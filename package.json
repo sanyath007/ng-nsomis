@@ -1,0 +1,21 @@
+{
+  "name": "ng-nsomis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "\u001b[D\u001b[Capp.js\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Djs/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sanyath007",
+  "license": "ISC",
+  "devDependencies": {
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-cache-bust": "^1.4.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-if": "^3.0.0",
+    "gulp-string-replace": "^1.1.2",
+    "gulp-uglify": "^3.0.2",
+    "gulp-useref": "^5.0.0"
+  }
+}
