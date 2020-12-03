@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-md-12">
+		<h3>User lists</h3>
+		
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th class="text-center" style="width: 5%;">#</th>
+					<th class="text-center">Name</th>
+					<th class="text-center" style="width: 30%;">Email</th>
+					<th class="text-center" style="width: 15%;">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="(index, user) in users">
+					<td class="text-center">{{ index+1 }}</td>
+					<td class="text-center">{{ user.name }}</td>
+					<td class="text-center">{{ user.email }}</td>
+					<td class="text-center">
+						<a href="#" class="btn btn-info">ดู</a>
+						<a href="#" class="btn btn-warning">แก้ไข</a>
+						<a href="#" class="btn btn-danger">ลบ</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

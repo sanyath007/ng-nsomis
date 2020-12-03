@@ -1,0 +1,109 @@
+<div class="row" ng-controller="ipController">
+	<div class="col-md-12">
+
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="#">หน้าหลัก</a></li>
+				<li class="breadcrumb-item active" aria-current="page">สรุปวันนอนตามวอร์ด</li>
+			</ol>
+		</nav>
+
+		<div class="card">
+			<div class="card-body">
+
+				<h2 class="card-title">สรุปวันนอนตามวอร์ด</h2>
+
+				<form action="" method="POST">
+					<div class="row">
+						<div class="col-md-5">
+							<div class="form-group">
+								<label>วันที่</label>
+								<input
+									type="text"
+									id="sdate"
+									name="sdate"								
+									class="form-control"
+									autocomplete="off"
+								>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="form-group">
+								<label>ถึงวันที่</label>
+								<input
+									type="text"
+									id="edate"
+									name="edate"
+									class="form-control"
+									autocomplete="off"
+								>
+							</div>
+						</div>
+						<div class="col-md-2" style="display: flex; align-items: flex-end;">
+							<div class="form-group">
+								<button ng-click="getAdmdateData($event)" class="btn btn-primary">ตกลง</button>
+							</div>
+						</div>
+					</div>
+					
+				</form>
+			</div>		
+		</div><br>
+
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th style="width: 3%; text-align: center;" rowspan="2">ลำดับ</th>
+					<th style="text-align: center;" rowspan="2">วอร์ด</th>
+					<th style="width: 12%; text-align: center;" rowspan="2">AdjRW</th>
+					<th style="width: 12%; text-align: center;" colspan="2">จน.ผป.คิดตามการจำหน่าย</th>
+					<th style="width: 12%; text-align: center;" colspan="2">จน.ผป.คิดตามการการนอน</th>
+				</tr>
+				<tr>
+					<th style="width: 12%; text-align: center;">จน.ผป.</th>
+					<th style="width: 12%; text-align: center;">จน.วันนอน</th>
+					<th style="width: 12%; text-align: center;">จน.ผป.</th>
+					<th style="width: 12%; text-align: center;">จน.วันนอน</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="(index, row) in data">	
+					<td style="text-align: center;">{{ index+1 }}</td>
+					<td>{{ row.ward + '-' + row.name }}</td>
+					<td style="text-align: center;">{{ row.rw }}</td>
+					<td style="text-align: center;">
+						<a href="#">
+							{{ row.dc_num }}
+						</a>
+					</td>
+					<td style="text-align: center;">{{ row.admdate }}</td>
+					<td style="text-align: center;">
+						<a href="#">
+							{{ row.sumAdm }}
+						</a>
+					</td>
+					<td style="text-align: center;">{{ row.sumPt }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div><!-- /.col -->
+</div><!-- /.row -->
+
+<script type="text/javascript">
+	$(function() {
+		$('#sdate').datepicker({
+			autoclose: true,
+	        language: 'th',
+	        format: 'dd/mm/yyyy',
+	        thaiyear: true
+		});
+
+		$('#edate').datepicker({
+			autoclose: true,
+	        language: 'th',
+	        format: 'dd/mm/yyyy',
+	        thaiyear: true
+		});
+	});
+</script>
