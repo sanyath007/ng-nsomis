@@ -233,6 +233,64 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
+    $scope.getErVisitData = function() {
+        var month = '2020';
+
+        ReportService.getSeriesData('er/visit/', month)
+        .then(function(res) {
+            let emergencyData = [];
+            let ugencyData = [];
+            let semiData = [];
+            let nonData = [];
+            let resusData = [];
+
+            res.data.visit.forEach((value, key) => {
+                let emergency = value.emergency ? parseInt(value.emergency) : 0;
+                let ugency = value.ugency ? parseInt(value.ugency) : 0;
+                let semi = value.semi ? parseInt(value.semi) : 0;
+                let non = value.non ? parseInt(value.non) : 0;
+                let resuscitation = value.resuscitation ? parseInt(value.resuscitation) : 0;
+
+                emergencyData.push(emergency);
+                ugencyData.push(ugency);
+                semiData.push(semi);
+                nonData.push(non);
+                resusData.push(resuscitation);
+
+            });
+
+            let series = [{
+                name: 'Emergency',
+                data: emergencyData,
+                color: '#e41749',
+            }, {
+                name: 'Ugency',
+                data: ugencyData,
+                color: '#f29c2b',
+            }, {
+                name: 'Semi-ugency',
+                data: semiData,
+                color: '#57D1C9',
+            }, {
+                name: 'Non-ugency',
+                data: nonData,
+                color: '#8bc24c',
+            }, {
+                name: 'Resuscitation',
+                data: resusData,
+                color: '#200A3E',
+            }];
+
+            var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
+            $scope.barOptions = ReportService.initBarChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
+            $scope.barOptions.series = series;
+
+            var chart = new Highcharts.Chart($scope.barOptions);
+        }, function(err) {
+            console.log(err);
+        });
+    };
+
     $scope.getErEmergencyData = function () {
         var month = '2020';
         // var selectMonth = document.getElementById('selectMonth').value;
@@ -241,7 +299,6 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
 
         ReportService.getSeriesData('/er/emergency/', month)
         .then(function(res) {
-            console.log(res);
             var dataSeries = [];
 
             $scope.pieOptions = ReportService.initPieChart("erEmergencyPieContainer", "ยอดการบริการ ตามประเภทความเร่งด่วน");
@@ -258,6 +315,64 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
     
+    $scope.getOrVisitData = function() {
+        var month = '2020';
+
+        ReportService.getSeriesData('er/visit/', month)
+        .then(function(res) {
+            let emergencyData = [];
+            let ugencyData = [];
+            let semiData = [];
+            let nonData = [];
+            let resusData = [];
+
+            res.data.visit.forEach((value, key) => {
+                let emergency = value.emergency ? parseInt(value.emergency) : 0;
+                let ugency = value.ugency ? parseInt(value.ugency) : 0;
+                let semi = value.semi ? parseInt(value.semi) : 0;
+                let non = value.non ? parseInt(value.non) : 0;
+                let resuscitation = value.resuscitation ? parseInt(value.resuscitation) : 0;
+
+                emergencyData.push(emergency);
+                ugencyData.push(ugency);
+                semiData.push(semi);
+                nonData.push(non);
+                resusData.push(resuscitation);
+
+            });
+
+            let series = [{
+                name: 'Emergency',
+                data: emergencyData,
+                color: '#e41749',
+            }, {
+                name: 'Ugency',
+                data: ugencyData,
+                color: '#f29c2b',
+            }, {
+                name: 'Semi-ugency',
+                data: semiData,
+                color: '#57D1C9',
+            }, {
+                name: 'Non-ugency',
+                data: nonData,
+                color: '#8bc24c',
+            }, {
+                name: 'Resuscitation',
+                data: resusData,
+                color: '#200A3E',
+            }];
+
+            var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
+            $scope.barOptions = ReportService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
+            $scope.barOptions.series = series;
+
+            var chart = new Highcharts.Chart($scope.barOptions);
+        }, function(err) {
+            console.log(err);
+        });
+    };
+
     $scope.getOrTypeData = function () {
         var month = '2020';
         // var selectMonth = document.getElementById('selectMonth').value;
