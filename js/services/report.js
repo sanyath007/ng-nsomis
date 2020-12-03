@@ -89,7 +89,7 @@ app.service('ReportService', function(CONFIG, $http) {
         };
     };
 
-    this.initPieChart = function(_container, _title) {
+    this.initPieChart = function(_container, _title, _labelUnit, _seriesName) {
         return {
             chart: {
                 renderTo: _container,
@@ -101,7 +101,7 @@ app.service('ReportService', function(CONFIG, $http) {
                 text: _title
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br>จน.: {point.y}/{point.total}',
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br>จน.: {point.y}',
                 percentageDecimals: 1
             },
             plotOptions: {
@@ -112,13 +112,13 @@ app.service('ReportService', function(CONFIG, $http) {
                         enabled: true,
                         color: '#000000',
                         connectorColor: '#000000',
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.y} ครั้ง)',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.y} ' +_labelUnit+ ')',
                     }
                 }
             },
             series: [{
                 type: 'pie',
-                name: 'สัดส่วนประเภทการมา',
+                name: _seriesName,
                 data: []
             }]
         };
