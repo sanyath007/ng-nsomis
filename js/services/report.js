@@ -17,6 +17,13 @@ app.service('ReportService', function(CONFIG, $http) {
                     text: _ytitle
                 }
             },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
             series: []
         };
     };
@@ -34,27 +41,27 @@ app.service('ReportService', function(CONFIG, $http) {
                 categories: _categories
             },
             yAxis: {
-		        min: 0,
-		        title: {
-		            text: _ytitle
-		        },
-		        stackLabels: {
-		            enabled: true,
-		            style: {
-		                fontWeight: 'bold',
-		                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-		            }
-		        }
-		    },
-		    plotOptions: {
-		        column: {
-		            stacking: 'normal',
-		            dataLabels: {
-		                enabled: true,
-		                color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
-		            }
-		        }
-		    },
+                min: 0,
+                title: {
+                    text: _ytitle
+                },
+                stackLabels: {
+                    enabled: true,
+                    style: {
+                        fontWeight: 'bold',
+                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                    }
+                }
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true,
+                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                    }
+                }
+            },
             series: []
         };
     };
@@ -70,6 +77,13 @@ app.service('ReportService', function(CONFIG, $http) {
             },
             xAxis: {
                 categories: _categories
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
             },
             series: []
         };
@@ -87,7 +101,7 @@ app.service('ReportService', function(CONFIG, $http) {
                 text: _title
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br>จน.: {point.y}/{point.total}',
                 percentageDecimals: 1
             },
             plotOptions: {
@@ -98,19 +112,19 @@ app.service('ReportService', function(CONFIG, $http) {
                         enabled: true,
                         color: '#000000',
                         connectorColor: '#000000',
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.y} ครั้ง)',
                     }
                 }
             },
             series: [{
                 type: 'pie',
-                name: 'สัดส่วนการให้บริการ',
+                name: 'สัดส่วนประเภทการมา',
                 data: []
             }]
         };
     };
 
 	this.getSeriesData = function (url, data) {
-		return $http.get(CONFIG.baseUrl + url + data);
+		return $http.get(CONFIG.apiUrl + url + data);
 	}
 });
