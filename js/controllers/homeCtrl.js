@@ -257,6 +257,30 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             console.log(err);
         });
     };
+    
+    $scope.getOrTypeData = function () {
+        var month = '2020';
+        // var selectMonth = document.getElementById('selectMonth').value;
+        // var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
+        // console.log(month);
+
+        ReportService.getSeriesData('/or/or-type/', month)
+        .then(function(res) {
+            var dataSeries = [];
+
+            $scope.pieOptions = ReportService.initPieChart("orTypePieContainer", "สัดส่วนผู้รับบริการผ่าตัด ตามประเภทการผ่าตัด");
+
+            res.data.ortype.forEach((value, key) => {
+                Object.keys(value).forEach(name => {
+                    $scope.pieOptions.series[0].data.push({name: name, y: parseInt(value[name])});
+                });
+            });
+
+            var chart = new Highcharts.Chart($scope.pieOptions);
+        }, function(err) {
+            console.log(err);
+        });
+    };
 
     $scope.getReferData = function () {
         var selectMonth = document.getElementById('selectMonth').value;
