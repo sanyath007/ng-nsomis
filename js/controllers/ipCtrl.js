@@ -1,12 +1,12 @@
 
-app.controller('ipController', function($scope, $http) 
+app.controller('ipController', function($scope, $http, CONFIG) 
 {
 	$scope.data = [];
 
 	$scope.getAdmdateData = function(e) {
-		e.preventDefault();
+		if(e) e.preventDefault();
 
-		$http.get('http://localhost/public_html/slim3-nsomis-api/public/ip/admdate')
+		$http.get(`${CONFIG.apiUrl}/ip/admdate`)
 		.then(res => {
 			console.log(res)
 			let admdate = res.data.admdate
