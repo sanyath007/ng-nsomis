@@ -344,7 +344,6 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
 
         ReportService.getSeriesData('or/visit/', month)
         .then(function(res) {
-            console.log(res.data);
             let smallData = [];
             let largeData = [];
             let otherData = [];

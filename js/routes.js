@@ -4,16 +4,16 @@ app.config(function($routeProvider, $locationProvider) {
 
 	$routeProvider
 	.when('/', {
-	    templateUrl: 'templates/home.html',
-	    controller: 'homeController'
+		templateUrl: 'templates/home.html',
+		controller: 'homeController'
 	})
-	.when('/users', {
-	    templateUrl: 'templates/users/user.html',
-	    controller: 'userController'
+	.when('/ornum', {
+		templateUrl: 'templates/users/user.html',
+		controller: 'userController'
 	})
 	.when('/admdate', {
-	    templateUrl: 'templates/ip/admdate.html',
-	    controller: 'ipController'
+		templateUrl: 'templates/ip/admdate.html',
+		controller: 'ipController'
 	})
 	.otherwise({
 		redirectTo: '/'
