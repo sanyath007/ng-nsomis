@@ -1,16 +1,10 @@
 
-app.controller('homeController', function($scope, $http, CONFIG, ReportService) {
-    $scope.cboYear = '';
+app.controller('dashController', function($scope, $http, CONFIG, ReportService) {
     $scope.pieOptions = {};
     $scope.barOptions = {};
     $scope.cardData = {};
-    $scope.toDay = new Date();
 
-    $scope.getCardData = function (e) {
-        if(e) e.preventDefault();
-        
-        $scope.cboYear = parseInt($scope.cboYear) - 543;
-
+    $scope.getCardData = function () {
         $scope.loading = true;
 
         $http.get(`${CONFIG.baseUrl}/dashboard/card-data`)
@@ -25,13 +19,10 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     }
 
-    $scope.getOpVisitMonthData = function (e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
+    $scope.getOpVisitMonthData = function () {
+        var month = '2020';
 
-        ReportService.getSeriesData('op/visit/', year)
+        ReportService.getSeriesData('op/visit/', month)
         .then(function(res) {
             var visitSeries = [];
 
@@ -42,7 +33,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             });
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอกรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ReportService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอกรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'op visit',
                 data: visitSeries,
@@ -55,13 +46,13 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
-    $scope.getOpVisitTypeData = function (e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
+    $scope.getOpVisitTypeData = function () {
+        var month = '2020';
+        // var selectMonth = document.getElementById('selectMonth').value;
+        // var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
+        // console.log(month);
 
-        ReportService.getSeriesData('/op/visit-type/', year)
+        ReportService.getSeriesData('/op/visit-type/', month)
         .then(function(res) {
             var dataSeries = [];
 
@@ -77,13 +68,10 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
-    $scope.getIpVisitMonthData = function(e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
-        
-        ReportService.getSeriesData('ip/visit/', year)
+    $scope.getIpVisitMonthData = function() {
+        var month = '2020';
+
+        ReportService.getSeriesData('ip/visit/', month)
         .then(function(res) {
             var visitSeries = [];
 
@@ -94,7 +82,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             });
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยในรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ReportService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยในรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'ip visit',
                 data: visitSeries,
@@ -107,13 +95,13 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
     
-    $scope.getIpClassificationData = function (e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
-        
-        ReportService.getSeriesData('/ip/classification/', year)
+    $scope.getIpClassificationData = function () {
+        var month = '2020';
+        // var selectMonth = document.getElementById('selectMonth').value;
+        // var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
+        // console.log(month);
+
+        ReportService.getSeriesData('/ip/classification/', month)
         .then(function(res) {
             var dataSeries = [];
 
@@ -131,13 +119,10 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
-    $scope.referInBarContainer = function(e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
-        
-        ReportService.getSeriesData('op/referin/', year)
+    $scope.referInBarContainer = function() {
+        var month = '2020';
+
+        ReportService.getSeriesData('op/referin/', month)
         .then(function(res) {
             var referinSeries = [];
 
@@ -148,7 +133,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             });
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("referInBarContainer", "Refer In รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ReportService.initBarChart("referInBarContainer", "Refer In รายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'referin',
                 data: referinSeries,
@@ -161,13 +146,10 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     }
     
-    $scope.referOutBarContainer = function(e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
-        
-        ReportService.getSeriesData('op/referout/', year)
+    $scope.referOutBarContainer = function() {
+        var month = '2020';
+
+        ReportService.getSeriesData('op/referout/', month)
         .then(function(res) {
             var referoutSeries = [];
 
@@ -178,7 +160,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             });
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("referOutBarContainer", "Refer Out รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ReportService.initBarChart("referOutBarContainer", "Refer Out รายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'referout',
                 data: referoutSeries,
@@ -191,13 +173,10 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     }
 
-    $scope.getSumYearData = function (e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
-        
-        ReportService.getSeriesData('/dashboard/sum-year-chart/', year)
+    $scope.getSumYearData = function () {       
+        var month = '2020';
+
+        ReportService.getSeriesData('/dashboard/sum-year-chart/', month)
         .then(function(res) {
             console.log(res);
             var debtSeries = [];
@@ -234,13 +213,12 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
-    $scope.getPeriodData = function (e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
+    $scope.getPeriodData = function () {
+        var selectMonth = document.getElementById('selectMonth').value;
+        var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
+        console.log(month);
 
-        ReportService.getSeriesData('/report/period-chart/', year)
+        ReportService.getSeriesData('/report/period-chart/', month)
         .then(function(res) {
             console.log(res);
             
@@ -279,13 +257,10 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
-    $scope.getErVisitData = function(e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
-        
-        ReportService.getSeriesData('er/visit/', year)
+    $scope.getErVisitData = function() {
+        var month = '2020';
+
+        ReportService.getSeriesData('er/visit/', month)
         .then(function(res) {
             let emergencyData = [];
             let ugencyData = [];
@@ -331,7 +306,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             }];
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ReportService.initBarChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
             $scope.barOptions.series = series;
 
             var chart = new Highcharts.Chart($scope.barOptions);
@@ -340,13 +315,13 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
-    $scope.getErEmergencyData = function (e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
-        
-        ReportService.getSeriesData('/er/emergency/', year)
+    $scope.getErEmergencyData = function () {
+        var month = '2020';
+        // var selectMonth = document.getElementById('selectMonth').value;
+        // var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
+        // console.log(month);
+
+        ReportService.getSeriesData('/er/emergency/', month)
         .then(function(res) {
             var dataSeries = [];
 
@@ -364,13 +339,10 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
     
-    $scope.getOrVisitData = function(e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
-        
-        ReportService.getSeriesData('or/visit/', year)
+    $scope.getOrVisitData = function() {
+        var month = '2020';
+
+        ReportService.getSeriesData('or/visit/', month)
         .then(function(res) {
             let smallData = [];
             let largeData = [];
@@ -401,7 +373,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             }];
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ReportService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
             $scope.barOptions.series = series;
 
             var chart = new Highcharts.Chart($scope.barOptions);
@@ -410,13 +382,13 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
-    $scope.getOrTypeData = function (e) {
-        if(e) e.preventDefault();
-        
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
-        
-        ReportService.getSeriesData('/or/or-type/', year)
+    $scope.getOrTypeData = function () {
+        var month = '2020';
+        // var selectMonth = document.getElementById('selectMonth').value;
+        // var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
+        // console.log(month);
+
+        ReportService.getSeriesData('/or/or-type/', month)
         .then(function(res) {
             var dataSeries = [];
 
@@ -429,6 +401,78 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             });
 
             var chart = new Highcharts.Chart($scope.pieOptions);
+        }, function(err) {
+            console.log(err);
+        });
+    };
+
+    $scope.getReferData = function () {
+        var selectMonth = document.getElementById('selectMonth').value;
+        var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
+        console.log(month);
+
+        ReportService.getSeriesData('/report/refer-chart/', month)
+        .then(function(res) {
+            console.log(res);
+            var nSeries = [];
+            var mSeries = [];
+            var aSeries = [];
+            var eSeries = [];
+            var categories = [];
+
+            angular.forEach(res.data, function(value, key) {
+                categories.push(value.d)
+                nSeries.push(value.n);
+                mSeries.push(value.m);
+                aSeries.push(value.a);
+            });
+
+            $scope.barOptions = ReportService.initStackChart("barContainer", "รายงานการให้บริการให้บริการรับ-ส่งต่อผู้ป่วย", categories, 'จำนวน Refer');
+            $scope.barOptions.series.push({
+                name: 'เวรดึก',
+                data: nSeries
+            }, {
+                name: 'เวรเช้า',
+                data: mSeries
+            }, {
+                name: 'เวรบ่าย',
+                data: aSeries
+            });
+
+            var chart = new Highcharts.Chart($scope.barOptions);
+        }, function(err) {
+            console.log(err);
+        });
+    };
+
+    $scope.getFuelDayData = function () {
+        var selectMonth = document.getElementById('selectMonth').value;
+        var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
+        console.log(month);
+
+        ReportService.getSeriesData('/report/fuel-day-chart/', month)
+        .then(function(res) {
+            console.log(res);
+            var nSeries = [];
+            var mSeries = [];
+            var categories = [];
+
+            angular.forEach(res.data, function(value, key) {
+                categories.push(value.bill_date)
+                nSeries.push(value.qty);
+                mSeries.push(value.net);
+            });
+
+            $scope.barOptions = ReportService.initBarChart("barContainer", "รายงานการใช้น้ำมันรวม รายวัน", categories, 'จำนวน');
+            $scope.barOptions.series.push({
+                name: 'ปริมาณ(ลิตร)',
+                data: nSeries
+            }, {
+                name: 'มูลค่า(บาท)',
+                data: mSeries
+            });
+
+            var chart = new Highcharts.Chart($scope.barOptions);
         }, function(err) {
             console.log(err);
         });

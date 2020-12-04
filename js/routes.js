@@ -7,8 +7,12 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'templates/home.html',
 		controller: 'homeController'
 	})
+	.when('/dashboard', {
+		templateUrl: 'templates/dashboard/dash1.html',
+		controller: 'dashController'
+	})
 	.when('/ornum', {
-		templateUrl: 'templates/users/user.html',
+		templateUrl: 'templates/user/list.html',
 		controller: 'userController'
 	})
 	.when('/admdate', {

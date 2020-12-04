@@ -2,19 +2,47 @@
 	class="row"
 	style="margin-top: 10px;"
 	ng-controller="homeController" 
-	ng-init="getOpVisitMonthData();
-			getOpVisitTypeData();
-			getIpVisitMonthData();
-			getIpClassificationData();
-			referInBarContainer();
-			referOutBarContainer();
-			getErVisitData();
-			getErEmergencyData();
-			getOrVisitData();
-			getOrTypeData();"
+	ng-init="getOpVisitMonthData($event);
+			getOpVisitTypeData($event);
+			getIpVisitMonthData($event);
+			getIpClassificationData($event);
+			referInBarContainer($event);
+			referOutBarContainer($event);
+			getErVisitData($event);
+			getErEmergencyData($event);
+			getOrVisitData($event);
+			getOrTypeData($event);"
 >
 	<div class="col-md-12" style="text-align: center; margin: 20px;">
 		<h3>Dashboard</h3>
+
+		<form action="" method="POST" class="form-inline">
+			<div class="form-group">
+				<label>ปีงบประมาณ :</label>
+				<input
+					type="text"
+					id="cboYear"
+					name="cboYear"
+					ng-model="cboYear"
+					class="form-control"
+					style="margin: 0 10px;"
+					autocomplete="off"
+				>
+			</div>
+
+			<button class="btn btn-primary" ng-click="getOpVisitMonthData($event);
+													getOpVisitTypeData($event);
+													getIpVisitMonthData($event);
+													getIpClassificationData($event);
+													referInBarContainer($event);
+													referOutBarContainer($event);
+													getErVisitData($event);
+													getErEmergencyData($event);
+													getOrVisitData($event);
+													getOrTypeData($event);"
+			>ตกลง</button>
+		</form>
+
 	</div>
 
 	<div class="card col-md-12" style="margin: 5px auto;">
@@ -122,3 +150,16 @@
 	</div>
 
 </div><!-- /.row-->
+
+<script type="text/javascript">
+	$(function() {
+		$('#cboYear').datepicker({
+			autoclose: true,
+	        format: 'yyyy',
+			viewMode: "years", 
+			minViewMode: "years",
+	        language: 'th',
+	        thaiyear: true
+		}).datepicker('update', new Date());
+	});
+</script>
