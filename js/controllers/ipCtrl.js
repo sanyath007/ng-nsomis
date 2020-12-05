@@ -1,12 +1,22 @@
 
-app.controller('ipController', function($scope, $http, CONFIG) 
+app.controller('ipController', function($scope, $http, CONFIG, StringFormatService) 
 {
+	$scope.sdate = '';
+	$scope.edate = '';
 	$scope.data = [];
+	$scope.toDay = new Date();
 
 	$scope.getAdmdateData = function(e) {
 		if(e) e.preventDefault();
 
-		$http.get(`${CONFIG.apiUrl}/ip/admdate`)
+		let startDate = ($('#sdate').val() !== '') 
+						? StringFormatService.convToDbDate($scope.sdate) 
+						: moment().format('YYYY-MM-DD');
+		let endDate = ($('#edate').val() !== '') 
+						? StringFormatService.convToDbDate($scope.edate) 
+						: moment().format('YYYY-MM-DD');
+
+		$http.get(`${CONFIG.apiUrl}/ip/admdate/${startDate}/${endDate}`)
 		.then(res => {
 			console.log(res)
 			let admdate = res.data.admdate

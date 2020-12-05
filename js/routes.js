@@ -7,8 +7,12 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'templates/home.html',
 		controller: 'homeController'
 	})
-	.when('/dashboard', {
-		templateUrl: 'templates/dashboard/dash1.html',
+	.when('/dash-month', {
+		templateUrl: 'templates/dashboard/dash-month.html',
+		controller: 'dashController'
+	})
+	.when('/dash-day', {
+		templateUrl: 'templates/dashboard/dash-day.html',
 		controller: 'dashController'
 	})
 	.when('/ornum', {

@@ -9,7 +9,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
     $scope.getCardData = function (e) {
         if(e) e.preventDefault();
         
-        $scope.cboYear = parseInt($scope.cboYear) - 543;
+        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
 
         $scope.loading = true;
 

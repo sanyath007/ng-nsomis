@@ -10,42 +10,37 @@
 		<div class="card">
 			<div class="card-header">
 				<h3 class="card-title">
-					<i class="fas fa-chart-pie mr-1"></i>
+					<i class="fas fa-bed mr-1"></i>
 					สรุปวันนอนตามวอร์ด
 				</h3>
 			</div><!-- /.card-header -->
 			<div class="card-body">
-				<form action="" method="POST">
-					<div class="row">
-						<div class="col-md-5">
+				<form action="" method="POST" class="form-inline">
 							<div class="form-group">
-								<label>วันที่</label>
+								<label>วันที่ :</label>
 								<input
 									type="text"
 									id="sdate"
 									name="sdate"								
-									class="form-control"
+									ng-model="sdate"								
+									class="form-control mr-2 ml-2"
 									autocomplete="off"
 								>
 							</div>
-						</div>
-						<div class="col-md-5">
+
 							<div class="form-group">
-								<label>ถึงวันที่</label>
+								<label>ถึงวันที่ :</label>
 								<input
 									type="text"
 									id="edate"
 									name="edate"
-									class="form-control"
+									ng-model="edate"
+									class="form-control mr-2 ml-2"
 									autocomplete="off"
 								>
 							</div>
-						</div>
-						<div class="col-md-2" style="display: flex; align-items: flex-end;">
-							<div class="form-group">
-								<button ng-click="getAdmdateData($event)" class="btn btn-primary">ตกลง</button>
-							</div>
-						</div>
+
+							<button ng-click="getAdmdateData($event)" class="btn btn-primary">ตกลง</button>
 					</div>
 					
 				</form>
@@ -103,16 +98,16 @@
 	$(function() {
 		$('#sdate').datepicker({
 			autoclose: true,
-	        language: 'th',
-	        format: 'dd/mm/yyyy',
-	        thaiyear: true
-		});
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
 
 		$('#edate').datepicker({
 			autoclose: true,
-	        language: 'th',
-	        format: 'dd/mm/yyyy',
-	        thaiyear: true
-		});
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
 	});
 </script>

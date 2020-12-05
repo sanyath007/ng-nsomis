@@ -11,7 +11,7 @@ if(window){
     Object.assign(env, window.__env);
 }
 
-var app = angular.module('App', ['ngRoute'])
+var app = angular.module('App', ['ngRoute','toaster'])
     /**
      * ==================================================
      *  App Config
