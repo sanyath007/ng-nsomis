@@ -2,7 +2,9 @@
 	class="content"
 	ng-controller="dashmonthController"
 	ng-init="getOpVisit($event);
-			getOpVisitType($event);"
+			getOpVisitType($event);
+			getIpVisit($event);
+			getIpClass($event);"
 >
 	<div class="container-fluid">		
 		<div class="row">
@@ -10,7 +12,7 @@
 
 				<form action="" method="POST" class="form-inline">
 					<div class="form-group">
-						<label>ระหว่างวันที่ :</label>
+						<label>ประจำเดือน :</label>
 						<input
 							type="text"
 							id="cboMonth"
@@ -22,7 +24,13 @@
 						>
 					</div>
 
-					<button class="btn btn-primary" ng-click="getOpVisit($event);getOpVisitType($event);">ตกลง</button>
+					<button class="btn btn-primary" ng-click="getOpVisit($event);
+																getOpVisitType($event);
+																getIpVisit($event);
+																getIpClass($event);"
+					>
+						ตกลง
+					</button>
 				</form>
 
 			</div><!-- /.col -->
@@ -35,21 +43,46 @@
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-users mr-1"></i>
-							ยอดผู้ป่วยนอก
+							ยอดผู้ป่วยนอก ประจำเดือน {{ cboMonth }}
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
 						
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-12">
 
 								<div id="opVisitBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
 
 							</div>
 
-							<div class="col-md-6">
+							<div class="col-md-12">
 
 								<div id="opVisitTypePieContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+
+							</div>
+						</div>
+
+					</div><!-- /.card-body-->
+				</div><!-- /.card-->
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-bed mr-1"></i>
+							ยอดผู้ป่วยใน ประจำวันที่ {{ cboMonth }}
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+
+								<div id="ipClassPieContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+
+							</div>
+							
+							<div class="col-md-12">
+
+								<div id="ipVisitBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
 
 							</div>
 						</div>
@@ -67,7 +100,7 @@
 	$(function() {
 		$('#cboMonth').datepicker({
 			autoclose: true,
-	        format: 'MM',
+	        format: 'mm/yyyy',
 			viewMode: "months", 
 			minViewMode: "months",
 	        language: 'th',

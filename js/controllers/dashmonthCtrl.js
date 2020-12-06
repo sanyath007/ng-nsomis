@@ -3,20 +3,19 @@ app.controller('dashmonthController', function($scope, $http, CONFIG, ReportServ
     $scope.cardData = {};
     $scope.barOptions = {};
     $scope.pieOptions = {};
-
     $scope.cboMonth = '';
-    $scope.toDay = new Date();
     
-    const createDataSeriesDoM = function(data) {
+    const createDataSeriesDoM = function(data, month) {
         let dataSeries = [];
-        let categories = new Array(31);
+        let endDate = lastDayOfMonth(`${month}-01`);
+        let categories = new Array(endDate);
 
         for(let i = 0; i < categories.length; i++) {
-            categories[i] = `${i}`;
+            categories[i] = `${i+1}`;
             dataSeries.push(0);
 
             data.every((val, key) => {
-                if(parseInt(val.hhmm) === i) {
+                if(parseInt(val.d) === i+1) {
                     dataSeries[i] = parseInt(val.num_pt);
                     return false;
                 }
@@ -27,16 +26,30 @@ app.controller('dashmonthController', function($scope, $http, CONFIG, ReportServ
 
         return { dataSeries, categories }
     }
+    
+    const lastDayOfMonth = function(date) {
+        if(!date) return 31;
+
+        return parseInt(moment(date).endOf('month').format('DD'));
+    }
+
+    const fotmatYearMonth = function(my) {
+        if(!my) return moment().format('YYYY-MM');
+
+        let [month, year] = my.split('/');
+
+        return `${year-543}-${month}`;
+    };
 
     $scope.getCardDay = function () {
         if(e) e.preventDefault();
 
         $scope.loading = true;
-        let date = ($scope.cboDate !== '') 
-                    ? StringFormatService.convToDbDate($scope.cboDate)
-                    : moment().format('YYYY-MM-DD');
+        let month = ($scope.cboMonth !== '') 
+                    ? $scope.cboMonth
+                    : moment().format('MM');
 
-        $http.get(`${CONFIG.baseUrl}/dashboard/card-data/${date}`)
+        $http.get(`${CONFIG.baseUrl}/dashboard/card-data/${month}`)
         .then(function(res) {
             console.log(res);
             $scope.cardData = res.data[0];
@@ -52,12 +65,12 @@ app.controller('dashmonthController', function($scope, $http, CONFIG, ReportServ
         if(e) e.preventDefault();
 
         let month = ($scope.cboMonth !== '') 
-                    ? $scope.cboMonth
-                    : moment().format('MM');
+                    ? fotmatYearMonth($scope.cboMonth)
+                    : moment().format('YYYY-MM');
 
-        ReportService.getSeriesData('dashboard/op-visit/', month)
+        ReportService.getSeriesData('dashboard/op-visit-month/', month)
         .then(function(res) {
-            let {dataSeries, categories} = createDataSeries24Hr(res.data);
+            let {dataSeries, categories} = createDataSeriesDoM(res.data, month);
 
             $scope.barOptions = ReportService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอก", categories, 'จำนวน');
             $scope.barOptions.series.push({
@@ -75,11 +88,11 @@ app.controller('dashmonthController', function($scope, $http, CONFIG, ReportServ
     $scope.getOpVisitType = function (e) {
         if(e) e.preventDefault();
         
-        let date = ($scope.cboDate !== '') 
-                    ? StringFormatService.convToDbDate($scope.cboDate)
-                    : moment().format('YYYY-MM-DD');
+        let month = ($scope.cboMonth !== '') 
+                    ? fotmatYearMonth($scope.cboMonth)
+                    : moment().format('YYYY-MM');
 
-        ReportService.getSeriesData('/dashboard/op-visit-type/', date)
+        ReportService.getSeriesData('/dashboard/op-visit-type-month/', month)
         .then(function(res) {
             $scope.pieOptions = ReportService.initPieChart("opVisitTypePieContainer", "สัดส่วนผู้ป่วยนอก ตามประเภทการมา", "", "สัดส่วนตามประเภทการมา");
 
@@ -96,13 +109,14 @@ app.controller('dashmonthController', function($scope, $http, CONFIG, ReportServ
     $scope.getIpVisit = function(e) {
         if(e) e.preventDefault();
         
-        let date = ($scope.cboDate !== '') 
-                    ? StringFormatService.convToDbDate($scope.cboDate)
-                    : moment().format('YYYY-MM-DD');
+        let month = ($scope.cboMonth !== '') 
+                    ? fotmatYearMonth($scope.cboMonth)
+                    : moment().format('YYYY-MM');
 
-        ReportService.getSeriesData('/dashboard/ip-visit/', date)
+        ReportService.getSeriesData('/dashboard/ip-visit-month/', month)
         .then(function(res) {
-            let {dataSeries, categories} = createDataSeries24Hr(res.data);
+            console.log(res);
+            let {dataSeries, categories} = createDataSeriesDoM(res.data, month);
 
             $scope.barOptions = ReportService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยใน", categories, 'จำนวน');
             $scope.barOptions.series.push({
@@ -120,11 +134,11 @@ app.controller('dashmonthController', function($scope, $http, CONFIG, ReportServ
     $scope.getIpClass = function (e) {
         if(e) e.preventDefault();
         
-        let date = ($scope.cboDate !== '') 
-                    ? StringFormatService.convToDbDate($scope.cboDate)
-                    : moment().format('YYYY-MM-DD');
+        let month = ($scope.cboMonth !== '') 
+                    ? fotmatYearMonth($scope.cboMonth)
+                    : moment().format('YYYY-MM');
 
-        ReportService.getSeriesData('/dashboard/ip-class/', date)
+        ReportService.getSeriesData('/dashboard/ip-class-month/', month)
         .then(function(res) {
             $scope.pieOptions = ReportService.initPieChart("ipClassPieContainer", "สัดส่วนผู้ป่วยใน ตามประเภทผู้ป่วย", "", "สัดส่วนตามประเภทผู้ป่วย");
 
@@ -143,13 +157,13 @@ app.controller('dashmonthController', function($scope, $http, CONFIG, ReportServ
     $scope.referIn = function(e) {
         if(e) e.preventDefault();
         
-        let date = ($scope.cboDate !== '') 
-                    ? StringFormatService.convToDbDate($scope.cboDate)
-                    : moment().format('YYYY-MM-DD');
+        let month = ($scope.cboMonth !== '') 
+                    ? $scope.cboMonth
+                    : moment().format('MM');
 
-        ReportService.getSeriesData('dashboard/referin/', date)
+        ReportService.getSeriesData('dashboard/referin/', month)
         .then(function(res) {
-            let {dataSeries, categories} = createDataSeries24Hr(res.data);
+            let {dataSeries, categories} = createDataSeriesDoM(res.data);
 
             $scope.barOptions = ReportService.initBarChart("referInBarContainer", "Refer In", categories, 'จำนวน');
             $scope.barOptions.series.push({
@@ -167,13 +181,13 @@ app.controller('dashmonthController', function($scope, $http, CONFIG, ReportServ
     $scope.referOut = function(e) {
         if(e) e.preventDefault();
         
-        let date = ($scope.cboDate !== '') 
-                    ? StringFormatService.convToDbDate($scope.cboDate)
-                    : moment().format('YYYY-MM-DD');
+        let month = ($scope.cboMonth !== '') 
+                    ? $scope.cboMonth
+                    : moment().format('MM');
 
-        ReportService.getSeriesData('dashboard/referout/', date)
+        ReportService.getSeriesData('dashboard/referout/', month)
         .then(function(res) {
-            let {dataSeries, categories} = createDataSeries24Hr(res.data);
+            let {dataSeries, categories} = createDataSeriesDoM(res.data);
 
             $scope.barOptions = ReportService.initBarChart("referOutBarContainer", "Refer Out", categories, 'จำนวน');
             $scope.barOptions.series.push({
