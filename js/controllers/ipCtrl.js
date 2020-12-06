@@ -4,7 +4,20 @@ app.controller('ipController', function($scope, $http, CONFIG, StringFormatServi
 	$scope.sdate = '';
 	$scope.edate = '';
 	$scope.data = [];
+	$scope.totalClass = {};
 	$scope.toDay = new Date();
+
+	const initTotalClass = function() {
+		return {
+			type1: 0,
+			type2: 0,
+			type3: 0,
+			type4: 0,
+			type5: 0,
+			unknown: 0,
+			all: 0,
+		};
+	}
 
 	$scope.getAdmdateData = function(e) {
 		if(e) e.preventDefault();
@@ -44,5 +57,36 @@ app.controller('ipController', function($scope, $http, CONFIG, StringFormatServi
 		});
 		
 		return data;
+	}
+
+	$scope.getIpClassData = function(e) {
+		if(e) e.preventDefault();
+
+		$scope.totalClass = initTotalClass();
+
+		let startDate = ($('#sdate').val() !== '') 
+						? StringFormatService.convToDbDate($scope.sdate) 
+						: moment().format('YYYY-MM-DD');
+		let endDate = ($('#edate').val() !== '') 
+						? StringFormatService.convToDbDate($scope.edate) 
+						: moment().format('YYYY-MM-DD');
+
+		$http.get(`${CONFIG.apiUrl}/ip/class/${startDate}/${endDate}`)
+		.then(res => {
+			console.log(res)
+			$scope.data = res.data.classes;
+
+			$scope.data.forEach((val, key) => {
+				$scope.totalClass.type1 += parseInt(val.type1);
+				$scope.totalClass.type2 += parseInt(val.type2);
+				$scope.totalClass.type3 += parseInt(val.type3);
+				$scope.totalClass.type4 += parseInt(val.type4);
+				$scope.totalClass.type5 += parseInt(val.type5);
+				$scope.totalClass.unknown += parseInt(val.unknown);
+				$scope.totalClass.all += parseInt(val.all);
+			});
+		}, err => {
+			console.log(err)
+		});
 	}
 });

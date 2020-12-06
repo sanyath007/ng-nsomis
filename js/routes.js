@@ -15,13 +15,17 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'templates/dashboard/dash-month.html',
 		controller: 'dashmonthController'
 	})
-	.when('/ornum', {
-		templateUrl: 'templates/user/list.html',
-		controller: 'userController'
-	})
-	.when('/admdate', {
+	.when('/ip/admdate', {
 		templateUrl: 'templates/ip/admdate.html',
 		controller: 'ipController'
+	})
+	.when('/ip/class', {
+		templateUrl: 'templates/ip/ipclass.html',
+		controller: 'ipController'
+	})
+	.when('/or/num', {
+		templateUrl: 'templates/user/list.html',
+		controller: 'userController'
 	})
 	.otherwise({
 		redirectTo: '/'

@@ -4,18 +4,19 @@
 	ng-init="getAdmdateData($event);"
 >
 	<div class="container-fluid">
-<div class="row">
-	<section class="col-lg-12 connectedSortable">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
 
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">
-					<i class="fas fa-bed mr-1"></i>
-					สรุปวันนอนตามวอร์ด
-				</h3>
-			</div><!-- /.card-header -->
-			<div class="card-body">
-				<form action="" method="POST" class="form-inline">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-bed mr-1"></i>
+							สรุปวันนอนตามวอร์ด
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+						<form action="" method="POST" class="form-inline">
 							<div class="form-group">
 								<label>วันที่ :</label>
 								<input
@@ -41,58 +42,57 @@
 							</div>
 
 							<button ng-click="getAdmdateData($event)" class="btn btn-primary">ตกลง</button>
+							
+						</form>
+					</div>		
+				</div>
+
+				<div class="card">
+					<div class="card-body">
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th style="width: 3%; text-align: center;" rowspan="2">ลำดับ</th>
+									<th style="text-align: center;" rowspan="2">วอร์ด</th>
+									<th style="width: 12%; text-align: center;" rowspan="2">AdjRW</th>
+									<th style="width: 12%; text-align: center;" colspan="2">จน.ผป.คิดตามการจำหน่าย</th>
+									<th style="width: 12%; text-align: center;" colspan="2">จน.ผป.คิดตามการการนอน</th>
+								</tr>
+								<tr>
+									<th style="width: 12%; text-align: center;">จน.ผป.</th>
+									<th style="width: 12%; text-align: center;">จน.วันนอน</th>
+									<th style="width: 12%; text-align: center;">จน.ผป.</th>
+									<th style="width: 12%; text-align: center;">จน.วันนอน</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(index, row) in data">	
+									<td style="text-align: center;">{{ index+1 }}</td>
+									<td>{{ row.ward + '-' + row.name }}</td>
+									<td style="text-align: center;">{{ row.rw }}</td>
+									<td style="text-align: center;">
+										<a href="#">
+											{{ row.dc_num }}
+										</a>
+									</td>
+									<td style="text-align: center;">{{ row.admdate }}</td>
+									<td style="text-align: center;">
+										<a href="#">
+											{{ row.sumAdm }}
+										</a>
+									</td>
+									<td style="text-align: center;">{{ row.sumPt }}</td>
+								</tr>
+							</tbody>
+						</table>
+
 					</div>
-					
-				</form>
-			</div>		
-		</div>
-
-		<div class="card">
-			<div class="card-body">
-				<table class="table table-bordered table-striped">
-					<thead>
-						<tr>
-							<th style="width: 3%; text-align: center;" rowspan="2">ลำดับ</th>
-							<th style="text-align: center;" rowspan="2">วอร์ด</th>
-							<th style="width: 12%; text-align: center;" rowspan="2">AdjRW</th>
-							<th style="width: 12%; text-align: center;" colspan="2">จน.ผป.คิดตามการจำหน่าย</th>
-							<th style="width: 12%; text-align: center;" colspan="2">จน.ผป.คิดตามการการนอน</th>
-						</tr>
-						<tr>
-							<th style="width: 12%; text-align: center;">จน.ผป.</th>
-							<th style="width: 12%; text-align: center;">จน.วันนอน</th>
-							<th style="width: 12%; text-align: center;">จน.ผป.</th>
-							<th style="width: 12%; text-align: center;">จน.วันนอน</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="(index, row) in data">	
-							<td style="text-align: center;">{{ index+1 }}</td>
-							<td>{{ row.ward + '-' + row.name }}</td>
-							<td style="text-align: center;">{{ row.rw }}</td>
-							<td style="text-align: center;">
-								<a href="#">
-									{{ row.dc_num }}
-								</a>
-							</td>
-							<td style="text-align: center;">{{ row.admdate }}</td>
-							<td style="text-align: center;">
-								<a href="#">
-									{{ row.sumAdm }}
-								</a>
-							</td>
-							<td style="text-align: center;">{{ row.sumPt }}</td>
-						</tr>
-					</tbody>
-				</table>
-
-			</div>
-		</div><!-- /.card -->
+				</div><!-- /.card -->
 	
 			</section>
 		</div><!-- Main row -->
 	</div><!-- /.container-fluid-->
-</section>
+</section><!-- /.content -->
 
 <script type="text/javascript">
 	$(function() {

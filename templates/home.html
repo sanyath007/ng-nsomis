@@ -1,16 +1,16 @@
 <section
 	class="content"
 	ng-controller="homeController"
-	ng-init="getOpVisitMonthData($event);
-			getOpVisitTypeData($event);
-			getIpVisitMonthData($event);
-			getIpClassificationData($event);
-			referInBarContainer($event);
-			referOutBarContainer($event);
-			getErVisitData($event);
-			getErEmergencyData($event);
-			getOrVisitData($event);
-			getOrTypeData($event);"
+	ng-init="getOpVisit($event);
+			getOpVisitType($event);
+			getIpVisit($event);
+			getIpClassification($event);
+			getReferIn($event);
+			getReferOut($event);
+			getErVisit($event);
+			getErEmergency($event);
+			getOrVisit($event);
+			getOrType($event);"
 >
 	<div class="container-fluid">		
 		<div class="row">
@@ -30,16 +30,16 @@
 						>
 					</div>
 
-					<button class="btn btn-primary" ng-click="getOpVisitMonthData($event);
-															getOpVisitTypeData($event);
-															getIpVisitMonthData($event);
-															getIpClassificationData($event);
-															referInBarContainer($event);
-															referOutBarContainer($event);
-															getErVisitData($event);
-															getErEmergencyData($event);
-															getOrVisitData($event);
-															getOrTypeData($event);"
+					<button class="btn btn-primary" ng-click="getOpVisit($event);
+															getOpVisitType($event);
+															getIpVisit($event);
+															getIpClassification($event);
+															getReferIn($event);
+															getReferOut($event);
+															getErVisit($event);
+															getErEmergency($event);
+															getOrVisit($event);
+															getOrType($event);"
 					>ตกลง</button>
 				</form>
 

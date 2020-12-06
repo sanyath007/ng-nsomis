@@ -25,7 +25,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     }
 
-    $scope.getOpVisitMonthData = function (e) {
+    $scope.getOpVisit = function (e) {
         if(e) e.preventDefault();
         
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
@@ -55,7 +55,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
-    $scope.getOpVisitTypeData = function (e) {
+    $scope.getOpVisitType = function (e) {
         if(e) e.preventDefault();
         
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
@@ -77,13 +77,13 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
-    $scope.getIpVisitMonthData = function(e) {
+    $scope.getIpVisit = function(e) {
         if(e) e.preventDefault();
         
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('ip/visit/', year)
+        ReportService.getSeriesData('dashboard/ip-visit-year/', year)
         .then(function(res) {
             var visitSeries = [];
 
@@ -107,13 +107,13 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
     
-    $scope.getIpClassificationData = function (e) {
+    $scope.getIpClass = function (e) {
         if(e) e.preventDefault();
         
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('/ip/classification/', year)
+        ReportService.getSeriesData('dashboard/ip-class-year/', year)
         .then(function(res) {
             var dataSeries = [];
 
@@ -131,7 +131,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     };
 
-    $scope.referInBarContainer = function(e) {
+    $scope.getReferIn = function(e) {
         if(e) e.preventDefault();
         
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
@@ -161,7 +161,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         });
     }
     
-    $scope.referOutBarContainer = function(e) {
+    $scope.getReferOut = function(e) {
         if(e) e.preventDefault();
         
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
