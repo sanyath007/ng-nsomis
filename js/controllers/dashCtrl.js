@@ -1,13 +1,22 @@
 
-app.controller('dashController', function($scope, $http, CONFIG, ReportService) {
-    $scope.pieOptions = {};
-    $scope.barOptions = {};
+app.controller('dashController', function($scope, $http, CONFIG, ReportService, StringFormatService) {
     $scope.cardData = {};
+    $scope.barOptions = {};
+    $scope.pieOptions = {};
+
+    $scope.cboDate = '';
+    $scope.toDay = new Date();
 
     $scope.getCardData = function () {
-        $scope.loading = true;
+        if(e) e.preventDefault();
 
-        $http.get(`${CONFIG.baseUrl}/dashboard/card-data`)
+        $scope.loading = true;
+        let date = ($scope.cboDate !== '') 
+                    ? StringFormatService.convToDbDate($scope.cboDate)
+                    : moment().format('YYYY-MM-DD');
+        console.log(date);
+
+        $http.get(`${CONFIG.baseUrl}/dashboard/card-data/${date}`)
         .then(function(res) {
             console.log(res);
             $scope.cardData = res.data[0];
@@ -19,46 +28,60 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService) 
         });
     }
 
-    $scope.getOpVisitMonthData = function () {
-        var month = '2020';
+    $scope.getOpVisitDay = function (e) {
+        if(e) e.preventDefault();
 
-        ReportService.getSeriesData('op/visit/', month)
+        let date = ($scope.cboDate !== '') 
+                    ? StringFormatService.convToDbDate($scope.cboDate)
+                    : moment().format('YYYY-MM-DD');
+        console.log(date);
+
+        ReportService.getSeriesData('dashboard/op-visit/', date)
         .then(function(res) {
-            var visitSeries = [];
+            let visitSeries = [];
+            let categories = new Array(24);
 
-            res.data.opvisit.forEach((value, key) => {
-                let visit = value.num_pt ? parseInt(value.num_pt) : 0;
+            for(let i = 0; i < categories.length; i++) {
+                categories[i] = `${i}`;
+                visitSeries.push(0);
 
-                visitSeries.push(visit);
-            });
+                res.data.data.every((val, key) => {
+                    if(parseInt(val.hhmm) === i) {
+                        visitSeries[i] = parseInt(val.num_pt);
+                        return false;
+                    }
 
-            var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอกรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
+                    return true;
+                });
+            }
+
+            $scope.barOptions = ReportService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอก ประจำวันที่ " + $scope.cboDate, categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'op visit',
                 data: visitSeries,
                 color: '#e41749',
             });
 
-            var chart = new Highcharts.Chart($scope.barOptions);
+            let chart = new Highcharts.Chart($scope.barOptions);
         }, function(err) {
             console.log(err);
         });
     };
 
-    $scope.getOpVisitTypeData = function () {
-        var month = '2020';
-        // var selectMonth = document.getElementById('selectMonth').value;
-        // var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
-        // console.log(month);
+    $scope.getOpVisitTypeDay = function (e) {
+        if(e) e.preventDefault();
+        
+        let date = ($scope.cboDate !== '') 
+                    ? StringFormatService.convToDbDate($scope.cboDate)
+                    : moment().format('YYYY-MM-DD');
 
-        ReportService.getSeriesData('/op/visit-type/', month)
+        ReportService.getSeriesData('/dashboard/op-visit-type/', date)
         .then(function(res) {
             var dataSeries = [];
 
-            $scope.pieOptions = ReportService.initPieChart("opVisitTypePieContainer", "สัดส่วนผู้ป่วยนอก ตามประเภทการมา", "", "สัดส่วนตามประเภทการมา");
+            $scope.pieOptions = ReportService.initPieChart("opVisitTypePieContainer", "สัดส่วนผู้ป่วยนอก ตามประเภทการมา ประจำวันที่ " + $scope.cboDate, "", "สัดส่วนตามประเภทการมา");
 
-            res.data.opVisitType.forEach((value, key) => {
+            res.data.data.forEach((value, key) => {
                 $scope.pieOptions.series[0].data.push({name: value.type, y: parseInt(value.num_pt)});
             });
 
@@ -97,9 +120,6 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService) 
     
     $scope.getIpClassificationData = function () {
         var month = '2020';
-        // var selectMonth = document.getElementById('selectMonth').value;
-        // var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
-        // console.log(month);
 
         ReportService.getSeriesData('/ip/classification/', month)
         .then(function(res) {
