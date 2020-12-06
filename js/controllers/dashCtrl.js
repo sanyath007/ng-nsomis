@@ -7,14 +7,34 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService, 
     $scope.cboDate = '';
     $scope.toDay = new Date();
 
-    $scope.getCardData = function () {
+    const createDataSeries24Hr = function(data) {
+        let dataSeries = [];
+        let categories = new Array(24);
+
+        for(let i = 0; i < categories.length; i++) {
+            categories[i] = `${i}`;
+            dataSeries.push(0);
+
+            data.every((val, key) => {
+                if(parseInt(val.hhmm) === i) {
+                    dataSeries[i] = parseInt(val.num_pt);
+                    return false;
+                }
+
+                return true;
+            });
+        }
+
+        return { dataSeries, categories }
+    }
+
+    $scope.getCardDay = function () {
         if(e) e.preventDefault();
 
         $scope.loading = true;
         let date = ($scope.cboDate !== '') 
                     ? StringFormatService.convToDbDate($scope.cboDate)
                     : moment().format('YYYY-MM-DD');
-        console.log(date);
 
         $http.get(`${CONFIG.baseUrl}/dashboard/card-data/${date}`)
         .then(function(res) {
@@ -34,31 +54,15 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService, 
         let date = ($scope.cboDate !== '') 
                     ? StringFormatService.convToDbDate($scope.cboDate)
                     : moment().format('YYYY-MM-DD');
-        console.log(date);
 
         ReportService.getSeriesData('dashboard/op-visit/', date)
         .then(function(res) {
-            let visitSeries = [];
-            let categories = new Array(24);
+            let {dataSeries, categories} = createDataSeries24Hr(res.data);
 
-            for(let i = 0; i < categories.length; i++) {
-                categories[i] = `${i}`;
-                visitSeries.push(0);
-
-                res.data.data.every((val, key) => {
-                    if(parseInt(val.hhmm) === i) {
-                        visitSeries[i] = parseInt(val.num_pt);
-                        return false;
-                    }
-
-                    return true;
-                });
-            }
-
-            $scope.barOptions = ReportService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอก ประจำวันที่ " + $scope.cboDate, categories, 'จำนวน');
+            $scope.barOptions = ReportService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอก", categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'op visit',
-                data: visitSeries,
+                data: dataSeries,
                 color: '#e41749',
             });
 
@@ -77,11 +81,9 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService, 
 
         ReportService.getSeriesData('/dashboard/op-visit-type/', date)
         .then(function(res) {
-            var dataSeries = [];
+            $scope.pieOptions = ReportService.initPieChart("opVisitTypePieContainer", "สัดส่วนผู้ป่วยนอก ตามประเภทการมา", "", "สัดส่วนตามประเภทการมา");
 
-            $scope.pieOptions = ReportService.initPieChart("opVisitTypePieContainer", "สัดส่วนผู้ป่วยนอก ตามประเภทการมา ประจำวันที่ " + $scope.cboDate, "", "สัดส่วนตามประเภทการมา");
-
-            res.data.data.forEach((value, key) => {
+            res.data.forEach((value, key) => {
                 $scope.pieOptions.series[0].data.push({name: value.type, y: parseInt(value.num_pt)});
             });
 
@@ -91,43 +93,42 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService, 
         });
     };
 
-    $scope.getIpVisitMonthData = function() {
-        var month = '2020';
+    $scope.getIpVisitDay = function(e) {
+        if(e) e.preventDefault();
+        
+        let date = ($scope.cboDate !== '') 
+                    ? StringFormatService.convToDbDate($scope.cboDate)
+                    : moment().format('YYYY-MM-DD');
 
-        ReportService.getSeriesData('ip/visit/', month)
+        ReportService.getSeriesData('/dashboard/ip-visit/', date)
         .then(function(res) {
-            var visitSeries = [];
+            let {dataSeries, categories} = createDataSeries24Hr(res.data);
 
-            res.data.ipvisit.forEach((value, key) => {
-                let visit = value.num_pt ? parseInt(value.num_pt) : 0;
-
-                visitSeries.push(visit);
-            });
-
-            var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยในรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
+            $scope.barOptions = ReportService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยใน", categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'ip visit',
-                data: visitSeries,
+                data: dataSeries,
                 color: '#1f640a',
             });
 
-            var chart = new Highcharts.Chart($scope.barOptions);
+            let chart = new Highcharts.Chart($scope.barOptions);
         }, function(err) {
             console.log(err);
         });
     };
-    
-    $scope.getIpClassificationData = function () {
-        var month = '2020';
 
-        ReportService.getSeriesData('/ip/classification/', month)
+    $scope.getIpClassificationDay = function (e) {
+        if(e) e.preventDefault();
+        
+        let date = ($scope.cboDate !== '') 
+                    ? StringFormatService.convToDbDate($scope.cboDate)
+                    : moment().format('YYYY-MM-DD');
+
+        ReportService.getSeriesData('/dashboard/ip-class/', date)
         .then(function(res) {
-            var dataSeries = [];
+            $scope.pieOptions = ReportService.initPieChart("ipClassPieContainer", "สัดส่วนผู้ป่วยใน ตามประเภทผู้ป่วย", "", "สัดส่วนตามประเภทผู้ป่วย");
 
-            $scope.pieOptions = ReportService.initPieChart("ipClassificationPieContainer", "สัดส่วนผู้ป่วยใน ตามประเภทผู้ป่วย", "", "สัดส่วนตามประเภทผู้ป่วย");
-
-            res.data.class.forEach((value, key) => {
+            res.data.forEach((value, key) => {
                 Object.keys(value).forEach(name => {
                     $scope.pieOptions.series[0].data.push({name: name, y: parseInt(value[name])});
                 });
@@ -139,24 +140,21 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService, 
         });
     };
 
-    $scope.referInBarContainer = function() {
-        var month = '2020';
+    $scope.referInDay = function(e) {
+        if(e) e.preventDefault();
+        
+        let date = ($scope.cboDate !== '') 
+                    ? StringFormatService.convToDbDate($scope.cboDate)
+                    : moment().format('YYYY-MM-DD');
 
-        ReportService.getSeriesData('op/referin/', month)
+        ReportService.getSeriesData('dashboard/referin/', date)
         .then(function(res) {
-            var referinSeries = [];
+            let {dataSeries, categories} = createDataSeries24Hr(res.data);
 
-            res.data.referin.forEach((value, key) => {
-                let visit = value.num_pt ? parseInt(value.num_pt) : 0;
-
-                referinSeries.push(visit);
-            });
-
-            var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("referInBarContainer", "Refer In รายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
+            $scope.barOptions = ReportService.initBarChart("referInBarContainer", "Refer In", categories, 'จำนวน');
             $scope.barOptions.series.push({
-                name: 'referin',
-                data: referinSeries,
+                name: 'refer in',
+                data: dataSeries,
                 color: '#8134af',
             });
 
@@ -166,24 +164,21 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService, 
         });
     }
     
-    $scope.referOutBarContainer = function() {
-        var month = '2020';
+    $scope.referOutDay = function(e) {
+        if(e) e.preventDefault();
+        
+        let date = ($scope.cboDate !== '') 
+                    ? StringFormatService.convToDbDate($scope.cboDate)
+                    : moment().format('YYYY-MM-DD');
 
-        ReportService.getSeriesData('op/referout/', month)
+        ReportService.getSeriesData('dashboard/referout/', date)
         .then(function(res) {
-            var referoutSeries = [];
+            let {dataSeries, categories} = createDataSeries24Hr(res.data);
 
-            res.data.referout.forEach((value, key) => {
-                let visit = value.num_pt ? parseInt(value.num_pt) : 0;
-
-                referoutSeries.push(visit);
-            });
-
-            var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("referOutBarContainer", "Refer Out รายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
+            $scope.barOptions = ReportService.initBarChart("referOutBarContainer", "Refer Out", categories, 'จำนวน');
             $scope.barOptions.series.push({
-                name: 'referout',
-                data: referoutSeries,
+                name: 'refer out',
+                data: dataSeries,
                 color: '#41b6e6',
             });
 
@@ -193,90 +188,7 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService, 
         });
     }
 
-    $scope.getSumYearData = function () {       
-        var month = '2020';
-
-        ReportService.getSeriesData('/dashboard/sum-year-chart/', month)
-        .then(function(res) {
-            console.log(res);
-            var debtSeries = [];
-            var paidSeries = [];
-            var setzeroSeries = [];
-            var categories = [];
-
-            angular.forEach(res.data, function(value, key) {
-                let debt = (value.debt) ? parseFloat(value.debt.toFixed(2)) : 0;
-                let paid = (value.paid) ? parseFloat(value.paid.toFixed(2)) : 0;
-                let setzero = (value.setzero) ? parseFloat(value.setzero.toFixed(2)) : 0;
-
-                categories.push(parseInt(value.yyyy) + 543);
-                debtSeries.push(debt);
-                paidSeries.push(paid);
-                setzeroSeries.push(setzero);
-            });
-
-            $scope.barOptions = ReportService.initBarChart("barContainer2", "รายงานยอดหนี้สามปีย้อนหลัง", categories, 'จำนวน');
-            $scope.barOptions.series.push({
-                name: 'หนี้คงเหลือ',
-                data: debtSeries
-            }, {
-                name: 'ชำระแล้ว',
-                data: paidSeries
-            }, {
-                name: 'ลดหนี้ศูนย์',
-                data: setzeroSeries
-            });
-
-            var chart = new Highcharts.Chart($scope.barOptions);
-        }, function(err) {
-            console.log(err);
-        });
-    };
-
-    $scope.getPeriodData = function () {
-        var selectMonth = document.getElementById('selectMonth').value;
-        var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
-        console.log(month);
-
-        ReportService.getSeriesData('/report/period-chart/', month)
-        .then(function(res) {
-            console.log(res);
-            
-            var categories = [];
-            var nSeries = [];
-            var mSeries = [];
-            var aSeries = [];
-            var eSeries = [];
-
-            angular.forEach(res.data, function(value, key) {
-                categories.push(value.d);
-                nSeries.push(value.n);
-                mSeries.push(value.m);
-                aSeries.push(value.a);
-                eSeries.push(value.e);
-            });
-
-            $scope.barOptions = ReportService.initStackChart("barContainer", "รายงานการให้บริการ ตามช่วงเวลา", categories, 'จำนวนการให้บริการ');
-            $scope.barOptions.series.push({
-                name: '00.00-08.00น.',
-                data: nSeries
-            }, {
-                name: '08.00-12.00น.',
-                data: mSeries
-            }, {
-                name: '12.00-16.00น.',
-                data: aSeries
-            }, {
-                name: '16.00-00.00น.',
-                data: eSeries
-            });
-
-            var chart = new Highcharts.Chart($scope.barOptions);
-        }, function(err) {
-            console.log(err);
-        });
-    };
-
+    
     $scope.getErVisitData = function() {
         var month = '2020';
 
@@ -426,6 +338,50 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService, 
         });
     };
 
+    $scope.getPeriodData = function () {
+        var selectMonth = document.getElementById('selectMonth').value;
+        var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
+        console.log(month);
+
+        ReportService.getSeriesData('/report/period-chart/', month)
+        .then(function(res) {
+            console.log(res);
+            
+            var categories = [];
+            var nSeries = [];
+            var mSeries = [];
+            var aSeries = [];
+            var eSeries = [];
+
+            angular.forEach(res.data, function(value, key) {
+                categories.push(value.d);
+                nSeries.push(value.n);
+                mSeries.push(value.m);
+                aSeries.push(value.a);
+                eSeries.push(value.e);
+            });
+
+            $scope.barOptions = ReportService.initStackChart("barContainer", "รายงานการให้บริการ ตามช่วงเวลา", categories, 'จำนวนการให้บริการ');
+            $scope.barOptions.series.push({
+                name: '00.00-08.00น.',
+                data: nSeries
+            }, {
+                name: '08.00-12.00น.',
+                data: mSeries
+            }, {
+                name: '12.00-16.00น.',
+                data: aSeries
+            }, {
+                name: '16.00-00.00น.',
+                data: eSeries
+            });
+
+            var chart = new Highcharts.Chart($scope.barOptions);
+        }, function(err) {
+            console.log(err);
+        });
+    };
+
     $scope.getReferData = function () {
         var selectMonth = document.getElementById('selectMonth').value;
         var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
@@ -457,39 +413,6 @@ app.controller('dashController', function($scope, $http, CONFIG, ReportService, 
             }, {
                 name: 'เวรบ่าย',
                 data: aSeries
-            });
-
-            var chart = new Highcharts.Chart($scope.barOptions);
-        }, function(err) {
-            console.log(err);
-        });
-    };
-
-    $scope.getFuelDayData = function () {
-        var selectMonth = document.getElementById('selectMonth').value;
-        var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
-        console.log(month);
-
-        ReportService.getSeriesData('/report/fuel-day-chart/', month)
-        .then(function(res) {
-            console.log(res);
-            var nSeries = [];
-            var mSeries = [];
-            var categories = [];
-
-            angular.forEach(res.data, function(value, key) {
-                categories.push(value.bill_date)
-                nSeries.push(value.qty);
-                mSeries.push(value.net);
-            });
-
-            $scope.barOptions = ReportService.initBarChart("barContainer", "รายงานการใช้น้ำมันรวม รายวัน", categories, 'จำนวน');
-            $scope.barOptions.series.push({
-                name: 'ปริมาณ(ลิตร)',
-                data: nSeries
-            }, {
-                name: 'มูลค่า(บาท)',
-                data: mSeries
             });
 
             var chart = new Highcharts.Chart($scope.barOptions);

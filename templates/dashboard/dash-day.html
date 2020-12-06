@@ -2,7 +2,11 @@
 	class="content"
 	ng-controller="dashController"
 	ng-init="getOpVisitDay($event);
-			getOpVisitTypeDay($event);"
+			getOpVisitTypeDay($event);
+			getIpVisitDay($event);
+			getIpClassificationDay($event);
+			referInDay($event);
+			referOutDay($event);"
 >
 	<div class="container-fluid">		
 		<div class="row">
@@ -22,7 +26,15 @@
 						>
 					</div>
 
-					<button class="btn btn-primary" ng-click="getOpVisitDay($event);getOpVisitTypeDay($event);">ตกลง</button>
+					<button class="btn btn-primary" ng-click="getOpVisitDay($event);
+															getOpVisitTypeDay($event);
+															getIpVisitDay($event);
+															getIpClassificationDay($event);
+															referInDay($event);
+															referOutDay($event);"
+					>
+						ตกลง
+					</button>
 				</form>
 
 			</div><!-- /.col -->
@@ -35,7 +47,7 @@
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-users mr-1"></i>
-							ยอดผู้ป่วยนอก
+							ยอดผู้ป่วยนอก ประจำวันที่ {{ cboDate }}
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
@@ -55,6 +67,55 @@
 
 					</div><!-- /.card-body-->
 				</div><!-- /.card-->
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-bed mr-1"></i>
+							ยอดผู้ป่วยใน ประจำวันที่ {{ cboDate }}
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-6">
+
+								<div id="ipClassPieContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+
+							</div>
+							
+							<div class="col-md-6">
+
+								<div id="ipVisitBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-ambulance mr-1"></i>
+							Refer In/Out ประจำวันที่ {{ cboDate }}
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-6">
+
+								<div id="referInBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+
+							</div>
+
+							<div class="col-md-6">
+
+								<div id="referOutBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+
+							</div>
+						</div>
+					</div>
+				</div>
 
 			</section><!-- /.col-lg-12 -->
 		</div><!-- Main row -->
