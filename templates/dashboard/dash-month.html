@@ -1,8 +1,8 @@
 <section
 	class="content"
-	ng-controller="homeController"
-	ng-init="getOpVisitMonthData($event);
-			getOpVisitTypeData($event);"
+	ng-controller="dashmonthController"
+	ng-init="getOpVisit($event);
+			getOpVisitType($event);"
 >
 	<div class="container-fluid">		
 		<div class="row">
@@ -13,29 +13,16 @@
 						<label>ระหว่างวันที่ :</label>
 						<input
 							type="text"
-							id="sdate"
-							name="sdate"
-							ng-model="sdate"
-							class="form-control"
-							style="margin: 0 10px;"
-							autocomplete="off"
-						>
-					</div>
-					
-					<div class="form-group">
-						<label>ถึงวันที่ :</label>
-						<input
-							type="text"
-							id="edate"
-							name="edate"
-							ng-model="edate"
+							id="cboMonth"
+							name="cboMonth"
+							ng-model="cboMonth"
 							class="form-control"
 							style="margin: 0 10px;"
 							autocomplete="off"
 						>
 					</div>
 
-					<button class="btn btn-primary" ng-click="getOpVisitMonthData($event);getOpVisitTypeData($event);">ตกลง</button>
+					<button class="btn btn-primary" ng-click="getOpVisit($event);getOpVisitType($event);">ตกลง</button>
 				</form>
 
 			</div><!-- /.col -->
@@ -78,18 +65,13 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#sdate').datepicker({
+		$('#cboMonth').datepicker({
 			autoclose: true,
+	        format: 'MM',
+			viewMode: "months", 
+			minViewMode: "months",
 	        language: 'th',
-	        format: 'dd/mm/yyyy',
 	        thaiyear: true
-		});
-
-		$('#edate').datepicker({
-			autoclose: true,
-	        language: 'th',
-	        format: 'dd/mm/yyyy',
-	        thaiyear: true
-		});
+		}).datepicker('update', new Date());
 	});
 </script>

@@ -1,5 +1,5 @@
 
-app.controller('dashController', function($scope, $http, CONFIG, ReportService, StringFormatService) {
+app.controller('dashdayController', function($scope, $http, CONFIG, ReportService, StringFormatService) {
     $scope.cardData = {};
     $scope.barOptions = {};
     $scope.pieOptions = {};
