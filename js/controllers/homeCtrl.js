@@ -87,7 +87,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         .then(function(res) {
             var visitSeries = [];
 
-            res.data.ipvisit.forEach((value, key) => {
+            res.data.forEach((value, key) => {
                 let visit = value.num_pt ? parseInt(value.num_pt) : 0;
 
                 visitSeries.push(visit);
@@ -119,7 +119,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
 
             $scope.pieOptions = ReportService.initPieChart("ipClassificationPieContainer", "สัดส่วนผู้ป่วยใน ตามประเภทผู้ป่วย", "", "สัดส่วนตามประเภทผู้ป่วย");
 
-            res.data.class.forEach((value, key) => {
+            res.data.forEach((value, key) => {
                 Object.keys(value).forEach(name => {
                     $scope.pieOptions.series[0].data.push({name: name, y: parseInt(value[name])});
                 });
