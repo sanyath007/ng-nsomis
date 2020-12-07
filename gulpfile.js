@@ -30,17 +30,17 @@ gulp.task('minify', function() {
             .pipe(cachebust({
                 type: 'timestamp'
             }))
-            .pipe(gulp.dest('public'));
+            .pipe(gulp.dest('dist'));
 });
 
 gulp.task('copy1', function() {
-    return gulp.src('templates/*.*')
-            .pipe(gulp.dest('public/templates'));
+    return gulp.src('templates/*')
+            .pipe(gulp.dest('dist/templates'));
 });
 
 gulp.task('copy2', function() {
     return gulp.src('img/*.*')
-            .pipe(gulp.dest('public/img'));
+            .pipe(gulp.dest('dist/img'));
 });
 
 gulp.task('default', gulp.series('delete_all', 'minify', 'copy1', 'copy2'));
