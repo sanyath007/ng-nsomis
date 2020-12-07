@@ -23,9 +23,9 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'templates/ip/ipclass.html',
 		controller: 'ipController'
 	})
-	.when('/or/num', {
-		templateUrl: 'templates/user/list.html',
-		controller: 'userController'
+	.when('/or/num-day', {
+		templateUrl: 'templates/or/num-day.html',
+		controller: 'orController'
 	})
 	.otherwise({
 		redirectTo: '/'
