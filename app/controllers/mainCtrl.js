@@ -1,4 +1,3 @@
-
 app.controller('mainController', function($scope, $http, CONFIG) {
     $scope.sidebarMenuToggle = function(e) {
         console.log(e);

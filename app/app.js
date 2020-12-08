@@ -74,4 +74,4 @@ var app = angular.module('App', ['ngRoute','toaster'])
 
             return thdate;
         };
-    })
+    });

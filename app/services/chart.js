@@ -1,4 +1,4 @@
-app.service('ReportService', function(CONFIG, $http) {
+app.service('ChartService', function(CONFIG, $http) {
 	this.initBarChart = function(_container, _title, _categories, _ytitle) {
         return {
             chart: {

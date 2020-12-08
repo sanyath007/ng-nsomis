@@ -1,12 +1,14 @@
 
-app.controller('userController', function($scope, $http) {
+app.controller('userController', function($scope, $http, CONFIG) {
 	$scope.users = [];
 	
-	// $http.get('http://localhost/public_html/slim3-nsomis-api/public/users')
-	// .then(res => {
-	// 	console.log(res)
-	// 	$scope.users = res.data.users;
-	// }, err => {
-	// 	console.log(err)
-	// });
+	$scope.getUsers = function() {
+		$http.get(`${CONFIG.apiUrl}/users`)
+		.then(res => {
+			console.log(res)
+			$scope.users = res.data.users;
+		}, err => {
+			console.log(err)
+		});
+	};
 });

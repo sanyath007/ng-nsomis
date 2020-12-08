@@ -1,5 +1,5 @@
 
-app.controller('homeController', function($scope, $http, CONFIG, ReportService) {
+app.controller('homeController', function($scope, $http, CONFIG, ChartService) {
     $scope.cboYear = '';
     $scope.pieOptions = {};
     $scope.barOptions = {};
@@ -31,7 +31,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
 
-        ReportService.getSeriesData('op/visit/', year)
+        ChartService.getSeriesData('op/visit/', year)
         .then(function(res) {
             var visitSeries = [];
 
@@ -42,7 +42,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             });
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอกรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ChartService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอกรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'op visit',
                 data: visitSeries,
@@ -61,11 +61,11 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
 
-        ReportService.getSeriesData('/op/visit-type/', year)
+        ChartService.getSeriesData('/op/visit-type/', year)
         .then(function(res) {
             var dataSeries = [];
 
-            $scope.pieOptions = ReportService.initPieChart("opVisitTypePieContainer", "สัดส่วนผู้ป่วยนอก ตามประเภทการมา", "", "สัดส่วนตามประเภทการมา");
+            $scope.pieOptions = ChartService.initPieChart("opVisitTypePieContainer", "สัดส่วนผู้ป่วยนอก ตามประเภทการมา", "", "สัดส่วนตามประเภทการมา");
 
             res.data.opVisitType.forEach((value, key) => {
                 $scope.pieOptions.series[0].data.push({name: value.type, y: parseInt(value.num_pt)});
@@ -83,7 +83,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('dashboard/ip-visit-year/', year)
+        ChartService.getSeriesData('dashboard/ip-visit-year/', year)
         .then(function(res) {
             var visitSeries = [];
 
@@ -94,7 +94,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             });
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยในรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ChartService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยในรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'ip visit',
                 data: visitSeries,
@@ -113,11 +113,11 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('dashboard/ip-class-year/', year)
+        ChartService.getSeriesData('dashboard/ip-class-year/', year)
         .then(function(res) {
             var dataSeries = [];
 
-            $scope.pieOptions = ReportService.initPieChart("ipClassificationPieContainer", "สัดส่วนผู้ป่วยใน ตามประเภทผู้ป่วย", "", "สัดส่วนตามประเภทผู้ป่วย");
+            $scope.pieOptions = ChartService.initPieChart("ipClassificationPieContainer", "สัดส่วนผู้ป่วยใน ตามประเภทผู้ป่วย", "", "สัดส่วนตามประเภทผู้ป่วย");
 
             res.data.forEach((value, key) => {
                 Object.keys(value).forEach(name => {
@@ -137,7 +137,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('op/referin/', year)
+        ChartService.getSeriesData('op/referin/', year)
         .then(function(res) {
             var referinSeries = [];
 
@@ -148,7 +148,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             });
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("referInBarContainer", "Refer In รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ChartService.initBarChart("referInBarContainer", "Refer In รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'referin',
                 data: referinSeries,
@@ -167,7 +167,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('op/referout/', year)
+        ChartService.getSeriesData('op/referout/', year)
         .then(function(res) {
             var referoutSeries = [];
 
@@ -178,7 +178,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             });
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("referOutBarContainer", "Refer Out รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ChartService.initBarChart("referOutBarContainer", "Refer Out รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'referout',
                 data: referoutSeries,
@@ -197,7 +197,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('er/visit/', year)
+        ChartService.getSeriesData('er/visit/', year)
         .then(function(res) {
             let emergencyData = [];
             let ugencyData = [];
@@ -243,7 +243,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             }];
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ChartService.initBarChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
             $scope.barOptions.series = series;
 
             var chart = new Highcharts.Chart($scope.barOptions);
@@ -258,11 +258,11 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('/er/emergency/', year)
+        ChartService.getSeriesData('/er/emergency/', year)
         .then(function(res) {
             var dataSeries = [];
 
-            $scope.pieOptions = ReportService.initPieChart("erEmergencyPieContainer", "สัดส่วนการบริการ ตามประเภทความเร่งด่วน", "", "สัดส่วนตามประเภทความเร่งด่วน");
+            $scope.pieOptions = ChartService.initPieChart("erEmergencyPieContainer", "สัดส่วนการบริการ ตามประเภทความเร่งด่วน", "", "สัดส่วนตามประเภทความเร่งด่วน");
 
             res.data.emergency.forEach((value, key) => {
                 Object.keys(value).forEach(name => {
@@ -282,7 +282,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('or/visit/', year)
+        ChartService.getSeriesData('or/visit/', year)
         .then(function(res) {
             let smallData = [];
             let largeData = [];
@@ -313,7 +313,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
             }];
 
             var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ReportService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions = ChartService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
             $scope.barOptions.series = series;
 
             var chart = new Highcharts.Chart($scope.barOptions);
@@ -328,11 +328,11 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('/or/or-type/', year)
+        ChartService.getSeriesData('/or/or-type/', year)
         .then(function(res) {
             var dataSeries = [];
 
-            $scope.pieOptions = ReportService.initPieChart("orTypePieContainer", "สัดส่วนผู้รับบริการผ่าตัด ตามประเภทการผ่าตัด", "", "สัดส่วนตามประเภทการผ่าตัด");
+            $scope.pieOptions = ChartService.initPieChart("orTypePieContainer", "สัดส่วนผู้รับบริการผ่าตัด ตามประเภทการผ่าตัด", "", "สัดส่วนตามประเภทการผ่าตัด");
 
             res.data.ortype.forEach((value, key) => {
                 Object.keys(value).forEach(name => {
@@ -352,7 +352,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ReportService.getSeriesData('/dashboard/sum-year-chart/', year)
+        ChartService.getSeriesData('/dashboard/sum-year-chart/', year)
         .then(function(res) {
             console.log(res);
             var debtSeries = [];
@@ -371,7 +371,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
                 setzeroSeries.push(setzero);
             });
 
-            $scope.barOptions = ReportService.initBarChart("barContainer2", "รายงานยอดหนี้สามปีย้อนหลัง", categories, 'จำนวน');
+            $scope.barOptions = ChartService.initBarChart("barContainer2", "รายงานยอดหนี้สามปีย้อนหลัง", categories, 'จำนวน');
             $scope.barOptions.series.push({
                 name: 'หนี้คงเหลือ',
                 data: debtSeries
@@ -395,7 +395,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
 
-        ReportService.getSeriesData('/report/period-chart/', year)
+        ChartService.getSeriesData('/report/period-chart/', year)
         .then(function(res) {
             console.log(res);
             
@@ -413,7 +413,7 @@ app.controller('homeController', function($scope, $http, CONFIG, ReportService) 
                 eSeries.push(value.e);
             });
 
-            $scope.barOptions = ReportService.initStackChart("barContainer", "รายงานการให้บริการ ตามช่วงเวลา", categories, 'จำนวนการให้บริการ');
+            $scope.barOptions = ChartService.initStackChart("barContainer", "รายงานการให้บริการ ตามช่วงเวลา", categories, 'จำนวนการให้บริการ');
             $scope.barOptions.series.push({
                 name: '00.00-08.00น.',
                 data: nSeries

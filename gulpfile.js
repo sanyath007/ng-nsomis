@@ -1,14 +1,11 @@
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var useref = require('gulp-useref');
+var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-clean-css');
+var del = require('del');
 var cachebust = require('gulp-cache-bust');
 var replace = require('gulp-string-replace');
-var uglifyes = require('uglify-es');
-var composer = require('gulp-uglify/composer');
-var uglify = composer(uglifyes, console);
-var del = require('del');
-const { minify } = require('uglify-js');
 var versionTimeStamp = "" + Date.now();
 
 gulp.task('delete_all', function() {
