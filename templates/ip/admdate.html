@@ -16,6 +16,7 @@
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
+
 						<form action="" method="POST" class="form-inline">
 							<div class="form-group">
 								<label>วันที่ :</label>
@@ -44,25 +45,27 @@
 							<button ng-click="getAdmdateData($event)" class="btn btn-primary">ตกลง</button>
 							
 						</form>
-					</div>		
-				</div>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
 
 				<div class="card">
 					<div class="card-body">
+
 						<table class="table table-bordered table-striped">
 							<thead>
 								<tr>
 									<th style="width: 3%; text-align: center;" rowspan="2">ลำดับ</th>
 									<th style="text-align: center;" rowspan="2">วอร์ด</th>
 									<th style="width: 12%; text-align: center;" rowspan="2">AdjRW</th>
-									<th style="width: 12%; text-align: center;" colspan="2">จน.ผป.คิดตามการจำหน่าย</th>
-									<th style="width: 12%; text-align: center;" colspan="2">จน.ผป.คิดตามการการนอน</th>
+									<th style="width: 12%; text-align: center;" colspan="2">จน.คิดตามการจำหน่าย</th>
+									<th style="width: 12%; text-align: center;" colspan="2">จน.คิดตามการการนอน</th>
 								</tr>
 								<tr>
-									<th style="width: 12%; text-align: center;">จน.ผป.</th>
-									<th style="width: 12%; text-align: center;">จน.วันนอน</th>
-									<th style="width: 12%; text-align: center;">จน.ผป.</th>
-									<th style="width: 12%; text-align: center;">จน.วันนอน</th>
+									<th style="width: 12%; text-align: center;">ผป.</th>
+									<th style="width: 12%; text-align: center;">วันนอน</th>
+									<th style="width: 12%; text-align: center;">ผป.</th>
+									<th style="width: 12%; text-align: center;">วันนอน</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -71,22 +74,30 @@
 									<td>{{ row.ward + '-' + row.name }}</td>
 									<td style="text-align: center;">{{ row.rw }}</td>
 									<td style="text-align: center;">
-										<a href="#">
-											{{ row.dc_num }}
-										</a>
+										<a href="#">{{ row.dc_num }}</a>
 									</td>
 									<td style="text-align: center;">{{ row.admdate }}</td>
-									<td style="text-align: center;">
-										<a href="#">
-											{{ row.sumAdm }}
-										</a>
-									</td>
 									<td style="text-align: center;">{{ row.sumPt }}</td>
+									<td style="text-align: center;">
+										<a href="#">{{ row.sumAdm }}</a>
+									</td>
 								</tr>
 							</tbody>
 						</table>
 
-					</div>
+					</div><!-- /.card-body -->
+					<div class="card-footer clearfix">
+						<div class="m-0 float-left" ng-show="data">
+							<a href="#" class="btn btn-success">Excel</a>
+						</div>
+						<ul class="pagination pagination-sm m-0 float-right" ng-show="false">
+							<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+						</ul>
+					</div><!-- /.card-footer -->
 				</div><!-- /.card -->
 	
 			</section>
