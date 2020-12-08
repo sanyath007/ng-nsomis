@@ -1,43 +1,76 @@
 var gulp = require('gulp');
-var gulpif = require('gulp-if');
-var useref = require('gulp-useref');
-var uglify = require('gulp-uglify');
-var minifyCss = require('gulp-clean-css');
-var del = require('del');
-var cachebust = require('gulp-cache-bust');
+// var uglify = require('gulp-uglify');
+var uglify = require('gulp-uglify-es').default;
+var concat = require('gulp-concat')
+var minifyCss = require('gulp-minify-css');
 var replace = require('gulp-string-replace');
 var versionTimeStamp = "" + Date.now();
 
-gulp.task('delete_all', function() {
-    return del([
-        'public/*.*',
-        'public/css/*.*',
-        'public/img/*.*',
-        'public/js/*.*',
-        'public/templates/*.*'
-    ]);
+gulp.task('css', function() {
+    return gulp.src([
+        'node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css',
+        'node_modules/admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
+        'node_modules/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css',
+        'node_modules/admin-lte/plugins/jqvmap/jqvmap.min.css',
+        'node_modules/admin-lte/dist/css/adminlte.min.css',
+        'node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css',
+        'node_modules/admin-lte/plugins/daterangepicker/daterangepicker.css',
+        'node_modules/admin-lte/plugins/summernote/summernote-bs4.min.css',
+        'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
+        'assets/css/**/*.css'
+    ])
+    .pipe(minifyCss())
+    .pipe(concat('bundle.css'))
+    .pipe(gulp.dest('dist/assets/css'));
 });
 
-gulp.task('minify', function() {
-    return gulp.src('index.html')
-            .pipe(useref())
-            .pipe(replace('___REPLACE_IN_GULP___', versionTimeStamp))
-            .pipe(gulpif('*.js', uglify()))
-            .pipe(gulpif('*.css', minifyCss()))
-            .pipe(cachebust({
-                type: 'timestamp'
-            }))
-            .pipe(gulp.dest('dist'));
+gulp.task('webfonts', function() {
+    return gulp.src([
+        'node_modules/admin-lte/plugins/fontawesome-free/webfonts/*',
+    ])
+    .pipe(gulp.dest('dist/assets/webfonts'));
 });
 
-gulp.task('copy1', function() {
-    return gulp.src('templates/*')
-            .pipe(gulp.dest('dist/templates'));
+gulp.task('venderjs', function() {
+    return gulp.src([
+        'node_modules/admin-lte/plugins/jquery/jquery.min.js',
+        'node_modules/admin-lte/plugins/jquery-ui/jquery-ui.min.js',
+        'node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js',
+        'node_modules/admin-lte/plugins/moment/moment.min.js',
+        'node_modules/admin-lte/dist/js/adminlte.js',
+        'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+        'assets/js/**/*.js',
+        'node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.th.min.js',
+        'node_modules/angular/angular.min.js',
+        'node_modules/angular-route/angular-route.min.js',
+    ])
+    .pipe(uglify())
+    .pipe(concat('vendor-bundle.js'))
+    .pipe(gulp.dest('dist/assets/js'));
 });
 
-gulp.task('copy2', function() {
-    return gulp.src('img/*.*')
-            .pipe(gulp.dest('dist/img'));
+gulp.task('appjs', function() {
+    return gulp.src([
+        'app/app.js',
+        'app/routes.js',
+        'app/controllers/**/*.js',
+        'app/services/**/*.js'
+    ])
+    .pipe(uglify())
+    .pipe(concat('bundle.js'))
+    .pipe(gulp.dest('dist/assets/js'));
 });
 
-gulp.task('default', gulp.series('delete_all', 'minify', 'copy1', 'copy2'));
+gulp.task('images', function() {
+    return gulp.src([
+        'assets/img/**/*'
+    ])
+    .pipe(gulp.dest('dist/assets/img'));
+});
+
+gulp.task('templates', function () {
+    return gulp.src('templates/**/*')
+        .pipe(gulp.dest('dist/templates'));
+});
+
+gulp.task('default', gulp.series('appjs', 'templates')); //'css', webfonts, 'venderjs', 'images'

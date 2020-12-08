@@ -1,4 +1,5 @@
-app.controller('mainController', function($scope, $http, CONFIG) {
+app.controller('mainController', ['$scope', '$http', 'CONFIG', function($scope, $http, CONFIG)
+{
     $scope.sidebarMenuToggle = function(e) {
         console.log(e);
         $(".nav-link.active").parent().toggleClass('menu-open');
@@ -7,4 +8,4 @@ app.controller('mainController', function($scope, $http, CONFIG) {
 
         $(e.currentTarget).toggleClass('active');
     };
-});
+}]);

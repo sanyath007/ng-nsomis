@@ -1,5 +1,5 @@
 
-app.controller('dashmonthController', function($scope, $http, CONFIG, ChartService, StringFormatService) {
+app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartService', 'StringFormatService', function($scope, $http, CONFIG, ChartService, StringFormatService) {
     $scope.cardData = {};
     $scope.barOptions = {};
     $scope.pieOptions = {};
@@ -434,4 +434,4 @@ app.controller('dashmonthController', function($scope, $http, CONFIG, ChartServi
             console.log(err);
         });
     };
-});
+}]);

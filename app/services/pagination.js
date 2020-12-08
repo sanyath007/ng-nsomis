@@ -1,4 +1,4 @@
-app.service('PaginateService', function(CONFIG, $http) {
+app.service('PaginateService', ['CONFIG', '$http', function(CONFIG, $http) {
 	this.createPagerNo = function (pager) {
 		let pages = [];
 
@@ -12,4 +12,4 @@ app.service('PaginateService', function(CONFIG, $http) {
 
 		return pages;
 	}
-});
+}]);

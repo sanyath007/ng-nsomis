@@ -1,5 +1,5 @@
 
-app.controller('userController', function($scope, $http, CONFIG) {
+app.controller('userController', ['$scope', '$http', 'CONFIG', function($scope, $http, CONFIG) {
 	$scope.users = [];
 	
 	$scope.getUsers = function() {
@@ -11,4 +11,4 @@ app.controller('userController', function($scope, $http, CONFIG) {
 			console.log(err)
 		});
 	};
-});
+}]);

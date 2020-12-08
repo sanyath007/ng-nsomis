@@ -1,5 +1,5 @@
 
-app.controller('homeController', function($scope, $http, CONFIG, ChartService) {
+app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', function($scope, $http, CONFIG, ChartService) {
     $scope.cboYear = '';
     $scope.pieOptions = {};
     $scope.barOptions = {};
@@ -433,4 +433,4 @@ app.controller('homeController', function($scope, $http, CONFIG, ChartService) {
             console.log(err);
         });
     };
-});
+}]);

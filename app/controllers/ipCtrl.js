@@ -1,5 +1,5 @@
 
-app.controller('ipController', function($scope, $http, CONFIG, StringFormatService) 
+app.controller('ipController', ['$scope', '$http', 'CONFIG', 'StringFormatService', function($scope, $http, CONFIG, StringFormatService) 
 {
 	$scope.sdate = '';
 	$scope.edate = '';
@@ -89,4 +89,4 @@ app.controller('ipController', function($scope, $http, CONFIG, StringFormatServi
 			console.log(err)
 		});
 	}
-});
+}]);

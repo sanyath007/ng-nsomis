@@ -11,7 +11,7 @@ if(window){
     Object.assign(env, window.__env);
 }
 
-var app = angular.module('App', ['ngRoute','toaster'])
+var app = angular.module('App', ['ngRoute'])
     /**
      * ==================================================
      *  App Config
@@ -24,27 +24,27 @@ var app = angular.module('App', ['ngRoute','toaster'])
      *  Intercept every request to templates directory
      * ==================================================
      */
-    .service('preventTemplateCache', [function() {
-        var service = this;
+    // .service('preventTemplateCache', [function() {
+    //     var service = this;
 
-        service.request = function(config) {
-            if (config.url.indexOf('templates') !== -1) {
-                config.url = config.url + '?t=___REPLACE_IN_GULP___'
-            }
-            return config;
-        };
-    }])
+    //     service.request = function(config) {
+    //         if (config.url.indexOf('templates') !== -1) {
+    //             config.url = config.url + '?t=___REPLACE_IN_GULP___'
+    //         }
+    //         return config;
+    //     };
+    // }])
 
-    .config(['$httpProvider',function ($httpProvider) {
-        $httpProvider.interceptors.push('preventTemplateCache');
-    }])
+    // .config(['$httpProvider',function ($httpProvider) {
+    //     $httpProvider.interceptors.push('preventTemplateCache');
+    // }])
 
     /**
      * ==================================================
      *  Global functions
      * ==================================================
      */
-    .run(function ($rootScope, $window, $http, CONFIG) {
+    .run(['$rootScope', '$window', '$http', 'CONFIG', function ($rootScope, $window, $http, CONFIG) {
         $rootScope.redirectToIndex = function(route) {
             setTimeout(function (){
                 window.location.href = `${CONFIG.baseUrl}/${route}`;
@@ -56,14 +56,14 @@ var app = angular.module('App', ['ngRoute','toaster'])
                 window.location.href = `${CONFIG.baseUrl}/`;
             }, 2000);
         };
-    })
+    }])
 
     /**
      * ==================================================
      *  Filter
      * ==================================================
      */
-    .filter('thdate', function($filter)
+    .filter('thdate', ['$filter', function($filter)
     {
         return function(input)
         {
@@ -74,4 +74,4 @@ var app = angular.module('App', ['ngRoute','toaster'])
 
             return thdate;
         };
-    });
+    }]);

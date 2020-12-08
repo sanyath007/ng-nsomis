@@ -1,5 +1,5 @@
 
-app.controller('dashdayController', function($scope, $http, CONFIG, ChartService, StringFormatService) {
+app.controller('dashdayController', ['$scope', '$http', 'CONFIG', 'ChartService', 'StringFormatService', function($scope, $http, CONFIG, ChartService, StringFormatService) {
     $scope.cardData = {};
     $scope.barOptions = {};
     $scope.pieOptions = {};
@@ -420,4 +420,4 @@ app.controller('dashdayController', function($scope, $http, CONFIG, ChartService
             console.log(err);
         });
     };
-});
+}]);

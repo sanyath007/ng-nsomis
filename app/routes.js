@@ -1,5 +1,5 @@
 
-app.config(function($routeProvider, $locationProvider) {
+app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true).hashPrefix('!');
 
 	$routeProvider
@@ -30,4 +30,4 @@ app.config(function($routeProvider, $locationProvider) {
 	.otherwise({
 		redirectTo: '/'
 	});
-});
+}]);

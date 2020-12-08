@@ -1,4 +1,4 @@
-app.service('ChartService', function(CONFIG, $http) {
+app.service('ChartService', ['CONFIG', '$http', function(CONFIG, $http) {
 	this.initBarChart = function(_container, _title, _categories, _ytitle) {
         return {
             chart: {
@@ -127,4 +127,4 @@ app.service('ChartService', function(CONFIG, $http) {
 	this.getSeriesData = function (url, data) {
 		return $http.get(CONFIG.apiUrl + url + data);
 	}
-});
+}]);

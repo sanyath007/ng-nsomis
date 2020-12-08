@@ -1,4 +1,4 @@
-app.service('StringFormatService', function(CONFIG, $http) {
+app.service('StringFormatService', ['CONFIG', '$http', function(CONFIG, $http) {
 	this.convToDbDate = function(date) {
 		arrDate = date.split('/');
 
@@ -18,4 +18,4 @@ app.service('StringFormatService', function(CONFIG, $http) {
 	this.numberFormat = function(str) {
         return str.replace(',', '');
     }
-});
+}]);
