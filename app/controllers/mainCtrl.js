@@ -1,5 +1,7 @@
 app.controller('mainController', ['$scope', '$http', 'CONFIG', function($scope, $http, CONFIG)
 {
+    $scope.isLogedIn = false;
+
     $scope.sidebarMenuToggle = function(e) {
         console.log(e);
         $(".nav-link.active").parent().toggleClass('menu-open');
@@ -8,4 +10,8 @@ app.controller('mainController', ['$scope', '$http', 'CONFIG', function($scope, 
 
         $(e.currentTarget).toggleClass('active');
     };
+
+    $scope.checkAuth = function() {
+        // return 
+    }
 }]);
