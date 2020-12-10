@@ -1,28 +1,51 @@
-<div class="row">
-	<div class="col-md-12">
-		<h3>User lists</h3>
-		
-		<table class="table table-bordered table-striped">
-			<thead>
-				<tr>
-					<th class="text-center" style="width: 5%;">#</th>
-					<th class="text-center">Name</th>
-					<th class="text-center" style="width: 30%;">Email</th>
-					<th class="text-center" style="width: 15%;">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="(index, user) in users">
-					<td class="text-center">{{ index+1 }}</td>
-					<td class="text-center">{{ user.name }}</td>
-					<td class="text-center">{{ user.email }}</td>
-					<td class="text-center">
-						<a href="#" class="btn btn-info">ดู</a>
-						<a href="#" class="btn btn-warning">แก้ไข</a>
-						<a href="#" class="btn btn-danger">ลบ</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
+<section
+	class="content"
+	ng-controller="userController"
+	ng-init="getUsers($event);"
+>
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-user mr-1"></i>
+							Users
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+						
+						<table class="table table-bordered table-striped" style="font-size: 14px;">
+							<thead>
+								<tr>
+									<th class="text-center" style="width: 5%;">#</th>
+									<th class="text-center">ชื่อ-สกุล</th>
+									<th class="text-center" style="width: 15%;">ชื่อผู้ใช้งาน</th>
+									<th class="text-center" style="width: 20%;">ตำแหน่ง</th>
+									<th class="text-center" style="width: 15%;">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(index, user) in users">
+									<td class="text-center">{{ index+1 }}</td>
+									<td class="text-left">{{ user.name }}</td>
+									<td class="text-center">{{ user.loginname }}</td>
+									<td class="text-center">{{ user.entryposition }}</td>
+									<td class="text-center">
+										<a href="#" class="btn btn-info btn-xs">ดู</a>
+										<a href="#" class="btn btn-warning btn-xs">แก้ไข</a>
+										<a href="#" class="btn btn-danger btn-xs">ลบ</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+	
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->

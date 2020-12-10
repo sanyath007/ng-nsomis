@@ -7,6 +7,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/home.html',
 		controller: 'homeController'
 	})
+	.when('/users', {
+		templateUrl: 'templates/user/list.html',
+		controller: 'userController'
+	})
 	.when('/dash-day', {
 		templateUrl: 'templates/dashboard/dash-day.html',
 		controller: 'dashdayController'
