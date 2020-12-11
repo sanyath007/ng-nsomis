@@ -3,7 +3,7 @@ app.controller('userController', ['$scope', '$http', 'CONFIG', function($scope, 
 	$scope.users = [];
 	
 	$scope.getUsers = function() {
-		$http.get(`${CONFIG.apiUrl}/users`)
+		$http.get(`${CONFIG.apiUrl}/api/users`)
 		.then(res => {
 			console.log(res)
 			$scope.users = res.data;

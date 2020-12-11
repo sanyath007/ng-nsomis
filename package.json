@@ -36,6 +36,7 @@
   "dependencies": {
     "admin-lte": "^3.0.5",
     "angular": "^1.8.2",
+    "angular-animate": "^1.8.2",
     "angular-modal-service": "^0.12.1",
     "angular-route": "^1.8.2",
     "angular-xeditable": "^0.8.0",
@@ -44,6 +45,7 @@
     "bootstrap": "^4.5.3",
     "bootstrap-datepicker": "^1.9.0",
     "jquery": "^3.5.1",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "ngstorage": "^0.3.11"
   }
 }

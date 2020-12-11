@@ -11,7 +11,7 @@ if(window){
     Object.assign(env, window.__env);
 }
 
-var app = angular.module('App', ['ngRoute'])
+var app = angular.module('App', ['ngRoute', 'ngStorage', 'toaster'])
     /**
      * ==================================================
      *  App Config
@@ -44,20 +44,33 @@ var app = angular.module('App', ['ngRoute'])
      *  Global functions
      * ==================================================
      */
-    .run(['$rootScope', '$window', '$http', 'CONFIG', function ($rootScope, $window, $http, CONFIG) {
-        $rootScope.redirectToIndex = function(route) {
-            setTimeout(function (){
-                window.location.href = `${CONFIG.baseUrl}/${route}`;
-            }, 2000);
-        };
-        
-        $rootScope.redirectToHome = function() {
-            setTimeout(function (){
-                window.location.href = `${CONFIG.baseUrl}/`;
-            }, 2000);
-        };
-    }])
+    .run([
+        '$rootScope',
+        '$window',
+        '$http',
+        'CONFIG',
+        '$localStorage',
+        function ($rootScope, $window, $http, CONFIG, $localStorage) 
+        {
+            // keep user logged in after page refresh
+            if ($localStorage.currentUser) {
+                $rootScope.isLogedIn = true;
+                $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+            }
 
+            $rootScope.redirectToIndex = function(route) {
+                setTimeout(function (){
+                    window.location.href = `${CONFIG.baseUrl}/${route}`;
+                }, 2000);
+            };
+            
+            $rootScope.redirectToHome = function() {
+                setTimeout(function (){
+                    window.location.href = `${CONFIG.baseUrl}/`;
+                }, 2000);
+            };
+        }
+    ])
     /**
      * ==================================================
      *  Filter
