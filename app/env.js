@@ -4,7 +4,7 @@
         * Main env 
     */
     // API url
-    window.__env.apiUrl = 'http://localhost/public_html/slim3-nsomis-api/public/';
+    window.__env.apiUrl = 'http://localhost/public_html/slim3-nsomis-api/public';
 
     // Base url
     window.__env.baseUrl = window.location.protocol+ '//' +window.location.host+ '/public_html/ng-nsomis/';

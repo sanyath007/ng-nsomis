@@ -1,4 +1,9 @@
-app.controller('mainController', ['$scope', '$http', 'CONFIG', function($scope, $http, CONFIG)
+app.controller('mainController', [
+    '$scope',
+    '$http',
+    'CONFIG',
+    'AuthService', 
+    function($scope, $http, CONFIG, AuthService)
 {
     $scope.isLogedIn = false;
 
@@ -9,6 +14,17 @@ app.controller('mainController', ['$scope', '$http', 'CONFIG', function($scope, 
         $(".nav-link.active").toggleClass('active');
 
         $(e.currentTarget).toggleClass('active');
+    };
+    
+        
+    $scope.login = function(e) {
+        e.preventDefault();
+
+        let username = 'sanyath', password = '0810736804';
+
+        AuthService.login(username, password, function() {
+
+        });
     };
 
     $scope.checkAuth = function() {
