@@ -60,6 +60,7 @@ gulp.task('appjs', function() {
         'app/controllers/**/*.js',
         'app/services/**/*.js',
         'app/directives/**/*.js',
+        'app/filters/**/*.js',
     ])
     .pipe(uglify())
     .pipe(concat('bundle.js'))
