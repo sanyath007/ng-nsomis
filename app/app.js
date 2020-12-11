@@ -35,9 +35,42 @@ var app = angular.module('App', ['ngRoute', 'ngStorage', 'toaster'])
     //     };
     // }])
 
-    // .config(['$httpProvider',function ($httpProvider) {
-    //     $httpProvider.interceptors.push('preventTemplateCache');
-    // }])
+    .config(['$httpProvider', function ($httpProvider) {
+        // $httpProvider.interceptors.push('preventTemplateCache');
+
+        $httpProvider.interceptors.push([
+			'$rootScope',
+			'$q',
+			'$location',
+			'$localStorage',
+			function($rootScope, $q, $location, $localStorage)
+			{
+				return {
+					'request': function(config) {
+						console.log(`This is on request process !!`);
+
+						config.headers = config.headers || {};
+						if($localStorage.currentUser) {
+							config.headers.Authorization = `Bearer ${$localStorage.currentUser.token}`;
+						}
+
+						return config;
+					},
+					'responseError': function(res) {
+						if(res.status === 401 || res.status === 403) {
+							console.log(`Response Status is ${res.status}`);
+							
+							$rootScope.clearAuthToken();
+
+							$location.path('/');
+						}
+
+						return $q.reject(res);
+					}
+				}
+			}
+		]);
+    }])
 
     /**
      * ==================================================
