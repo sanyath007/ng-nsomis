@@ -21,10 +21,6 @@ app.controller('mainController', [
 
         $(e.currentTarget).toggleClass('active');
     };
-    
-    $scope.showLogin = function(e) {
-        $('#loginForm').modal('show');
-    };
 
     $scope.login = function(e) {
         e.preventDefault();
@@ -33,18 +29,13 @@ app.controller('mainController', [
 
         AuthService.login(username, password)
         .then(res => {
-            console.log(res)
-
             // store username and token in local storage to keep user logged in between page refreshes
             $localStorage.currentUser = { username: username, token: res.data.token };
-
-            // add jwt token to auth header for all requests made by the $http service
-            $http.defaults.headers.common.Authorization = `Bearer ${res.data.token}`;
-
+            // set isLogin status is true 
             $rootScope.isLogedIn = true;
 
             toaster.pop('success', "", 'เข้าสู่ระบบสำเร็จ !!!');
-
+            // hide login form modal
             $('#loginForm').modal('hide');
         }, err => {
             console.log(err)
@@ -55,10 +46,6 @@ app.controller('mainController', [
     $scope.logout = function(e) {
         e.preventDefault();
 
-        // remove user from local storage and clear http auth header
-        delete $localStorage.currentUser;
-        $http.defaults.headers.common.Authorization = '';
-        
-        $rootScope.isLogedIn = false;
+        $rootScope.clearAuthToken();
     }
 }]);

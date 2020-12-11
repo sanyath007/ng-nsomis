@@ -55,8 +55,22 @@ var app = angular.module('App', ['ngRoute', 'ngStorage', 'toaster'])
             // keep user logged in after page refresh
             if ($localStorage.currentUser) {
                 $rootScope.isLogedIn = true;
-                $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+                // add jwt token to auth header for all requests made by the $http service
+                $http.defaults.headers.common.Authorization = `Bearer ${$localStorage.currentUser.token}`;
             }
+
+            $rootScope.showLogin = function() {
+                $('#loginForm').modal('show');
+            };
+
+            $rootScope.clearAuthToken = function() {
+                // remove user from local storage and clear http auth header
+                delete $localStorage.currentUser;
+
+                $http.defaults.headers.common.Authorization = '';
+                
+                $rootScope.isLogedIn = false;
+            };
 
             $rootScope.redirectToIndex = function(route) {
                 setTimeout(function (){
