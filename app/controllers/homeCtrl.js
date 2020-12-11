@@ -3,8 +3,45 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
     $scope.cboYear = '';
     $scope.pieOptions = {};
     $scope.barOptions = {};
-    $scope.cardData = {};
     $scope.toDay = new Date();
+    $scope.cardData = [
+        {
+            id: 1,
+            name: "ผู้ป่วยใหม่",
+            value: 150,
+            unit: 'คน',
+            bg: 'bg-info',
+            icon: 'ion-bag',
+            lnk: ''
+        },
+        {
+            id: 2,
+            name: "ประชากร",
+            value: '150,000',
+            unit: 'คน',
+            bg: 'bg-success',
+            icon: 'ion-stats-bars',
+            lnk: ''
+        },
+        {
+            id: 3,
+            name: "บุคลากร",
+            value: 650,
+            unit: 'คน',
+            bg: 'bg-warning',
+            icon: 'ion-person-add',
+            lnk: ''
+        },
+        {
+            id: 4,
+            name: "แพทย์",
+            value: 35,
+            unit: 'คน',
+            bg: 'bg-danger',
+            icon: 'ion-graph',
+            lnk: ''
+        },
+    ];
 
     $scope.getCardData = function (e) {
         if(e) e.preventDefault();
@@ -31,7 +68,7 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
 
-        ChartService.getSeriesData('op/visit/', year)
+        ChartService.getSeriesData('/op/visit/', year)
         .then(function(res) {
             var visitSeries = [];
 
@@ -83,7 +120,7 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ChartService.getSeriesData('dashboard/ip-visit-year/', year)
+        ChartService.getSeriesData('/dashboard/ip-visit-year/', year)
         .then(function(res) {
             var visitSeries = [];
 
@@ -113,7 +150,7 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ChartService.getSeriesData('dashboard/ip-class-year/', year)
+        ChartService.getSeriesData('/dashboard/ip-class-year/', year)
         .then(function(res) {
             var dataSeries = [];
 
@@ -137,7 +174,7 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ChartService.getSeriesData('op/referin/', year)
+        ChartService.getSeriesData('/op/referin/', year)
         .then(function(res) {
             var referinSeries = [];
 
@@ -167,7 +204,7 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ChartService.getSeriesData('op/referout/', year)
+        ChartService.getSeriesData('/op/referout/', year)
         .then(function(res) {
             var referoutSeries = [];
 
@@ -197,7 +234,7 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ChartService.getSeriesData('er/visit/', year)
+        ChartService.getSeriesData('/er/visit/', year)
         .then(function(res) {
             let emergencyData = [];
             let ugencyData = [];
@@ -282,7 +319,7 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
         
-        ChartService.getSeriesData('or/visit/', year)
+        ChartService.getSeriesData('/or/visit/', year)
         .then(function(res) {
             let smallData = [];
             let largeData = [];
