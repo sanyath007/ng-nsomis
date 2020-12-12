@@ -68,7 +68,7 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
                     ? fotmatYearMonth($scope.cboMonth)
                     : moment().format('YYYY-MM');
 
-        ChartService.getSeriesData('dashboard/op-visit-month/', month)
+        ChartService.getSeriesData('/dashboard/op-visit-month/', month)
         .then(function(res) {
             let {dataSeries, categories} = createDataSeriesDoM(res.data, month);
 
@@ -161,7 +161,7 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
                     ? $scope.cboMonth
                     : moment().format('MM');
 
-        ChartService.getSeriesData('dashboard/referin/', month)
+        ChartService.getSeriesData('/dashboard/referin/', month)
         .then(function(res) {
             let {dataSeries, categories} = createDataSeriesDoM(res.data);
 
@@ -185,7 +185,7 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
                     ? $scope.cboMonth
                     : moment().format('MM');
 
-        ChartService.getSeriesData('dashboard/referout/', month)
+        ChartService.getSeriesData('/dashboard/referout/', month)
         .then(function(res) {
             let {dataSeries, categories} = createDataSeriesDoM(res.data);
 
@@ -206,7 +206,7 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
     $scope.getErVisitData = function() {
         var month = '2020';
 
-        ChartService.getSeriesData('er/visit/', month)
+        ChartService.getSeriesData('/er/visit/', month)
         .then(function(res) {
             let emergencyData = [];
             let ugencyData = [];
@@ -288,7 +288,7 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
     $scope.getOrVisitData = function() {
         var month = '2020';
 
-        ChartService.getSeriesData('or/visit/', month)
+        ChartService.getSeriesData('/or/visit/', month)
         .then(function(res) {
             let smallData = [];
             let largeData = [];
