@@ -5,14 +5,6 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
     $scope.pieOptions = {};
     $scope.cboMonth = '';
 
-    const fotmatYearMonth = function(my) {
-        if(!my) return moment().format('YYYY-MM');
-
-        let [month, year] = my.split('/');
-
-        return `${year-543}-${month}`;
-    };
-
     $scope.getOpVisit = function (e) {
         if(e) e.preventDefault();
 
