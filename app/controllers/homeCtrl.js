@@ -168,65 +168,65 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
         });
     };
 
-    $scope.getReferIn = function(e) {
-        if(e) e.preventDefault();
+    // $scope.getReferIn = function(e) {
+    //     if(e) e.preventDefault();
         
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
+    //     let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
+    //     console.log(year);
         
-        ChartService.getSeriesData('/op/referin/', year)
-        .then(function(res) {
-            var referinSeries = [];
+    //     ChartService.getSeriesData('/op/referin/', year)
+    //     .then(function(res) {
+    //         var referinSeries = [];
 
-            res.data.referin.forEach((value, key) => {
-                let visit = value.num_pt ? parseInt(value.num_pt) : 0;
+    //         res.data.referin.forEach((value, key) => {
+    //             let visit = value.num_pt ? parseInt(value.num_pt) : 0;
 
-                referinSeries.push(visit);
-            });
+    //             referinSeries.push(visit);
+    //         });
 
-            var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ChartService.initBarChart("referInBarContainer", "Refer In รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
-            $scope.barOptions.series.push({
-                name: 'referin',
-                data: referinSeries,
-                color: '#8134af',
-            });
+    //         var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
+    //         $scope.barOptions = ChartService.initBarChart("referInBarContainer", "Refer In รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+    //         $scope.barOptions.series.push({
+    //             name: 'referin',
+    //             data: referinSeries,
+    //             color: '#8134af',
+    //         });
 
-            var chart = new Highcharts.Chart($scope.barOptions);
-        }, function(err) {
-            console.log(err);
-        });
-    }
+    //         var chart = new Highcharts.Chart($scope.barOptions);
+    //     }, function(err) {
+    //         console.log(err);
+    //     });
+    // };
     
-    $scope.getReferOut = function(e) {
-        if(e) e.preventDefault();
+    // $scope.getReferOut = function(e) {
+    //     if(e) e.preventDefault();
         
-        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        console.log(year);
+    //     let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
+    //     console.log(year);
         
-        ChartService.getSeriesData('/op/referout/', year)
-        .then(function(res) {
-            var referoutSeries = [];
+    //     ChartService.getSeriesData('/op/referout/', year)
+    //     .then(function(res) {
+    //         var referoutSeries = [];
 
-            res.data.referout.forEach((value, key) => {
-                let visit = value.num_pt ? parseInt(value.num_pt) : 0;
+    //         res.data.referout.forEach((value, key) => {
+    //             let visit = value.num_pt ? parseInt(value.num_pt) : 0;
 
-                referoutSeries.push(visit);
-            });
+    //             referoutSeries.push(visit);
+    //         });
 
-            var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-            $scope.barOptions = ChartService.initBarChart("referOutBarContainer", "Refer Out รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
-            $scope.barOptions.series.push({
-                name: 'referout',
-                data: referoutSeries,
-                color: '#41b6e6',
-            });
+    //         var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
+    //         $scope.barOptions = ChartService.initBarChart("referOutBarContainer", "Refer Out รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+    //         $scope.barOptions.series.push({
+    //             name: 'referout',
+    //             data: referoutSeries,
+    //             color: '#41b6e6',
+    //         });
 
-            var chart = new Highcharts.Chart($scope.barOptions);
-        }, function(err) {
-            console.log(err);
-        });
-    }
+    //         var chart = new Highcharts.Chart($scope.barOptions);
+    //     }, function(err) {
+    //         console.log(err);
+    //     });
+    // };
 
     $scope.getErVisit = function(e) {
         if(e) e.preventDefault();
@@ -349,11 +349,11 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
                 color: '#57D1C9',
             }];
 
-            var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
+            let categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย'];
             $scope.barOptions = ChartService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
             $scope.barOptions.series = series;
 
-            var chart = new Highcharts.Chart($scope.barOptions);
+            let chart = new Highcharts.Chart($scope.barOptions);
         }, function(err) {
             console.log(err);
         });
@@ -426,46 +426,93 @@ app.controller('homeController', ['$scope', '$http', 'CONFIG', 'ChartService', f
         });
     };
 
-    $scope.getPeriodData = function (e) {
+    $scope.getReferIn = function(e) {
         if(e) e.preventDefault();
         
         let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
         console.log(year);
+        
+        ChartService.getSeriesData('/refer/referin-year/', year)
+        .then(function(res) {            
+            // let categories = [];
+            let erData = [];
+            let opData = [];
+            let ipData = [];
+            let alData = [];
 
-        ChartService.getSeriesData('/report/period-chart/', year)
-        .then(function(res) {
-            console.log(res);
-            
-            var categories = [];
-            var nSeries = [];
-            var mSeries = [];
-            var aSeries = [];
-            var eSeries = [];
+            res.data.referin.forEach((value, key) => {
+                let er = value.ER ? parseInt(value.ER) : 0;
+                let op = value.OPD ? parseInt(value.OPD) : 0;
+                let ip = value.IPD ? parseInt(value.IPD) : 0;
+                // let al = value.ALL ? parseInt(value.ALL) : 0;
 
-            angular.forEach(res.data, function(value, key) {
-                categories.push(value.d);
-                nSeries.push(value.n);
-                mSeries.push(value.m);
-                aSeries.push(value.a);
-                eSeries.push(value.e);
+                // categories.push(value.yearmonth);
+                erData.push(er);
+                opData.push(op);
+                ipData.push(ip);
+                // alData.push(al);
             });
 
-            $scope.barOptions = ChartService.initStackChart("barContainer", "รายงานการให้บริการ ตามช่วงเวลา", categories, 'จำนวนการให้บริการ');
+            let categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย'];
+            $scope.barOptions = ChartService.initStackChart("referInBarContainer", "Refer In รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
             $scope.barOptions.series.push({
-                name: '00.00-08.00น.',
-                data: nSeries
+                name: 'ER',
+                data: erData
             }, {
-                name: '08.00-12.00น.',
-                data: mSeries
+                name: 'OPD',
+                data: opData
             }, {
-                name: '12.00-16.00น.',
-                data: aSeries
-            }, {
-                name: '16.00-00.00น.',
-                data: eSeries
+                name: 'IPD',
+                data: ipData
             });
 
-            var chart = new Highcharts.Chart($scope.barOptions);
+            let chart = new Highcharts.Chart($scope.barOptions);
+        }, function(err) {
+            console.log(err);
+        });
+    };
+
+    $scope.getReferOut = function(e) {
+        if(e) e.preventDefault();
+        
+        let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
+        console.log(year);
+        
+        ChartService.getSeriesData('/refer/referout-year/', year)
+        .then(function(res) {
+            // let categories = [];
+            let erData = [];
+            let opData = [];
+            let ipData = [];
+            let alData = [];
+
+            res.data.referout.forEach((value, key) => {
+                let er = value.ER ? parseInt(value.ER) : 0;
+                let op = value.OPD ? parseInt(value.OPD) : 0;
+                let ip = value.IPD ? parseInt(value.IPD) : 0;
+                // let al = value.ALL ? parseInt(value.ALL) : 0;
+
+                // categories.push(value.yearmonth);
+                erData.push(er);
+                opData.push(op);
+                ipData.push(ip);
+                // alData.push(al);
+            });
+
+            let categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย'];
+            $scope.barOptions = ChartService.initStackChart("referOutBarContainer", "Refer Out รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+            $scope.barOptions.series.push({
+                name: 'ER',
+                data: erData
+            }, {
+                name: 'OPD',
+                data: opData
+            }, {
+                name: 'IPD',
+                data: ipData
+            });
+
+            let chart = new Highcharts.Chart($scope.barOptions);
         }, function(err) {
             console.log(err);
         });
