@@ -1,0 +1,123 @@
+<section
+	class="content"
+	ng-controller="erController"
+	ng-init="getSumPeriodData($event);"
+>
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-user-nurse mr-1"></i>
+							สรุปผลการปฏิบัติงานห้อง ER
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+
+						<form action="" method="POST" class="form-inline">
+							<div class="form-group">
+								<label>วันที่ :</label>
+								<input
+									type="text"
+									id="sdate"
+									name="sdate"								
+									ng-model="sdate"								
+									class="form-control mr-2 ml-2"
+									autocomplete="off"
+								>
+							</div>
+
+							<div class="form-group">
+								<label>ถึงวันที่ :</label>
+								<input
+									type="text"
+									id="edate"
+									name="edate"
+									ng-model="edate"
+									class="form-control mr-2 ml-2"
+									autocomplete="off"
+								>
+							</div>
+
+							<button ng-click="getSumPeriodData($event)" class="btn btn-primary">ตกลง</button>
+					
+						</form>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<div class="card-body">
+
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped">
+								<thead>
+									<tr style="font-size: 14px;">
+										<th style="width: 3%; text-align: center;" rowspan="2">ลำดับ</td>
+										<th style="width: 8%; text-align: center;" rowspan="2">เวร</td>
+										<th style="width: 6%; text-align: center;" rowspan="2">รวม (ครั้ง)</td>
+										<th style="text-align: center;" colspan="5">ประเภทผู้ป่วย</td>
+										<th style="text-align: center;" colspan="5">ความเร่งด่วน</td>
+									</tr>
+									<tr style="font-size: 12px;">
+										<th width="6%" style="text-align: center;">ฉุกเฉิน</th>
+										<th width="6%" style="text-align: center;">อุบัติเหตุจราจร</th>
+										<th width="6%" style="text-align: center;">อุบัติเหตุอื่นๆ</th>
+										<th width="6%" style="text-align: center;">ตรวจโรคทั่วไป</th>
+										<th width="6%" style="text-align: center;">บริการอื่น ๆ</th>
+										
+										<th width="6%" style="text-align: center;">Emergency</th>
+										<th width="6%" style="text-align: center;">Urgency</th>
+										<th width="6%" style="text-align: center;">Semi-Urgency</th>
+										<th width="6%" style="text-align: center;">Non-Urgency</th>
+										<th width="6%" style="text-align: center;">Resuscitation</th>
+									</tr>
+								<thead>
+								<tbody>
+									<tr ng-repeat="(index, row) in data">
+										<td style="text-align: center;">{{ index+1 }}</td>
+										<td style="text-align: center;">{{ row.period }}</td>
+										<td style="text-align: center;">{{ row.pt_num }}</td>
+										<td style="text-align: center;">{{ row.type1 }}</td>
+										<td style="text-align: center;">{{ row.type5 }}</td>
+										<td style="text-align: center;">{{ row.type2 }}</td>
+										<td style="text-align: center;">{{ row.type3 }}</td>
+										<td style="text-align: center;">{{ row.type4 }}</td>
+										<td style="text-align: center;">{{ row.emer1 }}</td>
+										<td style="text-align: center;">{{ row.emer2 }}</td>
+										<td style="text-align: center;">{{ row.emer3 }}</td>
+										<td style="text-align: center;">{{ row.emer4 }}</td>
+										<td style="text-align: center;">{{ row.emer5 }}</td>		
+									</tr>
+								</tbody>
+							</table>
+						</div><!-- /.responsive-table -->
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->
+
+<script type="text/javascript">
+	$(function() {
+		$('#sdate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+
+		$('#edate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true,
+		}).datepicker('update', new Date());
+	});
+</script>
