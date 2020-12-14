@@ -135,10 +135,29 @@ app.service('ChartService', [
             return $http.get(CONFIG.apiUrl + url + data);
         }
         
+        service.createMonthlyCategories = function(month) {
+            if(!month) return new Array(31)
+            
+            let endDate = DatetimeService.lastDayOfMonth(`${month}-01`);
+
+            return new Array(endDate);
+        }
+        
+        service.createYearlyCategories = function(lang) {
+            let months = null;
+            
+            if(lang === 'en') {
+                months = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Api', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
+            } else {
+                months = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย'];
+            }
+
+            return months;
+        }
+
         service.createDataSeriesDoM = function (data, month) {
             let dataSeries = [];
-            let endDate = DatetimeService.lastDayOfMonth(`${month}-01`);
-            let categories = new Array(endDate);
+            let categories = service.createMonthlyCategories(month);
 
             for(let i = 0; i < categories.length; i++) {
                 categories[i] = `${i+1}`;
@@ -158,9 +177,8 @@ app.service('ChartService', [
         }
 
         service.createStackedDataSeriesDoM = function (data, stacked, month) {
-            let endDate = DatetimeService.lastDayOfMonth(`${month}-01`);
-            let categories = new Array(endDate);
             let series = [];
+            let categories = service.createMonthlyCategories(month);
 
             stacked.forEach((val, key) => {
                 series.push({
