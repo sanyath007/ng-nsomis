@@ -126,5 +126,69 @@ app.service('ChartService', ['CONFIG', '$http', function(CONFIG, $http) {
 
 	this.getSeriesData = function (url, data) {
 		return $http.get(CONFIG.apiUrl + url + data);
-	}
+    }
+    
+        
+    this.createDataSeriesDoM = function (data, month) {
+        let dataSeries = [];
+        let endDate = this.lastDayOfMonth(`${month}-01`);
+        let categories = new Array(endDate);
+
+        for(let i = 0; i < categories.length; i++) {
+            categories[i] = `${i+1}`;
+            dataSeries.push(0);
+
+            data.every((val, key) => {
+                if(parseInt(val.d) === i+1) {
+                    dataSeries[i] = parseInt(val.num_pt);
+                    return false;
+                }
+
+                return true;
+            });
+        }
+
+        return { dataSeries, categories }
+    }
+
+    this.createStackedDataSeriesDoM = function (data, stacked, month) {
+        let endDate = this.lastDayOfMonth(`${month}-01`);
+        let categories = new Array(endDate);
+        let series = [];
+
+        stacked.forEach((val, key) => {
+            series.push({
+                name: val,
+                data: [],
+            })
+        });
+
+        for(let i = 0; i < categories.length; i++) {
+            categories[i] = `${i+1}`;
+
+            data.every((val, key) => {
+                if(parseInt(val.d) === i+1) {
+                    series.forEach((s, key) => {
+                        s.data[i] = parseInt(val[s.name]);
+                    });
+
+                    return false;
+                } else {
+                    series.forEach((s, key) => {
+                        s.data[i] = 0;
+                    });
+                }
+
+                return true;
+            });
+        }
+
+        return { series, categories }
+    }
+    
+    this.lastDayOfMonth = function(date) {
+        if(!date) return 31;
+
+        return parseInt(moment(date).endOf('month').format('DD'));
+    }
 }]);

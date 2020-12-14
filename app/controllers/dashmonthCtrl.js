@@ -4,34 +4,6 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
     $scope.barOptions = {};
     $scope.pieOptions = {};
     $scope.cboMonth = '';
-    
-    const createDataSeriesDoM = function(data, month) {
-        let dataSeries = [];
-        let endDate = lastDayOfMonth(`${month}-01`);
-        let categories = new Array(endDate);
-
-        for(let i = 0; i < categories.length; i++) {
-            categories[i] = `${i+1}`;
-            dataSeries.push(0);
-
-            data.every((val, key) => {
-                if(parseInt(val.d) === i+1) {
-                    dataSeries[i] = parseInt(val.num_pt);
-                    return false;
-                }
-
-                return true;
-            });
-        }
-
-        return { dataSeries, categories }
-    }
-    
-    const lastDayOfMonth = function(date) {
-        if(!date) return 31;
-
-        return parseInt(moment(date).endOf('month').format('DD'));
-    }
 
     const fotmatYearMonth = function(my) {
         if(!my) return moment().format('YYYY-MM');
@@ -40,26 +12,6 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
 
         return `${year-543}-${month}`;
     };
-
-    $scope.getCardDay = function () {
-        if(e) e.preventDefault();
-
-        $scope.loading = true;
-        let month = ($scope.cboMonth !== '') 
-                    ? $scope.cboMonth
-                    : moment().format('MM');
-
-        $http.get(`${CONFIG.baseUrl}/dashboard/card-data/${month}`)
-        .then(function(res) {
-            console.log(res);
-            $scope.cardData = res.data[0];
-
-            $scope.loading = false;
-        }, function(err) {
-            console.log(err);
-            $scope.loading = false;
-        });
-    }
 
     $scope.getOpVisit = function (e) {
         if(e) e.preventDefault();
@@ -70,7 +22,7 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
 
         ChartService.getSeriesData('/dashboard/op-visit-month/', month)
         .then(function(res) {
-            let {dataSeries, categories} = createDataSeriesDoM(res.data, month);
+            let {dataSeries, categories} = ChartService.createDataSeriesDoM(res.data, month);
 
             $scope.barOptions = ChartService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอก", categories, 'จำนวน');
             $scope.barOptions.series.push({
@@ -115,8 +67,7 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
 
         ChartService.getSeriesData('/dashboard/ip-visit-month/', month)
         .then(function(res) {
-            console.log(res);
-            let {dataSeries, categories} = createDataSeriesDoM(res.data, month);
+            let {dataSeries, categories} = ChartService.createDataSeriesDoM(res.data, month);
 
             $scope.barOptions = ChartService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยใน", categories, 'จำนวน');
             $scope.barOptions.series.push({
@@ -154,54 +105,45 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
         });
     };
 
-    $scope.referIn = function(e) {
+    $scope.getReferIn = function(e) {
         if(e) e.preventDefault();
         
         let month = ($scope.cboMonth !== '') 
-                    ? $scope.cboMonth
-                    : moment().format('MM');
-
-        ChartService.getSeriesData('/dashboard/referin/', month)
+                    ? fotmatYearMonth($scope.cboMonth)
+                    : moment().format('YYYY-MM');
+        
+        ChartService.getSeriesData('/refer/referin-month/', month)
         .then(function(res) {
-            let {dataSeries, categories} = createDataSeriesDoM(res.data);
+            let {series, categories} = ChartService.createStackedDataSeriesDoM(res.data, ['ER', 'OPD', 'IPD'], month);
+            
+            $scope.barOptions = ChartService.initStackChart("referInBarContainer", "Refer In รายวัน", categories, 'จำนวน');
+            $scope.barOptions.series = series;
 
-            $scope.barOptions = ChartService.initBarChart("referInBarContainer", "Refer In", categories, 'จำนวน');
-            $scope.barOptions.series.push({
-                name: 'refer in',
-                data: dataSeries,
-                color: '#8134af',
-            });
-
-            var chart = new Highcharts.Chart($scope.barOptions);
+            let chart = new Highcharts.Chart($scope.barOptions);
         }, function(err) {
             console.log(err);
         });
-    }
-    
-    $scope.referOut = function(e) {
+    };
+
+    $scope.getReferOut = function(e) {
         if(e) e.preventDefault();
         
         let month = ($scope.cboMonth !== '') 
-                    ? $scope.cboMonth
-                    : moment().format('MM');
-
-        ChartService.getSeriesData('/dashboard/referout/', month)
+                    ? fotmatYearMonth($scope.cboMonth)
+                    : moment().format('YYYY-MM');
+        
+        ChartService.getSeriesData('/refer/referout-month/', month)
         .then(function(res) {
-            let {dataSeries, categories} = createDataSeriesDoM(res.data);
+            let {series, categories} = ChartService.createStackedDataSeriesDoM(res.data, ['ER', 'OPD', 'IPD'], month);
 
-            $scope.barOptions = ChartService.initBarChart("referOutBarContainer", "Refer Out", categories, 'จำนวน');
-            $scope.barOptions.series.push({
-                name: 'refer out',
-                data: dataSeries,
-                color: '#41b6e6',
-            });
+            $scope.barOptions = ChartService.initStackChart("referOutBarContainer", "Refer Out รายวัน", categories, 'จำนวน');
+            $scope.barOptions.series = series;
 
-            var chart = new Highcharts.Chart($scope.barOptions);
+            let chart = new Highcharts.Chart($scope.barOptions);
         }, function(err) {
             console.log(err);
         });
-    }
-
+    };
     
     $scope.getErVisitData = function() {
         var month = '2020';
@@ -347,89 +289,6 @@ app.controller('dashmonthController', ['$scope', '$http', 'CONFIG', 'ChartServic
             });
 
             var chart = new Highcharts.Chart($scope.pieOptions);
-        }, function(err) {
-            console.log(err);
-        });
-    };
-
-    $scope.getPeriodData = function () {
-        var selectMonth = document.getElementById('selectMonth').value;
-        var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
-        console.log(month);
-
-        ChartService.getSeriesData('/report/period-chart/', month)
-        .then(function(res) {
-            console.log(res);
-            
-            var categories = [];
-            var nSeries = [];
-            var mSeries = [];
-            var aSeries = [];
-            var eSeries = [];
-
-            angular.forEach(res.data, function(value, key) {
-                categories.push(value.d);
-                nSeries.push(value.n);
-                mSeries.push(value.m);
-                aSeries.push(value.a);
-                eSeries.push(value.e);
-            });
-
-            $scope.barOptions = ChartService.initStackChart("barContainer", "รายงานการให้บริการ ตามช่วงเวลา", categories, 'จำนวนการให้บริการ');
-            $scope.barOptions.series.push({
-                name: '00.00-08.00น.',
-                data: nSeries
-            }, {
-                name: '08.00-12.00น.',
-                data: mSeries
-            }, {
-                name: '12.00-16.00น.',
-                data: aSeries
-            }, {
-                name: '16.00-00.00น.',
-                data: eSeries
-            });
-
-            var chart = new Highcharts.Chart($scope.barOptions);
-        }, function(err) {
-            console.log(err);
-        });
-    };
-
-    $scope.getReferData = function () {
-        var selectMonth = document.getElementById('selectMonth').value;
-        var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
-        console.log(month);
-
-        ChartService.getSeriesData('/report/refer-chart/', month)
-        .then(function(res) {
-            console.log(res);
-            var nSeries = [];
-            var mSeries = [];
-            var aSeries = [];
-            var eSeries = [];
-            var categories = [];
-
-            angular.forEach(res.data, function(value, key) {
-                categories.push(value.d)
-                nSeries.push(value.n);
-                mSeries.push(value.m);
-                aSeries.push(value.a);
-            });
-
-            $scope.barOptions = ChartService.initStackChart("barContainer", "รายงานการให้บริการให้บริการรับ-ส่งต่อผู้ป่วย", categories, 'จำนวน Refer');
-            $scope.barOptions.series.push({
-                name: 'เวรดึก',
-                data: nSeries
-            }, {
-                name: 'เวรเช้า',
-                data: mSeries
-            }, {
-                name: 'เวรบ่าย',
-                data: aSeries
-            });
-
-            var chart = new Highcharts.Chart($scope.barOptions);
         }, function(err) {
             console.log(err);
         });

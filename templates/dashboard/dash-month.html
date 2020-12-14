@@ -4,7 +4,9 @@
 	ng-init="getOpVisit($event);
 			getOpVisitType($event);
 			getIpVisit($event);
-			getIpClass($event);"
+			getIpClass($event);
+			getReferIn($event);
+			getReferOut($event);"
 >
 	<div class="container-fluid">		
 		<div class="row">
@@ -27,7 +29,9 @@
 					<button class="btn btn-primary" ng-click="getOpVisit($event);
 																getOpVisitType($event);
 																getIpVisit($event);
-																getIpClass($event);"
+																getIpClass($event);
+																getReferIn($event);
+																getReferOut($event);"
 					>
 						ตกลง
 					</button>
@@ -83,6 +87,32 @@
 							<div class="col-md-12">
 
 								<div id="ipVisitBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+
+							</div>
+						</div>
+
+					</div><!-- /.card-body-->
+				</div><!-- /.card-->
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-users mr-1"></i>
+							Refer In/Out ประจำเดือน {{ cboMonth }}
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+						
+						<div class="row">
+							<div class="col-md-12">
+
+								<div id="referInBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+
+							</div>
+
+							<div class="col-md-12">
+
+								<div id="referOutBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
 
 							</div>
 						</div>
