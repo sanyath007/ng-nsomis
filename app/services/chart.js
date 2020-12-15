@@ -133,8 +133,12 @@ app.service('ChartService', [
 
         service.getSeriesData = function (url, data) {
             return $http.get(CONFIG.apiUrl + url + data);
-        }
+        };
         
+        service.createDailyCategories = function() {
+            return new Array(24);
+        };
+
         service.createMonthlyCategories = function(month) {
             if(!month) return new Array(31)
             
@@ -153,7 +157,28 @@ app.service('ChartService', [
             }
 
             return months;
-        }
+        };
+
+        service.createDataSeries24Hr = function(data) {
+            let dataSeries = [];
+            let categories = service.createDailyCategories();
+
+            for(let i = 0; i < categories.length; i++) {
+                categories[i] = `${i}`;
+                dataSeries.push(0);
+
+                data.every((val, key) => {
+                    if(parseInt(val.hhmm) === i) {
+                        dataSeries[i] = parseInt(val.num_pt);
+                        return false;
+                    }
+
+                    return true;
+                });
+            }
+
+            return { dataSeries, categories }
+        };
 
         service.createDataSeriesDoM = function (data, month) {
             let dataSeries = [];
@@ -174,7 +199,7 @@ app.service('ChartService', [
             }
 
             return { dataSeries, categories }
-        }
+        };
 
         service.createStackedDataSeriesDoM = function (data, stacked, month) {
             let series = [];
@@ -208,6 +233,6 @@ app.service('ChartService', [
             }
 
             return { series, categories }
-        }
+        };
     }
 ]);
