@@ -168,8 +168,6 @@ app.service('ChartService', [
                 categories = service.createDailyCategories();
             } else if (catType.name == 'm') {
                 categories = service.createMonthlyCategories(catType.value);
-            } else if (catType.name == 'y') {
-                categories = service.createYearlyCategories('th');
             }
 
             for(let i = 0; i < categories.length; i++) {
@@ -197,24 +195,47 @@ app.service('ChartService', [
             return { dataSeries, categories }
         };
 
-        service.createStackedDataSeriesDoM = function (data, stacked, month) {
+        service.createSeries = function(stacked) {
             let series = [];
-            let categories = service.createMonthlyCategories(month);
 
             stacked.forEach((val, key) => {
                 series.push({
-                    name: val,
-                    data: [],
+                    name: val.name,
+                    prop: val.prop,
+                    color: val.color,
+                    data: []
                 })
             });
 
+            return series;
+        };
+
+        service.createStackedDataSeries = function (stacked, data, dataProps, catType) {
+            let series = [];
+            let categories = [];
+            let catValue = 0;
+            
+            series = service.createSeries(stacked);
+            
+            if(catType.name == 'd') {
+                categories = service.createDailyCategories();
+            } else if (catType.name == 'm') {
+                categories = service.createMonthlyCategories(catType.value);
+            }
+
             for(let i = 0; i < categories.length; i++) {
-                categories[i] = `${i+1}`;
+                if(catType.name == 'd') {
+                    catValue = i;
+                } else if (catType.name == 'm') {
+                    catValue = i+1;
+                }
+
+                categories[i] = `${catValue}`;
 
                 data.every((val, key) => {
-                    if(parseInt(val.d) === i+1) {
+                    if(parseInt(val[dataProps.name]) === catValue) {
                         series.forEach((s, key) => {
-                            s.data[i] = parseInt(val[s.name]);
+                            s.data[i] = parseInt(val[s.prop]);
                         });
 
                         return false;

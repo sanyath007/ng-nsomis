@@ -4,8 +4,9 @@ app.controller('dashmonthController', [
     '$http',
     'CONFIG',
     'ChartService',
+    'DatetimeService',
     'StringFormatService',
-    function($scope, $http, CONFIG, ChartService, StringFormatService)
+    function($scope, $http, CONFIG, ChartService, DatetimeService, StringFormatService)
     {
         $scope.cardData = {};
         $scope.barOptions = {};
@@ -16,7 +17,7 @@ app.controller('dashmonthController', [
             if(e) e.preventDefault();
 
             let month = ($scope.cboMonth !== '') 
-                        ? fotmatYearMonth($scope.cboMonth)
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
 
             ChartService.getSeriesData('/dashboard/op-visit-month/', month)
@@ -44,7 +45,7 @@ app.controller('dashmonthController', [
             if(e) e.preventDefault();
             
             let month = ($scope.cboMonth !== '') 
-                        ? fotmatYearMonth($scope.cboMonth)
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
 
             ChartService.getSeriesData('/dashboard/op-visit-type-month/', month)
@@ -65,7 +66,7 @@ app.controller('dashmonthController', [
             if(e) e.preventDefault();
             
             let month = ($scope.cboMonth !== '') 
-                        ? fotmatYearMonth($scope.cboMonth)
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
 
             ChartService.getSeriesData('/dashboard/ip-visit-month/', month)
@@ -93,7 +94,7 @@ app.controller('dashmonthController', [
             if(e) e.preventDefault();
             
             let month = ($scope.cboMonth !== '') 
-                        ? fotmatYearMonth($scope.cboMonth)
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
 
             ChartService.getSeriesData('/dashboard/ip-class-month/', month)
@@ -116,12 +117,21 @@ app.controller('dashmonthController', [
             if(e) e.preventDefault();
             
             let month = ($scope.cboMonth !== '') 
-                        ? fotmatYearMonth($scope.cboMonth)
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
             
             ChartService.getSeriesData('/refer/referin-month/', month)
             .then(function(res) {
-                let {series, categories} = ChartService.createStackedDataSeriesDoM(res.data, ['ER', 'OPD', 'IPD'], month);
+                let {series, categories} = ChartService.createStackedDataSeries(
+                    [ 
+                        { name: 'ER', prop: 'ER' },
+                        { name: 'OPD', prop: 'OPD' },
+                        { name: 'IPD', prop: 'IPD' }
+                    ],
+                    res.data,
+                    { name: 'd'},
+                    { name: 'm', value: month }
+                );
                 
                 $scope.barOptions = ChartService.initStackChart("referInBarContainer", "Refer In รายวัน", categories, 'จำนวน');
                 $scope.barOptions.series = series;
@@ -136,12 +146,21 @@ app.controller('dashmonthController', [
             if(e) e.preventDefault();
             
             let month = ($scope.cboMonth !== '') 
-                        ? fotmatYearMonth($scope.cboMonth)
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
             
             ChartService.getSeriesData('/refer/referout-month/', month)
             .then(function(res) {
-                let {series, categories} = ChartService.createStackedDataSeriesDoM(res.data, ['ER', 'OPD', 'IPD'], month);
+                let {series, categories} = ChartService.createStackedDataSeries(                    
+                    [
+                        { name: 'ER', prop: 'ER' },
+                        { name: 'OPD', prop: 'OPD' },
+                        { name: 'IPD', prop: 'IPD' }
+                    ],
+                    res.data,
+                    { name: 'd'},
+                    { name: 'm', value: month }
+                );
 
                 $scope.barOptions = ChartService.initStackChart("referOutBarContainer", "Refer Out รายวัน", categories, 'จำนวน');
                 $scope.barOptions.series = series;
@@ -152,7 +171,7 @@ app.controller('dashmonthController', [
             });
         };
         
-        $scope.getErVisitData = function() {
+        $scope.getErVisit = function() {
             var month = '2020';
 
             ChartService.getSeriesData('/er/visit/', month)
@@ -210,7 +229,7 @@ app.controller('dashmonthController', [
             });
         };
 
-        $scope.getErEmergencyData = function () {
+        $scope.getErEmergency = function () {
             var month = '2020';
             // var selectMonth = document.getElementById('selectMonth').value;
             // var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
@@ -234,62 +253,48 @@ app.controller('dashmonthController', [
             });
         };
         
-        $scope.getOrVisitData = function() {
-            var month = '2020';
+        $scope.getOrVisit = function(e) {
+            if(e) e.preventDefault();
+            
+            let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
 
-            ChartService.getSeriesData('/or/visit/', month)
+            ChartService.getSeriesData('/dashboard/or-visit/', month)
             .then(function(res) {
-                let smallData = [];
-                let largeData = [];
-                let otherData = [];
+                let {series, categories} = ChartService.createStackedDataSeries(
+                    [
+                        { name: 'ผ่าตัดเล็ก', prop: 'small', color: '#8134af' }, 
+                        { name: 'ผ่าตัดใหญ่', prop: 'large', color: '#e41749' },
+                        { name: 'อื่นๆ', prop: 'other', color: '#57D1C9' }
+                    ],
+                    res.data,
+                    { name: 'd'},
+                    { name: 'm', value: month }
+                );
 
-                res.data.visit.forEach((value, key) => {
-                    let small = value.small ? parseInt(value.small) : 0;
-                    let large = value.large ? parseInt(value.large) : 0;
-                    let other = value.other ? parseInt(value.other) : 0;
-
-                    smallData.push(small);
-                    largeData.push(large);
-                    otherData.push(other);
-                });
-
-                let series = [{
-                    name: 'ผ่าตัดเล็ก',
-                    data: smallData,
-                    color: '#e41749',
-                }, {
-                    name: 'ผ่าตัดใหญ่',
-                    data: largeData,
-                    color: '#f29c2b',
-                }, {
-                    name: 'อื่นๆ',
-                    data: otherData,
-                    color: '#57D1C9',
-                }];
-
-                var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-                $scope.barOptions = ChartService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
+                $scope.barOptions = ChartService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการ รายวัน", categories, 'จำนวน');
                 $scope.barOptions.series = series;
 
-                var chart = new Highcharts.Chart($scope.barOptions);
+                let chart = new Highcharts.Chart($scope.barOptions);
             }, function(err) {
                 console.log(err);
             });
         };
 
-        $scope.getOrTypeData = function () {
-            var month = '2020';
-            // var selectMonth = document.getElementById('selectMonth').value;
-            // var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
-            // console.log(month);
+        $scope.getOrType = function (e) {
+            if(e) e.preventDefault();
+            
+            let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
 
-            ChartService.getSeriesData('/or/or-type/', month)
-            .then(function(res) {
-                var dataSeries = [];
-
+            ChartService.getSeriesData('/dashboard/or-type/', month)
+            .then(function(res) {                
+                console.log(res);
                 $scope.pieOptions = ChartService.initPieChart("orTypePieContainer", "สัดส่วนผู้รับบริการผ่าตัด ตามประเภทการผ่าตัด", "", "สัดส่วนตามประเภทการผ่าตัด");
 
-                res.data.ortype.forEach((value, key) => {
+                res.data.forEach((value, key) => {
                     Object.keys(value).forEach(name => {
                         $scope.pieOptions.series[0].data.push({name: name, y: parseInt(value[name])});
                     });
