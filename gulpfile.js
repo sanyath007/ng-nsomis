@@ -18,7 +18,8 @@ gulp.task('css', function() {
         'node_modules/admin-lte/plugins/daterangepicker/daterangepicker.css',
         'node_modules/admin-lte/plugins/summernote/summernote-bs4.min.css',
         'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
-        'assets/css/**/*.css'
+        'node_modules/angularjs-toaster/toaster.css',
+        'assets/css/**/*.css',
     ])
     .pipe(minifyCss())
     .pipe(concat('bundle.css'))
@@ -46,6 +47,9 @@ gulp.task('venderjs', function() {
         'node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.th.min.js',
         'node_modules/angular/angular.min.js',
         'node_modules/angular-route/angular-route.min.js',
+        'node_modules/angular-animate/angular-animate.min.js',
+        'node_modules/angularjs-toaster/toaster.min.js',
+        'node_modules/ngstorage/ngstorage.min.js',
     ])
     .pipe(uglify())
     .pipe(concat('vendor-bundle.js'))
@@ -82,4 +86,4 @@ gulp.task('templates', function () {
         .pipe(notify({ message: "Copy template files successfully" }));
 });
 
-gulp.task('default', gulp.series('appjs', 'templates')); //'css', webfonts, 'venderjs', 'images'
+gulp.task('default', gulp.series('appjs', 'templates')); //'css', 'webfonts', 'venderjs', 'images', 'appjs', 'templates'
