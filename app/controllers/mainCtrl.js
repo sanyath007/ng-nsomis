@@ -14,11 +14,20 @@ app.controller('mainController', [
     }
 
     $scope.sidebarMenuToggle = function(e) {
-        console.log(e);
-        $(".nav-link.active").parent().toggleClass('menu-open');
-        $(".nav-link.active").siblings().css("display", "none");
-        $(".nav-link.active").toggleClass('active');
+        // Set .menu-open to li.nav-item that is groupmenu
+        $(".nav-sidebar > li.nav-item > a.nav-link.active").parent().toggleClass('menu-open');
+        // Set ul.nav.nav-treeview that is sibling of .nav-link.active
+        $("a.nav-link.active").siblings().css("display", "none");
+        // Clear .active in all .nav-link (both groupmenus and submenus)
+        $("a.nav-link.active").toggleClass('active');
+        // Set .active to clicked element
+        $(e.currentTarget).toggleClass('active');
+    };
 
+    $scope.sidebarSubMenuToggle = function(e) {
+        // Clear .active in li.nav-link.active that is submenu and is sibling of clicked element
+        $('.menu-open > ul.nav.nav-treeview a.nav-link.active').toggleClass('active');
+        // Set .active to clicked element
         $(e.currentTarget).toggleClass('active');
     };
 
