@@ -43,7 +43,11 @@ app.controller('dashdayController', [
 
             ChartService.getSeriesData('/dashboard/op-visit/', date)
             .then(function(res) {
-                let {dataSeries, categories} = ChartService.createDataSeries24Hr(res.data);
+                let {dataSeries, categories} = ChartService.createDataSeries(
+                    res.data,
+                    { name: 'hhmm', value: 'num_pt'},
+                    { name: 'd', value: '' }
+                );
 
                 $scope.barOptions = ChartService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอก", categories, 'จำนวน');
                 $scope.barOptions.series.push({
@@ -88,7 +92,11 @@ app.controller('dashdayController', [
 
             ChartService.getSeriesData('/dashboard/ip-visit/', date)
             .then(function(res) {
-                let {dataSeries, categories} = ChartService.createDataSeries24Hr(res.data);
+                let {dataSeries, categories} = ChartService.createDataSeries(
+                    res.data,
+                    { name: 'hhmm', value: 'num_pt'},
+                    { name: 'd', value: '' }
+                );
 
                 $scope.barOptions = ChartService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยใน", categories, 'จำนวน');
                 $scope.barOptions.series.push({
@@ -103,7 +111,7 @@ app.controller('dashdayController', [
             });
         };
 
-        $scope.getIpClassificationDay = function (e) {
+        $scope.getIpClassDay = function (e) {
             if(e) e.preventDefault();
             
             let date = ($scope.cboDate !== '') 
@@ -135,7 +143,11 @@ app.controller('dashdayController', [
 
             ChartService.getSeriesData('/dashboard/referin/', date)
             .then(function(res) {
-                let {dataSeries, categories} = ChartService.createDataSeries24Hr(res.data);
+                let {dataSeries, categories} = ChartService.createDataSeries(
+                    res.data,
+                    { name: 'hhmm', value: 'num_pt'},
+                    { name: 'd', value: '' }
+                );
 
                 $scope.barOptions = ChartService.initBarChart("referInBarContainer", "Refer In", categories, 'จำนวน');
                 $scope.barOptions.series.push({
@@ -159,7 +171,11 @@ app.controller('dashdayController', [
 
             ChartService.getSeriesData('/dashboard/referout/', date)
             .then(function(res) {
-                let {dataSeries, categories} = ChartService.createDataSeries24Hr(res.data);
+                let {dataSeries, categories} = ChartService.createDataSeries(
+                    res.data,
+                    { name: 'hhmm', value: 'num_pt'},
+                    { name: 'd', value: '' }
+                );
 
                 $scope.barOptions = ChartService.initBarChart("referOutBarContainer", "Refer Out", categories, 'จำนวน');
                 $scope.barOptions.series.push({

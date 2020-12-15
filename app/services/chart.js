@@ -159,38 +159,34 @@ app.service('ChartService', [
             return months;
         };
 
-        service.createDataSeries24Hr = function(data) {
+        service.createDataSeries = function(data, dataProps, catType) {
             let dataSeries = [];
-            let categories = service.createDailyCategories();
+            let categories = [];
+            let catValue = 0;
 
-            for(let i = 0; i < categories.length; i++) {
-                categories[i] = `${i}`;
-                dataSeries.push(0);
-
-                data.every((val, key) => {
-                    if(parseInt(val.hhmm) === i) {
-                        dataSeries[i] = parseInt(val.num_pt);
-                        return false;
-                    }
-
-                    return true;
-                });
+            if(catType.name == 'd') {
+                categories = service.createDailyCategories();
+            } else if (catType.name == 'm') {
+                categories = service.createMonthlyCategories(catType.value);
+            } else if (catType.name == 'y') {
+                categories = service.createYearlyCategories('th');
             }
 
-            return { dataSeries, categories }
-        };
-
-        service.createDataSeriesDoM = function (data, month) {
-            let dataSeries = [];
-            let categories = service.createMonthlyCategories(month);
-
             for(let i = 0; i < categories.length; i++) {
-                categories[i] = `${i+1}`;
+                if(catType.name == 'd') {
+                    catValue = i;
+                } else if (catType.name == 'm') {
+                    catValue = i+1;
+                } else if (catType.name == 'm') {
+                    catValue = i;
+                }
+
+                categories[i] = `${catValue}`;
                 dataSeries.push(0);
 
                 data.every((val, key) => {
-                    if(parseInt(val.d) === i+1) {
-                        dataSeries[i] = parseInt(val.num_pt);
+                    if(parseInt(val[dataProps.name]) === catValue) {
+                        dataSeries[i] = parseInt(val[dataProps.value]);
                         return false;
                     }
 

@@ -21,7 +21,11 @@ app.controller('dashmonthController', [
 
             ChartService.getSeriesData('/dashboard/op-visit-month/', month)
             .then(function(res) {
-                let {dataSeries, categories} = ChartService.createDataSeriesDoM(res.data, month);
+                let {dataSeries, categories} = ChartService.createDataSeries(
+                    res.data,
+                    { name: 'd', value: 'num_pt'},
+                    { name: 'm', value: month }
+                );
 
                 $scope.barOptions = ChartService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอก", categories, 'จำนวน');
                 $scope.barOptions.series.push({
@@ -66,7 +70,11 @@ app.controller('dashmonthController', [
 
             ChartService.getSeriesData('/dashboard/ip-visit-month/', month)
             .then(function(res) {
-                let {dataSeries, categories} = ChartService.createDataSeriesDoM(res.data, month);
+                let {dataSeries, categories} = ChartService.createDataSeries(
+                    res.data,
+                    { name: 'd', value: 'num_pt'},
+                    { name: 'm', value: month }
+                );
 
                 $scope.barOptions = ChartService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยใน", categories, 'จำนวน');
                 $scope.barOptions.series.push({
