@@ -85,7 +85,7 @@ app.controller('homeController', [
                     visitSeries.push(visit);
                 });
 
-                $scope.barOptions = ChartService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอกรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+                $scope.barOptions = ChartService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอกรายเดือน", categories, 'จำนวน');
                 $scope.barOptions.series.push({
                     name: 'op visit',
                     data: visitSeries,
@@ -137,7 +137,7 @@ app.controller('homeController', [
                     visitSeries.push(visit);
                 });
 
-                $scope.barOptions = ChartService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยในรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+                $scope.barOptions = ChartService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยในรายเดือน", categories, 'จำนวน');
                 $scope.barOptions.series.push({
                     name: 'ip visit',
                     data: visitSeries,
@@ -189,7 +189,7 @@ app.controller('homeController', [
         //         });
 
         //         var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-        //         $scope.barOptions = ChartService.initBarChart("referInBarContainer", "Refer In รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+        //         $scope.barOptions = ChartService.initBarChart("referInBarContainer", "Refer In รายเดือน", categories, 'จำนวน');
         //         $scope.barOptions.series.push({
         //             name: 'referin',
         //             data: referinSeries,
@@ -219,7 +219,7 @@ app.controller('homeController', [
         //         });
 
         //         var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-        //         $scope.barOptions = ChartService.initBarChart("referOutBarContainer", "Refer Out รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+        //         $scope.barOptions = ChartService.initBarChart("referOutBarContainer", "Refer Out รายเดือน", categories, 'จำนวน');
         //         $scope.barOptions.series.push({
         //             name: 'referout',
         //             data: referoutSeries,
@@ -284,7 +284,7 @@ app.controller('homeController', [
                     color: '#200A3E',
                 }];
 
-                $scope.barOptions = ChartService.initBarChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+                $scope.barOptions = ChartService.initBarChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน", categories, 'จำนวน');
                 $scope.barOptions.series = series;
 
                 var chart = new Highcharts.Chart($scope.barOptions);
@@ -352,7 +352,7 @@ app.controller('homeController', [
                     color: '#57D1C9',
                 }];
 
-                $scope.barOptions = ChartService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+                $scope.barOptions = ChartService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน", categories, 'จำนวน');
                 $scope.barOptions.series = series;
 
                 let chart = new Highcharts.Chart($scope.barOptions);
@@ -413,7 +413,7 @@ app.controller('homeController', [
                 });
 
                 let categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย'];
-                $scope.barOptions = ChartService.initStackChart("referInBarContainer", "Refer In รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+                $scope.barOptions = ChartService.initStackChart("referInBarContainer", "Refer In รายเดือน", categories, 'จำนวน');
                 $scope.barOptions.series.push({
                     name: 'ER',
                     data: erData
@@ -459,7 +459,7 @@ app.controller('homeController', [
                 });
 
                 let categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย'];
-                $scope.barOptions = ChartService.initStackChart("referOutBarContainer", "Refer Out รายเดือน ปีงบ " + (year + 543), categories, 'จำนวน');
+                $scope.barOptions = ChartService.initStackChart("referOutBarContainer", "Refer Out รายเดือน", categories, 'จำนวน');
                 $scope.barOptions.series.push({
                     name: 'ER',
                     data: erData
