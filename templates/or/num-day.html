@@ -58,18 +58,18 @@
 									<tr style="font-size: 14px;">
 										<th style="width: 3%; text-align: center;" rowspan="3">ลำดับ</th>
 										<th style="width: 10%; text-align: center;" rowspan="3">วันที่</th>
-										<th style="width: 7%; text-align: center;" rowspan="3">ผป.(ราย)</th>
+										<th style="width: 7%; text-align: center;" rowspan="3">จน.ผู้ป่วย (ราย)</th>
 										<th style="width: 7%; text-align: center;" colspan="16">จำนวนการให้บริการ (ครั้ง)</th>
 									</tr>
 									<tr style="font-size: 12px;">
-										<th style="text-align: center;" colspan="3">Major/Minor</th>
+										<th style="text-align: center;" colspan="3">ประเภท</th>
 										<th style="text-align: center;" colspan="9">สาขา</th>
 										<th style="text-align: center;" colspan="4">ช่วงเวลา</th>
 									</tr>
 									<tr style="font-size: 12px;">
-										<th style="width: 7%; text-align: center;">เล็ก</th>
-										<th style="width: 7%; text-align: center;">ใหญ่</th>
-										<th style="width: 7%; text-align: center;">ไม่ระบุ</th>
+										<th style="width: 7%; text-align: center;">Minor</th>
+										<th style="width: 7%; text-align: center;">Major</th>
+										<th style="width: 7%; text-align: center;">อื่นๆ</th>
 										<th style="width: 7%; text-align: center;">SUR</th>
 										<th style="width: 7%; text-align: center;">OBS</th>		
 										<th style="width: 7%; text-align: center;">GYN</th>		
@@ -79,10 +79,10 @@
 										<th style="width: 7%; text-align: center;">NEURO</th>
 										<th style="width: 7%; text-align: center;">MAXILLO</th>
 										<th style="width: 7%; text-align: center;">อื่นๆ</th>
+										<th style="width: 7%; text-align: center;">ดึก</th>
 										<th style="width: 7%; text-align: center;">ก่อนเที่ยง</th>
 										<th style="width: 7%; text-align: center;">หลังเที่ยง</th>
 										<th style="width: 7%; text-align: center;">บ่าย</th>
-										<th style="width: 7%; text-align: center;">ดึก</th>
 									</tr>
 								<thead>
 								<tbody>
@@ -106,10 +106,10 @@
 										<td style="text-align: center;">{{ numday.max }}</td>
 										<td style="text-align: center;">{{ numday.oth }}</td>
 										
+										<td style="text-align: center;">{{ numday.night }}</td>
 										<td style="text-align: center;">{{ numday.morning }}</td>
 										<td style="text-align: center;">{{ numday.afternoon }}</td>
 										<td style="text-align: center;">{{ numday.evening }}</td>
-										<td style="text-align: center;">{{ numday.night }}</td>
 									</tr>
 
 								<?php } ?>
@@ -131,10 +131,10 @@
 										<td style="text-align: center;">{{ totalData.max }}</td>
 										<td style="text-align: center;">{{ totalData.oth }}</td>
 										
+										<td style="text-align: center;">{{ totalData.night }}</td>
 										<td style="text-align: center;">{{ totalData.morning }}</td>
 										<td style="text-align: center;">{{ totalData.afternoon }}</td>
 										<td style="text-align: center;">{{ totalData.evening }}</td>
-										<td style="text-align: center;">{{ totalData.night }}</td>
 									</tr>
 						
 								</tbody>
