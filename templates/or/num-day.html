@@ -56,16 +56,29 @@
 							<table class="table table-bordered table-striped">
 								<thead>
 									<tr style="font-size: 14px;">
-										<th style="width: 3%; text-align: center;">ลำดับ</th>
-										<th style="width: 10%; text-align: center;">วันที่</th>
-										<th style="width: 7%; text-align: center;">ทั้งหมด</th>
+										<th style="width: 3%; text-align: center;" rowspan="3">ลำดับ</th>
+										<th style="width: 10%; text-align: center;" rowspan="3">วันที่</th>
+										<th style="width: 7%; text-align: center;" rowspan="3">ผป.(ราย)</th>
+										<th style="width: 7%; text-align: center;" colspan="16">จำนวนการให้บริการ (ครั้ง)</th>
+									</tr>
+									<tr style="font-size: 12px;">
+										<th style="text-align: center;" colspan="3">Major/Minor</th>
+										<th style="text-align: center;" colspan="9">สาขา</th>
+										<th style="text-align: center;" colspan="4">ช่วงเวลา</th>
+									</tr>
+									<tr style="font-size: 12px;">
 										<th style="width: 7%; text-align: center;">เล็ก</th>
 										<th style="width: 7%; text-align: center;">ใหญ่</th>
-										<th style="width: 7%; text-align: center;">ทั่วไป</th>
-										<th style="width: 7%; text-align: center;">จักษุ</th>
-										<th style="width: 7%; text-align: center;">ออร์โธฯ</th>		
-										<th style="width: 7%; text-align: center;">C/S</th>		
-										<th style="width: 7%; text-align: center;">ศัลย์ฯ อื่นๆ</th>
+										<th style="width: 7%; text-align: center;">ไม่ระบุ</th>
+										<th style="width: 7%; text-align: center;">SUR</th>
+										<th style="width: 7%; text-align: center;">OBS</th>		
+										<th style="width: 7%; text-align: center;">GYN</th>		
+										<th style="width: 7%; text-align: center;">ENT</th>
+										<th style="width: 7%; text-align: center;">EYE</th>
+										<th style="width: 7%; text-align: center;">ORTHO</th>
+										<th style="width: 7%; text-align: center;">NEURO</th>
+										<th style="width: 7%; text-align: center;">MAXILLO</th>
+										<th style="width: 7%; text-align: center;">อื่นๆ</th>
 										<th style="width: 7%; text-align: center;">ก่อนเที่ยง</th>
 										<th style="width: 7%; text-align: center;">หลังเที่ยง</th>
 										<th style="width: 7%; text-align: center;">บ่าย</th>
@@ -79,14 +92,19 @@
 											{{ numday.operation_date | thdate }}
 										</td>
 										<td style="text-align: center;">{{ numday.num }}</td>
-										<td style="text-align: center;">{{ numday.small }}</td>
-										<td style="text-align: center;">{{ numday.large }}</td>
+										<td style="text-align: center;">{{ numday.miner }}</td>
+										<td style="text-align: center;">{{ numday.major }}</td>
 										<td style="text-align: center;">{{ numday.other }}</td>
 
+										<td style="text-align: center;">{{ numday.sur }}</td>
+										<td style="text-align: center;">{{ numday.obs }}</td>
+										<td style="text-align: center;">{{ numday.gyn }}</td>
+										<td style="text-align: center;">{{ numday.ent }}</td>
 										<td style="text-align: center;">{{ numday.eye }}</td>
-										<td style="text-align: center;">{{ numday.orth }}</td>
-										<td style="text-align: center;">{{ numday.cs }}</td>
-										<td style="text-align: center;">{{ numday.gen }}</td>
+										<td style="text-align: center;">{{ numday.ort }}</td>
+										<td style="text-align: center;">{{ numday.neu }}</td>
+										<td style="text-align: center;">{{ numday.max }}</td>
+										<td style="text-align: center;">{{ numday.oth }}</td>
 										
 										<td style="text-align: center;">{{ numday.morning }}</td>
 										<td style="text-align: center;">{{ numday.afternoon }}</td>
@@ -99,14 +117,19 @@
 									<tr>
 										<td style="text-align: center;" colspan="2">รวม</td>
 										<td style="text-align: center;">{{ totalData.num }}</td>
-										<td style="text-align: center;">{{ totalData.small }}</td>
-										<td style="text-align: center;">{{ totalData.large }}</td>
+										<td style="text-align: center;">{{ totalData.miner }}</td>
+										<td style="text-align: center;">{{ totalData.major }}</td>
 										<td style="text-align: center;">{{ totalData.other }}</td>
 
+										<td style="text-align: center;">{{ totalData.sur }}</td>
+										<td style="text-align: center;">{{ totalData.obs }}</td>
+										<td style="text-align: center;">{{ totalData.gyn }}</td>
+										<td style="text-align: center;">{{ totalData.ent }}</td>
 										<td style="text-align: center;">{{ totalData.eye }}</td>
-										<td style="text-align: center;">{{ totalData.orth }}</td>
-										<td style="text-align: center;">{{ totalData.cs }}</td>
-										<td style="text-align: center;">{{ totalData.gen }}</td>
+										<td style="text-align: center;">{{ totalData.ort }}</td>
+										<td style="text-align: center;">{{ totalData.neu }}</td>
+										<td style="text-align: center;">{{ totalData.max }}</td>
+										<td style="text-align: center;">{{ totalData.oth }}</td>
 										
 										<td style="text-align: center;">{{ totalData.morning }}</td>
 										<td style="text-align: center;">{{ totalData.afternoon }}</td>

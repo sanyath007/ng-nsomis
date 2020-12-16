@@ -9,13 +9,18 @@ app.controller('orController', ['$scope', '$http', 'CONFIG', 'StringFormatServic
 	const initTotalData = function() {
 		return {
 			num: 0,
-			small: 0,
-			large: 0,
-			other: 0,
+			miner: 0,
+			major: 0,
+			other: 0,			
+			sur: 0,
+			obs: 0,
+			gyn: 0,
+			ent: 0,
 			eye: 0,
-			orth: 0,
-			cs: 0,
-			gen: 0,
+			ort: 0,
+			neu: 0,
+			max: 0,
+			oth: 0,
 			morning: 0,
 			afternoon: 0,
 			evening: 0,
@@ -42,13 +47,18 @@ app.controller('orController', ['$scope', '$http', 'CONFIG', 'StringFormatServic
 
 			$scope.data.forEach((val, key) => {
 				$scope.totalData.num += parseInt(val.num);
-				$scope.totalData.small += parseInt(val.small);
-				$scope.totalData.large += parseInt(val.large);
+				$scope.totalData.miner += parseInt(val.miner);
+				$scope.totalData.major += parseInt(val.major);
 				$scope.totalData.other += parseInt(val.other);
+				$scope.totalData.sur += parseInt(val.sur);
+				$scope.totalData.obs += parseInt(val.obs);
+				$scope.totalData.gyn += parseInt(val.gyn);
+				$scope.totalData.ent += parseInt(val.ent);
 				$scope.totalData.eye += parseInt(val.eye);
-				$scope.totalData.orth += parseInt(val.orth);
-				$scope.totalData.cs += parseInt(val.cs);
-				$scope.totalData.gen += parseInt(val.gen);
+				$scope.totalData.ort += parseInt(val.ort);
+				$scope.totalData.neu += parseInt(val.neu);
+				$scope.totalData.max += parseInt(val.max);
+				$scope.totalData.oth += parseInt(val.oth);
 				$scope.totalData.morning += parseInt(val.morning);
 				$scope.totalData.afternoon += parseInt(val.afternoon);
 				$scope.totalData.evening += parseInt(val.evening);
