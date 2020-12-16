@@ -72,7 +72,6 @@ app.controller('homeController', [
             if(e) e.preventDefault();
             
             let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-            console.log(year);
 
             ChartService.getSeriesData('/op/visit/', year)
             .then(function(res) {
@@ -102,7 +101,6 @@ app.controller('homeController', [
             if(e) e.preventDefault();
             
             let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-            console.log(year);
 
             ChartService.getSeriesData('/op/visit-type/', year)
             .then(function(res) {
@@ -124,7 +122,6 @@ app.controller('homeController', [
             if(e) e.preventDefault();
             
             let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-            console.log(year);
             
             ChartService.getSeriesData('/dashboard/ip-visit-year/', year)
             .then(function(res) {
@@ -154,7 +151,6 @@ app.controller('homeController', [
             if(e) e.preventDefault();
             
             let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-            console.log(year);
             
             ChartService.getSeriesData('/dashboard/ip-class-year/', year)
             .then(function(res) {
@@ -176,7 +172,6 @@ app.controller('homeController', [
         //     if(e) e.preventDefault();
             
         //     let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-        //     console.log(year);
             
         //     ChartService.getSeriesData('/op/referin/', year)
         //     .then(function(res) {
@@ -236,7 +231,6 @@ app.controller('homeController', [
             if(e) e.preventDefault();
             
             let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-            console.log(year);
             
             ChartService.getSeriesData('/er/visit/', year)
             .then(function(res) {
@@ -297,7 +291,6 @@ app.controller('homeController', [
             if(e) e.preventDefault();
             
             let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-            console.log(year);
             
             ChartService.getSeriesData('/er/emergency/', year)
             .then(function(res) {
@@ -319,7 +312,6 @@ app.controller('homeController', [
             if(e) e.preventDefault();
             
             let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-            console.log(year);
             
             ChartService.getSeriesData('/or/visit/', year)
             .then(function(res) {
@@ -339,11 +331,11 @@ app.controller('homeController', [
                 });
 
                 let series = [{
-                    name: 'ผ่าตัดเล็ก',
+                    name: 'Minor',
                     data: minerData,
                     color: '#e41749',
                 }, {
-                    name: 'ผ่าตัดใหญ่',
+                    name: 'Major',
                     data: majorData,
                     color: '#f29c2b',
                 }, {
@@ -365,7 +357,6 @@ app.controller('homeController', [
             if(e) e.preventDefault();
             
             let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-            console.log(year);
             
             ChartService.getSeriesData('/or/or-type/', year)
             .then(function(res) {
@@ -387,7 +378,6 @@ app.controller('homeController', [
             if(e) e.preventDefault();
             
             let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-            console.log(year);
             
             ChartService.getSeriesData('/refer/referin-year/', year)
             .then(function(res) {            
@@ -433,7 +423,6 @@ app.controller('homeController', [
             if(e) e.preventDefault();
             
             let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-            console.log(year);
             
             ChartService.getSeriesData('/refer/referout-year/', year)
             .then(function(res) {

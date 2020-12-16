@@ -264,7 +264,7 @@ app.controller('dashmonthController', [
             .then(function(res) {
                 let {series, categories} = ChartService.createStackedDataSeries(
                     [
-                        { name: 'Miner', prop: 'miner', color: '#8134af' }, 
+                        { name: 'Minor', prop: 'miner', color: '#8134af' }, 
                         { name: 'Major', prop: 'major', color: '#e41749' },
                         { name: 'อื่นๆ', prop: 'other', color: '#57D1C9' }
                     ],
@@ -290,8 +290,7 @@ app.controller('dashmonthController', [
                         : moment().format('YYYY-MM');
 
             ChartService.getSeriesData('/dashboard/or-type/', month)
-            .then(function(res) {                
-                console.log(res);
+            .then(function(res) {
                 $scope.pieOptions = ChartService.initPieChart("orTypePieContainer", "สัดส่วนผู้รับบริการผ่าตัด ตามประเภทการผ่าตัด", "", "สัดส่วนตามประเภทการผ่าตัด");
 
                 res.data.forEach((value, key) => {
