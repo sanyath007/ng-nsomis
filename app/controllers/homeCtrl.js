@@ -315,24 +315,24 @@ app.controller('homeController', [
             
             ChartService.getSeriesData('/or/visit/', year)
             .then(function(res) {
-                let minerData = [];
+                let minorData = [];
                 let majorData = [];
                 let otherData = [];
                 let categories = ChartService.createYearlyCategories();
 
                 res.data.visit.forEach((value, key) => {
-                    let miner = value.miner ? parseInt(value.miner) : 0;
+                    let minor = value.minor ? parseInt(value.minor) : 0;
                     let major = value.major ? parseInt(value.major) : 0;
                     let other = value.other ? parseInt(value.other) : 0;
 
-                    minerData.push(miner);
+                    minorData.push(minor);
                     majorData.push(major);
                     otherData.push(other);
                 });
 
                 let series = [{
                     name: 'Minor',
-                    data: minerData,
+                    data: minorData,
                     color: '#e41749',
                 }, {
                     name: 'Major',
@@ -344,7 +344,7 @@ app.controller('homeController', [
                     color: '#57D1C9',
                 }];
 
-                $scope.barOptions = ChartService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน", categories, 'จำนวน');
+                $scope.barOptions = ChartService.initStackChart("orVisitBarContainer", "ยอดผู้รับบริการรายเดือน", categories, 'จำนวน');
                 $scope.barOptions.series = series;
 
                 let chart = new Highcharts.Chart($scope.barOptions);

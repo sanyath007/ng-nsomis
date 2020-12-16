@@ -264,7 +264,7 @@ app.controller('dashmonthController', [
             .then(function(res) {
                 let {series, categories} = ChartService.createStackedDataSeries(
                     [
-                        { name: 'Minor', prop: 'miner', color: '#8134af' }, 
+                        { name: 'Minor', prop: 'minor', color: '#8134af' }, 
                         { name: 'Major', prop: 'major', color: '#e41749' },
                         { name: 'อื่นๆ', prop: 'other', color: '#57D1C9' }
                     ],
@@ -273,7 +273,7 @@ app.controller('dashmonthController', [
                     { name: 'm', value: month }
                 );
 
-                $scope.barOptions = ChartService.initBarChart("orVisitBarContainer", "ยอดผู้รับบริการ รายวัน", categories, 'จำนวน');
+                $scope.barOptions = ChartService.initStackChart("orVisitBarContainer", "ยอดผู้รับบริการ รายวัน", categories, 'จำนวน');
                 $scope.barOptions.series = series;
 
                 let chart = new Highcharts.Chart($scope.barOptions);
