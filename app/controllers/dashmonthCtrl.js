@@ -264,8 +264,8 @@ app.controller('dashmonthController', [
             .then(function(res) {
                 let {series, categories} = ChartService.createStackedDataSeries(
                     [
-                        { name: 'ผ่าตัดเล็ก', prop: 'small', color: '#8134af' }, 
-                        { name: 'ผ่าตัดใหญ่', prop: 'large', color: '#e41749' },
+                        { name: 'Miner', prop: 'miner', color: '#8134af' }, 
+                        { name: 'Major', prop: 'major', color: '#e41749' },
                         { name: 'อื่นๆ', prop: 'other', color: '#57D1C9' }
                     ],
                     res.data,

@@ -323,28 +323,28 @@ app.controller('homeController', [
             
             ChartService.getSeriesData('/or/visit/', year)
             .then(function(res) {
-                let smallData = [];
-                let largeData = [];
+                let minerData = [];
+                let majorData = [];
                 let otherData = [];
                 let categories = ChartService.createYearlyCategories();
 
                 res.data.visit.forEach((value, key) => {
-                    let small = value.small ? parseInt(value.small) : 0;
-                    let large = value.large ? parseInt(value.large) : 0;
+                    let miner = value.miner ? parseInt(value.miner) : 0;
+                    let major = value.major ? parseInt(value.major) : 0;
                     let other = value.other ? parseInt(value.other) : 0;
 
-                    smallData.push(small);
-                    largeData.push(large);
+                    minerData.push(miner);
+                    majorData.push(major);
                     otherData.push(other);
                 });
 
                 let series = [{
                     name: 'ผ่าตัดเล็ก',
-                    data: smallData,
+                    data: minerData,
                     color: '#e41749',
                 }, {
                     name: 'ผ่าตัดใหญ่',
-                    data: largeData,
+                    data: majorData,
                     color: '#f29c2b',
                 }, {
                     name: 'อื่นๆ',
@@ -369,8 +369,6 @@ app.controller('homeController', [
             
             ChartService.getSeriesData('/or/or-type/', year)
             .then(function(res) {
-                var dataSeries = [];
-
                 $scope.pieOptions = ChartService.initPieChart("orTypePieContainer", "สัดส่วนผู้รับบริการผ่าตัด ตามประเภทการผ่าตัด", "", "สัดส่วนตามประเภทการผ่าตัด");
 
                 res.data.ortype.forEach((value, key) => {
@@ -379,7 +377,7 @@ app.controller('homeController', [
                     });
                 });
 
-                var chart = new Highcharts.Chart($scope.pieOptions);
+                let chart = new Highcharts.Chart($scope.pieOptions);
             }, function(err) {
                 console.log(err);
             });
