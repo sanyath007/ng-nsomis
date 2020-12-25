@@ -88,5 +88,9 @@ app.controller('ipController', ['$scope', '$http', 'CONFIG', 'StringFormatServic
 		}, err => {
 			console.log(err)
 		});
-	}
+	};
+
+	$scope.getPtDchByWard = function(e) {
+
+	};
 }]);
