@@ -59,7 +59,7 @@
 									<th style="text-align: center;" rowspan="2">วอร์ด</th>
 									<th style="width: 12%; text-align: center;" rowspan="2">AdjRW</th>
 									<th style="width: 12%; text-align: center;" colspan="2">จน.คิดตามการจำหน่าย</th>
-									<th style="width: 12%; text-align: center;" colspan="2">จน.คิดตามการการนอน</th>
+									<th style="width: 12%; text-align: center;" colspan="2">จน.คิดตามการดูแลจริง</th>
 								</tr>
 								<tr>
 									<th style="width: 12%; text-align: center;">ผป.</th>
@@ -79,7 +79,7 @@
 									<td style="text-align: center;">{{ row.admdate }}</td>
 									<td style="text-align: center;">{{ row.sumPt }}</td>
 									<td style="text-align: center;">
-										<a href="ip/ptdchbyward/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
 											{{ row.sumAdm }}
 										</a>
 									</td>

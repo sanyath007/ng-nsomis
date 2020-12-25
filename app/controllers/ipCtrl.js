@@ -40,7 +40,6 @@ app.controller('ipController', [
 
 			$http.get(`${CONFIG.apiUrl}/ip/admdate/${startDate}/${endDate}`)
 			.then(res => {
-				console.log(res)
 				let admdate = res.data.admdate
 				let wardStat = res.data.wardStat
 
@@ -104,7 +103,25 @@ app.controller('ipController', [
 			let edate = $routeParams.edate;
 			let ward = $routeParams.ward;
 
-			$http.get(`${CONFIG.apiUrl}/ip/ptdcbyward/${sdate}/${edate}/${ward}`)
+			$http.get(`${CONFIG.apiUrl}/ip/ptdchbyward/${sdate}/${edate}/${ward}`)
+			.then(res => {
+				$scope.data = res.data.data;
+				$scope.ward = res.data.ward;
+
+				$scope.totalAdmdate = $scope.data.reduce((sumAdmDate, curVal) => {
+					return sumAdmDate + parseInt(curVal.admdate);
+				}, 0);
+			}, err => {
+				console.log(err);
+			})
+		};
+		
+		$scope.getPtLosByCare = function(e) {
+			let sdate = $routeParams.sdate;
+			let edate = $routeParams.edate;
+			let ward = $routeParams.ward;
+
+			$http.get(`${CONFIG.apiUrl}/ip/ptlosbycare/${sdate}/${edate}/${ward}`)
 			.then(res => {
 				$scope.data = res.data.data;
 				$scope.ward = res.data.ward;

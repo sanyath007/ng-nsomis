@@ -35,6 +35,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/ip/ptdchbyward.html',
 		controller: 'ipController'
 	})
+	.when('/ip/ptlosbycare/:sdate/:edate/:ward', {
+		templateUrl: 'templates/ip/ptlosbycare.html',
+		controller: 'ipController'
+	})
 	.when('/er/sum-period', {
 		templateUrl: 'templates/er/sum-period.html',
 		controller: 'erController'

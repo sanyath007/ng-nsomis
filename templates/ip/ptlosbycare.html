@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="ipController"
-	ng-init="getPtDchByWard($event);"
+	ng-init="getPtLosByCare($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -12,7 +12,7 @@
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-bed mr-1"></i>
-							รายชื่อผู้ป่วยที่จำหน่ายในวอร์ด (นับเฉพาะที่ถูกจำหน่ายในวอร์ด)
+							รายชื่อผู้ป่วยที่ได้รับการดูแลโดยวอร์ด (นับทุกรายที่วอร์ดได้ดูแล)
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
@@ -26,7 +26,7 @@
 						<div class="table-responsive">
 							<table class="table table-bordered table-striped">
 								<thead>
-									<tr style="font-size: 14px;">
+									<tr>
 										<th style="width: 3%; text-align: center;">ลำดับ</th>
 										<th style="width: 6%; text-align: center;">AN</th>
 										<th style="width: 6%; text-align: center;">HN</th>
@@ -36,7 +36,8 @@
 										<th style="width: 6%; text-align: center;">เวลา Admit</th>
 										<th style="width: 8%; text-align: center;">วันที่ D/C</th>
 										<th style="width: 6%; text-align: center;">เวลา D/C</th>
-										<th style="width: 5%; text-align: center;">วันนอน</th>
+										<th style="width: 6%; text-align: center;">วันนอน</th>
+										<th style="width: 10%; text-align: center;">D/C วอร์ด</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -50,11 +51,15 @@
 										<td style="text-align: center;">{{ row.regtime }}</td>
 										<td style="text-align: center;">{{ row.dchdate | thdate }}</td>
 										<td style="text-align: center;">{{ row.dchtime }}</td>
-										<td style="text-align: center;">{{ row.admdate }}</td>
+										<td style="text-align: center;">
+											{{ (row.admdate > 0) ? row.admdate : row.admit_hour + 'Hr.' }}
+										</td>
+										<td>{{ row.wardname }}</td>
 									</tr>
 									<tr>
 										<td style="text-align: center;" colspan="9">รวมวันนอน</td>
 										<td style="text-align: center;">{{ totalAdmdate }}</td>
+										<td></td>
 									</tr>
 								</tbody>
 							</table>
