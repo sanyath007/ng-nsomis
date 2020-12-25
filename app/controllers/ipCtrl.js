@@ -1,11 +1,12 @@
 
 app.controller('ipController', [
+	'$rootScope',
 	'$scope',
 	'$http',
 	'$routeParams',
 	'CONFIG',
 	'StringFormatService',
-	function($scope, $http, $routeParams, CONFIG, StringFormatService)
+	function($rootScope, $scope, $http, $routeParams, CONFIG, StringFormatService)
 	{
 		$scope.sdate = '';
 		$scope.edate = '';
@@ -99,6 +100,8 @@ app.controller('ipController', [
 		};
 
 		$scope.getPtDchByWard = function(e) {
+			if(!$rootScope.isLogedIn) $rootScope.showLogin();
+
 			let sdate = $routeParams.sdate;
 			let edate = $routeParams.edate;
 			let ward = $routeParams.ward;
@@ -117,6 +120,8 @@ app.controller('ipController', [
 		};
 		
 		$scope.getPtLosByCare = function(e) {
+			if(!$rootScope.isLogedIn) $rootScope.showLogin();
+
 			let sdate = $routeParams.sdate;
 			let edate = $routeParams.edate;
 			let ward = $routeParams.ward;
