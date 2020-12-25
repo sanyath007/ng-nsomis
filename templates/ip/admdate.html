@@ -74,7 +74,7 @@
 									<td>{{ row.ward + '-' + row.name }}</td>
 									<td style="text-align: center;">{{ row.rw }}</td>
 									<td style="text-align: center;">
-										<a href="ip/ptdchbyward">{{ row.dc_num }}</a>
+										<a href="ip/ptdchbyward/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">{{ row.dc_num }}</a>
 									</td>
 									<td style="text-align: center;">{{ row.admdate }}</td>
 									<td style="text-align: center;">{{ row.sumPt }}</td>

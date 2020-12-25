@@ -32,7 +32,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		controller: 'ipController'
 	})
 	.when('/ip/ptdchbyward/:sdate/:edate/:ward', {
-		templateUrl: 'templates/ip/ptdchward.html',
+		templateUrl: 'templates/ip/ptdchbyward.html',
 		controller: 'ipController'
 	})
 	.when('/er/sum-period', {
