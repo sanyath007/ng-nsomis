@@ -66,8 +66,15 @@
                                     <tr ng-repeat="(index, row) in data">
                                         <td style="text-align: center;">{{ row.income }}</td>
                                         <td>{{ row.name }}</td>
-                                        <td style="text-align: center;">{{ row.sum_qty | currency:'':0 }}</td>
-                                        <td style="text-align: center;">{{ row.sum_price | currency:'':2 }}</td>
+                                        <td style="text-align: center;">
+                                            <a href="">
+                                                {{ row.sum_qty | currency:'':0 }}
+                                            </a>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a href="">
+                                                {{ row.sum_price | currency:'':2 }}</td>
+                                            </a>
                                     </tr>
                                     <tr>
                                         <td style="text-align: center;" colspan="2">รวม</td>
