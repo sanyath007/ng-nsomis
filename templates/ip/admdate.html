@@ -77,12 +77,12 @@
 										<a href="ip/ptdchbyward/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">{{ row.dc_num }}</a>
 									</td>
 									<td style="text-align: center;">{{ row.admdate }}</td>
-									<td style="text-align: center;">{{ row.sumPt }}</td>
 									<td style="text-align: center;">
 										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
-											{{ row.sumAdm }}
+											{{ row.sumPt }}
 										</a>
 									</td>
+									<td style="text-align: center;">{{ row.sumAdm }}</td>
 								</tr>
 							</tbody>
 						</table>

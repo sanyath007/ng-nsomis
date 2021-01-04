@@ -100,7 +100,7 @@ app.controller('ipController', [
 		};
 
 		$scope.getPtDchByWard = function(e) {
-			if(!$rootScope.isLogedIn) $rootScope.showLogin();
+			// if(!$rootScope.isLogedIn) $rootScope.showLogin();
 
 			let sdate = $routeParams.sdate;
 			let edate = $routeParams.edate;
@@ -120,7 +120,7 @@ app.controller('ipController', [
 		};
 		
 		$scope.getPtLosByCare = function(e) {
-			if(!$rootScope.isLogedIn) $rootScope.showLogin();
+			// if(!$rootScope.isLogedIn) $rootScope.showLogin();
 
 			let sdate = $routeParams.sdate;
 			let edate = $routeParams.edate;
