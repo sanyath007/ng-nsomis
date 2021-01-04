@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="orController"
-	ng-init="getExpenses($event);"
+	ng-init="getExpensesDetail($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -12,40 +12,11 @@
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-user-nurse mr-1"></i>
-							มูลค่าค่าใช้จ่ายแยกประเภท
+							รายละเอียดค่าใช้จ่าย
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
-
-						<form action="" method="POST" class="form-inline">
-							<div class="form-group">
-								<label>วันที่ :</label>
-								<input
-									type="text"
-									id="sdate"
-									name="sdate"								
-									ng-model="sdate"								
-									class="form-control mr-2 ml-2"
-									autocomplete="off"
-								>
-							</div>
-
-							<div class="form-group">
-								<label>ถึงวันที่ :</label>
-								<input
-									type="text"
-									id="edate"
-									name="edate"
-									ng-model="edate"
-									class="form-control mr-2 ml-2"
-									autocomplete="off"
-								>
-							</div>
-
-							<button ng-click="getExpenses($event)" class="btn btn-primary">ตกลง</button>
-					
-						</form>
-
+						<b>หมวด</b> {{ income.income+ '-' +income.name }}
 					</div><!-- /.card-body -->
 				</div><!-- /.card -->
 
@@ -56,22 +27,18 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: center; width: 6%;">รหัส</th>
-										<th style="text-align: center;">หมวดค่าใช้จ่าย</th>
-										<th style="text-align: center; width: 8%;">ราคา</th>
+                                        <th style="text-align: center; width: 8%;">รหัส</th>
+                                        <th style="text-align: center;">รายการค่าใช้จ่าย</th>
+                                        <th style="text-align: center; width: 8%;">ราคา</th>
                                         <th style="text-align: center; width: 10%;">จำนวนที่ใช้</th>
                                         <th style="text-align: center; width: 10%;">ค่าใช้จ่าย</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="(index, row) in data">
-                                        <td style="text-align: center;">{{ row.income }}</td>
-										<td>
-											<a href="or/expenses-detail/{{ row.income }}/{{ sdate | dbdate }}/{{ edate | dbdate }}">
-												{{ row.name }}
-											</a>
-										</td>
-										<td style="text-align: center;">{{ row.sum_price | currency:'':2 }}</td>
+                                        <td style="text-align: center;">{{ row.icode }}</td>
+                                        <td>{{ row.name }}</td>
+                                        <td style="text-align: center;">{{ row.price | currency:'':2 }}</td>
                                         <td style="text-align: center;">{{ row.sum_qty | currency:'':0 }}</td>
                                         <td style="text-align: center;">{{ row.sum_total | currency:'':2 }}</td>
                                     </tr>
@@ -91,21 +58,3 @@
 		</div><!-- Main row -->
 	</div><!-- /.container-fluid-->
 </section><!-- /.content -->
-
-<script type="text/javascript">
-	$(function() {
-		$('#sdate').datepicker({
-			autoclose: true,
-			language: 'th',
-			format: 'dd/mm/yyyy',
-			thaiyear: true
-		}).datepicker('update', new Date());
-
-		$('#edate').datepicker({
-			autoclose: true,
-			language: 'th',
-			format: 'dd/mm/yyyy',
-			thaiyear: true,
-		}).datepicker('update', new Date());
-	});
-</script>

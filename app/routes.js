@@ -51,6 +51,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/or/expenses.html',
 		controller: 'orController'
 	})
+	.when('/or/expenses-detail/:income/:sdate/:edate', {
+		templateUrl: 'templates/or/expenses-detail.html',
+		controller: 'orController'
+	})
 	.otherwise({
 		redirectTo: '/'
 	});

@@ -3,13 +3,15 @@ app.controller('orController', [
 	'$scope',
 	'$http',
 	'CONFIG',
+	'$routeParams',
 	'StringFormatService',
-	function($scope, $http, CONFIG, StringFormatService)
+	function($scope, $http, CONFIG, $routeParams, StringFormatService)
 	{
 		$scope.sdate = '';
 		$scope.edate = '';
 		$scope.data = [];
 		$scope.totalData = {};
+		$scope.income = {};
 		$scope.toDay = new Date();
 
 		const initTotalData = function() {
@@ -55,7 +57,6 @@ app.controller('orController', [
 
 			$http.get(`${CONFIG.apiUrl}/or/num-day/${startDate}/${endDate}`)
 			.then(res => {
-				console.log(res)
 				$scope.data = res.data.numdays;
 
 				$scope.data.forEach((val, key) => {
@@ -96,12 +97,34 @@ app.controller('orController', [
 
 			$http.get(`${CONFIG.apiUrl}/or/expenses/${startDate}/${endDate}`)
 			.then(res => {
-				console.log(res)
 				$scope.data = res.data;
 
 				$scope.data.forEach((val, key) => {
 					$scope.totalData.qty += parseInt(val.sum_qty);
-					$scope.totalData.price += parseInt(val.sum_price);
+					$scope.totalData.price += parseInt(val.sum_total);
+				});
+			}, err => {
+				console.log(err)
+			});
+		};
+
+		$scope.getExpensesDetail = function(e) {
+			if(e) e.preventDefault();
+
+			$scope.totalData = initTotalExpensesData();
+
+			let startDate = $routeParams.sdate;
+			let endDate = $routeParams.edate;
+			let income = $routeParams.income;
+
+			$http.get(`${CONFIG.apiUrl}/or/expenses/${income}/${startDate}/${endDate}`)
+			.then(res => {
+				$scope.data = res.data.expenses;
+				$scope.income = res.data.income;
+
+				$scope.data.forEach((val, key) => {
+					$scope.totalData.qty += parseInt(val.sum_qty);
+					$scope.totalData.price += parseInt(val.sum_total);
 				});
 			}, err => {
 				console.log(err)
