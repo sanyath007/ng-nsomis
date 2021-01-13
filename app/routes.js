@@ -55,6 +55,14 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/or/expenses-detail.html',
 		controller: 'orController'
 	})
+	.when('/pharma/ip', {
+		templateUrl: 'templates/pharma/ip.html',
+		controller: 'pharmaController'
+	})
+	.when('/pharma/op', {
+		templateUrl: 'templates/pharma/op.html',
+		controller: 'pharmaController'
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
