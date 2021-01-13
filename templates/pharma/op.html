@@ -16,7 +16,73 @@
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
-                    
+						<form action="" method="POST" class="form-inline">
+							<div class="form-group">
+								<label>วันที่ :</label>
+								<input
+									type="text"
+									id="sdate"
+									name="sdate"								
+									ng-model="sdate"								
+									class="form-control mr-2 ml-2"
+									autocomplete="off"
+								>
+							</div>
+
+							<div class="form-group">
+								<label>ถึงวันที่ :</label>
+								<input
+									type="text"
+									id="edate"
+									name="edate"
+									ng-model="edate"
+									class="form-control mr-2 ml-2"
+									autocomplete="off"
+								>
+							</div>
+
+							<button ng-click="getOp($event)" class="btn btn-primary">ตกลง</button>
+					
+						</form>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<div class="card-body">
+
+						<div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center; width: 6%;">ลำดับ</th>
+                                        <th style="text-align: center; width: 6%;">icode</th>
+										<th style="text-align: center;">ชื่อยา</th>
+										<th style="text-align: center; width: 15%;">ขนาด</th>
+                                        <th style="text-align: center; width: 15%;">หน่วย</th>
+                                        <th style="text-align: center; width: 10%;">จำนวนที่ใช้</th>
+                                        <th style="text-align: center; width: 10%;">ค่าใช้จ่าย</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="(index, row) in data">
+                                        <td style="text-align: center;">{{ index+1 }}</td>
+                                        <td style="text-align: center;">{{ row.icode }}</td>
+										<td>{{ row.drugName }}</td>
+                                        <td style="text-align: center;">{{ row.drugStrength }}</td>
+                                        <td style="text-align: center;">{{ row.drugUnits }}</td>
+                                        <td style="text-align: center;">{{ row.sum_qty | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ row.sum_price | currency:'':2 }}</td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td style="text-align: center;" colspan="3">รวม</td>
+                                        <td style="text-align: center;">{{ totalData.qty | currency:'':0 }}</td>
+                                        <td style="text-align: center;">{{ totalData.price | currency:'':2 }}</td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+						</div><!-- /.table-responsive -->
+						
                     </div><!-- /.card-body -->
 				</div><!-- /.card -->
 
