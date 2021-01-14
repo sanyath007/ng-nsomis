@@ -46,6 +46,7 @@
     "bootstrap-datepicker": "^1.9.0",
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
-    "ngstorage": "^0.3.11"
+    "ngstorage": "^0.3.11",
+    "select2": "^4.0.13"
   }
 }

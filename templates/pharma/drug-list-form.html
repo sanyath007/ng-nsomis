@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="pharmaController"
-	ng-init="getIp($event);"
+	ng-init="getDrugItems($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -17,24 +17,23 @@
 					</div><!-- /.card-header -->
 					<div class="card-body">
                         <form action="" method="POST" class="form-inline">
-							<div class="form-group">
-								<label>เลือกยา :</label>
+							<div class="form-group mx-2">
+								<label style="margin-right: 5px;">รายการยา : </label>
 								<select 
-									id="parcel_id" 
-									name="parcel_id"
-									ng-model="asset.parcel_id"
+									id="cboDrugItems" 
+									name="cboDrugItems"
+									ng-model="cboDrugItems"
 									class="form-control select2"
-									tabindex="2"
+									style="width: 800px;"
 								>
 									<option value="" selected="selected">-- กรุณาเลือก --</option>
-
-									<option value="">
-										...
+									<option ng-repeat="(index, drug) in drugItems" value="{{ drug.icode }}">
+										{{ drug.icode+ '-' +drug.name+ ' ' +drug.strength+ ' ' +drug.units }}
 									</option>
 								</select>
 							</div>
 
-							<button ng-click="getIp($event)" class="btn btn-primary">เพิ่มรายการ</button>
+							<button ng-click="addDrugToDrugList($event)" class="btn btn-primary">เพิ่มรายการ</button>
 					
 						</form>
 
@@ -53,19 +52,17 @@
 										<th style="text-align: center;">ชื่อยา</th>
 										<th style="text-align: center; width: 15%;">ขนาด</th>
                                         <th style="text-align: center; width: 15%;">หน่วย</th>
-                                        <th style="text-align: center; width: 10%;">จำนวนที่ใช้</th>
-                                        <th style="text-align: center; width: 10%;">ค่าใช้จ่าย</th>
+                                        <th style="text-align: center; width: 10%;">ราคา</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="(index, row) in data">
+                                    <tr ng-repeat="(index, row) in drugLists">
                                         <td style="text-align: center;">{{ index+1 }}</td>
                                         <td style="text-align: center;">{{ row.icode }}</td>
-										<td>{{ row.drugName }}</td>
-                                        <td style="text-align: center;">{{ row.drugStrength }}</td>
-                                        <td style="text-align: center;">{{ row.drugUnits }}</td>
-                                        <td style="text-align: center;">{{ row.sum_qty | currency:'':0 }}</td>
-										<td style="text-align: center;">{{ row.sum_price | currency:'':2 }}</td>
+										<td>{{ row.name }}</td>
+                                        <td style="text-align: center;">{{ row.strength }}</td>
+                                        <td style="text-align: center;">{{ row.units }}</td>
+                                        <td style="text-align: center;">{{ row.unitprice | currency:'':0 }}</td>
                                     </tr>
                                 </tbody>
                             </table>

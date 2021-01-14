@@ -8,7 +8,8 @@ var replace = require('gulp-string-replace');
 var versionTimeStamp = "" + Date.now();
 
 gulp.task('css', function() {
-    return gulp.src([
+    return gulp.src([        
+        'node_modules/select2/dist/css/select2.min.css',
         'node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css',
         'node_modules/admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
         'node_modules/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css',
@@ -50,6 +51,7 @@ gulp.task('venderjs', function() {
         'node_modules/angular-animate/angular-animate.min.js',
         'node_modules/angularjs-toaster/toaster.min.js',
         'node_modules/ngstorage/ngstorage.min.js',
+        'node_modules/select2/dist/js/select2.full.min.js',
     ])
     .pipe(uglify())
     .pipe(concat('vendor-bundle.js'))

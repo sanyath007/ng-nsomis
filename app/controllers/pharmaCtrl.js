@@ -8,6 +8,30 @@ app.controller('pharmaController', [
     function($rootScope, $scope, $http, CONFIG, StringFormatService, toaster)
     {
         $scope.data = [];
+        $scope.drugLists = [];
+        $scope.drugItems = [];
+        $scope.cboDrugItems = '';
+
+        $scope.getDrugItems = function(e) {
+            if (e) e.preventDefault();
+
+            $http.get(`${CONFIG.apiUrl}/drug-items`)
+            .then(res => {
+                console.log(res);
+				$scope.drugItems = res.data.drugItems;
+			}, err => {
+				console.log(err)
+			});
+        };
+
+        $scope.addDrugToDrugList = function(e) {
+            if (e) e.preventDefault();
+
+            const dl = $scope.drugItems.find(drug => drug.icode === $scope.cboDrugItems);
+            const { icode, name, strength, units, unitprice } = dl;
+
+            $scope.drugLists.push({ icode, name, strength, units, unitprice });
+        };
 
         $scope.getOp = function(e) {
             if(e) e.preventDefault();
