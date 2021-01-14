@@ -56,14 +56,12 @@ app.controller('pharmaController', [
                 icodes: createDrugListsToDB()
             };
 
-            console.log(data);
-
-            // $http.post(`${CONFIG.apiUrl}/drug-items`, data)
-            // .then(res => {
-            //     console.log(res);
-			// }, err => {
-			// 	console.log(err)
-			// });
+            $http.post(`${CONFIG.apiUrl}/pharma/store-drug-list`, data)
+            .then(res => {
+                console.log(res);
+			}, err => {
+				console.log(err)
+			});
         };
 
         $scope.addDrugToDrugList = function(e) {
