@@ -11,6 +11,11 @@ app.controller('pharmaController', [
         $scope.drugLists = [];
         $scope.drugItems = [];
         $scope.cboDrugItems = '';
+        $scope.userDrugLists = {
+            user_id: '',
+            type: '',
+            icodes: ''
+        };
 
         $scope.getDrugItems = function(e) {
             if (e) e.preventDefault();
@@ -44,9 +49,10 @@ app.controller('pharmaController', [
                 alert('ไม่พบรายการยาของคุณ!!');
                 return false;
             }
+
             let data = {
-                user_id: 'sanyath',
-                type: 'opd',
+                user_id: $scope.userDrugLists.user_id,
+                type: $scope.userDrugLists.type,
                 icodes: createDrugListsToDB()
             };
 
