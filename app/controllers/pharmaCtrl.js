@@ -3,9 +3,10 @@ app.controller('pharmaController', [
     '$scope',
     '$http',
     'CONFIG',
+    '$localStorage',
     'StringFormatService',
     'toaster',
-    function($rootScope, $scope, $http, CONFIG, StringFormatService, toaster)
+    function($rootScope, $scope, $http, CONFIG, $localStorage, StringFormatService, toaster)
     {
         $scope.data = [];
         $scope.drugLists = [];
@@ -13,6 +14,7 @@ app.controller('pharmaController', [
         $scope.cboDrugItems = '';
         $scope.userDrugLists = {
             user_id: '',
+            name: '',
             type: '',
             icodes: ''
         };
@@ -50,18 +52,26 @@ app.controller('pharmaController', [
                 return false;
             }
 
-            let data = {
-                user_id: $scope.userDrugLists.user_id,
-                type: $scope.userDrugLists.type,
-                icodes: createDrugListsToDB()
-            };
+            if ($localStorage.currentUser) {
+                const { username } = $localStorage.currentUser;
 
-            $http.post(`${CONFIG.apiUrl}/pharma/store-drug-list`, data)
-            .then(res => {
-                console.log(res);
-			}, err => {
-				console.log(err)
-			});
+                let data = {
+                    user_id: username,
+                    name: $scope.userDrugLists.name,
+                    type: $scope.userDrugLists.type,
+                    icodes: createDrugListsToDB()
+                };
+    
+                $http.post(`${CONFIG.apiUrl}/pharma/store-drug-list`, data)
+                .then(res => {
+                    console.log(res);
+                }, err => {
+                    console.log(err)
+                });
+            } else {
+                alert('คุณไม่สามารถบันทึกข้อมูลได้ กรุณา Log in เข้าสู่ระบบก่อน!!');
+                return false;
+            }
         };
 
         $scope.addDrugToDrugList = function(e) {
