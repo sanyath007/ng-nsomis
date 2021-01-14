@@ -1,0 +1,100 @@
+<section
+	class="content"
+	ng-controller="pharmaController"
+	ng-init="getIp($event);"
+>
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-user-nurse mr-1"></i>
+							สร้างรายการยา
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+                        <form action="" method="POST" class="form-inline">
+							<div class="form-group">
+								<label>เลือกยา :</label>
+								<select 
+									id="parcel_id" 
+									name="parcel_id"
+									ng-model="asset.parcel_id"
+									class="form-control select2"
+									tabindex="2"
+								>
+									<option value="" selected="selected">-- กรุณาเลือก --</option>
+
+									<option value="">
+										...
+									</option>
+								</select>
+							</div>
+
+							<button ng-click="getIp($event)" class="btn btn-primary">เพิ่มรายการ</button>
+					
+						</form>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<div class="card-body">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center; width: 6%;">ลำดับ</th>
+                                        <th style="text-align: center; width: 6%;">icode</th>
+										<th style="text-align: center;">ชื่อยา</th>
+										<th style="text-align: center; width: 15%;">ขนาด</th>
+                                        <th style="text-align: center; width: 15%;">หน่วย</th>
+                                        <th style="text-align: center; width: 10%;">จำนวนที่ใช้</th>
+                                        <th style="text-align: center; width: 10%;">ค่าใช้จ่าย</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="(index, row) in data">
+                                        <td style="text-align: center;">{{ index+1 }}</td>
+                                        <td style="text-align: center;">{{ row.icode }}</td>
+										<td>{{ row.drugName }}</td>
+                                        <td style="text-align: center;">{{ row.drugStrength }}</td>
+                                        <td style="text-align: center;">{{ row.drugUnits }}</td>
+                                        <td style="text-align: center;">{{ row.sum_qty | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ row.sum_price | currency:'':2 }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div><!-- /.table-responsive -->
+
+                    </div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->
+
+<script type="text/javascript">
+	$(function() {
+		$('.select2').select2();
+
+		$('#sdate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+
+		$('#edate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true,
+		}).datepicker('update', new Date());
+	});
+</script>
