@@ -24,6 +24,21 @@ app.controller('pharmaController', [
 			});
         };
 
+        $scope.storeDrugList = function(e) {
+            if (e) e.preventDefault();
+            if ($scope.drugLists.length === 0) {
+                alert('ไม่พบรายการยาของคุณ!!');
+                return false;
+            }
+
+            $http.post(`${CONFIG.apiUrl}/drug-items`, $scope.drugLists)
+            .then(res => {
+                console.log(res);
+			}, err => {
+				console.log(err)
+			});
+        };
+
         $scope.addDrugToDrugList = function(e) {
             if (e) e.preventDefault();
 
