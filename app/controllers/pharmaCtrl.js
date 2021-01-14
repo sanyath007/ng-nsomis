@@ -77,14 +77,25 @@ app.controller('pharmaController', [
         $scope.addDrugToDrugList = function(e) {
             if (e) e.preventDefault();
 
+            if ($scope.drugLists.find(drug => drug.icode === $scope.cboDrugItems)) {
+                alert('รายการที่คุณเลือกมีอยู่แล้ว!!');
+                return false;
+            }
+
             const dl = $scope.drugItems.find(drug => drug.icode === $scope.cboDrugItems);
+
             const { icode, name, strength, units, unitprice } = dl;
 
             $scope.drugLists.push({ icode, name, strength, units, unitprice });
         };
 
         $scope.removeItemFromDrugList = function(icode) {
-            console.log(icode);
+            $scope.drugLists.forEach((drug, index) => {
+                if(drug.icode === icode) {
+                    $scope.drugLists.splice(index, 1);
+                    return false;
+                }
+            });
         };
 
         $scope.getOp = function(e) {
