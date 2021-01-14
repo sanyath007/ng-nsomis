@@ -83,6 +83,10 @@ app.controller('pharmaController', [
             $scope.drugLists.push({ icode, name, strength, units, unitprice });
         };
 
+        $scope.removeItemFromDrugList = function(icode) {
+            console.log(icode);
+        };
+
         $scope.getOp = function(e) {
             if(e) e.preventDefault();
 
@@ -100,7 +104,7 @@ app.controller('pharmaController', [
 			}, err => {
 				console.log(err)
 			});
-        }
+        };
         
         $scope.getIp = function(e) {
             if(e) e.preventDefault();

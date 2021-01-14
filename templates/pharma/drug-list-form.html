@@ -80,6 +80,7 @@
 										<th style="text-align: center; width: 15%;">ขนาด</th>
                                         <th style="text-align: center; width: 15%;">หน่วย</th>
                                         <th style="text-align: center; width: 10%;">ราคา</th>
+                                        <th style="text-align: center; width: 10%;">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,6 +91,11 @@
                                         <td style="text-align: center;">{{ row.strength }}</td>
                                         <td style="text-align: center;">{{ row.units }}</td>
                                         <td style="text-align: center;">{{ row.unitprice | currency:'':0 }}</td>
+										<td style="text-align: center;">
+											<a href="#" ng-click="removeItemFromDrugList(row.icode)">
+												<i class="fas fa-trash"></i> ลบ
+											</a>
+										</td>
                                     </tr>
                                 </tbody>
                             </table>
