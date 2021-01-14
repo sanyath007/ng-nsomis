@@ -24,19 +24,40 @@ app.controller('pharmaController', [
 			});
         };
 
+        const createDrugListsToDB = function () {
+            let icodes = "";
+
+            for(let i = 0; i < $scope.drugLists.length; i++) {
+                if(i !== $scope.drugLists.length - 1) {
+                    icodes += "'" +$scope.drugLists[i].icode+ "', "
+                } else {
+                    icodes += "'" +$scope.drugLists[i].icode+ "'"
+                }
+            }
+
+            return icodes;
+        };
+        
         $scope.storeDrugList = function(e) {
             if (e) e.preventDefault();
             if ($scope.drugLists.length === 0) {
                 alert('ไม่พบรายการยาของคุณ!!');
                 return false;
             }
+            let data = {
+                user_id: 'sanyath',
+                type: 'opd',
+                icodes: createDrugListsToDB()
+            };
 
-            $http.post(`${CONFIG.apiUrl}/drug-items`, $scope.drugLists)
-            .then(res => {
-                console.log(res);
-			}, err => {
-				console.log(err)
-			});
+            console.log(data);
+
+            // $http.post(`${CONFIG.apiUrl}/drug-items`, data)
+            // .then(res => {
+            //     console.log(res);
+			// }, err => {
+			// 	console.log(err)
+			// });
         };
 
         $scope.addDrugToDrugList = function(e) {
