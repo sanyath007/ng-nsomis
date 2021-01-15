@@ -3,10 +3,11 @@ app.controller('pharmaController', [
     '$scope',
     '$http',
     'CONFIG',
+    '$location',
     '$localStorage',
     'StringFormatService',
     'toaster',
-    function($rootScope, $scope, $http, CONFIG, $localStorage, StringFormatService, toaster)
+    function($rootScope, $scope, $http, CONFIG, $location, $localStorage, StringFormatService, toaster)
     {
         $scope.data = [];
         $scope.drugLists = [];
@@ -66,9 +67,13 @@ app.controller('pharmaController', [
                 $http.post(`${CONFIG.apiUrl}/pharma/store-drug-list`, data)
                 .then(res => {
                     console.log(res);
+                    toaster.pop('success', "", 'บันทึกข้อมูลสำเร็จ !!!');
                 }, err => {
                     console.log(err)
+                    toaster.pop('error', "", 'เกิดข้อผิดพลาด ไม่สามารถบันทึกข้อมูลได้ !!!');
                 });
+
+                $location.path("/pharma/user-druglists");
             } else {
                 alert('คุณไม่สามารถบันทึกข้อมูลได้ กรุณา Log in เข้าสู่ระบบก่อน!!');
                 return false;
@@ -100,7 +105,12 @@ app.controller('pharmaController', [
         };
 
         $scope.removeUserDrugList = function(id) {
+            if ($localStorage.currentUser) {
 
+            } else {
+                alert('คุณไม่สามารถบันทึกข้อมูลได้ กรุณา Log in เข้าสู่ระบบก่อน!!');
+                return false;
+            }
         };
 
         $scope.getUserDrugLists = function(e) {
@@ -109,7 +119,6 @@ app.controller('pharmaController', [
 
                 $http.get(`${CONFIG.apiUrl}/pharma/user-drug-list/${username}`)
                 .then(res => {
-                    console.log(res);
                     $scope.userDrugLists = res.data.userDrugLists;
                 }, err => {
                     console.log(err)
@@ -132,7 +141,6 @@ app.controller('pharmaController', [
 
             $http.get(`${CONFIG.apiUrl}/pharma/op/${$scope.cboUserDrugLists}/${startDate}/${endDate}`)
             .then(res => {
-                console.log(res);
                 $scope.data = res.data;
             }, err => {
                 console.log(err)
@@ -151,7 +159,6 @@ app.controller('pharmaController', [
 
             $http.get(`${CONFIG.apiUrl}/pharma/ip/${$scope.cboUserDrugLists}/${startDate}/${endDate}`)
             .then(res => {
-                console.log(res);
                 $scope.data = res.data;
             }, err => {
                 console.log(err)
