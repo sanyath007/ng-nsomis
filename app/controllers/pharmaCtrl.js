@@ -9,12 +9,14 @@ app.controller('pharmaController', [
     'toaster',
     function($rootScope, $scope, $http, CONFIG, $location, $localStorage, StringFormatService, toaster)
     {
+        $scope.cboDrugItems = '';
+        $scope.cboUserDrugLists = '';
+
         $scope.data = [];
         $scope.drugLists = [];
         $scope.drugItems = [];
-        $scope.cboDrugItems = '';
-        $scope.cboUserDrugLists = '';
         $scope.userDrugLists = [];
+        $scope.userDrugListsIcodes = [];
         $scope.userDrugList = {
             user_id: '',
             name: '',
@@ -128,6 +130,15 @@ app.controller('pharmaController', [
                 alert('คุณไม่สามารถบันทึกข้อมูลได้ กรุณา Log in เข้าสู่ระบบก่อน!!');
                 return false;
             }
+        };
+
+        $scope.showUserDrugListsDetail = (e, icodes) => {
+            e.preventDefault();
+
+            console.log(icodes);
+
+            $scope.userDrugListsIcodes = [];
+            $('#drugList').modal('show');
         };
 
         $scope.getOp = function(e) {

@@ -32,9 +32,9 @@
                                 <thead>
                                     <tr>
                                         <th style="text-align: center; width: 6%;">ลำดับ</th>
-										<th style="text-align: center; width: 20%;">ชื่อรายการ</th>
+										<th style="text-align: center;">ชื่อรายการ</th>
 										<th style="text-align: center; width: 8%;">ประเภท</th>
-                                        <th style="text-align: center;">รายการยา</th>
+                                        <th style="text-align: center; width: 8%;">รายการยา</th>
                                         <th style="text-align: center; width: 6%;">Actions</th>
                                     </tr>
                                 </thead>
@@ -43,7 +43,15 @@
                                         <td style="text-align: center;">{{ index+1 }}</td>
 										<td>{{ row.name }}</td>
                                         <td style="text-align: center;">{{ row.type }}</td>
-                                        <td style="text-align: center; font-size: 10px;">{{ row.icodes }}</td>
+										<td style="text-align: center;">
+											<a 
+												href="#"
+												ng-click="showUserDrugListsDetail($event, row.icodes)"
+												class="btn btn-info"
+											>
+											<i class="fas fa-clipboard-list"></i>
+											</a>
+										</td>
 										<td style="text-align: center;">
 											<a 
 												href="#"
@@ -58,6 +66,8 @@
                             </table>
 						</div><!-- /.table-responsive -->
 
+						<div ng-include="'./templates/modals/drug-list.html'"></div>
+						
 					</div><!-- /.card-body -->
 				</div><!-- /.card -->
 
