@@ -124,6 +124,7 @@ app.controller('pharmaController', [
                     console.log(err)
                 });
             } else {
+                $rootScope.showLogin();
                 alert('คุณไม่สามารถบันทึกข้อมูลได้ กรุณา Log in เข้าสู่ระบบก่อน!!');
                 return false;
             }
