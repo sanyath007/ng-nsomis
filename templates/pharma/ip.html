@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="pharmaController"
-	ng-init="getIp($event);"
+	ng-init="getUserDrugLists($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -28,7 +28,6 @@
 									autocomplete="off"
 								>
 							</div>
-
 							<div class="form-group">
 								<label>ถึงวันที่ :</label>
 								<input
@@ -40,9 +39,22 @@
 									autocomplete="off"
 								>
 							</div>
+							<div class="form-group mx-2">
+								<label style="margin-right: 5px;">รายการ : </label>
+								<select 
+									id="cboUserDrugLists" 
+									name="cboUserDrugLists"
+									ng-model="cboUserDrugLists"
+									class="form-control select2"
+								>
+									<option value="" selected="selected">-- กรุณาเลือก --</option>
+									<option ng-repeat="(index, ls) in userDrugLists" value="{{ ls.id }}">
+										{{ ls.name }}
+									</option>
+								</select>
+							</div>
 
-							<button ng-click="getIp($event)" class="btn btn-primary">ตกลง</button>
-					
+							<button ng-click="getIp($event)" class="btn btn-primary">ตกลง</button>					
 						</form>
 
 					</div><!-- /.card-body -->

@@ -12,7 +12,9 @@ app.controller('pharmaController', [
         $scope.drugLists = [];
         $scope.drugItems = [];
         $scope.cboDrugItems = '';
-        $scope.userDrugLists = {
+        $scope.cboUserDrugLists = '';
+        $scope.userDrugLists = [];
+        $scope.userDrugList = {
             user_id: '',
             name: '',
             type: '',
@@ -24,7 +26,6 @@ app.controller('pharmaController', [
 
             $http.get(`${CONFIG.apiUrl}/drug-items`)
             .then(res => {
-                console.log(res);
 				$scope.drugItems = res.data.drugItems;
 			}, err => {
 				console.log(err)
@@ -57,8 +58,8 @@ app.controller('pharmaController', [
 
                 let data = {
                     user_id: username,
-                    name: $scope.userDrugLists.name,
-                    type: $scope.userDrugLists.type,
+                    name: $scope.userDrugList.name,
+                    type: $scope.userDrugList.type,
                     icodes: createDrugListsToDB()
                 };
     
@@ -98,42 +99,58 @@ app.controller('pharmaController', [
             });
         };
 
+        $scope.getUserDrugLists = function(e) {
+            if ($localStorage.currentUser) {
+                const { username } = $localStorage.currentUser;
+
+                $http.get(`${CONFIG.apiUrl}/pharma/user-drug-list/${username}`)
+                .then(res => {
+                    $scope.userDrugLists = res.data.userDrugLists;
+                }, err => {
+                    console.log(err)
+                });
+            } else {
+                alert('คุณไม่สามารถบันทึกข้อมูลได้ กรุณา Log in เข้าสู่ระบบก่อน!!');
+                return false;
+            }
+        };
+
         $scope.getOp = function(e) {
             if(e) e.preventDefault();
-
+            
             let startDate = ($('#sdate').val() !== '') 
-							? StringFormatService.convToDbDate($scope.sdate) 
-							: moment().format('YYYY-MM-DD');
-			let endDate = ($('#edate').val() !== '') 
-							? StringFormatService.convToDbDate($scope.edate) 
+                            ? StringFormatService.convToDbDate($scope.sdate) 
                             : moment().format('YYYY-MM-DD');
-                            
-            $http.get(`${CONFIG.apiUrl}/pharma/op/${startDate}/${endDate}`)
-			.then(res => {
+            let endDate = ($('#edate').val() !== '') 
+                            ? StringFormatService.convToDbDate($scope.edate) 
+                            : moment().format('YYYY-MM-DD');
+
+            $http.get(`${CONFIG.apiUrl}/pharma/op/${$scope.cboUserDrugLists}/${startDate}/${endDate}`)
+            .then(res => {
                 console.log(res);
-				$scope.data = res.data;
-			}, err => {
-				console.log(err)
-			});
+                $scope.data = res.data;
+            }, err => {
+                console.log(err)
+            });
         };
         
         $scope.getIp = function(e) {
             if(e) e.preventDefault();
 
             let startDate = ($('#sdate').val() !== '') 
-							? StringFormatService.convToDbDate($scope.sdate) 
-							: moment().format('YYYY-MM-DD');
-			let endDate = ($('#edate').val() !== '') 
-							? StringFormatService.convToDbDate($scope.edate) 
+                            ? StringFormatService.convToDbDate($scope.sdate) 
                             : moment().format('YYYY-MM-DD');
-                            
-            $http.get(`${CONFIG.apiUrl}/pharma/ip/${startDate}/${endDate}`)
-			.then(res => {
+            let endDate = ($('#edate').val() !== '') 
+                            ? StringFormatService.convToDbDate($scope.edate) 
+                            : moment().format('YYYY-MM-DD');
+
+            $http.get(`${CONFIG.apiUrl}/pharma/ip/${$scope.cboUserDrugLists}/${startDate}/${endDate}`)
+            .then(res => {
                 console.log(res);
-				$scope.data = res.data;
-			}, err => {
-				console.log(err)
-			});
+                $scope.data = res.data;
+            }, err => {
+                console.log(err)
+            });
         }
     }
 ]);
