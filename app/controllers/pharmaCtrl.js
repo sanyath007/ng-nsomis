@@ -99,12 +99,17 @@ app.controller('pharmaController', [
             });
         };
 
+        $scope.removeUserDrugList = function(id) {
+
+        };
+
         $scope.getUserDrugLists = function(e) {
             if ($localStorage.currentUser) {
                 const { username } = $localStorage.currentUser;
 
                 $http.get(`${CONFIG.apiUrl}/pharma/user-drug-list/${username}`)
                 .then(res => {
+                    console.log(res);
                     $scope.userDrugLists = res.data.userDrugLists;
                 }, err => {
                     console.log(err)

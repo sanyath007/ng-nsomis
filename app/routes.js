@@ -67,6 +67,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/pharma/drug-list-form.html',
 		controller: 'pharmaController'
 	})
+	.when('/pharma/user-druglists', {
+		templateUrl: 'templates/pharma/user-drug-list.html',
+		controller: 'pharmaController'
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
