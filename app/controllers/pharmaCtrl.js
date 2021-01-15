@@ -13,6 +13,7 @@ app.controller('pharmaController', [
         $scope.cboUserDrugLists = '';
 
         $scope.data = [];
+        $scope.pager = null;
         $scope.drugLists = [];
         $scope.drugItems = [];
         $scope.userDrugLists = [];
@@ -108,7 +109,7 @@ app.controller('pharmaController', [
 
         $scope.removeUserDrugList = function(id) {
             if ($localStorage.currentUser) {
-
+                //TODO: remove user drug list record from db
             } else {
                 alert('คุณไม่สามารถบันทึกข้อมูลได้ กรุณา Log in เข้าสู่ระบบก่อน!!');
                 return false;
@@ -132,13 +133,18 @@ app.controller('pharmaController', [
             }
         };
 
-        $scope.showUserDrugListsDetail = (e, icodes) => {
+        $scope.showUserDrugListsDetail = (e, id) => {
             e.preventDefault();
+            
+            $http.get(`${CONFIG.apiUrl}/pharma/user-drug-list/${id}/detail`)
+            .then(res => {
+                $scope.userDrugListsIcodes = res.data.drugItems;
+                //TODO: Set pager object data to show in modal
 
-            console.log(icodes);
-
-            $scope.userDrugListsIcodes = [];
-            $('#drugList').modal('show');
+                $('#drugList').modal('show');
+            }, err => {
+                console.log(err)
+            });
         };
 
         $scope.getOp = function(e) {
