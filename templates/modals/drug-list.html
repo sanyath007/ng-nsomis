@@ -10,27 +10,27 @@
             <div class="modal-body" style="padding-bottom: 0;">
 
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped" style="font-size: 14px;">
                         <thead>
                             <tr>
-                                <th style="text-align: center; width: 6%;">ลำดับ</th>
+                                <th style="text-align: center; width: 3%;">ลำดับ</th>
                                 <th style="text-align: center; width: 6%;">icode</th>
                                 <th style="text-align: center;">ชื่อยา</th>
                                 <th style="text-align: center; width: 15%;">ขนาด</th>
                                 <th style="text-align: center; width: 15%;">หน่วย</th>
                                 <th style="text-align: center; width: 10%;">ราคา/หน่วย</th>
-                                <th style="text-align: center; width: 6%;">Actions</th>
+                                <!-- <th style="text-align: center; width: 6%;">Actions</th> -->
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="(index, row) in userDrugListsIcodes">
-                                <td style="text-align: center;">{{ index+1 }}</td>
+                                <td style="text-align: center;">{{ pager.from+index }}</td>
                                 <td style="text-align: center;">{{ row.icode }}</td>
                                 <td>{{ row.name }}</td>
                                 <td style="text-align: center;">{{ row.strength }}</td>
                                 <td style="text-align: center;">{{ row.units }}</td>
                                 <td style="text-align: center;">{{ row.unitprice | currency:'':0 }}</td>
-                                <td style="text-align: center;">
+                                <!-- <td style="text-align: center;">
                                     <a 
                                         href="#"
                                         ng-click="removeItemFromDrugList(row.icode)"
@@ -38,7 +38,7 @@
                                     >
                                         <i class="far fa-trash-alt"></i>
                                     </a>
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -47,25 +47,29 @@
             </div><!-- /.modal-body -->
             <div class="modal-footer" style="padding-bottom: 0;">
 
-                <nav aria-label="Page navigation" style="margin: 0;">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="container" style="display: flex; margin-top: 0;">
+                    <div class="col-md-6 py-2">
+                        หน้า {{ pager.current_page }} จาก {{ pager.last_page }} / ทั้งหมด {{ pager.total }} รายการ
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <ul class="pagination float-right" style="margin: 0;">
+                            <li class="page-item" ng-class="{disabled: pager.current_page==1}">
+                                <a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.prev_page_url)" aria-label="Previous">
+                                    Previous
+                                </a>
+                            </li>
+                            <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                            <li class="page-item" ng-class="{disabled: pager.current_page==pager.last_page}">
+                                <a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.next_page_url)" aria-label="Next">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
             </div><!-- /.modal-footer -->
         </div>

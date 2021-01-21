@@ -147,6 +147,18 @@ app.controller('pharmaController', [
             });
         };
 
+        $scope.onPaginateLinkClick = (e, link) => {
+            e.preventDefault();
+            
+            $http.get(link)
+            .then(res => {
+                $scope.userDrugListsIcodes = res.data.items;
+                $scope.pager = res.data.pager;
+            }, err => {
+                console.log(err)
+            });
+        };
+
         $scope.getOp = function(e) {
             if(e) e.preventDefault();
             
