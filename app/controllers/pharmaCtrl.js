@@ -136,10 +136,10 @@ app.controller('pharmaController', [
         $scope.showUserDrugListsDetail = (e, id) => {
             e.preventDefault();
             
-            $http.get(`${CONFIG.apiUrl}/pharma/user-drug-list/${id}/detail`)
+            $http.get(`${CONFIG.apiUrl}/pharma/user-drug-list/${id}/detail?page=1`)
             .then(res => {
-                $scope.userDrugListsIcodes = res.data.drugItems;
-                //TODO: Set pager object data to show in modal
+                $scope.userDrugListsIcodes = res.data.items;
+                $scope.pager = res.data.pager;
 
                 $('#drugList').modal('show');
             }, err => {
