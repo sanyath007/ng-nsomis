@@ -9,8 +9,8 @@ app.controller('mainController', [
     function($rootScope, $scope, $http, CONFIG, AuthService, $localStorage, toaster)
     {
         $scope.signinUser = {
-            username: 'sanyath',
-            password: '0810736804'
+            username: '',
+            password: ''
         }
 
         $scope.sidebarMenuToggle = function(e) {

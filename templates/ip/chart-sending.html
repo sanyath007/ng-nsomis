@@ -1,0 +1,157 @@
+<section
+	class="content"
+	ng-controller="errorController"
+	ng-init="getChartSending($event);"
+>
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-bed mr-1"></i>
+							สรุปการส่งชาร์ตผู้ป่วย รายวอร์ด
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+
+						<form action="" method="POST" class="form-inline">
+							<div class="form-group">
+								<label>วันที่ :</label>
+								<input
+									type="text"
+									id="sdate"
+									name="sdate"								
+									ng-model="sdate"								
+									class="form-control mr-2 ml-2"
+									autocomplete="off"
+								>
+							</div>
+
+							<div class="form-group">
+								<label>ถึงวันที่ :</label>
+								<input
+									type="text"
+									id="edate"
+									name="edate"
+									ng-model="edate"
+									class="form-control mr-2 ml-2"
+									autocomplete="off"
+								>
+							</div>
+
+							<button ng-click="getChartSending($event)" class="btn btn-primary">ตกลง</button>
+							
+						</form>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<div class="card-body">
+
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th style="width: 3%; text-align: center;" rowspan="2">ลำดับ</th>
+									<th style="text-align: center;" rowspan="2">วอร์ด</th>
+									<th style="width: 12%; text-align: center;" colspan="10">จำนวน (ชาร์ต)</th>
+								</tr>
+								<tr>
+									<th style="width: 6%; text-align: center;">ทั้งหมด</th>
+									<th style="width: 6%; text-align: center;">ส่งแล้ว</th>
+									<th style="width: 6%; text-align: center;">ส่งแล้ว (ร้อยละ)</th>
+									<th style="width: 6%; text-align: center;">ยังไม่ส่ง</th>
+									<th style="width: 6%; text-align: center;">ยังไม่ส่ง (ร้อยละ)</th>
+									<th style="width: 8%; text-align: center;">ยังไม่ส่งน้อยกว่า 7 วัน</th>
+									<th style="width: 8%; text-align: center;">ยังไม่ส่ง 7-14 วัน</th>
+									<th style="width: 8%; text-align: center;">ยังไม่ส่ง 15-21 วัน</th>
+									<th style="width: 8%; text-align: center;">ยังไม่ส่ง 22-30 วัน</th>
+									<th style="width: 8%; text-align: center;">ยังไม่ส่งมากกว่า 31 วัน</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(index, row) in data">	
+									<td style="text-align: center;">{{ index+1 }}</td>
+									<td>{{ row.ward + '-' + row.name }}</td>
+									<td style="text-align: center;">{{ row.total }}</td>
+									<td style="text-align: center;">
+										<a href="ip/ptdchbyward/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+											{{ row.send }}
+										</a>
+									</td>
+									<td style="text-align: center;">{{ row.send*100/row.total | currency:'':1 }}</td>
+									<td style="text-align: center;">
+										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+											{{ row.notsend }}
+										</a>
+									</td>
+									<td style="text-align: center;">{{ row.notsend*100/row.total | currency:'':1 }}</td>
+									<td style="text-align: center;">
+										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+											{{ row.notsendless7 }}
+										</a>
+									</td>
+									<td style="text-align: center;">
+										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+											{{ row.notsend7 }}
+										</a>
+									</td>
+									<td style="text-align: center;">
+										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+											{{ row.notsend14 }}
+										</a>
+									</td>
+									<td style="text-align: center;">
+										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+											{{ row.notsend21 }}
+										</a>
+									</td>
+									<td style="text-align: center;">
+										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+											{{ row.notsendgreat30 }}
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div><!-- /.card-body -->
+					<div class="card-footer clearfix">
+						<div class="m-0 float-left" ng-show="data">
+							<a href="#" class="btn btn-success">Excel</a>
+						</div>
+						<ul class="pagination pagination-sm m-0 float-right" ng-show="false">
+							<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+						</ul>
+					</div><!-- /.card-footer -->
+				</div><!-- /.card -->
+	
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->
+
+<script type="text/javascript">
+	$(function() {
+		$('#sdate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+
+		$('#edate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+	});
+</script>
