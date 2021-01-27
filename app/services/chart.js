@@ -175,8 +175,6 @@ app.service('ChartService', [
                     catValue = i;
                 } else if (catType.name == 'm') {
                     catValue = i+1;
-                } else if (catType.name == 'm') {
-                    catValue = i;
                 }
 
                 categories[i] = `${catValue}`;
@@ -213,7 +211,7 @@ app.service('ChartService', [
         service.createStackedDataSeries = function (stacked, data, dataProps, catType) {
             let series = [];
             let categories = [];
-            let catValue = 0;
+            let catValue = '';
             
             series = service.createSeries(stacked);
             
@@ -221,6 +219,10 @@ app.service('ChartService', [
                 categories = service.createDailyCategories();
             } else if (catType.name == 'm') {
                 categories = service.createMonthlyCategories(catType.value);
+            } else if (catType.name == 'o') {
+                categories = data.map(d => {
+                    return d[dataProps.name]+ '-' +d.name;
+                });
             }
 
             for(let i = 0; i < categories.length; i++) {
@@ -228,12 +230,20 @@ app.service('ChartService', [
                     catValue = i;
                 } else if (catType.name == 'm') {
                     catValue = i+1;
+                } else if (catType.name == 'o') {
+                    catValue = categories[i].substr(0, 2);
                 }
 
-                categories[i] = `${catValue}`;
+                if (catType.name != 'o') {
+                    categories[i] = `${catValue}`;
+                }
 
                 data.every((val, key) => {
-                    if(parseInt(val[dataProps.name]) === catValue) {
+                    // if (catType.name == 'o') {         
+                    //     console.log(val[dataProps.name]+ '==' +catValue);
+                    // }
+
+                    if(val[dataProps.name] == catValue) {
                         series.forEach((s, key) => {
                             s.data[i] = parseInt(val[s.prop]);
                         });

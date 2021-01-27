@@ -281,7 +281,7 @@ app.controller('dashmonthController', [
                 console.log(err);
             });
         };
-
+        
         $scope.getOrType = function (e) {
             if(e) e.preventDefault();
             
@@ -300,6 +300,63 @@ app.controller('dashmonthController', [
                 });
 
                 var chart = new Highcharts.Chart($scope.pieOptions);
+            }, function(err) {
+                console.log(err);
+            });
+        };
+
+        $scope.getErrorOp = function(e) {
+            if(e) e.preventDefault();
+            
+            let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
+
+            ChartService.getSeriesData('/dashboard/error-op/', month)
+            .then(function(res) {
+                let {series, categories} = ChartService.createStackedDataSeries(
+                    [
+                        { name: 'ไม่มี Diag', prop: 'nodx', color: '#6abe83' }, 
+                        { name: 'ไม่มีซักประวัติ', prop: 'noscreen', color: '#13334c' },
+                        { name: 'ซักประวัติไม่ครบ', prop: 'inc_screen', color: '#de4307' }
+                    ],
+                    res.data,
+                    { name: 'id'},
+                    { name: 'o' }
+                );
+
+                $scope.barOptions = ChartService.initStackChart("errorOPBarContainer", "สรุปข้อมูล Error ผู้ป่วยนอก", categories, 'จำนวน');
+                $scope.barOptions.series = series;
+
+                let chart = new Highcharts.Chart($scope.barOptions);
+            }, function(err) {
+                console.log(err);
+            });
+        };
+        
+        $scope.getErrorIp = function(e) {
+            if(e) e.preventDefault();
+            
+            let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
+
+            ChartService.getSeriesData('/dashboard/error-ip/', month)
+            .then(function(res) {
+                let {series, categories} = ChartService.createStackedDataSeries(
+                    [
+                        { name: 'ส่งแล้ว', prop: 'send', color: '#1f640a' }, 
+                        { name: 'ยังไม่ส่ง', prop: 'notsend', color: '#dd0a35' },
+                    ],
+                    res.data,
+                    { name: 'ward'},
+                    { name: 'o' }
+                );
+
+                $scope.barOptions = ChartService.initStackChart("errorIPBarContainer", "สรุปการส่งชาร์ตผู้ป่วยใน รายวอร์ด", categories, 'จำนวน');
+                $scope.barOptions.series = series;
+
+                let chart = new Highcharts.Chart($scope.barOptions);
             }, function(err) {
                 console.log(err);
             });
