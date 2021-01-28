@@ -336,7 +336,7 @@ app.controller('dashdayController', [
             let date = ($scope.cboDate !== '') 
                         ? StringFormatService.convToDbDate($scope.cboDate)
                         : moment().format('YYYY-MM-DD');
-            let displayDate = StringFormatService.convFromDbDate(moment(date).add(-1, 'days').format('YYYY-MM-DD'));
+            let displayDate = StringFormatService.convFromDbDate(moment(date).add(0, 'days').format('YYYY-MM-DD'));
 
             ChartService.getSeriesData('/dashboard/error-op-day/', date)
             .then(function(res) {
@@ -366,6 +366,7 @@ app.controller('dashdayController', [
             let date = ($scope.cboDate !== '') 
                         ? StringFormatService.convToDbDate($scope.cboDate)
                         : moment().format('YYYY-MM-DD');
+            let displayDate = StringFormatService.convFromDbDate(moment(date).add(-7, 'days').format('YYYY-MM-DD'));
 
             ChartService.getSeriesData('/dashboard/error-ip-day/', date)
             .then(function(res) {
@@ -381,7 +382,7 @@ app.controller('dashdayController', [
                     { name: 'o' }
                 );
 
-                $scope.barOptions = ChartService.initStackChart("errorIPBarContainer", "สรุปวอร์ดที่ยังไม่ส่งชาร์ตผู้ป่วยใน (D/C แล้วมากกว่า 7 วัน)", categories, 'จำนวน (ชาร์ต)');
+                $scope.barOptions = ChartService.initStackChart("errorIPBarContainer", `สรุปวอร์ดที่ยังไม่ส่งชาร์ตผู้ป่วยใน (D/C ถึงวันที่ ${displayDate})`, categories, 'จำนวน (ชาร์ต)');
                 $scope.barOptions.series = series;
 
                 let chart = new Highcharts.Chart($scope.barOptions);
