@@ -312,7 +312,7 @@ app.controller('dashmonthController', [
                         ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
 
-            ChartService.getSeriesData('/dashboard/error-op/', month)
+            ChartService.getSeriesData('/dashboard/error-op-month/', month)
             .then(function(res) {
                 let {series, categories} = ChartService.createStackedDataSeries(
                     [
@@ -341,7 +341,7 @@ app.controller('dashmonthController', [
                         ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
 
-            ChartService.getSeriesData('/dashboard/error-ip/', month)
+            ChartService.getSeriesData('/dashboard/error-ip-month/', month)
             .then(function(res) {
                 let {series, categories} = ChartService.createStackedDataSeries(
                     [

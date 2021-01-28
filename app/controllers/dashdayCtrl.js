@@ -134,7 +134,7 @@ app.controller('dashdayController', [
             });
         };
 
-        $scope.referInDay = function(e) {
+        $scope.getReferInDay = function(e) {
             if(e) e.preventDefault();
             
             let date = ($scope.cboDate !== '') 
@@ -162,7 +162,7 @@ app.controller('dashdayController', [
             });
         };
         
-        $scope.referOutDay = function(e) {
+        $scope.getReferOutDay = function(e) {
             if(e) e.preventDefault();
             
             let date = ($scope.cboDate !== '') 
@@ -325,6 +325,66 @@ app.controller('dashdayController', [
                 });
 
                 let chart = new Highcharts.Chart($scope.pieOptions);
+            }, function(err) {
+                console.log(err);
+            });
+        };
+
+        $scope.getErrorOp = function(e) {
+            if(e) e.preventDefault();
+            
+            let date = ($scope.cboDate !== '') 
+                        ? StringFormatService.convToDbDate($scope.cboDate)
+                        : moment().format('YYYY-MM-DD');
+            let displayDate = StringFormatService.convFromDbDate(moment(date).add(-1, 'days').format('YYYY-MM-DD'));
+
+            ChartService.getSeriesData('/dashboard/error-op-day/', date)
+            .then(function(res) {
+                let {series, categories} = ChartService.createStackedDataSeries(
+                    [
+                        { name: 'ไม่มี Diag', prop: 'nodx', color: '#6abe83' }, 
+                        { name: 'ไม่มีซักประวัติ', prop: 'noscreen', color: '#13334c' },
+                        { name: 'ซักประวัติไม่ครบ', prop: 'inc_screen', color: '#de4307' }
+                    ],
+                    res.data,
+                    { name: 'id'},
+                    { name: 'o' }
+                );
+
+                $scope.barOptions = ChartService.initStackChart("errorOPBarContainer", `สรุปข้อมูล Error ผู้ป่วยนอก (ณ วันที่ ${displayDate})`, categories, 'จำนวน (records)');
+                $scope.barOptions.series = series;
+
+                let chart = new Highcharts.Chart($scope.barOptions);
+            }, function(err) {
+                console.log(err);
+            });
+        };
+        
+        $scope.getErrorIp = function(e) {
+            if(e) e.preventDefault();
+            
+            let date = ($scope.cboDate !== '') 
+                        ? StringFormatService.convToDbDate($scope.cboDate)
+                        : moment().format('YYYY-MM-DD');
+
+            ChartService.getSeriesData('/dashboard/error-ip-day/', date)
+            .then(function(res) {
+                let {series, categories} = ChartService.createStackedDataSeries(
+                    [
+                        // { name: 'ยังไม่ส่งน้อยกว่า 7d', prop: 'les7', color: '#1f640a' }, 
+                        { name: 'ยังไม่ส่งมากกว่า 7-14วัน', prop: 'gr7to14', color: '#6abe83' },
+                        { name: 'ยังไม่ส่งมากกว่า 15-21วัน', prop: 'gr15to21', color: '#de4307' },
+                        { name: 'ยังไม่ส่งมากกว่า 21วัน', prop: 'gr21', color: '#dd0a35' },
+                    ],
+                    res.data,
+                    { name: 'ward'},
+                    { name: 'o' }
+                );
+
+                $scope.barOptions = ChartService.initStackChart("errorIPBarContainer", "สรุปวอร์ดที่ยังไม่ส่งชาร์ตผู้ป่วยใน (D/C แล้วมากกว่า 7 วัน)", categories, 'จำนวน (ชาร์ต)');
+                $scope.barOptions.series = series;
+
+                let chart = new Highcharts.Chart($scope.barOptions);
             }, function(err) {
                 console.log(err);
             });

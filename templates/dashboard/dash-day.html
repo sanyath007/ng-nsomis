@@ -5,8 +5,10 @@
 			getOpVisitTypeDay($event);
 			getIpVisitDay($event);
 			getIpClassDay($event);
-			referInDay($event);
-			referOutDay($event);"
+			getReferInDay($event);
+			getReferOutDay($event);
+			getErrorOp($event);
+			getErrorIp($event);"
 >
 	<div class="container-fluid">		
 		<div class="row">
@@ -30,8 +32,10 @@
 															getOpVisitTypeDay($event);
 															getIpVisitDay($event);
 															getIpClassDay($event);
-															referInDay($event);
-															referOutDay($event);"
+															getReferInDay($event);
+															getReferOutDay($event);
+															getErrorOp($event);
+															getErrorIp($event);"
 					>
 						ตกลง
 					</button>
@@ -90,8 +94,8 @@
 							</div>
 						</div>
 
-					</div>
-				</div>
+					</div><!-- /.card-body-->
+				</div><!-- /.card-->
 
 				<div class="card">
 					<div class="card-header">
@@ -114,8 +118,35 @@
 
 							</div>
 						</div>
-					</div>
-				</div>
+					</div><!-- /.card-body-->
+				</div><!-- /.card-->
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-user-nurse mr-1"></i>
+							ข้อมูล Error ประจำวันที่ {{ cboDate }}
+							<!-- <a href="#" class="btn btn-warning btn-xs">ดูเพิ่มเติม</a> -->
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+						
+						<div class="row">
+							<div class="col-md-12">
+
+								<div id="errorOPBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+
+							</div>
+
+							<div class="col-md-12">
+
+								<div id="errorIPBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+
+							</div>
+						</div>
+
+					</div><!-- /.card-body-->
+				</div><!-- /.card-->
 
 			</section><!-- /.col-lg-12 -->
 		</div><!-- Main row -->
