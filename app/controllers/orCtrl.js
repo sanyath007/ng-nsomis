@@ -7,6 +7,7 @@ app.controller('orController', [
 	'StringFormatService',
 	function($scope, $http, CONFIG, $routeParams, StringFormatService)
 	{
+		$scope.cboYear = '';
 		$scope.sdate = '';
 		$scope.edate = '';
 		$scope.data = [];
@@ -78,6 +79,25 @@ app.controller('orController', [
 					$scope.totalData.evening += parseInt(val.evening);
 					$scope.totalData.night += parseInt(val.night);
 				});
+			}, err => {
+				console.log(err)
+			});
+		};
+
+		$scope.getEmergencyYear = function(e) {
+			if(e) e.preventDefault();
+
+			let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
+
+			$http.get(`${CONFIG.apiUrl}/or/emergency-year/${year}`)
+			.then(res => {
+				console.log(res);
+				$scope.data = res.data;
+
+				// $scope.data.forEach((val, key) => {
+				// 	$scope.totalData.qty += parseInt(val.sum_qty);
+				// 	$scope.totalData.price += parseInt(val.sum_total);
+				// });
 			}, err => {
 				console.log(err)
 			});
