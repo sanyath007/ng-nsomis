@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="orController"
-	ng-init="getNumDayData($event);"
+	ng-init="getSumYear($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -12,37 +12,26 @@
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-user-nurse mr-1"></i>
-							จำนวนผู้รับบริการผ่าตัดรายวัน
+							สรุปยอดผ่าตัด
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
 
 						<form action="" method="POST" class="form-inline">
 							<div class="form-group">
-								<label>วันที่ :</label>
+								<label>ปีงบประมาณ :</label>
 								<input
 									type="text"
-									id="sdate"
-									name="sdate"								
-									ng-model="sdate"								
-									class="form-control mr-2 ml-2"
+									id="cboYear"
+									name="cboYear"
+									ng-model="cboYear"
+									class="form-control"
+									style="margin: 0 10px;"
 									autocomplete="off"
 								>
 							</div>
 
-							<div class="form-group">
-								<label>ถึงวันที่ :</label>
-								<input
-									type="text"
-									id="edate"
-									name="edate"
-									ng-model="edate"
-									class="form-control mr-2 ml-2"
-									autocomplete="off"
-								>
-							</div>
-
-							<button ng-click="getNumDayData($event)" class="btn btn-primary">ตกลง</button>
+							<button ng-click="getSumYear($event)" class="btn btn-primary">ตกลง</button>
 					
 						</form>
 
@@ -89,49 +78,49 @@
 									<tr ng-repeat="(index, numday) in data">
 										<td style="text-align: center;">{{ index+1 }}</td>
 										<td style="text-align: center;">
-											{{ numday.operation_date | thdate }}
+											{{ numday.yymm }}
 										</td>
-										<td style="text-align: center;">{{ numday.num }}</td>
-										<td style="text-align: center;">{{ numday.miner }}</td>
-										<td style="text-align: center;">{{ numday.major }}</td>
-										<td style="text-align: center;">{{ numday.other }}</td>
+										<td style="text-align: center;">{{ numday.num | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.miner | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.major | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.other | currency:'':0 }}</td>
 
-										<td style="text-align: center;">{{ numday.sur }}</td>
-										<td style="text-align: center;">{{ numday.obs }}</td>
-										<td style="text-align: center;">{{ numday.gyn }}</td>
-										<td style="text-align: center;">{{ numday.ent }}</td>
-										<td style="text-align: center;">{{ numday.eye }}</td>
-										<td style="text-align: center;">{{ numday.ort }}</td>
-										<td style="text-align: center;">{{ numday.neu }}</td>
-										<td style="text-align: center;">{{ numday.max }}</td>
-										<td style="text-align: center;">{{ numday.oth }}</td>
+										<td style="text-align: center;">{{ numday.sur | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.obs | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.gyn | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.ent | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.eye | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.ort | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.neu | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.max | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.oth | currency:'':0 }}</td>
 										
-										<td style="text-align: center;">{{ numday.night }}</td>
-										<td style="text-align: center;">{{ numday.morning }}</td>
-										<td style="text-align: center;">{{ numday.afternoon }}</td>
-										<td style="text-align: center;">{{ numday.evening }}</td>
+										<td style="text-align: center;">{{ numday.night | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.morning | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.afternoon | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ numday.evening | currency:'':0 }}</td>
 									</tr>
 									<tr>
 										<td style="text-align: center;" colspan="2">รวม</td>
-										<td style="text-align: center;">{{ totalData.num }}</td>
-										<td style="text-align: center;">{{ totalData.miner }}</td>
-										<td style="text-align: center;">{{ totalData.major }}</td>
-										<td style="text-align: center;">{{ totalData.other }}</td>
+										<td style="text-align: center;">{{ totalData.num | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.miner | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.major | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.other | currency:'':0 }}</td>
 
-										<td style="text-align: center;">{{ totalData.sur }}</td>
-										<td style="text-align: center;">{{ totalData.obs }}</td>
-										<td style="text-align: center;">{{ totalData.gyn }}</td>
-										<td style="text-align: center;">{{ totalData.ent }}</td>
-										<td style="text-align: center;">{{ totalData.eye }}</td>
-										<td style="text-align: center;">{{ totalData.ort }}</td>
-										<td style="text-align: center;">{{ totalData.neu }}</td>
-										<td style="text-align: center;">{{ totalData.max }}</td>
-										<td style="text-align: center;">{{ totalData.oth }}</td>
+										<td style="text-align: center;">{{ totalData.sur | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.obs | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.gyn | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.ent | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.eye | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.ort | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.neu | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.max | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.oth | currency:'':0 }}</td>
 										
-										<td style="text-align: center;">{{ totalData.night }}</td>
-										<td style="text-align: center;">{{ totalData.morning }}</td>
-										<td style="text-align: center;">{{ totalData.afternoon }}</td>
-										<td style="text-align: center;">{{ totalData.evening }}</td>
+										<td style="text-align: center;">{{ totalData.night | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.morning | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.afternoon | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.evening | currency:'':0 }}</td>
 									</tr>
 						
 								</tbody>
@@ -148,18 +137,13 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#sdate').datepicker({
+		$('#cboYear').datepicker({
 			autoclose: true,
+			format: 'yyyy',
+			viewMode: "years", 
+			minViewMode: "years",
 			language: 'th',
-			format: 'dd/mm/yyyy',
 			thaiyear: true
-		}).datepicker('update', new Date());
-
-		$('#edate').datepicker({
-			autoclose: true,
-			language: 'th',
-			format: 'dd/mm/yyyy',
-			thaiyear: true,
 		}).datepicker('update', new Date());
 	});
 </script>

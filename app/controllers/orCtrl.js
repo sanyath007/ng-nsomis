@@ -44,19 +44,14 @@ app.controller('orController', [
 			}
 		};
 		
-		$scope.getNumDayData = function(e) {
+		$scope.getSumYear = function(e) {
 			if(e) e.preventDefault();
 
 			$scope.totalData = initTotalData();
 
-			let startDate = ($('#sdate').val() !== '') 
-							? StringFormatService.convToDbDate($scope.sdate) 
-							: moment().format('YYYY-MM-DD');
-			let endDate = ($('#edate').val() !== '') 
-							? StringFormatService.convToDbDate($scope.edate) 
-							: moment().format('YYYY-MM-DD');
+			let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
 
-			$http.get(`${CONFIG.apiUrl}/or/num-day/${startDate}/${endDate}`)
+			$http.get(`${CONFIG.apiUrl}/or/sum-year/${year}`)
 			.then(res => {
 				$scope.data = res.data.numdays;
 

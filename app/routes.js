@@ -47,8 +47,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/er/sum-period.html',
 		controller: 'erController'
 	})
-	.when('/or/num-day', {
-		templateUrl: 'templates/or/num-day.html',
+	.when('/or/sum-year', {
+		templateUrl: 'templates/or/sum-year.html',
 		controller: 'orController'
 	})
 	.when('/or/emergency-year', {
