@@ -311,6 +311,7 @@ app.controller('dashmonthController', [
             let month = ($scope.cboMonth !== '') 
                         ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
+            let displayDate = StringFormatService.convFromDbDate(moment().add(-1, 'days').format('YYYY-MM-DD'));
 
             ChartService.getSeriesData('/dashboard/error-op-month/', month)
             .then(function(res) {
@@ -325,7 +326,7 @@ app.controller('dashmonthController', [
                     { name: 'o' }
                 );
 
-                $scope.barOptions = ChartService.initStackChart("errorOPBarContainer", "สรุปข้อมูล Error ผู้ป่วยนอก", categories, 'จำนวน');
+                $scope.barOptions = ChartService.initStackChart("errorOPBarContainer", `สรุปข้อมูล Error ผู้ป่วยนอก (ข้อมูล ณ วันที่ ${displayDate})`, categories, 'จำนวน');
                 $scope.barOptions.series = series;
 
                 let chart = new Highcharts.Chart($scope.barOptions);
@@ -340,6 +341,7 @@ app.controller('dashmonthController', [
             let month = ($scope.cboMonth !== '') 
                         ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
+            let displayDate = StringFormatService.convFromDbDate(moment().add(-7, 'days').format('YYYY-MM-DD'));
 
             ChartService.getSeriesData('/dashboard/error-ip-month/', month)
             .then(function(res) {
@@ -353,7 +355,7 @@ app.controller('dashmonthController', [
                     { name: 'o' }
                 );
 
-                $scope.barOptions = ChartService.initStackChart("errorIPBarContainer", "สรุปการส่งชาร์ตผู้ป่วยใน รายวอร์ด", categories, 'จำนวน');
+                $scope.barOptions = ChartService.initStackChart("errorIPBarContainer", `สรุปการส่งชาร์ตผู้ป่วยใน รายวอร์ด (D/C ถึงวันที่ ${displayDate})`, categories, 'จำนวน');
                 $scope.barOptions.series = series;
 
                 let chart = new Highcharts.Chart($scope.barOptions);
