@@ -12,6 +12,8 @@ app.controller('dashdayController', [
         $scope.pieOptions = {};
 
         $scope.cboDate = '';
+        $scope.sDate = '';
+        $scope.eDate = '';
         $scope.toDay = new Date();
 
         $scope.getCardDay = function () {
@@ -366,14 +368,17 @@ app.controller('dashdayController', [
             let date = ($scope.cboDate !== '') 
                         ? StringFormatService.convToDbDate($scope.cboDate)
                         : moment().format('YYYY-MM-DD');
-            let displayDate = StringFormatService.convFromDbDate(moment(date).add(-7, 'days').format('YYYY-MM-DD'));
-
+            let displayDate = StringFormatService.convFromDbDate(moment(date).add(-1, 'days').format('YYYY-MM-DD'));
+            
+            $scope.sDate = StringFormatService.convFromDbDate(moment(date).add(-1, 'days').format('YYYY-MM') + '-01');
+            $scope.eDate = displayDate;
+            
             ChartService.getSeriesData('/dashboard/error-ip-day/', date)
             .then(function(res) {
                 let {series, categories} = ChartService.createStackedDataSeries(
                     [
-                        // { name: 'ยังไม่ส่งน้อยกว่า 7d', prop: 'les7', color: '#1f640a' }, 
-                        { name: 'ยังไม่ส่งมากกว่า 7-14วัน', prop: 'gr7to14', color: '#6abe83' },
+                        { name: 'ยังไม่ส่งไม่เกิน 7วัน', prop: 'less7', color: '#1f640a' }, 
+                        { name: 'ยังไม่ส่งมากกว่า 8-14วัน', prop: 'gr7to14', color: '#2694ab' },
                         { name: 'ยังไม่ส่งมากกว่า 15-21วัน', prop: 'gr15to21', color: '#de4307' },
                         { name: 'ยังไม่ส่งมากกว่า 21วัน', prop: 'gr21', color: '#dd0a35' },
                     ],
