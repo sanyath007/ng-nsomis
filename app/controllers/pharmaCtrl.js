@@ -109,7 +109,19 @@ app.controller('pharmaController', [
 
         $scope.removeUserDrugList = function(id) {
             if ($localStorage.currentUser) {
-                //TODO: remove user drug list record from db
+                if (confirm(`คุณต้องการลบรายการยา ID : ${id} ใช่หรือไม่?`)) {
+                    $http.delete(`${CONFIG.apiUrl}/pharma/user-drug-list/${id}`, )
+                    .then(res => {
+                        if(res.data.status === 1) {
+                            toaster.pop('success', "", 'ลบข้อมูลเรียบร้อยแล้ว !!!');
+                            
+                            $scope.userDrugLists = $scope.userDrugLists.filter(dl => dl.id !== id);
+                        }
+                    }, err => {
+                        console.log(err)
+                        toaster.pop('error', "", 'เกิดข้อผิดพลาด ไม่สามารถลบข้อมูลได้ !!!');
+                    });
+                }
             } else {
                 alert('คุณไม่สามารถบันทึกข้อมูลได้ กรุณา Log in เข้าสู่ระบบก่อน!!');
                 return false;
