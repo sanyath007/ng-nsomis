@@ -145,5 +145,31 @@ app.controller('orController', [
 				console.log(err)
 			});
 		};
+
+		$scope.getCataractList = function(e) {
+			if(e) e.preventDefault();
+
+			$scope.totalData = initTotalExpensesData();
+
+			let startDate = ($('#sdate').val() !== '') 
+							? StringFormatService.convToDbDate($scope.sdate) 
+							: moment().format('YYYY-MM-DD');
+			let endDate = ($('#edate').val() !== '') 
+							? StringFormatService.convToDbDate($scope.edate) 
+							: moment().format('YYYY-MM-DD');
+
+			$http.get(`${CONFIG.apiUrl}/or/cataract-list/${startDate}/${endDate}`)
+			.then(res => {
+				console.log(res);
+				$scope.data = res.data;
+
+				// $scope.data.forEach((val, key) => {
+				// 	$scope.totalData.qty += parseInt(val.sum_qty);
+				// 	$scope.totalData.price += parseInt(val.sum_total);
+				// });
+			}, err => {
+				console.log(err)
+			});
+		};
 	}
 ]);

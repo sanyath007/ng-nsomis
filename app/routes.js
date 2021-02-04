@@ -63,6 +63,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/or/expenses-detail.html',
 		controller: 'orController'
 	})
+	.when('/or/cataract', {
+		templateUrl: 'templates/or/cataract-list.html',
+		controller: 'orController'
+	})
 	.when('/scope/sum-year', {
 		templateUrl: 'templates/scope/sum-year.html',
 		controller: 'scopeController'
