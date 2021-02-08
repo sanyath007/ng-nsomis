@@ -16,6 +16,24 @@ app.controller('ipController', [
 
 		$scope.totalAdmdate = 0;
 		$scope.ward = null;
+		const wardBed = [
+			{ ward: '00', bed: 10 }, // จักษุ โสต ศอ นาสิก
+			{ ward: '01', bed: 35 }, // อายุรกรรมชาย
+			{ ward: '02', bed: 35 }, // อายุรกรรมหญิง
+			{ ward: '04', bed: 8 }, // ห้องคลอด
+			{ ward: '05', bed: 8 }, // วิกฤต
+			{ ward: '06', bed: 8 }, // พิเศษ 1
+			{ ward: '07', bed: 35 }, // ศัลยกรรมหญิง
+			{ ward: '08', bed: 35 }, // กุมารเวชกรรม
+			{ ward: '09', bed: 35 }, // สูติ-นรีเวชกรรม
+			{ ward: '10', bed: 35 }, // ศัลกรรมชาย
+			{ ward: '11', bed: 12 }, // พิเศษ 2
+			{ ward: '12', bed: 10 }, // พิเศษ 3
+			{ ward: '13', bed: 6 }, // ทารกแรกเกิดป่วย
+			{ ward: '14', bed: 8 }, // Stroke Unit
+			{ ward: '15', bed: 6 }, // NICU
+			{ ward: '17', bed: 6 }, // IntermediateCare
+		];
 
 		const initTotalClass = function() {
 			return {
@@ -44,16 +62,27 @@ app.controller('ipController', [
 				let admdate = res.data.admdate
 				let wardStat = res.data.wardStat
 
-				admdate.forEach(d => d.stat = wardStat.filter(st => d.ward === st.ward));
+				admdate.forEach(d => {
+					d.stat = wardStat.filter(st => d.ward === st.ward);
+					// Get bed amount of each ward
+					d.bed = wardBed.find(wb => d.ward===wb.ward);
+				});
 				
-				$scope.data = sumAdmdate(admdate);
+				// Get end date of month from startDate
+				endDateOfMonth = moment(startDate).endOf("month").format('DD')
+				// Create data by calling sumAdmdate function
+				$scope.data = sumAdmdate(admdate, endDateOfMonth);
 			}, err => {
 				console.log(err)
 			});
 		}
 
-		const sumAdmdate = function(data) {
+		const sumAdmdate = function(data, endOfMonth) {
 			data.forEach(d => {
+				d.sumBedOcc1 = (d.admdate*100)/(d.bed.bed*endOfMonth);
+
+				d.activeBed1 = (d.sumBedOcc1*d.bed.bed)/endOfMonth;
+
 				d.sumAdm = d.stat.reduce((sum, st) => {
 					return sum + parseInt(st.admdate);
 				}, 0);
@@ -63,6 +92,10 @@ app.controller('ipController', [
 				}, 0);
 				
 				d.sumPt = d.stat.length;
+
+				d.sumBedOcc2 = (d.sumAdm*100)/(d.bed.bed*endOfMonth);
+
+				d.activeBed2 = (d.sumBedOcc2*d.bed.bed)/endOfMonth;
 			});
 			
 			return data;
