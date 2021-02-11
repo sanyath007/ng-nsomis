@@ -9,6 +9,7 @@ app.controller('ipController', [
 	'StringFormatService',
 	function($rootScope, $scope, $http, $routeParams, CONFIG, DatetimeService, StringFormatService)
 	{
+		$scope.cboYear = '';
 		$scope.sdate = '';
 		$scope.edate = '';
 		$scope.data = [];
@@ -48,14 +49,14 @@ app.controller('ipController', [
 			};
 		}
 
-		$scope.getAdmdate = function(e) {
+		$scope.getAdmdateMonth = function(e) {
 			if(e) e.preventDefault();
 
 			let month = ($scope.cboMonth !== '') 
                         ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
 
-			$http.get(`${CONFIG.apiUrl}/ip/admdate/${month}`)
+			$http.get(`${CONFIG.apiUrl}/ip/admdate-month/${month}`)
 			.then(res => {
 				let admdate = res.data.admdate
 				let wardStat = res.data.wardStat
@@ -75,11 +76,44 @@ app.controller('ipController', [
 			});
 		}
 
-		const sumAdmdate = function(data, endOfMonth) {
-			data.forEach(d => {
-				d.sumBedOcc1 = (d.admdate*100)/(d.bed.bed*endOfMonth);
+		$scope.getBedOccYear = function(e) {
+			if(e) e.preventDefault();
 
-				d.activeBed1 = (d.sumBedOcc1*d.bed.bed)/100;
+			let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
+			
+			$http.get(`${CONFIG.apiUrl}/ip/bedocc-year/${year}`)
+			.then(res => {
+				let admdate = res.data.admdate
+				let wardStat = res.data.wardStat
+
+				admdate.forEach(d => {
+					d.stat = wardStat.filter(st => d.ward === st.ward);
+					// Get bed amount of each ward
+					d.bed = wardBed.find(wb => d.ward===wb.ward);
+				});
+				
+				// Get total days of the year
+				daysOfYear = (moment().year(year).month(1).endOf("month").format('DD') == 28) ? 365 : 366;
+				// Create data by calling sumAdmdate function
+				$scope.data = sumAdmdate(admdate, daysOfYear);
+			}, err => {
+				console.log(err)
+			});
+		}
+
+		const calculateBedOcc = function(sumAdmdate, totalBed, totalDate) {
+			return (sumAdmdate*100)/(totalBed*totalDate);
+		}
+		
+		const calculateActiveBed = function(bedOcc, totalBed) {
+			return (bedOcc*totalBed)/100;
+		}
+
+		const sumAdmdate = function(data, totalDate) {
+			data.forEach(d => {
+				d.sumBedOcc1 = calculateBedOcc(d.admdate, d.bed.bed, totalDate);
+
+				d.activeBed1 = calculateActiveBed(d.sumBedOcc1, d.bed.bed);
 
 				d.sumAdm = d.stat.reduce((sum, st) => {
 					return sum + parseInt(st.admdate);
@@ -91,9 +125,9 @@ app.controller('ipController', [
 				
 				d.sumPt = d.stat.length;
 
-				d.sumBedOcc2 = (d.sumAdm*100)/(d.bed.bed*endOfMonth);
+				d.sumBedOcc2 = calculateBedOcc(d.sumAdm, d.bed.bed, totalDate);
 
-				d.activeBed2 = (d.sumBedOcc2*d.bed.bed)/100;
+				d.activeBed2 = calculateActiveBed(d.sumBedOcc2, d.bed.bed);
 			});
 			
 			return data;

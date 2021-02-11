@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="ipController"
-	ng-init="getAdmdate($event);"
+	ng-init="getBedOccYear($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -12,26 +12,26 @@
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-bed mr-1"></i>
-							สรุปวันนอนตามวอร์ด (ไม่รวม ICU และเด็กแรกเกิด)
+							สรุปอัตราครองเตียง (ไม่รวม ICU และเด็กแรกเกิด)
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
 
 						<form action="" method="POST" class="form-inline">
 							<div class="form-group">
-								<label>ประจำเดือน :</label>
+								<label>ปีงบประมาณ :</label>
 								<input
 									type="text"
-									id="cboMonth"
-									name="cboMonth"
-									ng-model="cboMonth"
+									id="cboYear"
+									name="cboYear"
+									ng-model="cboYear"
 									class="form-control"
 									style="margin: 0 10px;"
 									autocomplete="off"
 								>
 							</div>
 
-							<button ng-click="getAdmdate($event)" class="btn btn-primary">ตกลง</button>
+							<button ng-click="getBedOccYear($event)" class="btn btn-primary">ตกลง</button>
 							
 						</form>
 
@@ -46,7 +46,7 @@
 								<tr>
 									<th style="width: 3%; text-align: center;" rowspan="2">ลำดับ</th>
 									<th style="text-align: center;" rowspan="2">วอร์ด</th>
-									<th style="width: 8%; text-align: center;" rowspan="2">จำนวนเตียง</th>
+									<th style="width: 6%; text-align: center;" rowspan="2">จำนวนเตียง</th>
 									<th style="width: 8%; text-align: center;" rowspan="2">AdjRW</th>
 									<th style="text-align: center;" colspan="4">จน.คิดตามการจำหน่าย</th>
 									<th style="text-align: center;" colspan="4">จน.คิดตามการดูแลจริง</th>
@@ -55,11 +55,11 @@
 									<th style="width: 6%; text-align: center;">ผป.</th>
 									<th style="width: 6%; text-align: center;">วันนอน</th>
 									<th style="width: 10%; text-align: center;">อัตราครองเตียง</th>									
-									<th style="width: 8%; text-align: center;">Active Bed</th>
+									<th style="width: 6%; text-align: center;">Active Bed</th>
 									<th style="width: 6%; text-align: center;">ผป.</th>
 									<th style="width: 6%; text-align: center;">วันนอน</th>
 									<th style="width: 10%; text-align: center;">อัตราครองเตียง</th>
-									<th style="width: 8%; text-align: center;">Active Bed</th>
+									<th style="width: 6%; text-align: center;">Active Bed</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -69,17 +69,19 @@
 									<td style="text-align: center;">{{ row.bed.bed }}</td>
 									<td style="text-align: center;">{{ row.rw }}</td>
 									<td style="text-align: center;">
-										<a href="ip/ptdchbyward/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">{{ row.dc_num }}</a>
+										<a href="ip/ptdchbyward/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+											{{ row.dc_num | currency:'':0 }}
+										</a>
 									</td>
-									<td style="text-align: center;">{{ row.admdate }}</td>
-									<td style="text-align: center;">{{ row.sumBedOcc1 | currency:'':2  }}</td>
+									<td style="text-align: center;">{{ row.admdate | currency:'':0 }}</td>
+									<td style="text-align: center;">{{ row.sumBedOcc1 | currency:'':2 }}</td>
 									<td style="text-align: center;">{{ row.activeBed1 | currency:'':1 }}</td>
 									<td style="text-align: center;">
 										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
-											{{ row.sumPt }}
+											{{ row.sumPt | currency:'':0 }}
 										</a>
 									</td>
-									<td style="text-align: center;">{{ row.sumAdm }}</td>
+									<td style="text-align: center;">{{ row.sumAdm | currency:'':0 }}</td>
 									<td style="text-align: center;">{{ row.sumBedOcc2 | currency:'':2 }}</td>
 									<td style="text-align: center;">{{ row.activeBed2 | currency:'':1 }}</td>
 								</tr>
@@ -111,11 +113,11 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#cboMonth').datepicker({
+		$('#cboYear').datepicker({
 			autoclose: true,
-			format: 'mm/yyyy',
-			viewMode: "months", 
-			minViewMode: "months",
+			format: 'yyyy',
+			viewMode: "years", 
+			minViewMode: "years",
 			language: 'th',
 			thaiyear: true
 		}).datepicker('update', new Date());

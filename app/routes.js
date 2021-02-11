@@ -23,8 +23,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/dashboard/dash-month.html',
 		controller: 'dashmonthController'
 	})
-	.when('/ip/admdate', {
-		templateUrl: 'templates/ip/admdate.html',
+	.when('/ip/admdate-month', {
+		templateUrl: 'templates/ip/admdate-month.html',
+		controller: 'ipController'
+	})
+	.when('/ip/bedocc-year', {
+		templateUrl: 'templates/ip/bedocc-year.html',
 		controller: 'ipController'
 	})
 	.when('/ip/class', {
