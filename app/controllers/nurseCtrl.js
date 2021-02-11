@@ -2,7 +2,8 @@ app.controller('nurseController', [
 	'$scope',
 	'$http',
 	'CONFIG',
-	function($scope, $http, CONFIG) 
+	'$routeParams',
+	function($scope, $http, CONFIG, $routeParams) 
 	{
 		$scope.cboYear = '';
 		$scope.sdate = '';
@@ -10,6 +11,7 @@ app.controller('nurseController', [
 		$scope.data = [];
 		$scope.pager = null;
 		$scope.totalData = {};
+		$scope.profile = null;
 		$scope.toDay = new Date();
 
 		const initTotalSumYear = function() {
@@ -35,6 +37,17 @@ app.controller('nurseController', [
 				calculatAge();
 			}, err => {
 				console.log(err)
+			});
+		};
+
+		$scope.getNurse = (e) => {
+			const id = $routeParams.id;
+
+			$http.get(`${CONFIG.apiUrl}/nurses/profile/${id}`)
+			.then(res => {
+				$scope.profile = res.data;
+			}, err => {
+				console.log(err);
 			});
 		};
 
