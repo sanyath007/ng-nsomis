@@ -1,0 +1,167 @@
+<section
+	class="content"
+	ng-controller="nurseController"
+	ng-init="getGenList($event);"
+>
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-hospital-user"></i>
+							ข้อมูลเจเนอเรชั่นและระดับของพยาบาลวิชาชีพ
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+
+						<form action="" method="POST" class="form-inline">
+							<div class="form-group">
+								<label>วันที่ :</label>
+								<input
+									type="text"
+									id="sdate"
+									name="sdate"								
+									ng-model="sdate"								
+									class="form-control mr-2 ml-2"
+									autocomplete="off"
+								>
+							</div>
+
+							<div class="form-group">
+								<label>ถึงวันที่ :</label>
+								<input
+									type="text"
+									id="edate"
+									name="edate"
+									ng-model="edate"
+									class="form-control mr-2 ml-2"
+									autocomplete="off"
+								>
+							</div>
+
+							<button ng-click="getGenList($event)" class="btn btn-primary">ตกลง</button>
+							
+						</form>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<div class="card-body">
+
+						<table class="table table-bordered table-striped" style="font-size: 14px;">
+							<thead>
+								<tr>
+									<th style="width: 3%; text-align: center;" rowspan="2">ลำดับ</th>
+									<th style="text-align: center;" rowspan="2">ชื่อ-สกุล</th>
+									<th style="width: 8%; text-align: center;" rowspan="2">จ.18</th>
+									<th style="width: 7%; text-align: center;" rowspan="2">ว/ด/ป เกิด</th>
+									<th style="width: 5%; text-align: center;" rowspan="2">อายุ</th>
+									<th style="text-align: center;" colspan="4">Generations</th>
+									<th style="width: 7%; text-align: center;" rowspan="2">ว/ด/ป บรรจุ</th>
+									<th style="width: 5%; text-align: center;" rowspan="2">อายุงาน</th>
+									<th style="text-align: center;" colspan="5">ระดับ</th>
+								</tr>
+								<tr>
+									<th style="width: 5%; text-align: center;">BB</th>
+									<th style="width: 5%; text-align: center;">X</th>
+									<th style="width: 5%; text-align: center;">Y</th>
+									<th style="width: 5%; text-align: center;">Z</th>									
+									<th style="width: 7%; text-align: center;">Novice</th>
+									<th style="width: 7%; text-align: center;">Beginner</th>
+									<th style="width: 7%; text-align: center;">Competent</th>
+									<th style="width: 7%; text-align: center;">Proficient</th>
+									<th style="width: 7%; text-align: center;">Expert</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(index, row) in data">	
+									<td style="text-align: center;">{{ index+1 }}</td>
+									<td>
+										{{ row.person.prefix.prefix_name+row.person.person_firstname+ ' ' +row.person.person_lastname }}
+									</td>
+									<td style="text-align: center;">{{ row.hosppay18.name }}</td>
+									<td style="text-align: center;">{{ row.person.person_birth | thdate }}</td>
+									<td style="text-align: center;">{{ row.ageY+ 'ป ' +row.ageM+ 'ด' }}</td>
+									<td style="text-align: center;">
+										<!-- {{ (row.birthYear >= 1946 && row.birthYear <= 1964) ? '1' : '' }} -->
+										<i class="fas fa-check-circle" ng-show="(row.birthYear >= 1946 && row.birthYear <= 1964)"></i>
+									</td>
+									<td style="text-align: center;">
+										<!-- {{ (row.birthYear >= 1965 && row.birthYear <= 1979) ? '1' : '' }} -->
+										<i class="fas fa-check-circle" ng-show="(row.birthYear >= 1965 && row.birthYear <= 1979)"></i>
+									</td>
+									<td style="text-align: center;">
+										<!-- {{ (row.birthYear >= 1980 && row.birthYear <= 1997) ? '1' : '' }} -->
+										<i class="fas fa-check-circle" ng-show="(row.birthYear >= 1980 && row.birthYear <= 1997)"></i>
+									</td>
+									<td style="text-align: center;">
+										<!-- {{ (row.birthYear >= 1998) ? '1' : '' }} -->
+										<i class="fas fa-check-circle" ng-show="(row.birthYear >= 1998)"></i>
+									</td>
+									<td style="text-align: center;">{{ row.start_date | thdate }}</a></td>
+									<td style="text-align: center;">{{ row.level+ 'ปี' }}</a></td>
+									<td style="text-align: center;">
+										<!-- {{ (row.level < 1) ? '1' : '' }} -->
+										<i class="fas fa-check-circle" ng-show="(row.level < 1)"></i>
+									</td>
+									<td style="text-align: center;">
+										<!-- {{ (row.level >= 1 && row.level < 2) ? '1' : '' }} -->
+										<i class="fas fa-check-circle" ng-show="(row.level >= 1 && row.level < 2)"></i>
+									</td>
+									<td style="text-align: center;">
+										<!-- {{ (row.level >= 2 && row.level < 3) ? '1' : '' }} -->
+										<i class="fas fa-check-circle" ng-show="(row.level >= 2 && row.level < 3)"></i>
+									</td>
+									<td style="text-align: center;">
+										<!-- {{ (row.level >= 3 && row.level < 5) ? '1' : '' }} -->
+										<i class="fas fa-check-circle" ng-show="(row.level >= 3 && row.level < 5)"></i>
+									</td>
+									<td style="text-align: center;">
+										<!-- {{ (row.level > 5) ? '1' : '' }} -->
+										<i class="fas fa-check-circle" ng-show="(row.level > 5)"></i>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div><!-- /.card-body -->
+					<div class="card-footer clearfix">
+						<div class="m-0 float-left" ng-show="data">
+							<a href="#" class="btn btn-success">Excel</a>
+						</div>
+						<ul class="pagination pagination-sm m-0 float-right" ng-show="false">
+							<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+						</ul>
+					</div><!-- /.card-footer -->
+				</div><!-- /.card -->
+	
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->
+
+<script type="text/javascript">
+	$(function() {
+		$('#sdate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+
+		$('#edate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+	});
+</script>
