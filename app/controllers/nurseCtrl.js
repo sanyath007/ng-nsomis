@@ -8,6 +8,7 @@ app.controller('nurseController', [
 		$scope.sdate = '';
 		$scope.edate = '';
 		$scope.data = [];
+		$scope.pager = null;
 		$scope.totalData = {};
 		$scope.toDay = new Date();
 
@@ -26,24 +27,43 @@ app.controller('nurseController', [
 
 			let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
 
-			$http.get(`${CONFIG.apiUrl}/nurses/gen-list`)
+			$http.get(`${CONFIG.apiUrl}/nurses`)
 			.then(res => {
-				$scope.data = res.data.nurses;
+				$scope.data = res.data.items;
+				$scope.pager = res.data.pager;
 
-				$scope.data.forEach(nurse => {
-					let personBirthDate = moment(nurse.person.person_birth);
-					let ageYear = moment().diff(personBirthDate, 'years');
-					let ageMonth = moment().diff(personBirthDate, 'months') - (ageYear*12);
-					
-					nurse.ageY = ageYear;
-					nurse.ageM = ageMonth;
-					nurse.birthYear = moment(nurse.person.person_birth).format('YYYY');
-					nurse.level = moment().diff(moment(nurse.start_date), 'years');
-				});
+				calculatAge();
 			}, err => {
 				console.log(err)
 			});
 		};
+
+		const calculatAge = function() {
+			$scope.data.forEach(nurse => {
+				nurse.birthYear = moment(nurse.person.person_birth).format('YYYY');
+				nurse.ageY = calcAge(nurse.person.person_birth, 'years');
+				nurse.ageM = calcAge(nurse.person.person_birth, 'months') - (nurse.ageY*12);
+				nurse.level = calcAge(nurse.start_date, 'years');
+			});
+		}
+
+		const calcAge = function(birthdate, type) {
+			return moment().diff(moment(birthdate), type);
+		}
+
+		$scope.onPaginateLinkClick = (e, link) => {
+            e.preventDefault();
+            
+            $http.get(link)
+            .then(res => {
+                $scope.data = res.data.items;
+                $scope.pager = res.data.pager;
+
+				calculatAge();
+            }, err => {
+                console.log(err)
+            });
+        };
 
 		$scope.getGenList = function(e) {
 			if(e) e.preventDefault();
@@ -54,16 +74,7 @@ app.controller('nurseController', [
 			.then(res => {
 				$scope.data = res.data.nurses;
 
-				$scope.data.forEach(nurse => {
-					let personBirthDate = moment(nurse.person.person_birth);
-					let ageYear = moment().diff(personBirthDate, 'years');
-					let ageMonth = moment().diff(personBirthDate, 'months') - (ageYear*12);
-					
-					nurse.ageY = ageYear;
-					nurse.ageM = ageMonth;
-					nurse.birthYear = moment(nurse.person.person_birth).format('YYYY');
-					nurse.level = moment().diff(moment(nurse.start_date), 'years');
-				});
+				calculatAge();
 			}, err => {
 				console.log(err)
 			});

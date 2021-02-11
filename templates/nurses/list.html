@@ -1,0 +1,168 @@
+<section
+	class="content"
+	ng-controller="nurseController"
+	ng-init="getAll($event);"
+>
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-hospital-user"></i>
+							รายชื่อพยาบาลวิชาชีพ
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+
+						<form action="" method="POST" class="form-inline">
+							<!-- <div class="form-group">
+								<label>วันที่บรรจุ :</label>
+								<input
+									type="text"
+									id="sdate"
+									name="sdate"								
+									ng-model="sdate"								
+									class="form-control mr-2 ml-2"
+									autocomplete="off"
+								>
+							</div> -->
+
+							<div class="form-group">
+								<label>กลุ่มงาน :</label>
+								<select
+									id="cboDepart"
+									name="cboDepart"								
+									ng-model="cboDepart"								
+									class="form-control mr-2 ml-2"
+								>
+									<option></option>
+								</select>
+							</div>
+
+							<!-- <button ng-click="getAll($event)" class="btn btn-primary">ตกลง</button> -->
+							
+						</form>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<div class="card-body">
+
+						<table class="table table-bordered table-striped" style="font-size: 14px;">
+							<thead>
+								<tr>
+									<th style="width: 3%; text-align: center;">ลำดับ</th>
+									<th style="text-align: center;">ชื่อ-สกุล</th>
+									<th style="width: 15%; text-align: center;">จ.18</th>
+									<th style="width: 7%; text-align: center;">ว/ด/ป เกิด</th>
+									<th style="width: 6%; text-align: center;">อายุ</th>
+									<th style="width: 20%; text-align: center;">กลุ่มงาน</th>
+									<th style="width: 7%; text-align: center;">ว/ด/ป บรรจุ</th>
+									<th style="width: 6%; text-align: center;">อายุงาน</th>
+									<th style="width: 8%; text-align: center;">ระดับ</th>
+									<th style="width: 10%; text-align: center;">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(index, row) in data">	
+									<td style="text-align: center;">{{ pager.from+index }}</td>
+									<td>
+										{{ row.person.prefix.prefix_name+row.person.person_firstname+ ' ' +row.person.person_lastname }}
+									</td>
+									<td style="text-align: center;">{{ row.hosppay18.name }}</td>
+									<td style="text-align: center;">{{ row.person.person_birth | thdate }}</td>
+									<td style="text-align: center;">{{ row.ageY+ 'ป ' +row.ageM+ 'ด' }}</td>
+									<td style="text-align: center;">
+										{{ row.depart.depart_id+ '-' +row.depart.depart_name }}
+									</td>
+									<td style="text-align: center;">{{ row.start_date | thdate }}</td>
+									<td style="text-align: center;">{{ row.level+ 'ปี' }}</td>
+									<td style="text-align: center;">
+										<span ng-show="(row.level < 1)">Novice</span>
+										<span ng-show="(row.level >= 1 && row.level < 2)">Beginner</span>
+										<span ng-show="(row.level >= 2 && row.level < 3)">Competent</span>
+										<span ng-show="(row.level >= 3 && row.level < 5)">Proficient	</span>
+										<span ng-show="(row.level >= 5)">Expert</span>
+									</td>
+									<td style="text-align: center;">
+										<a 
+											href="#"
+											class="btn btn-info btn-sm"
+										>
+											<i class="fas fa-search"></i>
+										</a>
+										<a 
+											href="#"
+											class="btn btn-warning btn-sm"
+										>
+											<i class="fas fa-edit"></i>
+										</a>
+										<a 
+											href="#"
+											class="btn btn-danger btn-sm"
+										>
+											<i class="far fa-trash-alt"></i>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div><!-- /.card-body -->
+					<div class="card-footer clearfix">
+						<div class="row">
+							<div class="col-3 m-0 float-left" ng-show="data">
+								<a href="#" class="btn btn-success">Excel</a>
+							</div>
+							
+							<div class="col-6 m-0" ng-show="data" style="text-align: center;">
+								<span>จำนวนทั้งหมด {{ pager.total }} ราย</span>
+							</div>
+							
+							<div class="col-3 m-0" ng-show="data">
+								<ul class="pagination pagination-md m-0 float-right" ng-show="pager">
+									<li class="page-item" ng-class="{disabled: pager.current_page==1}">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.first_page_url)">
+											First
+										</a>
+									</li>
+									<li class="page-item" ng-class="{disabled: pager.current_page==1}">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.prev_page_url)">
+											Prev
+										</a>
+									</li>
+									<li class="page-item" ng-class="{disabled: pager.current_page==pager.last_page}">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.next_page_url)">
+											Next
+										</a>
+									</li>
+									<li class="page-item" ng-class="{disabled: pager.current_page==pager.last_page}">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.last_page_url)">
+											Last
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div><!-- /.card-footer -->
+				</div><!-- /.card -->
+	
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->
+
+<script type="text/javascript">
+	$(function() {
+		// $('#sdate').datepicker({
+		// 	autoclose: true,
+		// 	language: 'th',
+		// 	format: 'dd/mm/yyyy',
+		// 	thaiyear: true
+		// }).datepicker('update', new Date());
+	});
+</script>

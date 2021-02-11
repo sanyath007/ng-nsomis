@@ -79,6 +79,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/nurses/gen-list.html',
 		controller: 'nurseController'
 	})
+	.when('/nurses/list', {
+		templateUrl: 'templates/nurses/list.html',
+		controller: 'nurseController'
+	})
 	.when('/pharma/ip', {
 		templateUrl: 'templates/pharma/ip.html',
 		controller: 'pharmaController'
