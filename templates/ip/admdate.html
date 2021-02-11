@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="ipController"
-	ng-init="getAdmdateData($event);"
+	ng-init="getAdmdate($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -19,30 +19,19 @@
 
 						<form action="" method="POST" class="form-inline">
 							<div class="form-group">
-								<label>วันที่ :</label>
+								<label>ประจำเดือน :</label>
 								<input
 									type="text"
-									id="sdate"
-									name="sdate"								
-									ng-model="sdate"								
-									class="form-control mr-2 ml-2"
+									id="cboMonth"
+									name="cboMonth"
+									ng-model="cboMonth"
+									class="form-control"
+									style="margin: 0 10px;"
 									autocomplete="off"
 								>
 							</div>
 
-							<div class="form-group">
-								<label>ถึงวันที่ :</label>
-								<input
-									type="text"
-									id="edate"
-									name="edate"
-									ng-model="edate"
-									class="form-control mr-2 ml-2"
-									autocomplete="off"
-								>
-							</div>
-
-							<button ng-click="getAdmdateData($event)" class="btn btn-primary">ตกลง</button>
+							<button ng-click="getAdmdate($event)" class="btn btn-primary">ตกลง</button>
 							
 						</form>
 
@@ -84,7 +73,7 @@
 									</td>
 									<td style="text-align: center;">{{ row.admdate }}</td>
 									<td style="text-align: center;">{{ row.sumBedOcc1 | currency:'':2  }}</td>
-									<td style="text-align: center;">{{ row.activeBed1 | currency:'':2 }}</td>
+									<td style="text-align: center;">{{ row.activeBed1 | currency:'':1 }}</td>
 									<td style="text-align: center;">
 										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
 											{{ row.sumPt }}
@@ -92,14 +81,14 @@
 									</td>
 									<td style="text-align: center;">{{ row.sumAdm }}</td>
 									<td style="text-align: center;">{{ row.sumBedOcc2 | currency:'':2 }}</td>
-									<td style="text-align: center;">{{ row.activeBed2 | currency:'':2 }}</td>
+									<td style="text-align: center;">{{ row.activeBed2 | currency:'':1 }}</td>
 								</tr>
 							</tbody>
 						</table>
 
 						<!-- <p style="color: red; margin: 2px auto;">* อัตราครองเตียงข้างต้นคิดที่จำนวนเตียง 200 เตียง</p> -->
 						<p style="color: red; margin: 2px auto;">* อัตราครองเตียง = จำนวนวันนอนของวอร์ด * 100 / จำนวนเตียงของวอร์ด * จำนวนวันในเดือน</p>
-						<p style="color: red; margin: 2px auto;">** Active Bed = อัตราครองเตียง * 100 / จำนวนวันในเดือน</p>
+						<p style="color: red; margin: 2px auto;">** Active Bed = อัตราครองเตียง * จำนวนเตียงของวอร์ด / 100</p>
 					</div><!-- /.card-body -->
 					<div class="card-footer clearfix">
 						<div class="m-0 float-left" ng-show="data">
@@ -122,17 +111,12 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#sdate').datepicker({
+		$('#cboMonth').datepicker({
 			autoclose: true,
+			format: 'mm/yyyy',
+			viewMode: "months", 
+			minViewMode: "months",
 			language: 'th',
-			format: 'dd/mm/yyyy',
-			thaiyear: true
-		}).datepicker('update', new Date());
-
-		$('#edate').datepicker({
-			autoclose: true,
-			language: 'th',
-			format: 'dd/mm/yyyy',
 			thaiyear: true
 		}).datepicker('update', new Date());
 	});

@@ -5,8 +5,9 @@ app.controller('ipController', [
 	'$http',
 	'$routeParams',
 	'CONFIG',
+	'DatetimeService',
 	'StringFormatService',
-	function($rootScope, $scope, $http, $routeParams, CONFIG, StringFormatService)
+	function($rootScope, $scope, $http, $routeParams, CONFIG, DatetimeService, StringFormatService)
 	{
 		$scope.sdate = '';
 		$scope.edate = '';
@@ -17,19 +18,19 @@ app.controller('ipController', [
 		$scope.totalAdmdate = 0;
 		$scope.ward = null;
 		const wardBed = [
-			{ ward: '00', bed: 10 }, // จักษุ โสต ศอ นาสิก
-			{ ward: '01', bed: 35 }, // อายุรกรรมชาย
-			{ ward: '02', bed: 35 }, // อายุรกรรมหญิง
+			{ ward: '00', bed: 20 }, // จักษุ โสต ศอ นาสิก
+			{ ward: '01', bed: 30 }, // อายุรกรรมชาย
+			{ ward: '02', bed: 30 }, // อายุรกรรมหญิง
 			{ ward: '04', bed: 8 }, // ห้องคลอด
 			{ ward: '05', bed: 8 }, // วิกฤต
 			{ ward: '06', bed: 8 }, // พิเศษ 1
-			{ ward: '07', bed: 35 }, // ศัลยกรรมหญิง
-			{ ward: '08', bed: 35 }, // กุมารเวชกรรม
-			{ ward: '09', bed: 35 }, // สูติ-นรีเวชกรรม
-			{ ward: '10', bed: 35 }, // ศัลกรรมชาย
+			{ ward: '07', bed: 30 }, // ศัลยกรรมหญิง
+			{ ward: '08', bed: 20 }, // กุมารเวชกรรม
+			{ ward: '09', bed: 30 }, // สูติ-นรีเวชกรรม
+			{ ward: '10', bed: 30 }, // ศัลกรรมชาย
 			{ ward: '11', bed: 12 }, // พิเศษ 2
 			{ ward: '12', bed: 10 }, // พิเศษ 3
-			{ ward: '13', bed: 6 }, // ทารกแรกเกิดป่วย
+			{ ward: '13', bed: 8 }, // ทารกแรกเกิดป่วย
 			{ ward: '14', bed: 8 }, // Stroke Unit
 			{ ward: '15', bed: 6 }, // NICU
 			{ ward: '17', bed: 6 }, // IntermediateCare
@@ -47,17 +48,14 @@ app.controller('ipController', [
 			};
 		}
 
-		$scope.getAdmdateData = function(e) {
+		$scope.getAdmdate = function(e) {
 			if(e) e.preventDefault();
 
-			let startDate = ($('#sdate').val() !== '') 
-							? StringFormatService.convToDbDate($scope.sdate) 
-							: moment().format('YYYY-MM-DD');
-			let endDate = ($('#edate').val() !== '') 
-							? StringFormatService.convToDbDate($scope.edate) 
-							: moment().format('YYYY-MM-DD');
+			let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
 
-			$http.get(`${CONFIG.apiUrl}/ip/admdate/${startDate}/${endDate}`)
+			$http.get(`${CONFIG.apiUrl}/ip/admdate/${month}`)
 			.then(res => {
 				let admdate = res.data.admdate
 				let wardStat = res.data.wardStat
@@ -69,7 +67,7 @@ app.controller('ipController', [
 				});
 				
 				// Get end date of month from startDate
-				endDateOfMonth = moment(startDate).endOf("month").format('DD')
+				endDateOfMonth = moment(month).endOf("month").format('DD')
 				// Create data by calling sumAdmdate function
 				$scope.data = sumAdmdate(admdate, endDateOfMonth);
 			}, err => {
@@ -81,7 +79,7 @@ app.controller('ipController', [
 			data.forEach(d => {
 				d.sumBedOcc1 = (d.admdate*100)/(d.bed.bed*endOfMonth);
 
-				d.activeBed1 = (d.sumBedOcc1*d.bed.bed)/endOfMonth;
+				d.activeBed1 = (d.sumBedOcc1*d.bed.bed)/100;
 
 				d.sumAdm = d.stat.reduce((sum, st) => {
 					return sum + parseInt(st.admdate);
@@ -95,7 +93,7 @@ app.controller('ipController', [
 
 				d.sumBedOcc2 = (d.sumAdm*100)/(d.bed.bed*endOfMonth);
 
-				d.activeBed2 = (d.sumBedOcc2*d.bed.bed)/endOfMonth;
+				d.activeBed2 = (d.sumBedOcc2*d.bed.bed)/100;
 			});
 			
 			return data;
