@@ -19,27 +19,15 @@
 
 						<form action="" method="POST" class="form-inline">
 							<div class="form-group">
-								<label>วันที่ :</label>
-								<input
-									type="text"
-									id="sdate"
-									name="sdate"								
-									ng-model="sdate"								
+								<label>กลุ่มงาน :</label>
+								<select
+									id="cboDepart"
+									name="cboDepart"								
+									ng-model="cboDepart"								
 									class="form-control mr-2 ml-2"
-									autocomplete="off"
 								>
-							</div>
-
-							<div class="form-group">
-								<label>ถึงวันที่ :</label>
-								<input
-									type="text"
-									id="edate"
-									name="edate"
-									ng-model="edate"
-									class="form-control mr-2 ml-2"
-									autocomplete="off"
-								>
+									<option></option>
+								</select>
 							</div>
 
 							<button ng-click="getGenList($event)" class="btn btn-primary">ตกลง</button>
