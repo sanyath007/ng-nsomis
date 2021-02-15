@@ -14,13 +14,22 @@ app.controller('nurseController', [
 		$scope.profile = null;
 		$scope.toDay = new Date();
 
-		const initTotalSumYear = function() {
+		const initTotalGenerations = function() {
 			return {
-				men: 0,
-				women: 0,
-				app: 0,
-				notapp: 0,
-				total: 0,
+				b: 0,
+				x: 0,
+				y: 0,
+				z: 0
+			}
+		};
+		
+		const initTotalLevels = function() {
+			return {
+				novice: 0,
+				beginner: 0,
+				competent: 0,
+				proficient: 0,
+				expert: 0
 			}
 		};
 
@@ -78,6 +87,29 @@ app.controller('nurseController', [
             });
         };
 
+		const calcTotalGen = function() {
+			$scope.totalData.generations = initTotalGenerations();
+
+			$scope.data.forEach(nurse => {
+				$scope.totalData.generations.b += (nurse.birthYear >= 1946 && nurse.birthYear <= 1964) ? 1 : 0; // gen b
+				$scope.totalData.generations.x += (nurse.birthYear >= 1965 && nurse.birthYear <= 1979) ? 1 : 0; // gen x
+				$scope.totalData.generations.y += (nurse.birthYear >= 1980 && nurse.birthYear <= 1997) ? 1 : 0; // gen y
+				$scope.totalData.generations.z += (nurse.birthYear >= 1998) ? 1 : 0; // gen z
+			});
+		}
+		
+		const calcTotalLevel = function() {
+			$scope.totalData.levels = initTotalLevels();
+
+			$scope.data.forEach(nurse => {
+				$scope.totalData.levels.novice += (nurse.level < 1) ? 1 : 0; // Novice
+				$scope.totalData.levels.beginner += (nurse.level >= 1 && nurse.level < 2) ? 1 : 0; // Beginner
+				$scope.totalData.levels.competent += (nurse.level >= 2 && nurse.level < 3) ? 1 : 0; // Competent
+				$scope.totalData.levels.proficient += (nurse.level >= 3 && nurse.level < 5) ? 1 : 0; // Proficient
+				$scope.totalData.levels.expert += (nurse.level >= 5) ? 1 : 0; // Expert
+			});
+		}
+
 		$scope.getGenList = function(e) {
 			if(e) e.preventDefault();
 
@@ -88,6 +120,8 @@ app.controller('nurseController', [
 				$scope.data = res.data.nurses;
 
 				calculatAge();
+				calcTotalGen();
+				calcTotalLevel();
 			}, err => {
 				console.log(err)
 			});

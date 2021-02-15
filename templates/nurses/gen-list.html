@@ -58,11 +58,11 @@
 									<th style="width: 5%; text-align: center;">X</th>
 									<th style="width: 5%; text-align: center;">Y</th>
 									<th style="width: 5%; text-align: center;">Z</th>									
-									<th style="width: 7%; text-align: center;">Novice</th>
-									<th style="width: 7%; text-align: center;">Beginner</th>
-									<th style="width: 7%; text-align: center;">Competent</th>
-									<th style="width: 7%; text-align: center;">Proficient</th>
-									<th style="width: 7%; text-align: center;">Expert</th>
+									<th style="width: 5%; text-align: center;">Novice</th>
+									<th style="width: 5%; text-align: center;">Beginner</th>
+									<th style="width: 5%; text-align: center;">Competent</th>
+									<th style="width: 5%; text-align: center;">Proficient</th>
+									<th style="width: 5%; text-align: center;">Expert</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -112,6 +112,19 @@
 										<!-- {{ (row.level >= 5) ? '1' : '' }} -->
 										<i class="fas fa-check-circle" ng-show="(row.level >= 5)"></i>
 									</td>
+								</tr>
+								<tr>
+									<td style="text-align: center;" colspan="5">รวม</td>
+									<td style="text-align: center;">{{ totalData.generations.b }}</td>
+									<td style="text-align: center;">{{ totalData.generations.x }}</td>
+									<td style="text-align: center;">{{ totalData.generations.y }}</td>
+									<td style="text-align: center;">{{ totalData.generations.z }}</td>
+									<td colspan="2"></td>
+									<td style="text-align: center;">{{ totalData.levels.novice }}</td>
+									<td style="text-align: center;">{{ totalData.levels.beginner }}</td>
+									<td style="text-align: center;">{{ totalData.levels.competent }}</td>
+									<td style="text-align: center;">{{ totalData.levels.proficient }}</td>
+									<td style="text-align: center;">{{ totalData.levels.expert }}</td>
 								</tr>
 							</tbody>
 						</table>
