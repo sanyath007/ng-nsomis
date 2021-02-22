@@ -20,8 +20,8 @@ app.controller('ipController', [
 		$scope.ward = null;
 		const wardBed = [
 			{ ward: '00', bed: 20 }, // จักษุ โสต ศอ นาสิก
-			{ ward: '01', bed: 30 }, // อายุรกรรมชาย
-			{ ward: '02', bed: 30 }, // อายุรกรรมหญิง
+			{ ward: '01', bed: 26 }, // อายุรกรรมชาย
+			{ ward: '02', bed: 26 }, // อายุรกรรมหญิง
 			{ ward: '04', bed: 8 }, // ห้องคลอด
 			{ ward: '05', bed: 8 }, // วิกฤต
 			{ ward: '06', bed: 8 }, // พิเศษ 1
@@ -31,9 +31,9 @@ app.controller('ipController', [
 			{ ward: '10', bed: 30 }, // ศัลกรรมชาย
 			{ ward: '11', bed: 12 }, // พิเศษ 2
 			{ ward: '12', bed: 10 }, // พิเศษ 3
-			{ ward: '13', bed: 8 }, // ทารกแรกเกิดป่วย
+			{ ward: '13', bed: 10 }, // ทารกแรกเกิดป่วย
 			{ ward: '14', bed: 8 }, // Stroke Unit
-			{ ward: '15', bed: 6 }, // NICU
+			{ ward: '15', bed: 2 }, // NICU
 			{ ward: '17', bed: 6 }, // IntermediateCare
 		];
 
