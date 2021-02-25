@@ -87,10 +87,37 @@
 								</tr>
 							</tbody>
 						</table>
-
-						<!-- <p style="color: red; margin: 2px auto;">* อัตราครองเตียงข้างต้นคิดที่จำนวนเตียง 200 เตียง</p> -->
-						<p style="color: red; margin: 2px auto;">* อัตราครองเตียง = จำนวนวันนอนของวอร์ด * 100 / จำนวนเตียงของวอร์ด * จำนวนวันในปี</p>
+						
+						<p style="color: red; margin: 2px auto;">* อัตราครองเตียง = จำนวนวันนอนของวอร์ดในปี * 100 / จำนวนเตียงของวอร์ด * จำนวนวันในปี</p>
 						<p style="color: red; margin: 2px auto;">** Active Bed = อัตราครองเตียง * จำนวนเตียงของวอร์ด / 100</p>
+						
+						<div class="row" style="flex-direction: row; justify-content: center; align-items: center; margin: 20px auto;">
+							<div class="col-md-8">
+								<h4>อัตราครองเตียงรวม</h4>
+								<table class="table table-bordered table-striped">
+									<tr>
+										<th style="width: 6%; text-align: center;">จำนวนเตียง</th>
+										<th style="width: 6%; text-align: center;">AdjRW</th>
+										<th style="width: 6%; text-align: center;">ผป.</th>
+										<th style="width: 6%; text-align: center;">วันนอน</th>
+										<th style="width: 10%; text-align: center;">อัตราครองเตียง</th>									
+										<th style="width: 6%; text-align: center;">Active Bed</th>
+									</tr>
+									<tr>
+										<td style="text-align: center;">{{ totalData.bedTotal | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.adjRwTotal | currency:'':2 }}</td>
+										<td style="text-align: center;">{{ totalData.ptTotal | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.admDateTotal | currency:'':0 }}</td>
+										<td style="text-align: center;">{{ totalData.bedOccTotal | currency:'':2 }}</td>
+										<td style="text-align: center;">{{ totalData.activeBedTotal | currency:'':2 }}</td>
+									</tr>
+								</table>
+
+								<p style="color: red; margin: 2px auto;">* จำนวนเตียง 200 เตียง ตามกรอบที่กระทรวงกำหนด</p>
+							</div>
+						</div>
+
+
 					</div><!-- /.card-body -->
 					<div class="card-footer clearfix">
 						<div class="m-0 float-left" ng-show="data">

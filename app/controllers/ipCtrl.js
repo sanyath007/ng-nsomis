@@ -54,6 +54,15 @@ app.controller('ipController', [
 			bedEmpty: 0,
 		});
 
+		const initTotalBedOccYear = () => ({
+			bedTotal: 0,
+			adjRwTotal: 0,
+			ptTotal: 0,
+			admDateTotal: 0,
+			bedOccTotal: 0,
+			activeBedTotal: 0,
+		});
+
 		$scope.getAdmdateMonth = function(e) {
 			if(e) e.preventDefault();
 
@@ -91,6 +100,8 @@ app.controller('ipController', [
 				let admdate = res.data.admdate
 				let wardStat = res.data.wardStat
 
+				$scope.totalData = initTotalBedOccYear();
+
 				admdate.forEach(d => {
 					d.stat = wardStat.filter(st => d.ward === st.ward);
 					// Get bed amount of each ward
@@ -101,17 +112,19 @@ app.controller('ipController', [
 				daysOfYear = (moment().year(year).month(1).endOf("month").format('DD') == 28) ? 365 : 366;
 				// Create data by calling sumAdmdate function
 				$scope.data = sumAdmdate(admdate, daysOfYear);
+
+				$scope.data.forEach(d => {
+					$scope.totalData.adjRwTotal += parseFloat(d.rw);
+					$scope.totalData.ptTotal += parseInt(d.dc_num);
+					$scope.totalData.admDateTotal += parseInt(d.admdate);
+				});
+
+				$scope.totalData.bedTotal = 200; //คิด
+				$scope.totalData.bedOccTotal = ($scope.totalData.admDateTotal) * 100/($scope.totalData.bedTotal * daysOfYear)
+				$scope.totalData.activeBedTotal = ($scope.totalData.bedOccTotal * 200)/100;
 			}, err => {
 				console.log(err)
 			});
-		}
-
-		const calculateBedOcc = function(sumAdmdate, totalBed, totalDate) {
-			return (sumAdmdate*100)/(totalBed*totalDate);
-		}
-		
-		const calculateActiveBed = function(bedOcc, totalBed) {
-			return (bedOcc*totalBed)/100;
 		}
 
 		const sumAdmdate = function(data, totalDate) {
@@ -136,6 +149,14 @@ app.controller('ipController', [
 			});
 			
 			return data;
+		}
+
+		const calculateBedOcc = function(sumAdmdate, totalBed, totalDate) {
+			return (sumAdmdate*100)/(totalBed*totalDate);
+		}
+		
+		const calculateActiveBed = function(bedOcc, totalBed) {
+			return (bedOcc*totalBed)/100;
 		}
 
 		$scope.getBedEmptyDay = function(e) {
