@@ -9,11 +9,12 @@ app.controller('ipController', [
 	'StringFormatService',
 	function($rootScope, $scope, $http, $routeParams, CONFIG, DatetimeService, StringFormatService)
 	{
+		$scope.cboDate = '';
 		$scope.cboYear = '';
 		$scope.sdate = '';
 		$scope.edate = '';
 		$scope.data = [];
-		$scope.totalClass = {};
+		$scope.totalData = {};
 		$scope.toDay = new Date();
 
 		$scope.totalAdmdate = 0;
@@ -37,17 +38,21 @@ app.controller('ipController', [
 			{ ward: '17', bed: 6 }, // IntermediateCare
 		];
 
-		const initTotalClass = function() {
-			return {
-				type1: 0,
-				type2: 0,
-				type3: 0,
-				type4: 0,
-				type5: 0,
-				unknown: 0,
-				all: 0,
-			};
-		}
+		const initTotalClass = () => ({
+			type1: 0,
+			type2: 0,
+			type3: 0,
+			type4: 0,
+			type5: 0,
+			unknown: 0,
+			all: 0,
+		});
+
+		const initTotalBedEmpty = () => ({
+			bedTotal: 0,
+			ptAmount: 0,
+			bedEmpty: 0,
+		});
 
 		$scope.getAdmdateMonth = function(e) {
 			if(e) e.preventDefault();
@@ -131,6 +136,43 @@ app.controller('ipController', [
 			});
 			
 			return data;
+		}
+
+		$scope.getBedEmptyDay = function(e) {
+			if(e) e.preventDefault();
+
+			$scope.totalData = initTotalBedEmpty();
+
+			let date = ($scope.cboDate !== '') 
+                        ? StringFormatService.convToDbDate($scope.cboDate)
+                        : moment().format('YYYY-MM-DD');
+			
+			$http.get(`${CONFIG.apiUrl}/ip/bedempty-day/${date}`)
+			.then(res => {
+				$scope.data = res.data
+
+				/** Get bed amount of each ward */
+				$scope.data.forEach(d => {
+					d.bed = wardBed.find(wb => d.ward===wb.ward);
+				});
+
+				$scope.data.forEach(d => {
+					d.bedEmpty = parseInt(d.bed.bed) - parseInt(d.num_pt);
+					d.bedUsePercent = (d.num_pt * 100) / d.bed.bed;
+					d.bedEmptyPercent = (d.bedEmpty * 100) / d.bed.bed;
+				});
+
+				$scope.data.forEach((val, key) => {
+					$scope.totalData.bedTotal += parseInt(val.bed.bed);
+					$scope.totalData.ptAmount += parseInt(val.num_pt);
+					$scope.totalData.bedEmpty += parseInt(val.bed.bed) - parseInt(val.num_pt);
+				});
+
+				$scope.totalData.bedUsePercent = ($scope.totalData.ptAmount * 100) / $scope.totalData.bedTotal;
+				$scope.totalData.bedEmptyPercent = ($scope.totalData.bedEmpty * 100) / $scope.totalData.bedTotal;
+			}, err => {
+				console.log(err)
+			});
 		}
 
 		$scope.getIpClassData = function(e) {

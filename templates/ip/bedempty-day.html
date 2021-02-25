@@ -1,0 +1,110 @@
+<section
+	class="content"
+	ng-controller="ipController"
+	ng-init="getBedEmptyDay($event);"
+>
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-bed mr-1"></i>
+							การใช้เตียงประจำวัน (จำนวนผู้ป่วยไม่นับรวมเด็กแรกเกิด) 
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+
+						<form action="" method="POST" class="form-inline">
+							<div class="form-group">
+								<label>ประจำวันที่ :</label>
+								<input
+									type="text"
+									id="cboDate"
+									name="cboDate"
+									ng-model="cboDate"
+									class="form-control"
+									style="margin: 0 10px;"
+									autocomplete="off"
+								>
+							</div>
+
+							<button ng-click="getBedEmptyDay($event)" class="btn btn-primary">ตกลง</button>
+							
+						</form>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<div class="card-body">
+
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th style="width: 3%; text-align: center;">ลำดับ</th>
+									<th style="text-align: center;">วอร์ด</th>
+									<th style="width: 12%; text-align: center;">จำนวนเตียง</th>
+									<th style="width: 12%; text-align: center;">จำนวนผู้ป่วย</th>
+									<th style="width: 12%; text-align: center;">เตียงว่าง</th>
+									<th style="width: 12%; text-align: center;">การใช้เตียง (%)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(index, row) in data">	
+									<td style="text-align: center;">{{ index+1 }}</td>
+									<td>{{ row.ward + '-' + row.wardname }}</td>
+									<td style="text-align: center;">{{ row.bed.bed }}</td>
+									<td style="text-align: center;">
+										<a href="ip/ptdchbyward/{{ cboDate | dbdate }}/{{ cboDate | dbdate }}/{{ row.ward }}">
+											{{ row.num_pt | currency:'':0 }}
+										</a>
+									</td>
+									<td style="text-align: center;">{{ row.bedEmpty | currency:'':0 }}</td>
+									<td style="text-align: center;" ng-style="row.bedUsePercent > 80 && { 'color': 'red' }">
+										{{ row.bedUsePercent | currency:'':1 }}
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align: center;" colspan="2">รวม</td>
+									<td style="text-align: center;">{{ totalData.bedTotal | currency:'':0 }}</td>
+									<td style="text-align: center;">{{ totalData.ptAmount | currency:'':0 }}</td>
+									<td style="text-align: center;">{{ totalData.bedEmpty | currency:'':0 }}</td>
+									<td style="text-align: center;" ng-style="totalData.bedUsePercent > 80 && { 'color': 'red' }">
+										{{ totalData.bedUsePercent | currency:'':1 }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div><!-- /.card-body -->
+					<div class="card-footer clearfix">
+						<div class="m-0 float-left" ng-show="data">
+							<a href="#" class="btn btn-success">Excel</a>
+						</div>
+						<ul class="pagination pagination-sm m-0 float-right" ng-show="false">
+							<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+						</ul>
+					</div><!-- /.card-footer -->
+				</div><!-- /.card -->
+	
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->
+
+<script type="text/javascript">
+	$(function() {
+		$('#cboDate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+	});
+</script>
