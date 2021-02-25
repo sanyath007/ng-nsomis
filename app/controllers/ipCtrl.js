@@ -178,7 +178,7 @@ app.controller('ipController', [
 		$scope.getIpClassData = function(e) {
 			if(e) e.preventDefault();
 
-			$scope.totalClass = initTotalClass();
+			$scope.totalData = initTotalClass();
 
 			let startDate = ($('#sdate').val() !== '') 
 							? StringFormatService.convToDbDate($scope.sdate) 
@@ -193,13 +193,13 @@ app.controller('ipController', [
 				$scope.data = res.data.classes;
 
 				$scope.data.forEach((val, key) => {
-					$scope.totalClass.type1 += parseInt(val.type1);
-					$scope.totalClass.type2 += parseInt(val.type2);
-					$scope.totalClass.type3 += parseInt(val.type3);
-					$scope.totalClass.type4 += parseInt(val.type4);
-					$scope.totalClass.type5 += parseInt(val.type5);
-					$scope.totalClass.unknown += parseInt(val.unknown);
-					$scope.totalClass.all += parseInt(val.all);
+					$scope.totalData.type1 += parseInt(val.type1);
+					$scope.totalData.type2 += parseInt(val.type2);
+					$scope.totalData.type3 += parseInt(val.type3);
+					$scope.totalData.type4 += parseInt(val.type4);
+					$scope.totalData.type5 += parseInt(val.type5);
+					$scope.totalData.unknown += parseInt(val.unknown);
+					$scope.totalData.all += parseInt(val.all);
 				});
 			}, err => {
 				console.log(err)
