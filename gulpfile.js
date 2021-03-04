@@ -20,6 +20,7 @@ gulp.task('css', function() {
         'node_modules/admin-lte/plugins/summernote/summernote-bs4.min.css',
         'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css',
         'node_modules/angularjs-toaster/toaster.css',
+        'node_modules/angular-loading-bar/build/loading-bar.min.css',
         'assets/css/**/*.css',
     ])
     .pipe(minifyCss())
@@ -52,6 +53,7 @@ gulp.task('venderjs', function() {
         'node_modules/angularjs-toaster/toaster.min.js',
         'node_modules/ngstorage/ngstorage.min.js',
         'node_modules/select2/dist/js/select2.full.min.js',
+        'node_modules/angular-loading-bar/build/loading-bar.min.js',
     ])
     .pipe(uglify())
     .pipe(concat('vendor-bundle.js'))
