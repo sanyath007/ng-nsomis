@@ -79,6 +79,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/scope/sum-year.html',
 		controller: 'scopeController'
 	})
+	.when('/eye/vision2020', {
+		templateUrl: 'templates/eye/vision2020.html',
+		controller: 'eyeController'
+	})
 	.when('/nurses/gen-list', {
 		templateUrl: 'templates/nurses/gen-list.html',
 		controller: 'nurseController'
