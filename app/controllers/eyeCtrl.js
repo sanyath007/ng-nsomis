@@ -24,7 +24,7 @@ app.controller('eyeController', [
 			.then(res => {
 				$scope.data = res.data.vision;
 
-				$scope.data.forEach(async (visit) => {
+				$scope.data && $scope.data.forEach(async (visit) => {
 					let resDc = await $http.get(`${CONFIG.apiUrl}/eye/visio2020/followup/${visit.hn}/${visit.vn}/1`);					
 					let dc = (resDc.data.length > 0) ? resDc.data[0] : null;
 					
