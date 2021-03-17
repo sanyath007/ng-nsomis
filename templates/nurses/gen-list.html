@@ -47,10 +47,10 @@
 									<th style="text-align: center;" rowspan="2">ชื่อ-สกุล</th>
 									<th style="width: 8%; text-align: center;" rowspan="2">จ.18</th>
 									<th style="width: 7%; text-align: center;" rowspan="2">ว/ด/ป เกิด</th>
-									<th style="width: 5%; text-align: center;" rowspan="2">อายุ</th>
+									<th style="width: 5%; text-align: center;" rowspan="2">อายุ (ปี)</th>
 									<th style="text-align: center;" colspan="4">Generations</th>
 									<th style="width: 7%; text-align: center;" rowspan="2">ว/ด/ป บรรจุ</th>
-									<th style="width: 5%; text-align: center;" rowspan="2">อายุงาน</th>
+									<th style="width: 5%; text-align: center;" rowspan="2">อายุงาน (ปี)</th>
 									<th style="text-align: center;" colspan="5">ระดับ</th>
 								</tr>
 								<tr>
@@ -73,7 +73,7 @@
 									</td>
 									<td style="text-align: center;">{{ row.hosppay18.name }}</td>
 									<td style="text-align: center;">{{ row.person.person_birth | thdate }}</td>
-									<td style="text-align: center;">{{ row.ageY+ 'ป ' +row.ageM+ 'ด' }}</td>
+									<td style="text-align: center;">{{ row.ageY }}</td> <!-- // + 'ป ' +row.ageM+ 'ด' -->
 									<td style="text-align: center;">
 										{{ (row.birthYear >= 1946 && row.birthYear <= 1964) ? '1' : '' }}
 										<!-- <i class="fas fa-check-circle" ng-show="(row.birthYear >= 1946 && row.birthYear <= 1964)"></i> -->
@@ -91,7 +91,7 @@
 										<!-- <i class="fas fa-check-circle" ng-show="(row.birthYear >= 1998)"></i> -->
 									</td>
 									<td style="text-align: center;">{{ row.start_date | thdate }}</a></td>
-									<td style="text-align: center;">{{ row.level+ 'ปี' }}</a></td>
+									<td style="text-align: center;">{{ row.level }}</a></td>
 									<td style="text-align: center;">
 										{{ (row.level < 1) ? '1' : '' }}
 										<!-- <i class="fas fa-check-circle" ng-show="(row.level < 1)"></i> -->
