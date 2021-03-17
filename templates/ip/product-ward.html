@@ -16,36 +16,40 @@
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
+						<div class="row">
+							<form action="" method="POST" class="form-inline col-md-8">
+								<div class="form-group">
+									<label>วันที่ :</label>
+									<input
+										type="text"
+										id="sdate"
+										name="sdate"								
+										ng-model="sdate"								
+										class="form-control mr-2 ml-2"
+										autocomplete="off"
+									>
+								</div>
 
-						<form action="" method="POST" class="form-inline">
-							<div class="form-group">
-								<label>วันที่ :</label>
-								<input
-									type="text"
-									id="sdate"
-									name="sdate"								
-									ng-model="sdate"								
-									class="form-control mr-2 ml-2"
-									autocomplete="off"
-								>
+								<div class="form-group">
+									<label>วอร์ด :</label>
+									<input
+										type="text"
+										id="ward"
+										name="ward"
+										ng-model="ward"
+										class="form-control mr-2 ml-2"
+										autocomplete="off"
+									>
+								</div>
+
+								<button ng-click="getProductWard($event)" class="btn btn-primary">ตกลง</button>
+						
+							</form>
+
+							<div class="col-md-4">
+								<button class="btn btn-primary float-right">บันทึก Productivity</button>
 							</div>
-
-							<div class="form-group">
-								<label>วอร์ด :</label>
-								<input
-									type="text"
-									id="ward"
-									name="ward"
-									ng-model="ward"
-									class="form-control mr-2 ml-2"
-									autocomplete="off"
-								>
-							</div>
-
-							<button ng-click="getProductWard($event)" class="btn btn-primary">ตกลง</button>
-					
-						</form>
-
+						</div>
 					</div><!-- /.card-body -->
 				</div><!-- /.card -->
 
@@ -56,37 +60,45 @@
 							<table class="table table-bordered table-striped">
 								<thead>
 									<tr>
-										<td width="5%" style="text-align: center;">ลำดับ</td>
-										<td style="text-align: center;">หอผู้ป่วย</td>
-										<td width="10%" style="text-align: center;">ประเภท 1</td>
-										<td width="10%" style="text-align: center;">ประเภท 2</td>
-										<td width="10%" style="text-align: center;">ประเภท 3</td>
-										<td width="10%" style="text-align: center;">ประเภท 4</td>
-										<td width="10%" style="text-align: center;">ประเภท 5</td>		
-										<td width="10%" style="text-align: center;">ไม่ระบุ</td>
-										<td width="10%" style="text-align: center;">ทั้งหมด</td>
+										<td width="3%" style="text-align: center;">ลำดับ</td>
+										<td style="text-align: center;">วันที่</td>
+										<td width="6%" style="text-align: center;">เวร</td>
+										<td width="8%" style="text-align: center;">ผู้ป่วยทั้งหมด</td>
+										<td width="6%" style="text-align: center;">ประเภท 1</td>
+										<td width="6%" style="text-align: center;">ประเภท 2</td>
+										<td width="6%" style="text-align: center;">ประเภท 3</td>
+										<td width="6%" style="text-align: center;">ประเภท 4</td>
+										<td width="6%" style="text-align: center;">ประเภท 5</td>
+										<td width="6%" style="text-align: center;">RN</td>
+										<td width="6%" style="text-align: center;">PN/NA</td>
+										<td width="8%" style="text-align: center;">Productivity</td>
 									</tr>
 								</thead>
-									<tr ng-repeat="(index, class) in data">
+									<tr ng-repeat="(index, prod) in data">
 										<td style="text-align: center;">{{ index+1 }}</td>
-										<td>{{ class.ward + '-' + class.name }}</td>
-										<td style="text-align: center;">{{ class.type1 }}</td>
-										<td style="text-align: center;">{{ class.type2 }}</td>
-										<td style="text-align: center;">{{ class.type3 }}</td>
-										<td style="text-align: center;">{{ class.type4 }}</td>
-										<td style="text-align: center;">{{ class.type5 }}</td>
-										<td style="text-align: center;">{{ class.unknown }}</td>
-										<td style="text-align: center;">{{ class.all }}</td>
+										<td style="text-align: center;">{{ prod.product_date | thdate }}</td>
+										<td style="text-align: center;">{{ prod.period }}</td>
+										<td style="text-align: center;">{{ prod.total_patient }}</td>
+										<td style="text-align: center;">{{ prod.t1 }}</td>
+										<td style="text-align: center;">{{ prod.t2 }}</td>
+										<td style="text-align: center;">{{ prod.t3 }}</td>
+										<td style="text-align: center;">{{ prod.t4 }}</td>
+										<td style="text-align: center;">{{ prod.t5 }}</td>
+										<td style="text-align: center;">{{ prod.rn }}</td>
+										<td style="text-align: center;">{{ prod.pn }}</td>
+										<td style="text-align: center;">{{ prod.productivities }}</td>
 									</tr>
 									<tr>
-										<td colspan=2 style="text-align: center;">รวม</td>
+										<td colspan="3" style="text-align: center;">รวม</td>
+										<td style="text-align: center;">{{ totalData.patient }}</td>
 										<td style="text-align: center;">{{ totalData.type1 }}</td>
 										<td style="text-align: center;">{{ totalData.type2 }}</td>
 										<td style="text-align: center;">{{ totalData.type3 }}</td>
 										<td style="text-align: center;">{{ totalData.type4 }}</td>
 										<td style="text-align: center;">{{ totalData.type5 }}</td>
-										<td style="text-align: center;">{{ totalData.unknown }}</td>
-										<td style="text-align: center;">{{ totalData.all }}</td>
+										<td style="text-align: center;">{{ totalData.rn }}</td>
+										<td style="text-align: center;">{{ totalData.pn }}</td>
+										<td style="text-align: center;">{{ totalData.product }}</td>
 									</tr>
 
 								</tbody>

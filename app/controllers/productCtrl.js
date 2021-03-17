@@ -2,7 +2,8 @@ app.controller('productivityController', [
 	'$scope',
 	'$http',
 	'CONFIG',
-	function($scope, $http, CONFIG) 
+	'StringFormatService',
+	function($scope, $http, CONFIG, StringFormatService) 
 	{
 		$scope.sdate = '';
 		$scope.ward = '';
@@ -11,14 +12,16 @@ app.controller('productivityController', [
 		$scope.getProductWard = (e) => {
 			if (e) e.preventDefault();
 
-			let date = $scope.sdate === '' ? moment().format('YYYY-MM-DD') : $scope.sdate;
+			let date = $scope.sdate !== ''
+						? StringFormatService.convToDbDate($scope.sdate) 
+						: moment().format('YYYY-MM-DD');
 			let ward = $scope.ward === '' ? '00' : $scope.ward;
 
             $http.get(`${CONFIG.apiUrl}/ip/product-ward/${date}/${ward}`)
             .then(res => {
 				console.log(res);
 
-				// $scope.data = res.data;
+				$scope.data = res.data;
 			}, err => {
 				console.log(err)
 			});
