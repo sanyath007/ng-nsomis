@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="productivityController"
-	ng-init="getIpClassData($event);"
+	ng-init="getProductWard($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -31,18 +31,18 @@
 							</div>
 
 							<div class="form-group">
-								<label>ถึงวันที่ :</label>
+								<label>วอร์ด :</label>
 								<input
 									type="text"
-									id="edate"
-									name="edate"
-									ng-model="edate"
+									id="ward"
+									name="ward"
+									ng-model="ward"
 									class="form-control mr-2 ml-2"
 									autocomplete="off"
 								>
 							</div>
 
-							<button ng-click="getIpClassData($event)" class="btn btn-primary">ตกลง</button>
+							<button ng-click="getProductWard($event)" class="btn btn-primary">ตกลง</button>
 					
 						</form>
 
