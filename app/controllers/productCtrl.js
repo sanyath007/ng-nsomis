@@ -3,7 +3,8 @@ app.controller('productController', [
 	'$http',
 	'CONFIG',
 	'StringFormatService',
-	function($scope, $http, CONFIG, StringFormatService) 
+	'toaster',
+	function($scope, $http, CONFIG, StringFormatService, toaster) 
 	{
 		$scope.sdate = '';
 		$scope.cboWard = '';
@@ -104,6 +105,20 @@ app.controller('productController', [
 		};
 
 		$scope.store = (e) => {
+			e.preventDefault();
+
+			if ($scope.data.length === 0 && !$scope.multiply && !$scope.staff) {
+				toaster.pop('warning', "", 'กรุณาเลือกวอร์ดและเลือกเวรก่อน !!!');
+
+				return false;
+			}
+			
+			if (parseInt($scope.data.unknow) > 0) {
+				toaster.pop('warning', "", 'คุณมีผู้ป่วยที่ยังไม่ได้ระบุประเภท กรุณาระบุประเภทผู้ป่วยก่อน !!!');
+
+				return false;
+			}
+
 			let data = {
 				ward: $scope.cboWard,
 				period: $scope.cboPeriod,
@@ -131,6 +146,14 @@ app.controller('productController', [
 			$http.post(`${CONFIG.apiUrl}/product-store`, data)
             .then(res => {
 				console.log(res);
+
+				if (res.data.status === 0) {
+					toaster.pop('warning', "", 'กรุณาเลือกวอร์ดและเลือกเวรก่อน !!!');
+
+					$scope.errors = res.data.errors;
+				} else {
+					toaster.pop('success', "", 'บันทึกข้อมูลเรียบร้อย !!!');
+				}
 			}, err => {
 				console.log(err)
 			});
