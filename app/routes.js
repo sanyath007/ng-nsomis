@@ -55,6 +55,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/ip/product-ward.html',
 		controller: 'productivityController'
 	})
+	.when('/ip/product-add', {
+		templateUrl: 'templates/ip/product-add.html',
+		controller: 'productivityController'
+	})
 	.when('/ip/chart-sending', {
 		templateUrl: 'templates/ip/chart-sending.html',
 		controller: 'ipController'
