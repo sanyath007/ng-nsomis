@@ -22,6 +22,9 @@ app.controller('productivityController', [
 				type3: 0,
 				type4: 0,
 				type5: 0,
+				totalType: 0.0,
+				staff: 0,
+				productivity: 0.0,
 			};
 		};
 
@@ -89,6 +92,10 @@ app.controller('productivityController', [
 					$scope.multiply.type3 = parseInt($scope.data.type3) * 5.5;
 					$scope.multiply.type4 = parseInt($scope.data.type4) * 7.5;
 					$scope.multiply.type5 = parseInt($scope.data.type5) * 12;
+					$scope.multiply.totalType = $scope.multiply.type1 + $scope.multiply.type2 + $scope.multiply.type3 + $scope.multiply.type4 + $scope.multiply.type5;
+
+					$scope.multiply.staff = parseInt($scope.staff.total) * 7;
+					$scope.multiply.productivity = (($scope.multiply.totalType*100)/$scope.multiply.staff).toFixed(2);
 				}
 			}, err => {
 				console.log(err)

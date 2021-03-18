@@ -27,7 +27,7 @@
 								<div class="col-md-7">
 									<div class="row">
 
-										<div class="form-group col-md-12">
+										<div class="form-group col-md-6">
 											<label for="ward">วอร์ด</label>
 											<select
 												id="ward"
@@ -69,15 +69,26 @@
 												<option value="3">เวรดึก</option>
 											</select>
 										</div>
-										<div class="form-group col-md-4">
+										<div class="form-group col-md-6">
 											<label for="totlaPatient">ผู้ป่วยทั้งหมด</label>
 											<input
 												type="text"
 												id="totlaPatient"
 												name="totlaPatient"
 												ng-model="data.all"
-												class="form-control"
+												class="form-control text-center"
 												placeholder="ผู้ป่วยทั้งหมด"
+											>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="unknow">ไม่ระบุประเภท</label>
+											<input
+												type="text"
+												id="unknow"
+												name="unknow"
+												ng-model="data.unknow"
+												class="form-control text-center is-invalid"
+												placeholder="ไม่ระบุประเภท"
 											>
 										</div>
 										<div class="form-group col-md-4">
@@ -87,7 +98,7 @@
 												id="type1"
 												name="type1"
 												ng-model="data.type1"
-												class="form-control"
+												class="form-control text-center"
 												placeholder="ประเภท 1"
 											>
 										</div>
@@ -98,7 +109,7 @@
 												id="type2"
 												name="type2"
 												ng-model="data.type2"
-												class="form-control"
+												class="form-control text-center"
 												placeholder="ประเภท 2"
 											>
 										</div>
@@ -109,7 +120,7 @@
 												id="type3"
 												name="type3"
 												ng-model="data.type3"
-												class="form-control"
+												class="form-control text-center"
 												placeholder="ประเภท 3"
 											>
 										</div>
@@ -120,7 +131,7 @@
 												id="type4"
 												name="type4"
 												ng-model="data.type4"
-												class="form-control"
+												class="form-control text-center"
 												placeholder="ประเภท 4"
 											>
 										</div>
@@ -131,7 +142,7 @@
 												id="type5"
 												name="type5"
 												ng-model="data.type5"
-												class="form-control"
+												class="form-control text-center"
 												placeholder="ประเภท 5"
 											>
 										</div>
@@ -142,7 +153,7 @@
 												id="rn"
 												name="rn"
 												ng-model="staff.rn"
-												class="form-control"
+												class="form-control text-center"
 												placeholder="จำนวน RN"
 											>
 										</div>
@@ -153,7 +164,7 @@
 												id="pn"
 												name="pn"
 												ng-model="staff.pn"
-												class="form-control"
+												class="form-control text-center"
 												placeholder="จำนวน PN/NA"
 											>
 										</div>
@@ -164,7 +175,7 @@
 												id="total_staff"
 												name="total_staff"
 												ng-model="staff.total"
-												class="form-control"
+												class="form-control text-center"
 												placeholder="รวมผู้ปฏิบัติ"
 											>
 										</div>
@@ -173,97 +184,121 @@
 
 								<div class="col-md-1"></div>
 
-								<div class="col-md-4" style="border: 1px solid red;">
-									<div class="row">
-										<div class="form-group col-md-6">
-											<label for="exampleInputPassword1">ประเภท 1 x 1</label>
-											<input
-												type="text"
-												id="type1x10"
-												name="type1x10"
-												ng-model="multiply.type1"
-												class="form-control"
-												placeholder="Password"
-												readonly
-											>
-										</div>								
-										<div class="form-group col-md-6">
-											<label for="exampleInputPassword1">ประเภท 2 x 3.5</label>
-											<input
-												type="text"
-												id="type2x35"
-												name="type2x35"
-												ng-model="multiply.type2"
-												class="form-control"
-												placeholder="Password"
-												readonly
-											>
-										</div>								
-										<div class="form-group col-md-6">
-											<label for="exampleInputPassword1">ประเภท 3 x 5.5</label>
-											<input
-												type="text"
-												id="type3x55"
-												name="type3x55"
-												ng-model="multiply.type3"
-												class="form-control"
-												placeholder="Password"
-												readonly
-											>
-										</div>								
-										<div class="form-group col-md-6">
-											<label for="exampleInputPassword1">ประเภท 4 x 7.5</label>
-											<input
-												type="text"
-												id="type4x75"
-												name="type4x75"
-												ng-model="multiply.type4"
-												class="form-control"
-												placeholder="Password"
-												readonly
-											>
-										</div>								
-										<div class="form-group col-md-6">
-											<label for="exampleInputPassword1">ประเภท 5 x 12</label>
-											<input
-												type="text"
-												id="type5x12"
-												name="type5x12"
-												ng-model="multiply.type5"
-												class="form-control"
-												placeholder="Password"
-												readonly
-											>
-										</div>
-										<div class="form-group col-md-12">
-											<label for="exampleInputPassword1">ผู้ปฏิบัติ x 7</label>
-											<input
-												type="text"
-												id="staffx7"
-												name="staffx7"
-												class="form-control"
-												placeholder="Password"
-												readonly
-											>
-										</div>
-										<div class="form-group col-md-12">
-											<label for="exampleInputPassword1">Productivity</label>
-											<input
-												type="text"
-												id="productivity"
-												name="productivity"
-												class="form-control"
-												placeholder="Password"
-												readonly
-											>
-										</div>
-									</div>
+								<div class="col-md-4">
+
+									<div class="card card-primary">
+										<div class="card-body">
+
+											<div class="row">
+												<div class="form-group col-md-6">
+													<label for="type1x10">ประเภท1 x 1</label>
+													<input
+														type="text"
+														id="type1x10"
+														name="type1x10"
+														ng-model="multiply.type1"
+														class="form-control text-center"
+														placeholder="ประเภท 1 x 1"
+														readonly
+													>
+												</div>								
+												<div class="form-group col-md-6">
+													<label for="type2x35">ประเภท2 x 3.5</label>
+													<input
+														type="text"
+														id="type2x35"
+														name="type2x35"
+														ng-model="multiply.type2"
+														class="form-control text-center"
+														placeholder="ประเภท 2 x 3.5"
+														readonly
+													>
+												</div>								
+												<div class="form-group col-md-6">
+													<label for="type3x55">ประเภท3 x 5.5</label>
+													<input
+														type="text"
+														id="type3x55"
+														name="type3x55"
+														ng-model="multiply.type3"
+														class="form-control text-center"
+														placeholder="ประเภท 3 x 5.5"
+														readonly
+													>
+												</div>								
+												<div class="form-group col-md-6">
+													<label for="type4x75">ประเภท4 x 7.5</label>
+													<input
+														type="text"
+														id="type4x75"
+														name="type4x75"
+														ng-model="multiply.type4"
+														class="form-control text-center"
+														placeholder="ประเภท 4 x 7.5"
+														readonly
+													>
+												</div>								
+												<div class="form-group col-md-6">
+													<label for="type5x12">ประเภท5 x 12</label>
+													<input
+														type="text"
+														id="type5x12"
+														name="type5x12"
+														ng-model="multiply.type5"
+														class="form-control text-center"
+														placeholder="ประเภท 5 x 12"
+														readonly
+													>
+												</div>
+												<div class="form-group col-md-6">
+													<label for="total_type">รวมทุกประเภท</label>
+													<input
+														type="text"
+														id="total_type"
+														name="total_type"
+														ng-model="multiply.totalType"
+														class="form-control text-center"
+														placeholder="ประเภท 5 x 12"
+														readonly
+													>
+												</div>
+												<div class="form-group col-md-12">
+													<label for="staffx7">ผู้ปฏิบัติ x 7</label>
+													<input
+														type="text"
+														id="staffx7"
+														name="staffx7"
+														ng-model="multiply.staff"
+														class="form-control text-center"
+														placeholder="ผู้ปฏิบัติ x 7"
+														readonly
+													>
+												</div>
+												<div class="form-group col-md-12">
+													<label for="productivity">Productivity</label>
+													<input
+														type="text"
+														id="productivity"
+														name="productivity"
+														ng-model="multiply.productivity"
+														class="form-control text-center"
+														placeholder="Productivity"
+														readonly
+													>
+												</div>
+											</div><!-- /.row -->
+
+										</div><!-- /.card-body -->
+									</div><!-- /.card -->
+
 								</div>
-							</div>
+							</div><!-- /.row -->
 						</div><!-- /.card-body -->
 			
 						<div class="card-footer">
-							<button type="submit" class="btn btn-primary float-right">Submit</button>
+							<button type="submit" class="btn btn-primary float-right">
+								บันทึก
+							</button>
 						</div>
 					</form>
 				</div><!-- /.card -->
