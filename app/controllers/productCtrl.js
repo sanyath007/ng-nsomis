@@ -1,4 +1,4 @@
-app.controller('productivityController', [
+app.controller('productController', [
 	'$scope',
 	'$http',
 	'CONFIG',
@@ -14,6 +14,7 @@ app.controller('productivityController', [
 		$scope.wards = [];
 		$scope.staff = null;
 		$scope.multiply = null;
+		$scope.errors = null;
 
 		const initMultiplyData = () => {
 			return {
@@ -87,16 +88,49 @@ app.controller('productivityController', [
 				$scope.staff = res.data.staff;
 
 				if ($scope.data) {
-					$scope.multiply.type1 = parseInt($scope.data.type1) * 1;
-					$scope.multiply.type2 = parseInt($scope.data.type2) * 3.5;
-					$scope.multiply.type3 = parseInt($scope.data.type3) * 5.5;
-					$scope.multiply.type4 = parseInt($scope.data.type4) * 7.5;
-					$scope.multiply.type5 = parseInt($scope.data.type5) * 12;
-					$scope.multiply.totalType = $scope.multiply.type1 + $scope.multiply.type2 + $scope.multiply.type3 + $scope.multiply.type4 + $scope.multiply.type5;
+					$scope.multiply.x10 = parseInt($scope.data.type1) * 1;
+					$scope.multiply.x35 = parseInt($scope.data.type2) * 3.5;
+					$scope.multiply.x55 = parseInt($scope.data.type3) * 5.5;
+					$scope.multiply.x75 = parseInt($scope.data.type4) * 7.5;
+					$scope.multiply.x120 = parseInt($scope.data.type5) * 12;
+					$scope.multiply.xtotal = $scope.multiply.x10 + $scope.multiply.x35 + $scope.multiply.x55 + $scope.multiply.x75 + $scope.multiply.x120;
 
 					$scope.multiply.staff = parseInt($scope.staff.total) * 7;
-					$scope.multiply.productivity = (($scope.multiply.totalType*100)/$scope.multiply.staff).toFixed(2);
+					$scope.multiply.productivity = (($scope.multiply.xtotal*100)/$scope.multiply.staff).toFixed(2);
 				}
+			}, err => {
+				console.log(err)
+			});
+		};
+
+		$scope.store = (e) => {
+			let data = {
+				ward: $scope.cboWard,
+				period: $scope.cboPeriod,
+				product_date: $scope.dtpProductDate,
+				total_patient: $scope.data.all,
+				t1: $scope.data.type1,
+				t2: $scope.data.type2,
+				t3: $scope.data.type3,
+				t4: $scope.data.type4,
+				t5: $scope.data.type5,
+				tx10: $scope.multiply.x10,
+				tx35: $scope.multiply.x35,
+				tx55: $scope.multiply.x55,
+				tx75: $scope.multiply.x75,
+				tx120: $scope.multiply.x120,
+				txtotal: $scope.multiply.xtotal,
+				rn: $scope.staff.rn,
+				pn: $scope.staff.pn,
+				total_staff: $scope.staff.total,
+				staff_x7: $scope.staff.total,
+				productivity: $scope.multiply.productivity,
+				user: 'test'
+			};
+
+			$http.post(`${CONFIG.apiUrl}/product-store`, data)
+            .then(res => {
+				console.log(res);
 			}, err => {
 				console.log(err)
 			});

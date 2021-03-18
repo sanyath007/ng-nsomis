@@ -1,6 +1,6 @@
 <section
 	class="content"
-	ng-controller="productivityController"
+	ng-controller="productController"
 	ng-init="getProductAdd($event);"
 >
 	<div class="container-fluid">
@@ -196,7 +196,7 @@
 														type="text"
 														id="type1x10"
 														name="type1x10"
-														ng-model="multiply.type1"
+														ng-model="multiply.x10"
 														class="form-control text-center"
 														placeholder="ประเภท 1 x 1"
 														readonly
@@ -208,7 +208,7 @@
 														type="text"
 														id="type2x35"
 														name="type2x35"
-														ng-model="multiply.type2"
+														ng-model="multiply.x35"
 														class="form-control text-center"
 														placeholder="ประเภท 2 x 3.5"
 														readonly
@@ -220,7 +220,7 @@
 														type="text"
 														id="type3x55"
 														name="type3x55"
-														ng-model="multiply.type3"
+														ng-model="multiply.x55"
 														class="form-control text-center"
 														placeholder="ประเภท 3 x 5.5"
 														readonly
@@ -232,7 +232,7 @@
 														type="text"
 														id="type4x75"
 														name="type4x75"
-														ng-model="multiply.type4"
+														ng-model="multiply.x75"
 														class="form-control text-center"
 														placeholder="ประเภท 4 x 7.5"
 														readonly
@@ -244,19 +244,19 @@
 														type="text"
 														id="type5x12"
 														name="type5x12"
-														ng-model="multiply.type5"
+														ng-model="multiply.x120"
 														class="form-control text-center"
 														placeholder="ประเภท 5 x 12"
 														readonly
 													>
 												</div>
 												<div class="form-group col-md-6">
-													<label for="total_type">รวมทุกประเภท</label>
+													<label for="xtotal">รวมทุกประเภท</label>
 													<input
 														type="text"
-														id="total_type"
-														name="total_type"
-														ng-model="multiply.totalType"
+														id="xtotal"
+														name="xtotal"
+														ng-model="multiply.xtotal"
 														class="form-control text-center"
 														placeholder="ประเภท 5 x 12"
 														readonly
@@ -296,7 +296,7 @@
 						</div><!-- /.card-body -->
 			
 						<div class="card-footer">
-							<button type="submit" class="btn btn-primary float-right">
+							<button type="submit" class="btn btn-primary float-right" ng-click="store($event)">
 								บันทึก
 							</button>
 						</div>
