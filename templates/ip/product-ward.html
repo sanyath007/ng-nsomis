@@ -81,7 +81,11 @@
 									<tr ng-repeat="(index, prod) in data">
 										<td style="text-align: center;">{{ index+1 }}</td>
 										<td style="text-align: center;">{{ prod.product_date | thdate }}</td>
-										<td style="text-align: center;">{{ prod.period }}</td>
+										<td style="text-align: center;">
+											<span ng-show="prod.period == 1">เช้า</span>
+											<span ng-show="prod.period == 2">บ่าย</span>
+											<span ng-show="prod.period == 3">ดึก</span>
+										</td>
 										<td style="text-align: center;">{{ prod.total_patient }}</td>
 										<td style="text-align: center;">{{ prod.t1 }}</td>
 										<td style="text-align: center;">{{ prod.t2 }}</td>
