@@ -11,33 +11,22 @@
 				<div class="card">
 					<div class="card-header">
 						<h3 class="card-title">
-							<i class="fas fa-bed mr-1"></i>
-							Productivity หน่วยงาน
+							<i class="fas fa-chart-bar mr-1"></i>
+							สรุป Productivity
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
 
 						<form action="#" method="POST" class="form-inline">
 							<div class="form-group">
-								<label>วันที่ :</label>
+								<label>ประจำเดือน :</label>
 								<input
 									type="text"
-									id="sdate"
-									name="sdate"								
-									ng-model="sdate"								
-									class="form-control mr-2 ml-2"
-									autocomplete="off"
-								>
-							</div>
-
-							<div class="form-group">
-								<label>ถึงวันที่ :</label>
-								<input
-									type="text"
-									id="edate"
-									name="edate"
-									ng-model="edate"
-									class="form-control mr-2 ml-2"
+									id="cboMonth"
+									name="cboMonth"
+									ng-model="cboMonth"
+									class="form-control"
+									style="margin: 0 10px;"
 									autocomplete="off"
 								>
 							</div>
@@ -56,29 +45,36 @@
 							<table class="table table-bordered table-striped">
 								<thead>
 									<tr>
-										<td width="5%" style="text-align: center;">ลำดับ</td>
-										<td style="text-align: center;">หอผู้ป่วย</td>
-										<td width="10%" style="text-align: center;">ประเภท 1</td>
-										<td width="10%" style="text-align: center;">ประเภท 2</td>
-										<td width="10%" style="text-align: center;">ประเภท 3</td>
-										<td width="10%" style="text-align: center;">ประเภท 4</td>
-										<td width="10%" style="text-align: center;">ประเภท 5</td>		
-										<td width="10%" style="text-align: center;">ไม่ระบุ</td>
-										<td width="10%" style="text-align: center;">ทั้งหมด</td>
-									</tr>
-								</thead>
-									<tr ng-repeat="(index, class) in data">
-										<td style="text-align: center;">{{ index+1 }}</td>
-										<td>{{ class.ward + '-' + class.name }}</td>
-										<td style="text-align: center;">{{ class.type1 }}</td>
-										<td style="text-align: center;">{{ class.type2 }}</td>
-										<td style="text-align: center;">{{ class.type3 }}</td>
-										<td style="text-align: center;">{{ class.type4 }}</td>
-										<td style="text-align: center;">{{ class.type5 }}</td>
-										<td style="text-align: center;">{{ class.unknown }}</td>
-										<td style="text-align: center;">{{ class.all }}</td>
+										<td tyle="width: 3%; text-align: center;" rowspan="2">ลำดับ</td>
+										<td style="text-align: center;" rowspan="2">หน่วยงาน</td>
+										<td style="width: 5%; text-align: center;" rowspan="2">เวร</td>
+										<td style="text-align: center;" colspan="31">วันที่</td>
 									</tr>
 									<tr>
+										<td
+											style="width: 4%; text-align: center;"
+											ng-repeat="m in range(1, dataTableOptions.totalCol)"
+										>
+											{{ m }}
+										</td>
+									</tr>
+								</thead>
+									<tr ng-repeat="(index, prod) in data" style="font-size: 12px;">
+										<td style="text-align: center;">{{ index+1 }}</td>
+										<td>{{ prod.ward + '-' + prod.ward_name }}</td>
+										<td style="text-align: center;">
+											<span ng-show="prod.period == 1">เช้า</span>
+											<span ng-show="prod.period == 2">บ่าย</span>
+											<span ng-show="prod.period == 3">ดึก</span>
+										</td>
+										<td
+											ng-repeat="m in range(1, dataTableOptions.totalCol)"
+											style="width: 5%; text-align: center; padding: 10px 0px 0px;"
+										>
+											{{ prod[m] | currency:'':2 }}
+										</td>
+									</tr>
+									<!-- <tr>
 										<td colspan=2 style="text-align: center;">รวม</td>
 										<td style="text-align: center;">{{ totalData.type1 }}</td>
 										<td style="text-align: center;">{{ totalData.type2 }}</td>
@@ -87,8 +83,7 @@
 										<td style="text-align: center;">{{ totalData.type5 }}</td>
 										<td style="text-align: center;">{{ totalData.unknown }}</td>
 										<td style="text-align: center;">{{ totalData.all }}</td>
-									</tr>
-
+									</tr> -->
 								</tbody>
 							</table>
 						</div>
@@ -103,18 +98,13 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#sdate').datepicker({
+		$('#cboMonth').datepicker({
 			autoclose: true,
+			format: 'mm/yyyy',
+			viewMode: "months", 
+			minViewMode: "months",
 			language: 'th',
-			format: 'dd/mm/yyyy',
 			thaiyear: true
-		}).datepicker('update', new Date());
-
-		$('#edate').datepicker({
-			autoclose: true,
-			language: 'th',
-			format: 'dd/mm/yyyy',
-			thaiyear: true,
 		}).datepicker('update', new Date());
 	});
 </script>

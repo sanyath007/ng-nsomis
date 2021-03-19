@@ -3,32 +3,23 @@ app.controller('productController', [
 	'$http',
 	'CONFIG',
 	'StringFormatService',
+	'DatetimeService',
 	'toaster',
-	function($scope, $http, CONFIG, StringFormatService, toaster) 
+	function($scope, $http, CONFIG, StringFormatService, DatetimeService, toaster) 
 	{
-		$scope.sdate = '';
+		$scope.cboSDate = '';
+		$scope.cboMonth = '';
 		$scope.cboWard = '';
 		$scope.cboPeriod = '';
 		$scope.dtpProductDate = StringFormatService.convFromDbDate(moment(new Date()).format('YYYY-MM-DD'));
+
+		$scope.dataTableOptions = null;
 
 		$scope.data = [];
 		$scope.wards = [];
 		$scope.staff = null;
 		$scope.multiply = null;
 		$scope.errors = null;
-
-		const initMultiplyData = () => {
-			return {
-				type1: 0,
-				type2: 0,
-				type3: 0,
-				type4: 0,
-				type5: 0,
-				totalType: 0.0,
-				staff: 0,
-				productivity: 0.0,
-			};
-		};
 
 		$('#product_date').datepicker({
 			autoclose: true,
@@ -43,19 +34,53 @@ app.controller('productController', [
 			$scope.getWorkload(e);
 		});
 
+		const initMultiplyData = () => {
+			return {
+				type1: 0,
+				type2: 0,
+				type3: 0,
+				type4: 0,
+				type5: 0,
+				totalType: 0.0,
+				staff: 0,
+				productivity: 0.0,
+			};
+		};
+
+		$scope.range = function(min, max, step) {
+			step = step || 1;
+			var input = [];
+			for (var i = min; i <= max; i += step) {
+				input.push(i);
+			}
+			return input;
+		};
+		
 		$scope.getProductSum = (e) => {
 			if (e) e.preventDefault();
+			
+			let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
 
-			let date = $scope.sdate !== ''
-						? StringFormatService.convToDbDate($scope.sdate) 
-						: moment().format('YYYY-MM-DD');
-			let ward = $scope.cboWard === '' ? '00' : $scope.cboWard;
+			$scope.dataTableOptions = {
+				totalCol: parseInt(moment(month).endOf('month').format('D')),
+			};
 
-            $http.get(`${CONFIG.apiUrl}/product-ward/${date}/${ward}`)
+            $http.get(`${CONFIG.apiUrl}/product-sum/${month}`)
             .then(res => {
 				console.log(res);
 				$scope.data = res.data.product;
-				$scope.wards = res.data.wards;
+
+				// set ward name to product data
+				$scope.data.forEach(d => {
+					res.data.wards.forEach((w) => {
+						if (d.ward == w.ward) {
+							d.ward_name = w.name;
+							return;
+						}
+					});
+				});
 			}, err => {
 				console.log(err)
 			});
