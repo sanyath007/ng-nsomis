@@ -49,13 +49,13 @@ app.controller('productController', [
 			let date = $scope.sdate !== ''
 						? StringFormatService.convToDbDate($scope.sdate) 
 						: moment().format('YYYY-MM-DD');
-			let ward = $scope.ward === '' ? '00' : $scope.ward;
+			let ward = $scope.cboWard === '' ? '00' : $scope.cboWard;
 
             $http.get(`${CONFIG.apiUrl}/product-ward/${date}/${ward}`)
             .then(res => {
 				console.log(res);
-
-				$scope.data = res.data;
+				$scope.data = res.data.product;
+				$scope.wards = res.data.wards;
 			}, err => {
 				console.log(err)
 			});
@@ -122,7 +122,7 @@ app.controller('productController', [
 			let data = {
 				ward: $scope.cboWard,
 				period: $scope.cboPeriod,
-				product_date: $scope.dtpProductDate,
+				product_date: StringFormatService.convToDbDate($scope.dtpProductDate),
 				total_patient: $scope.data.all,
 				t1: $scope.data.type1,
 				t2: $scope.data.type2,
