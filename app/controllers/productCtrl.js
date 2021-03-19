@@ -43,6 +43,24 @@ app.controller('productController', [
 			$scope.getWorkload(e);
 		});
 
+		$scope.getProductSum = (e) => {
+			if (e) e.preventDefault();
+
+			let date = $scope.sdate !== ''
+						? StringFormatService.convToDbDate($scope.sdate) 
+						: moment().format('YYYY-MM-DD');
+			let ward = $scope.cboWard === '' ? '00' : $scope.cboWard;
+
+            $http.get(`${CONFIG.apiUrl}/product-ward/${date}/${ward}`)
+            .then(res => {
+				console.log(res);
+				$scope.data = res.data.product;
+				$scope.wards = res.data.wards;
+			}, err => {
+				console.log(err)
+			});
+		};
+
 		$scope.getProductWard = (e) => {
 			if (e) e.preventDefault();
 

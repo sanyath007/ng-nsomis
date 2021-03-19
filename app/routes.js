@@ -47,8 +47,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/ip/ptlosbycare.html',
 		controller: 'ipController'
 	})
-	.when('/ip/productivity', {
-		templateUrl: 'templates/ip/productivity.html',
+	.when('/ip/product-sum', {
+		templateUrl: 'templates/ip/product-sum.html',
 		controller: 'productController'
 	})
 	.when('/ip/product-ward', {
