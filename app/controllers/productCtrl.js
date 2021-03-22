@@ -36,13 +36,13 @@ app.controller('productController', [
 
 		const initMultiplyData = () => {
 			return {
-				type1: 0,
-				type2: 0,
-				type3: 0,
-				type4: 0,
-				type5: 0,
-				totalType: 0.0,
-				staff: 0,
+				xtype1: 0,
+				xtype2: 0,
+				xtype3: 0,
+				xtype4: 0,
+				xtype5: 0,
+				xtotal: 0.0,
+				xstaff: 0,
 				productivity: 0.0,
 			};
 		};
@@ -89,10 +89,10 @@ app.controller('productController', [
 		$scope.getProductWard = (e) => {
 			if (e) e.preventDefault();
 
-			let date = $scope.sdate !== ''
-						? StringFormatService.convToDbDate($scope.sdate) 
+			let date = $scope.cboSDate !== ''
+						? StringFormatService.convToDbDate($scope.cboSDate) 
 						: moment().format('YYYY-MM-DD');
-			let ward = $scope.cboWard === '' ? '00' : $scope.cboWard;
+			let ward = $scope.cboWard === '' ? '0' : $scope.cboWard;
 
             $http.get(`${CONFIG.apiUrl}/product-ward/${date}/${ward}`)
             .then(res => {
@@ -132,15 +132,14 @@ app.controller('productController', [
 				$scope.staff = res.data.staff;
 
 				if ($scope.data) {
-					$scope.multiply.x10 = parseInt($scope.data.type1) * 1;
-					$scope.multiply.x35 = parseInt($scope.data.type2) * 3.5;
-					$scope.multiply.x55 = parseInt($scope.data.type3) * 5.5;
-					$scope.multiply.x75 = parseInt($scope.data.type4) * 7.5;
-					$scope.multiply.x120 = parseInt($scope.data.type5) * 12;
-					$scope.multiply.xtotal = $scope.multiply.x10 + $scope.multiply.x35 + $scope.multiply.x55 + $scope.multiply.x75 + $scope.multiply.x120;
-
-					$scope.multiply.staff = parseInt($scope.staff.total) * 7;
-					$scope.multiply.productivity = (($scope.multiply.xtotal*100)/$scope.multiply.staff).toFixed(2);
+					$scope.multiply.xtype1 = parseInt($scope.data.type1) * 0.5;
+					$scope.multiply.xtype2 = parseInt($scope.data.type2) * 3.5;
+					$scope.multiply.xtype3 = parseInt($scope.data.type3) * 5.5;
+					$scope.multiply.xtype4 = parseInt($scope.data.type4) * 7.5;
+					$scope.multiply.xtype5 = parseInt($scope.data.type5) * 12;
+					$scope.multiply.xtotal = $scope.multiply.xtype1 + $scope.multiply.xtype2 + $scope.multiply.xtype3 + $scope.multiply.xtype4 + $scope.multiply.xtype5;
+					$scope.multiply.xstaff = parseInt($scope.staff.total) * 7;
+					$scope.multiply.productivity = (($scope.multiply.xtotal*100)/$scope.multiply.xstaff).toFixed(2);
 				}
 			}, err => {
 				console.log(err)
@@ -156,6 +155,7 @@ app.controller('productController', [
 				return false;
 			}
 			
+			// TODO: set unknow type to some type of type1 - 4
 			if (parseInt($scope.data.unknow) > 0) {
 				toaster.pop('warning', "", 'คุณมีผู้ป่วยที่ยังไม่ได้ระบุประเภท กรุณาระบุประเภทผู้ป่วยก่อน !!!');
 
@@ -167,21 +167,21 @@ app.controller('productController', [
 				period: $scope.cboPeriod,
 				product_date: StringFormatService.convToDbDate($scope.dtpProductDate),
 				total_patient: $scope.data.all,
-				t1: $scope.data.type1,
-				t2: $scope.data.type2,
-				t3: $scope.data.type3,
-				t4: $scope.data.type4,
-				t5: $scope.data.type5,
-				tx10: $scope.multiply.x10,
-				tx35: $scope.multiply.x35,
-				tx55: $scope.multiply.x55,
-				tx75: $scope.multiply.x75,
-				tx120: $scope.multiply.x120,
-				txtotal: $scope.multiply.xtotal,
+				type1: $scope.data.type1,
+				type2: $scope.data.type2,
+				type3: $scope.data.type3,
+				type4: $scope.data.type4,
+				type5: $scope.data.type5,
+				xtype1: $scope.multiply.xtype1,
+				xtype2: $scope.multiply.xtype2,
+				xtype3: $scope.multiply.xtype3,
+				xtype4: $scope.multiply.xtype4,
+				xtype5: $scope.multiply.xtype5,
+				xtotal: $scope.multiply.xtotal,
 				rn: $scope.staff.rn,
 				pn: $scope.staff.pn,
 				total_staff: $scope.staff.total,
-				staff_x7: $scope.staff.total,
+				xstaff: $scope.multiply.xstaff,
 				productivity: $scope.multiply.productivity,
 				user: 'test'
 			};
@@ -190,11 +190,12 @@ app.controller('productController', [
             .then(res => {
 				console.log(res);
 
-				if (res.data.status === 0) {
-					toaster.pop('warning', "", 'กรุณาเลือกวอร์ดและเลือกเวรก่อน !!!');
-
+				if (res.data.status === 1) {
+					toaster.pop('error', "", 'คุณกรอกข้อมูลไม่ครบ กรุณาเลือกวอร์ดและเลือกเวรก่อน !!!');
 					$scope.errors = res.data.errors;
-				} else {
+				} else if (res.data.status === 2) {
+					toaster.pop('error', "", 'คุณบันทึกข้อมูลซ้ำ !!!');
+				} else if (res.data.status === 0) {
 					toaster.pop('success', "", 'บันทึกข้อมูลเรียบร้อย !!!');
 				}
 			}, err => {
