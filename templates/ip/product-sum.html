@@ -59,19 +59,19 @@
 										</td>
 									</tr>
 								</thead>
-									<tr ng-repeat="(index, prod) in data" style="font-size: 12px;">
+									<tr ng-repeat="(index, ward) in data" style="font-size: 12px;">
 										<td style="text-align: center;">{{ index+1 }}</td>
-										<td>{{ prod.ward + '-' + prod.ward_name }}</td>
+										<td>{{ ward.ward + '-' + ward.name }}</td>
 										<td style="text-align: center;">
-											<span ng-show="prod.period == 1">เช้า</span>
-											<span ng-show="prod.period == 2">บ่าย</span>
-											<span ng-show="prod.period == 3">ดึก</span>
+											<span ng-show="ward.period == 1">เช้า</span>
+											<span ng-show="ward.period == 2">บ่าย</span>
+											<span ng-show="ward.period == 3">ดึก</span>
 										</td>
 										<td
 											ng-repeat="m in range(1, dataTableOptions.totalCol)"
 											style="width: 5%; text-align: center; padding: 10px 0px 0px;"
 										>
-											{{ prod[m] | currency:'':2 }}
+											{{ ward[m] }}
 										</td>
 									</tr>
 									<!-- <tr>

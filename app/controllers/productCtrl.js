@@ -69,17 +69,17 @@ app.controller('productController', [
 
             $http.get(`${CONFIG.apiUrl}/product-sum/${month}`)
             .then(res => {
-				console.log(res);
-				$scope.data = res.data.product;
+				$scope.data = res.data.wards;
 
-				// set ward name to product data
-				$scope.data.forEach(d => {
-					res.data.wards.forEach((w) => {
-						if (d.ward == w.ward) {
-							d.ward_name = w.name;
-							return;
-						}
-					});
+				// create productivity of each day
+				$scope.data.forEach(w => {
+					for(let day = 1; day <= $scope.dataTableOptions.totalCol; day++) {
+						let prod = res.data.product.find(p => {
+							return w.ward == p.ward && w.period == p.period && day == p.product_day;
+						});
+
+						w[day] = prod ? prod.productivity : '';
+					}
 				});
 			}, err => {
 				console.log(err)
@@ -96,7 +96,6 @@ app.controller('productController', [
 
             $http.get(`${CONFIG.apiUrl}/product-ward/${date}/${ward}`)
             .then(res => {
-				console.log(res);
 				$scope.data = res.data.product;
 				$scope.wards = res.data.wards;
 			}, err => {
@@ -107,8 +106,6 @@ app.controller('productController', [
 		$scope.getProductAdd = () => {
 			$http.get(`${CONFIG.apiUrl}/product-add`)
             .then(res => {
-				console.log(res);
-
 				$scope.wards = res.data;
 			}, err => {
 				console.log(err)
@@ -126,13 +123,11 @@ app.controller('productController', [
 
 			$http.get(`${CONFIG.apiUrl}/product-workload/${date}/${period}/${ward}`)
             .then(res => {
-				console.log(res);
-
 				$scope.data = res.data.workload;
 				$scope.staff = res.data.staff;
 
 				if ($scope.data) {
-					$scope.multiply.xtype1 = parseInt($scope.data.type1) * 0.5;
+					$scope.multiply.xtype1 = parseInt($scope.data.type1) * 1.5;
 					$scope.multiply.xtype2 = parseInt($scope.data.type2) * 3.5;
 					$scope.multiply.xtype3 = parseInt($scope.data.type3) * 5.5;
 					$scope.multiply.xtype4 = parseInt($scope.data.type4) * 7.5;
