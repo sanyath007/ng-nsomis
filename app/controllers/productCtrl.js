@@ -126,19 +126,23 @@ app.controller('productController', [
 				$scope.data = res.data.workload;
 				$scope.staff = res.data.staff;
 
-				if ($scope.data) {
-					$scope.multiply.xtype1 = parseInt($scope.data.type1) * 1.5;
-					$scope.multiply.xtype2 = parseInt($scope.data.type2) * 3.5;
-					$scope.multiply.xtype3 = parseInt($scope.data.type3) * 5.5;
-					$scope.multiply.xtype4 = parseInt($scope.data.type4) * 7.5;
-					$scope.multiply.xtype5 = parseInt($scope.data.type5) * 12;
-					$scope.multiply.xtotal = $scope.multiply.xtype1 + $scope.multiply.xtype2 + $scope.multiply.xtype3 + $scope.multiply.xtype4 + $scope.multiply.xtype5;
-					$scope.multiply.xstaff = parseInt($scope.staff.total) * 7;
-					$scope.multiply.productivity = (($scope.multiply.xtotal*100)/$scope.multiply.xstaff).toFixed(2);
-				}
+				calcProductivity();
 			}, err => {
 				console.log(err)
 			});
+		};
+
+		function calcProductivity() {
+			if ($scope.data) {
+				$scope.multiply.xtype1 = parseInt($scope.data.type1) * 1.5;
+				$scope.multiply.xtype2 = parseInt($scope.data.type2) * 3.5;
+				$scope.multiply.xtype3 = parseInt($scope.data.type3) * 5.5;
+				$scope.multiply.xtype4 = parseInt($scope.data.type4) * 7.5;
+				$scope.multiply.xtype5 = parseInt($scope.data.type5) * 12;
+				$scope.multiply.xtotal = $scope.multiply.xtype1 + $scope.multiply.xtype2 + $scope.multiply.xtype3 + $scope.multiply.xtype4 + $scope.multiply.xtype5;
+				$scope.multiply.xstaff = parseInt($scope.staff.total) * 7;
+				$scope.multiply.productivity = (($scope.multiply.xtotal*100)/$scope.multiply.xstaff).toFixed(2);
+			}
 		};
 
 		$scope.store = (e) => {
@@ -150,11 +154,15 @@ app.controller('productController', [
 				return false;
 			}
 			
-			// TODO: set unknow type to some type of type1 - 4
+			// ask user for set unknow type to type 3
 			if (parseInt($scope.data.unknow) > 0) {
-				toaster.pop('warning', "", 'คุณมีผู้ป่วยที่ยังไม่ได้ระบุประเภท กรุณาระบุประเภทผู้ป่วยก่อน !!!');
+				if(confirm(`คุณมีผู้ป่วยที่ยังไม่ได้ระบุประเภทจำนวน  ${$scope.data.unknow} ราย หากคุณทำการบันทึกผู้ป่วยประเภทดังกล่าวจะถูกนำไปรวมกับผู้ป่วยประเภท 3 คุณต้องการทำการบันทึกต่อไปหรือไม่?`)) {
+					$scope.data.type3 = parseInt($scope.data.type3) + parseInt($scope.data.unknow);
 
-				return false;
+					calcProductivity();
+				} else {
+					return false;
+				}
 			}
 
 			let data = {
