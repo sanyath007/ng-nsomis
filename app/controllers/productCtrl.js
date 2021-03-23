@@ -94,12 +94,12 @@ app.controller('productController', [
 		$scope.getProductWard = (e) => {
 			if (e) e.preventDefault();
 
-			let date = $scope.cboSDate !== ''
-						? StringFormatService.convToDbDate($scope.cboSDate) 
-						: moment().format('YYYY-MM-DD');
+			let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
 			let ward = $scope.cboWard === '' ? '0' : $scope.cboWard;
 
-            $http.get(`${CONFIG.apiUrl}/product-ward/${date}/${ward}`)
+            $http.get(`${CONFIG.apiUrl}/product-ward/${month}/${ward}`)
             .then(res => {
 				$scope.data = res.data.product;
 				$scope.wards = res.data.wards;
@@ -139,7 +139,7 @@ app.controller('productController', [
 
 		$scope.onChangeStaffAmount = () => {
 			$scope.staff.total = parseInt($scope.staff.rn) + parseInt($scope.staff.pn);
-			
+
 			calcProductivity();
 		};
 

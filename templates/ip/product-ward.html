@@ -19,13 +19,14 @@
 						<div class="row">
 							<form action="" method="POST" class="form-inline col-md-8">
 								<div class="form-group">
-									<label>วันที่ :</label>
+									<label>ประจำเดือน :</label>
 									<input
 										type="text"
-										id="sdate"
-										name="sdate"								
-										ng-model="cboSDate"								
-										class="form-control mr-2 ml-2"
+										id="cboMonth"
+										name="cboMonth"
+										ng-model="cboMonth"
+										class="form-control"
+										style="margin: 0 10px;"
 										autocomplete="off"
 									>
 								</div>
@@ -71,8 +72,10 @@
 										<td width="6%" style="text-align: center;">ประเภท 3</td>
 										<td width="6%" style="text-align: center;">ประเภท 4</td>
 										<td width="6%" style="text-align: center;">ประเภท 5</td>
+										<td width="8%" style="text-align: center; font-size: 14px;">รวม ผป./ชม.การพยาบาล</td>
 										<td width="6%" style="text-align: center;">RN</td>
 										<td width="6%" style="text-align: center;">PN/NA</td>
+										<td width="6%" style="text-align: center;">รวม จนท.</td>
 										<td width="8%" style="text-align: center;">Productivity</td>
 									</tr>
 								</thead>
@@ -90,9 +93,13 @@
 										<td style="text-align: center;">{{ prod.type3 }}</td>
 										<td style="text-align: center;">{{ prod.type4 }}</td>
 										<td style="text-align: center;">{{ prod.type5 }}</td>
+										<td style="text-align: center;">{{ prod.xtotal | currency:'':2 }}</td>
 										<td style="text-align: center;">{{ prod.rn }}</td>
 										<td style="text-align: center;">{{ prod.pn }}</td>
-										<td style="text-align: center;">{{ prod.productivity }}</td>
+										<td style="text-align: center;">{{ prod.total_staff }}</td>
+										<td style="text-align: center;">
+											{{ prod.productivity | currency:'':2 }}
+										</td>
 									</tr>
 									<tr>
 										<td colspan="3" style="text-align: center;">รวม</td>
@@ -102,7 +109,9 @@
 										<td style="text-align: center;">{{ totalData.type3 }}</td>
 										<td style="text-align: center;">{{ totalData.type4 }}</td>
 										<td style="text-align: center;">{{ totalData.type5 }}</td>
+										<td style="text-align: center;">{{ totalData.type5 }}</td>
 										<td style="text-align: center;">{{ totalData.rn }}</td>
+										<td style="text-align: center;">{{ totalData.pn }}</td>
 										<td style="text-align: center;">{{ totalData.pn }}</td>
 										<td style="text-align: center;">{{ totalData.product }}</td>
 									</tr>
@@ -121,18 +130,27 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#sdate').datepicker({
+		$('#cboMonth').datepicker({
 			autoclose: true,
+			format: 'mm/yyyy',
+			viewMode: "months", 
+			minViewMode: "months",
 			language: 'th',
-			format: 'dd/mm/yyyy',
 			thaiyear: true
 		}).datepicker('update', new Date());
 
-		$('#edate').datepicker({
-			autoclose: true,
-			language: 'th',
-			format: 'dd/mm/yyyy',
-			thaiyear: true,
-		}).datepicker('update', new Date());
+		// $('#cboSDate').datepicker({
+		// 	autoclose: true,
+		// 	language: 'th',
+		// 	format: 'dd/mm/yyyy',
+		// 	thaiyear: true
+		// }).datepicker('update', new Date());
+
+		// $('#sboEDate').datepicker({
+		// 	autoclose: true,
+		// 	language: 'th',
+		// 	format: 'dd/mm/yyyy',
+		// 	thaiyear: true,
+		// }).datepicker('update', new Date());
 	});
 </script>
