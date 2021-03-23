@@ -12,29 +12,32 @@
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-chart-bar mr-1"></i>
-							สรุป Productivity
+							Productivity ผู้ป่วยใน
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
+						<div class="row">
+							<form action="#" method="POST" class="form-inline col-md-8">
+								<div class="form-group">
+									<label>ประจำเดือน :</label>
+									<input
+										type="text"
+										id="cboMonth"
+										name="cboMonth"
+										ng-model="cboMonth"
+										class="form-control"
+										style="margin: 0 10px;"
+										autocomplete="off"
+									>
+								</div>
 
-						<form action="#" method="POST" class="form-inline">
-							<div class="form-group">
-								<label>ประจำเดือน :</label>
-								<input
-									type="text"
-									id="cboMonth"
-									name="cboMonth"
-									ng-model="cboMonth"
-									class="form-control"
-									style="margin: 0 10px;"
-									autocomplete="off"
-								>
+								<button ng-click="getProductSum($event)" class="btn btn-primary">ตกลง</button>						
+							</form>
+
+							<div class="col-md-4">
+								<a href="ip/product-ward" class="btn btn-success float-right">Productivity รายวอร์ด</a>
 							</div>
-
-							<button ng-click="getProductSum($event)" class="btn btn-primary">ตกลง</button>
-					
-						</form>
-
+						</div>
 					</div><!-- /.card-body -->
 				</div><!-- /.card -->
 
