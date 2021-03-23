@@ -137,9 +137,15 @@ app.controller('productController', [
 			});
 		};
 
+		$scope.onChangeStaffAmount = () => {
+			$scope.staff.total = parseInt($scope.staff.rn) + parseInt($scope.staff.pn);
+			
+			calcProductivity();
+		};
+
 		function calcProductivity() {
 			if ($scope.data) {
-				$scope.multiply.xtype1 = parseInt($scope.data.type1) * 1.5;
+				$scope.multiply.xtype1 = parseInt($scope.data.type1) * 0.5;
 				$scope.multiply.xtype2 = parseInt($scope.data.type2) * 3.5;
 				$scope.multiply.xtype3 = parseInt($scope.data.type3) * 5.5;
 				$scope.multiply.xtype4 = parseInt($scope.data.type4) * 7.5;
