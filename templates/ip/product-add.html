@@ -83,15 +83,28 @@
 											>
 										</div>
 										<div class="form-group col-md-4">
-											<label for="unknow">ไม่ระบุประเภท</label>
-											<input
-												type="text"
-												id="unknow"
-												name="unknow"
-												ng-model="data.unknow"
-												class="form-control text-center is-invalid"
-												placeholder="ไม่ระบุประเภท"
-											>
+											<label for="unknow">ไม่ระบุประเภท {{ data.unknow }}</label>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="unknow"
+													name="unknow"
+													ng-model="data.unknow"
+													class="form-control text-center is-invalid"
+													placeholder="ไม่ระบุประเภท"
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showUnknowClassList($event)"
+														ng-disabled="!data.unknow > 0 || data.unknow == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
+											
 										</div>
 										<div class="form-group col-md-4">
 											<label for="type1">ประเภท 1</label>
@@ -304,7 +317,9 @@
 						</div>
 					</form>
 				</div><!-- /.card -->
-	
+				
+				<div ng-include="'./templates/modals/ip-unknowtype-list.html'"></div>
+
 			</section>
 		</div><!-- Main row -->
 	</div><!-- /.container-fluid-->

@@ -1,0 +1,83 @@
+<div class="modal fade" id="ipUnknowTypeList" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">รายการผู้ป่วยที่ยังไม่ได้ระบุประเภท</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding-bottom: 0;">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" style="font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center; width: 3%;">ลำดับ</th>
+                                <th style="text-align: center; width: 6%;">AN</th>
+                                <th style="text-align: center; width: 6%;">HN</th>
+                                <th style="text-align: center;">ชื่อผู้ป่วย</th>
+                                <th style="text-align: center; width: 6%;">อายุ</th>
+                                <th style="text-align: center; width: 20%;">วอร์ด</th>
+                                <th style="text-align: center; width: 10%;">วันที่ Admit</th>
+                                <th style="text-align: center; width: 8%;">เวลา Admit</th>
+                                <th style="text-align: center; width: 10%;">ประเภท</th>
+                                <!-- <th style="text-align: center; width: 6%;">Actions</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(index, row) in unknows">
+                                <td style="text-align: center;">{{ index+1 }}</td>
+                                <td style="text-align: center;">{{ row.an }}</td>
+                                <td style="text-align: center;">{{ row.hn }}</td>
+                                <td>{{ row.patient_name }}</td>
+                                <td style="text-align: center;">{{ row.ageY }}</td>
+                                <td style="text-align: center;">{{ row.ward_name }}</td>
+                                <td style="text-align: center;">{{ row.regdate | thdate }}</td>
+                                <td style="text-align: center;">{{ row.regtime }}</td>
+                                <td style="text-align: center;">{{ row.icnp_classification_id }}</td>
+                                <!-- <td style="text-align: center;">
+                                    <a 
+                                        href="#"
+                                        ng-click="removeItemFromDrugList(row.icode)"
+                                        class="btn btn-danger"
+                                    >
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /.table-responsive -->
+
+            </div><!-- /.modal-body -->
+            <div class="modal-footer" style="padding-bottom: 0;">
+
+                <!-- <div class="container" style="display: flex; margin-top: 0;">
+                    <div class="col-md-6 py-2">
+                        หน้า {{ pager.current_page }} จาก {{ pager.last_page }} / ทั้งหมด {{ pager.total }} รายการ
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <ul class="pagination float-right" style="margin: 0;">
+                            <li class="page-item" ng-class="{disabled: pager.current_page==1}">
+                                <a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.prev_page_url)" aria-label="Previous">
+                                    Previous
+                                </a>
+                            </li> -->
+                            <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                            <!-- <li class="page-item" ng-class="{disabled: pager.current_page==pager.last_page}">
+                                <a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.next_page_url)" aria-label="Next">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div> -->
+
+            </div><!-- /.modal-footer -->
+        </div>
+    </div>
+</div>

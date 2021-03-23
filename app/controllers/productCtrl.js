@@ -20,6 +20,7 @@ app.controller('productController', [
 		$scope.staff = null;
 		$scope.multiply = null;
 		$scope.errors = null;
+		$scope.unknows = [];
 
 		$('#product_date').datepicker({
 			autoclose: true,
@@ -55,6 +56,10 @@ app.controller('productController', [
 			}
 			return input;
 		};
+
+		const calcAge = function(birthdate, type) {
+			return moment().diff(moment(birthdate), type);
+		}
 		
 		$scope.getProductSum = (e) => {
 			if (e) e.preventDefault();
@@ -143,6 +148,31 @@ app.controller('productController', [
 				$scope.multiply.xstaff = parseInt($scope.staff.total) * 7;
 				$scope.multiply.productivity = (($scope.multiply.xtotal*100)/$scope.multiply.xstaff).toFixed(2);
 			}
+		};
+
+		$scope.showUnknowClassList = (e) => {
+			e.preventDefault();
+            
+			let date = $scope.dtpProductDate !== ''
+						? StringFormatService.convToDbDate($scope.dtpProductDate) 
+						: moment().format('YYYY-MM-DD');
+			let period = $scope.cboPeriod === '' ? 1 : $scope.cboPeriod;
+			let ward = $scope.cboWard === '' ? '00' : $scope.cboWard;
+
+            $http.get(`${CONFIG.apiUrl}/unknow-type/${date}/${period}/${ward}`)
+            .then(res => {
+				console.log(res);
+                $scope.unknows = res.data;
+                // $scope.pager = res.data.pager;
+
+				$scope.unknows.forEach(u => {
+					u.ageY = calcAge(u.birthday, 'years');
+				});
+				
+                $('#ipUnknowTypeList').modal('show');
+			}, err => {
+                console.log(err)
+            });
 		};
 
 		$scope.store = (e) => {
