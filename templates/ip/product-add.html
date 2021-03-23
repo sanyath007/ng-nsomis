@@ -18,9 +18,6 @@
 				</div><!-- /.card -->
 
 				<div class="card">
-					<div class="card-header">
-						<h3 class="card-title">แบบบันทึก Productivity</h3>
-					</div>
 					<form action="" method="POST">
 						<div class="card-body">
 							<div class="row">
@@ -98,74 +95,133 @@
 													<button
 														type="button"
 														class="btn btn-info btn-flat"
-														ng-click="showUnknowClassList($event)"
+														ng-click="showIpTypeLists($event, '')"
 														ng-disabled="!data.unknow > 0 || data.unknow == 0"
 													>
 														<i class="fas fa-search"></i>
 													</button>
 												</span>
-											</div>
-											
+											</div>											
 										</div>
 										<div class="form-group col-md-4">
 											<label for="type1">ประเภท 1</label>
-											<input
-												type="text"
-												id="type1"
-												name="type1"
-												ng-model="data.type1"
-												class="form-control text-center"
-												placeholder="ประเภท 1"
-												readonly
-											>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="type1"
+													name="type1"
+													ng-model="data.type1"
+													class="form-control text-center"
+													placeholder="ประเภท 1"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '1')"
+														ng-disabled="!data.type1 > 0 || data.type1 == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
 										</div>
 										<div class="form-group col-md-4">
 											<label for="type2">ประเภท 2</label>
-											<input
-												type="text"
-												id="type2"
-												name="type2"
-												ng-model="data.type2"
-												class="form-control text-center"
-												placeholder="ประเภท 2"
-												readonly
-											>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="type2"
+													name="type2"
+													ng-model="data.type2"
+													class="form-control text-center"
+													placeholder="ประเภท 2"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '2')"
+														ng-disabled="!data.type2 > 0 || data.type2 == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
 										</div>
 										<div class="form-group col-md-4">
 											<label for="type3">ประเภท 3</label>
-											<input
-												type="text"
-												id="type3"
-												name="type3"
-												ng-model="data.type3"
-												class="form-control text-center"
-												placeholder="ประเภท 3"
-												readonly
-											>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="type3"
+													name="type3"
+													ng-model="data.type3"
+													class="form-control text-center"
+													placeholder="ประเภท 3"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '3')"
+														ng-disabled="!data.type3 > 0 || data.type3 == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
 										</div>
 										<div class="form-group col-md-4">
 											<label for="type4">ประเภท 4</label>
-											<input
-												type="text"
-												id="type4"
-												name="type4"
-												ng-model="data.type4"
-												class="form-control text-center"
-												placeholder="ประเภท 4"
-												readonly
-											>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="type4"
+													name="type4"
+													ng-model="data.type4"
+													class="form-control text-center"
+													placeholder="ประเภท 4"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '4')"
+														ng-disabled="!data.type4 > 0 || data.type4 == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
 										</div>
 										<div class="form-group col-md-4">
 											<label for="type5">ประเภท 5</label>
-											<input
-												type="text"
-												id="type5"
-												name="type5"
-												ng-model="data.type5"
-												class="form-control text-center"
-												placeholder="ประเภท 5"
-												readonly
-											>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="type5"
+													name="type5"
+													ng-model="data.type5"
+													class="form-control text-center"
+													placeholder="ประเภท 5"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '5')"
+														ng-disabled="!data.type5 > 0 || data.type5 == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
 										</div>
 										<div class="form-group col-md-4">
 											<label for="exampleInputPassword1">จำนวน RN</label>
@@ -327,7 +383,7 @@
 					</form>
 				</div><!-- /.card -->
 				
-				<div ng-include="'./templates/modals/ip-unknowtype-list.html'"></div>
+				<div ng-include="'./templates/modals/ip-type-list.html'"></div>
 
 			</section>
 		</div><!-- Main row -->

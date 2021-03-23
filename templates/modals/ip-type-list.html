@@ -1,4 +1,4 @@
-<div class="modal fade" id="ipUnknowTypeList" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<div class="modal fade" id="ipTypeLists" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,12 +21,12 @@
                                 <th style="text-align: center; width: 20%;">วอร์ด</th>
                                 <th style="text-align: center; width: 10%;">วันที่ Admit</th>
                                 <th style="text-align: center; width: 8%;">เวลา Admit</th>
-                                <th style="text-align: center; width: 10%;">ประเภท</th>
+                                <th style="text-align: center; width: 8%;">ประเภท</th>
                                 <!-- <th style="text-align: center; width: 6%;">Actions</th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="(index, row) in unknows">
+                            <tr ng-repeat="(index, row) in ipTypeLists">
                                 <td style="text-align: center;">{{ index+1 }}</td>
                                 <td style="text-align: center;">{{ row.an }}</td>
                                 <td style="text-align: center;">{{ row.hn }}</td>
@@ -35,7 +35,14 @@
                                 <td style="text-align: center;">{{ row.ward_name }}</td>
                                 <td style="text-align: center;">{{ row.regdate | thdate }}</td>
                                 <td style="text-align: center;">{{ row.regtime }}</td>
-                                <td style="text-align: center;">{{ row.icnp_classification_id }}</td>
+                                <td style="text-align: center;">
+                                    <span ng-show="row.icnp_classification_id == null" style="color: red;">
+                                        ยังไม่ระบุ
+                                    </span>
+                                    <span ng-show="row.icnp_classification_id != ''">
+                                        {{ row.icnp_classification_id }}
+                                    </span>
+                                </td>
                                 <!-- <td style="text-align: center;">
                                     <a 
                                         href="#"

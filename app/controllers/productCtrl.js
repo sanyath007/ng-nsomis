@@ -20,7 +20,7 @@ app.controller('productController', [
 		$scope.staff = null;
 		$scope.multiply = null;
 		$scope.errors = null;
-		$scope.unknows = [];
+		$scope.ipTypeLists = [];
 
 		$('#product_date').datepicker({
 			autoclose: true,
@@ -156,7 +156,7 @@ app.controller('productController', [
 			}
 		};
 
-		$scope.showUnknowClassList = (e) => {
+		$scope.showIpTypeLists = (e, ipType) => {
 			e.preventDefault();
             
 			let date = $scope.dtpProductDate !== ''
@@ -164,18 +164,19 @@ app.controller('productController', [
 						: moment().format('YYYY-MM-DD');
 			let period = $scope.cboPeriod === '' ? 1 : $scope.cboPeriod;
 			let ward = $scope.cboWard === '' ? '00' : $scope.cboWard;
+			let type = ipType === '' ? 0 : ipType;
 
-            $http.get(`${CONFIG.apiUrl}/unknow-type/${date}/${period}/${ward}`)
+            $http.get(`${CONFIG.apiUrl}/ip-type/${date}/${period}/${ward}/${type}`)
             .then(res => {
 				console.log(res);
-                $scope.unknows = res.data;
+                $scope.ipTypeLists = res.data;
                 // $scope.pager = res.data.pager;
 
-				$scope.unknows.forEach(u => {
+				$scope.ipTypeLists.forEach(u => {
 					u.ageY = calcAge(u.birthday, 'years');
 				});
 				
-                $('#ipUnknowTypeList').modal('show');
+                $('#ipTypeLists').modal('show');
 			}, err => {
                 console.log(err)
             });
