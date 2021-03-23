@@ -38,16 +38,14 @@
 										ng-model="cboWard"
 										class="form-control ml-2"
 										ng-class="{'is-invalid': errors.ward}"
+										ng-change="getProductWard($event)"
 									>
 										<option value="">-- กรุณาเลือก --</option>
 										<option value="{{ ward.ward }}" ng-repeat="(index, ward) in wards">
 											{{ ward.ward+ '-' +ward.name }}
 										</option>
 									</select>
-								</div>
-
-								<button ng-click="getProductWard($event)" class="btn btn-primary">ตกลง</button>
-						
+								</div>						
 							</form>
 
 							<div class="col-md-4">
