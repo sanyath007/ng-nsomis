@@ -74,7 +74,30 @@
 											ng-repeat="m in range(1, dataTableOptions.totalCol)"
 											style="width: 5%; text-align: center; padding: 10px 0px 0px;"
 										>
-											{{ ward[m] }}
+											<span
+												ng-show="ward[m] > 130"
+												class="badge bg-danger"
+											>
+												{{ ward[m] }}
+											</span>
+											<span
+												ng-show="ward[m] > 110 && ward[m] <= 130"
+												class="badge bg-warning"
+											>
+												{{ ward[m] }}
+											</span>
+											<span
+												ng-show="ward[m] >= 90 && ward[m] <= 110"
+												class="badge bg-success"
+											>
+												{{ ward[m] }}
+											</span>
+											<span
+												ng-show="ward[m] < 90"
+												class="badge bg-default"
+											>
+												{{ ward[m] }}
+											</span>
 										</td>
 									</tr>
 									<!-- <tr>

@@ -65,18 +65,22 @@
 									<tr>
 										<td width="3%" style="text-align: center;">ลำดับ</td>
 										<td style="text-align: center;">วันที่</td>
-										<td width="6%" style="text-align: center;">เวร</td>
-										<td width="8%" style="text-align: center;">ผู้ป่วยทั้งหมด</td>
+										<td width="5%" style="text-align: center;">เวร</td>
+										<td width="6%" style="text-align: center;">ผู้ป่วยทั้งหมด</td>
 										<td width="6%" style="text-align: center;">ประเภท 1</td>
 										<td width="6%" style="text-align: center;">ประเภท 2</td>
 										<td width="6%" style="text-align: center;">ประเภท 3</td>
 										<td width="6%" style="text-align: center;">ประเภท 4</td>
 										<td width="6%" style="text-align: center;">ประเภท 5</td>
-										<td width="8%" style="text-align: center; font-size: 14px;">รวม ผป./ชม.การพยาบาล</td>
+										<td width="8%" style="text-align: center; font-size: 14px;">
+											รวม ผป.xชม.การพยาบาล
+										</td>
 										<td width="6%" style="text-align: center;">RN</td>
 										<td width="6%" style="text-align: center;">PN/NA</td>
-										<td width="6%" style="text-align: center;">รวม จนท.</td>
-										<td width="8%" style="text-align: center;">Productivity</td>
+										<td width="8%" style="text-align: center; font-size: 14px;">
+											รวม จนท.xชม.การทำงาน
+										</td>
+										<td width="6%" style="text-align: center;">Nursing Productivity</td>
 									</tr>
 								</thead>
 									<tr ng-repeat="(index, prod) in data">
@@ -96,9 +100,32 @@
 										<td style="text-align: center;">{{ prod.xtotal | currency:'':2 }}</td>
 										<td style="text-align: center;">{{ prod.rn }}</td>
 										<td style="text-align: center;">{{ prod.pn }}</td>
-										<td style="text-align: center;">{{ prod.total_staff }}</td>
+										<td style="text-align: center;">{{ prod.xstaff }}</td>
 										<td style="text-align: center;">
-											{{ prod.productivity | currency:'':2 }}
+											<span
+												ng-show="prod.productivity > 130"
+												class="badge bg-danger"
+											>
+												{{ prod.productivity | currency:'':2 }}
+											</span>
+											<span
+												ng-show="prod.productivity > 110 && prod.productivity <= 130"
+												class="badge bg-warning"
+											>
+												{{ prod.productivity | currency:'':2 }}
+											</span>
+											<span
+												ng-show="prod.productivity >= 90 && prod.productivity <= 110"
+												class="badge bg-success"
+											>
+												{{ prod.productivity | currency:'':2 }}
+											</span>
+											<span
+												ng-show="prod.productivity < 90"
+												class="badge bg-default"
+											>
+												{{ prod.productivity | currency:'':2 }}
+											</span>
 										</td>
 									</tr>
 									<tr>
