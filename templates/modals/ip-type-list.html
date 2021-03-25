@@ -19,8 +19,10 @@
                                 <th style="text-align: center;">ชื่อผู้ป่วย</th>
                                 <th style="text-align: center; width: 6%;">อายุ</th>
                                 <th style="text-align: center; width: 20%;">วอร์ด</th>
-                                <th style="text-align: center; width: 10%;">วันที่ Admit</th>
-                                <th style="text-align: center; width: 8%;">เวลา Admit</th>
+                                <th style="text-align: center; width: 8%;">วันที่ Admit</th>
+                                <th style="text-align: center; width: 6%;">เวลา Admit</th>
+                                <th style="text-align: center; width: 8%;">วันที่ D/C</th>
+                                <th style="text-align: center; width: 6%;">เวลา D/C</th>
                                 <th style="text-align: center; width: 8%;">ประเภท</th>
                                 <!-- <th style="text-align: center; width: 6%;">Actions</th> -->
                             </tr>
@@ -35,6 +37,8 @@
                                 <td style="text-align: center;">{{ row.ward_name }}</td>
                                 <td style="text-align: center;">{{ row.regdate | thdate }}</td>
                                 <td style="text-align: center;">{{ row.regtime }}</td>
+                                <td style="text-align: center;">{{ row.dchdate | thdate }}</td>
+                                <td style="text-align: center;">{{ row.dchtime }}</td>
                                 <td style="text-align: center;">
                                     <span ng-show="row.icnp_classification_id == null" style="color: red;">
                                         ยังไม่ระบุ
