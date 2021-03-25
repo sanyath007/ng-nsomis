@@ -56,10 +56,6 @@ app.controller('productController', [
 			}
 			return input;
 		};
-
-		const calcAge = function(birthdate, type) {
-			return moment().diff(moment(birthdate), type);
-		}
 		
 		$scope.getProductSum = (e) => {
 			if (e) e.preventDefault();
@@ -173,7 +169,7 @@ app.controller('productController', [
                 // $scope.pager = res.data.pager;
 
 				$scope.ipTypeLists.forEach(u => {
-					u.ageY = calcAge(u.birthday, 'years');
+					u.ageY = DatetimeService.calcAge(u.birthday, 'years');
 				});
 				
                 $('#ipTypeLists').modal('show');

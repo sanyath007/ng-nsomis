@@ -14,6 +14,8 @@ app.controller('ipController', [
 		$scope.sdate = '';
 		$scope.edate = '';
 		$scope.data = [];
+		$scope.ipLists = [];
+		$scope.pager = null;
 		$scope.totalData = {};
 		$scope.toDay = new Date();
 
@@ -158,6 +160,45 @@ app.controller('ipController', [
 		const calculateActiveBed = function(bedOcc, totalBed) {
 			return (bedOcc*totalBed)/100;
 		}
+
+		$scope.showIpLists = (e, ward) => {
+			e.preventDefault();
+            
+			let date = ($scope.cboDate !== '') 
+                        ? StringFormatService.convToDbDate($scope.cboDate)
+                        : moment().format('YYYY-MM-DD');
+
+            $http.get(`${CONFIG.apiUrl}/ip/ip-lists/${date}/${ward}`)
+            .then(res => {
+				console.log(res);
+                $scope.ipLists = res.data.items;
+                $scope.pager = res.data.pager;
+
+				$scope.ipLists.forEach(u => {
+					u.ageY = DatetimeService.calcAge(u.birthday, 'years');
+				});
+				
+                $('#ipLists').modal('show');
+			}, err => {
+                console.log(err)
+            });
+		};
+
+		$scope.onPaginateLinkClick = (e, link) => {
+            e.preventDefault();
+            
+            $http.get(link)
+            .then(res => {
+                $scope.ipLists = res.data.items;
+                $scope.pager = res.data.pager;
+
+				$scope.ipLists.forEach(u => {
+					u.ageY = DatetimeService.calcAge(u.birthday, 'years');
+				});
+            }, err => {
+                console.log(err)
+            });
+        };
 
 		$scope.getBedEmptyDay = function(e) {
 			if(e) e.preventDefault();

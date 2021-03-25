@@ -58,7 +58,7 @@
 									<td>{{ row.ward + '-' + row.wardname }}</td>
 									<td style="text-align: center;">{{ row.bed.bed }}</td>
 									<td style="text-align: center;">
-										<a href="ip/ptdchbyward/{{ cboDate | dbdate }}/{{ cboDate | dbdate }}/{{ row.ward }}">
+										<a href="#" ng-click="showIpLists($event, row.ward)">
 											{{ row.num_pt | currency:'':0 }}
 										</a>
 									</td>
@@ -92,6 +92,8 @@
 						</ul>
 					</div><!-- /.card-footer -->
 				</div><!-- /.card -->
+
+				<div ng-include="'./templates/modals/ip-list.html?version=202103251411'"></div>
 	
 			</section>
 		</div><!-- Main row -->

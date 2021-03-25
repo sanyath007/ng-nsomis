@@ -14,4 +14,8 @@ app.service('DatetimeService', [function() {
 
         return `${year-543}-${month}`;
     };
+
+    service.calcAge = function(birthdate, type) {
+        return moment().diff(moment(birthdate), type);
+    }
 }]);
