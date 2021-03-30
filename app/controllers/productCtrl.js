@@ -189,8 +189,8 @@ app.controller('productController', [
 			
 			// ask user for set unknow type to type 3
 			if (parseInt($scope.data.unknow) > 0) {
-				if(confirm(`คุณมีผู้ป่วยที่ยังไม่ได้ระบุประเภทจำนวน  ${$scope.data.unknow} ราย หากคุณทำการบันทึกผู้ป่วยประเภทดังกล่าวจะถูกนำไปรวมกับผู้ป่วยประเภท 3 คุณต้องการทำการบันทึกต่อไปหรือไม่?`)) {
-					$scope.data.type3 = parseInt($scope.data.type3) + parseInt($scope.data.unknow);
+				if(confirm(`คุณมีผู้ป่วยที่ยังไม่ได้ระบุประเภทจำนวน  ${$scope.data.unknow} ราย หากคุณทำการบันทึกผู้ป่วยประเภทดังกล่าวจะถูกนำไปรวมกับผู้ป่วยประเภท 2 คุณต้องการทำการบันทึกต่อไปหรือไม่?`)) {
+					$scope.data.type2 = parseInt($scope.data.type2) + parseInt($scope.data.unknow);
 
 					calcProductivity();
 				} else {
