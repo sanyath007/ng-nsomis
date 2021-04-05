@@ -10,7 +10,7 @@ app.controller('productController', [
 		$scope.cboSDate = '';
 		$scope.cboMonth = '';
 		$scope.cboWard = '';
-		$scope.cboPeriod = '';
+		$scope.cboPeriod = '1';
 		$scope.dtpProductDate = StringFormatService.convFromDbDate(moment(new Date()).format('YYYY-MM-DD'));
 
 		$scope.dataTableOptions = null;
@@ -21,6 +21,13 @@ app.controller('productController', [
 		$scope.multiply = null;
 		$scope.errors = null;
 		$scope.ipTypeLists = [];
+		$scope.xtype = {
+			type1: 0.3,
+			type2: 1.5,
+			type3: 2.4,
+			type4: 3.5,
+			type5: 5,
+		};
 
 		$('#product_date').datepicker({
 			autoclose: true,
@@ -127,6 +134,7 @@ app.controller('productController', [
 				$scope.data = res.data.workload;
 				$scope.staff = res.data.staff;
 
+				setXType(period);
 				calcProductivity();
 			}, err => {
 				console.log(err)
@@ -139,18 +147,41 @@ app.controller('productController', [
 			calcProductivity();
 		};
 
+		function setXType(period) {
+			if (period === '1') {
+				$scope.xtype.type1 = 0.3;
+				$scope.xtype.type2 = 1.5;
+				$scope.xtype.type3 = 2.4;
+				$scope.xtype.type4 = 3.5;
+				$scope.xtype.type5 = 5;
+			} else if (period === '2') {
+				$scope.xtype.type1 = 0.1;
+				$scope.xtype.type2 = 1.6;
+				$scope.xtype.type3 = 2;
+				$scope.xtype.type4 = 2;
+				$scope.xtype.type5 = 4;
+			} else if (period === '3') {
+				$scope.xtype.type1 = 0.1;
+				$scope.xtype.type2 = 1;
+				$scope.xtype.type3 = 1.5;
+				$scope.xtype.type4 = 2;
+				$scope.xtype.type5 = 4;
+			}
+		}
+
 		function calcProductivity() {
 			if ($scope.data) {
-				$scope.multiply.xtype1 = parseInt($scope.data.type1) * 0.5;
-				$scope.multiply.xtype2 = parseInt($scope.data.type2) * 3.5;
-				$scope.multiply.xtype3 = parseInt($scope.data.type3) * 5.5;
-				$scope.multiply.xtype4 = parseInt($scope.data.type4) * 7.5;
-				$scope.multiply.xtype5 = parseInt($scope.data.type5) * 12;
-				$scope.multiply.xtotal = $scope.multiply.xtype1 + $scope.multiply.xtype2 + $scope.multiply.xtype3 + $scope.multiply.xtype4 + $scope.multiply.xtype5;
+				$scope.multiply.xtype1 = (parseInt($scope.data.type1) * $scope.xtype.type1).toFixed(2);
+				$scope.multiply.xtype2 = (parseInt($scope.data.type2) * $scope.xtype.type2).toFixed(2);
+				$scope.multiply.xtype3 = (parseInt($scope.data.type3) * $scope.xtype.type3).toFixed(2);
+				$scope.multiply.xtype4 = (parseInt($scope.data.type4) * $scope.xtype.type4).toFixed(2);
+				$scope.multiply.xtype5 = (parseInt($scope.data.type5) * $scope.xtype.type5).toFixed(2);
+
+				$scope.multiply.xtotal = parseFloat($scope.multiply.xtype1) + parseFloat($scope.multiply.xtype2) + parseFloat($scope.multiply.xtype3) + parseFloat($scope.multiply.xtype4) + parseFloat($scope.multiply.xtype5);
 				$scope.multiply.xstaff = parseInt($scope.staff.total) * 7;
 				$scope.multiply.productivity = (($scope.multiply.xtotal*100)/$scope.multiply.xstaff).toFixed(2);
 			}
-		};
+		}
 
 		$scope.showIpTypeLists = (e, ipType) => {
 			e.preventDefault();
