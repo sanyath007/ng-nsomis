@@ -165,7 +165,7 @@ app.controller('productController', [
 				$scope.xtype.type2 = 1;
 				$scope.xtype.type3 = 1.5;
 				$scope.xtype.type4 = 2;
-				$scope.xtype.type5 = 4;
+				$scope.xtype.type5 = 3;
 			}
 		}
 
