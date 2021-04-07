@@ -195,7 +195,6 @@ app.controller('productController', [
 
             $http.get(`${CONFIG.apiUrl}/ip-type/${date}/${period}/${ward}/${type}`)
             .then(res => {
-				console.log(res);
                 $scope.ipTypeLists = res.data;
                 // $scope.pager = res.data.pager;
 
@@ -217,8 +216,24 @@ app.controller('productController', [
 
 				return false;
 			}
-			
-			// ask user for set unknow type to type 3
+
+			// Check if user save data before fit time 
+			let chkTime = '';
+			if ($scope.cboPeriod === '1') {
+				chkTime = 'T15:00:00';
+			} else if ($scope.cboPeriod === '2') {
+				chkTime = 'T23:00:00';
+			} else if ($scope.cboPeriod === '3') {
+				chkTime = 'T07:00:00';
+			}
+
+			if (moment(new Date()).diff(moment(StringFormatService.convToDbDate($scope.dtpProductDate) + chkTime), 'minutes') < 0) {
+				toaster.pop('error', "", `ไม่สามารถบันทึกข้อมูลก่อนเวลาได้ ต้องบันทึกหลังเวลา ${chkTime} น. สำหรับ${$('#period option:selected').text()} !!!`);
+
+				return false;
+			}
+
+			// Ask user for set unknow type to type 3
 			if (parseInt($scope.data.unknow) > 0) {
 				if(confirm(`คุณมีผู้ป่วยที่ยังไม่ได้ระบุประเภทจำนวน  ${$scope.data.unknow} ราย หากคุณทำการบันทึกผู้ป่วยประเภทดังกล่าวจะถูกนำไปรวมกับผู้ป่วยประเภท 2 คุณต้องการทำการบันทึกต่อไปหรือไม่?`)) {
 					$scope.data.type2 = parseInt($scope.data.type2) + parseInt($scope.data.unknow);
