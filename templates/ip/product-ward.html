@@ -63,7 +63,7 @@
 							<table class="table table-bordered table-striped">
 								<thead>
 									<tr>
-										<td width="3%" style="text-align: center;">ลำดับ</td>
+										<!-- <td width="3%" style="text-align: center;">ลำดับ</td> -->
 										<td style="text-align: center;">วันที่</td>
 										<td width="5%" style="text-align: center;">เวร</td>
 										<td width="6%" style="text-align: center;">ผู้ป่วยทั้งหมด</td>
@@ -84,7 +84,7 @@
 									</tr>
 								</thead>
 									<tr ng-repeat="(index, prod) in data">
-										<td style="text-align: center;">{{ index+1 }}</td>
+										<!-- <td style="text-align: center;">{{ index+1 }}</td> -->
 										<td style="text-align: center;">{{ prod.product_date | thdate }}</td>
 										<td style="text-align: center;">
 											<span ng-show="prod.period == 1">เช้า</span>
@@ -102,30 +102,38 @@
 										<td style="text-align: center;">{{ prod.pn }}</td>
 										<td style="text-align: center;">{{ prod.xstaff }}</td>
 										<td style="text-align: center;">
-											<span
-												ng-show="prod.productivity > 130"
-												class="badge bg-danger"
-											>
-												{{ prod.productivity | currency:'':2 }}
-											</span>
-											<span
-												ng-show="prod.productivity > 110 && prod.productivity <= 130"
-												class="badge bg-warning"
-											>
-												{{ prod.productivity | currency:'':2 }}
-											</span>
-											<span
-												ng-show="prod.productivity >= 90 && prod.productivity <= 110"
-												class="badge bg-success"
-											>
-												{{ prod.productivity | currency:'':2 }}
-											</span>
-											<span
-												ng-show="prod.productivity < 90"
-												class="badge bg-default"
-											>
-												{{ prod.productivity | currency:'':2 }}
-											</span>
+											<h6>
+												<span
+													ng-show="prod.productivity > 130"
+													class="badge bg-danger"
+												>
+													{{ prod.productivity | currency:'':2 }}
+												</span>
+											</h6>
+											<h6>
+												<span
+													ng-show="prod.productivity > 110 && prod.productivity <= 130"
+													class="badge bg-warning"
+												>
+													{{ prod.productivity | currency:'':2 }}
+												</span>
+											</h6>
+											<h6>
+												<span
+													ng-show="prod.productivity >= 90 && prod.productivity <= 110"
+													class="badge bg-success"
+												>
+													{{ prod.productivity | currency:'':2 }}
+												</span>
+											</h6>
+											<h6>
+												<span
+													ng-show="prod.productivity < 90"
+													class="badge bg-default"
+												>
+													{{ prod.productivity | currency:'':2 }}
+												</span>
+											</h6>
 										</td>
 									</tr>
 									<tr>

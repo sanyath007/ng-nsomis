@@ -48,7 +48,7 @@
 							<table class="table table-bordered table-striped">
 								<thead>
 									<tr>
-										<td tyle="width: 3%; text-align: center;" rowspan="2">ลำดับ</td>
+										<!-- <td tyle="width: 3%; text-align: center;" rowspan="2">ลำดับ</td> -->
 										<td style="text-align: center;" rowspan="2">หน่วยงาน</td>
 										<td style="width: 5%; text-align: center;" rowspan="2">เวร</td>
 										<td style="text-align: center;" colspan="31">วันที่</td>
@@ -63,7 +63,7 @@
 									</tr>
 								</thead>
 									<tr ng-repeat="(index, ward) in data" style="font-size: 12px;">
-										<td style="text-align: center;">{{ index+1 }}</td>
+										<!-- <td style="text-align: center;">{{ index+1 }}</td> -->
 										<td>{{ ward.ward + '-' + ward.name }}</td>
 										<td style="text-align: center;">
 											<span ng-show="ward.period == 1">เช้า</span>
@@ -72,32 +72,40 @@
 										</td>
 										<td
 											ng-repeat="m in range(1, dataTableOptions.totalCol)"
-											style="width: 5%; text-align: center; padding: 10px 0px 0px;"
+											style="text-align: center; padding: 10px 0px 0px;"
 										>
-											<span
-												ng-show="ward[m] > 130"
-												class="badge bg-danger"
-											>
-												{{ ward[m] }}
-											</span>
-											<span
-												ng-show="ward[m] > 110 && ward[m] <= 130"
-												class="badge bg-warning"
-											>
-												{{ ward[m] }}
-											</span>
-											<span
-												ng-show="ward[m] >= 90 && ward[m] <= 110"
-												class="badge bg-success"
-											>
-												{{ ward[m] }}
-											</span>
-											<span
-												ng-show="ward[m] < 90"
-												class="badge bg-default"
-											>
-												{{ ward[m] }}
-											</span>
+											<h6>
+												<span
+													ng-show="ward[m] > 130"
+													class="badge bg-danger"
+												>
+													{{ ward[m] }}
+												</span>
+											</h6>
+											<h6>
+												<span
+													ng-show="ward[m] > 110 && ward[m] <= 130"
+													class="badge bg-warning"
+												>
+													{{ ward[m] }}
+												</span>
+											</h6>
+											<h6>
+												<span
+													ng-show="ward[m] >= 90 && ward[m] <= 110"
+													class="badge bg-success"
+												>
+													{{ ward[m] }}
+												</span>
+											</h6>
+											<h6>
+												<span
+													ng-show="ward[m] < 90"
+													class="badge bg-default"
+												>
+													{{ ward[m] }}
+												</span>
+											</h6>
 										</td>
 									</tr>
 									<!-- <tr>
