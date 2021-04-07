@@ -177,7 +177,7 @@ app.controller('productController', [
 				$scope.multiply.xtype4 = (parseInt($scope.data.type4) * $scope.xtype.type4).toFixed(2);
 				$scope.multiply.xtype5 = (parseInt($scope.data.type5) * $scope.xtype.type5).toFixed(2);
 
-				$scope.multiply.xtotal = parseFloat($scope.multiply.xtype1) + parseFloat($scope.multiply.xtype2) + parseFloat($scope.multiply.xtype3) + parseFloat($scope.multiply.xtype4) + parseFloat($scope.multiply.xtype5);
+				$scope.multiply.xtotal = (parseFloat($scope.multiply.xtype1) + parseFloat($scope.multiply.xtype2) + parseFloat($scope.multiply.xtype3) + parseFloat($scope.multiply.xtype4) + parseFloat($scope.multiply.xtype5)).toFixed(2);
 				$scope.multiply.xstaff = parseInt($scope.staff.total) * 7;
 				$scope.multiply.productivity = (($scope.multiply.xtotal*100)/$scope.multiply.xstaff).toFixed(2);
 			}
