@@ -1,7 +1,7 @@
 <section
 	class="content"
-	ng-controller="scopeController"
-	ng-init="getSumYear($event);"
+	ng-controller="covidController"
+	ng-init="getNumTambon($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -11,8 +11,8 @@
 				<div class="card">
 					<div class="card-header">
 						<h3 class="card-title">
-							<i class="fas fa-microscope mr-1"></i>
-							สรุปยอดผู้รับบริการห้องส่องกล้อง
+							<i class="fas fa-lungs-virus mr-1"></i>
+							สรุปยอดผู้ป่วยโควิด 19 อ.เมือง รายตำบล
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
@@ -41,56 +41,39 @@
 				<div class="card">
 					<div class="card-body">
 
-						<div class="table-responsive">
-							<table class="table table-bordered table-striped">
-								<thead>
-									<tr style="font-size: 14px;">
-										<th style="width: 3%; text-align: center;" rowspan="3">ลำดับ</th>
-										<th style="width: 10%; text-align: center;" rowspan="3">ปี เดือน</th>
-										<th style="width: 7%; text-align: center;" colspan="6">จำนวนการให้บริการ (ครั้ง)</th>
-									</tr>
-									<tr style="font-size: 12px;">
-										<th style="text-align: center;" colspan="3">เพศ</th>
-										<th style="text-align: center;" colspan="3">การนัด</th>
-									</tr>
-									<tr style="font-size: 12px;">
-										<th style="width: 7%; text-align: center;">ชาย</th>
-										<th style="width: 7%; text-align: center;">หญิง</th>
-										<th style="width: 7%; text-align: center;">รวม</th>
-										<th style="width: 7%; text-align: center;">นัด</th>
-										<th style="width: 7%; text-align: center;">ไม่นัด</th>		
-										<th style="width: 7%; text-align: center;">รวม</th>
-									</tr>
-								<thead>
-								<tbody>
-									<tr ng-repeat="(index, numday) in data">
-										<td style="text-align: center;">{{ index+1 }}</td>
-										<td style="text-align: center;">
-											{{ numday.yymm }}
-										</td>
-										<td style="text-align: center;">{{ numday.men | currency:'':0 }}</td>
-										<td style="text-align: center;">{{ numday.women | currency:'':0 }}</td>
-										<td style="text-align: center;">{{ numday.total | currency:'':0 }}</td>
+						<div class="row">
+							<div class="col-md-8">
 
-										<td style="text-align: center;">{{ numday.app | currency:'':0 }}</td>
-										<td style="text-align: center;">{{ numday.notapp | currency:'':0 }}</td>
-										<td style="text-align: center;">{{ numday.total | currency:'':0 }}</td>
-									</tr>
-									<tr>
-										<td style="text-align: center;" colspan="2">รวม</td>
-										<td style="text-align: center;">{{ totalData.men | currency:'':0 }}</td>
-										<td style="text-align: center;">{{ totalData.women | currency:'':0 }}</td>
-										<td style="text-align: center;">{{ totalData.total | currency:'':0 }}</td>
+								<div class="table-responsive">
+									<table class="table table-bordered table-striped">
+										<thead>
+											<tr style="font-size: 14px;">
+												<th style="width: 3%; text-align: center;">ลำดับ</th>
+												<th style="text-align: center;">ตำบล</th>
+												<th style="width: 20%; text-align: center;">จำนวน (ราย)</th>
+											</tr>
+										<thead>
+										<tbody>
+											<tr ng-repeat="(index, tambon) in data">
+												<td style="text-align: center;">{{ index+1 }}</td>
+												<td>{{ tambon.name }}</td>
+												<td style="text-align: center;">
+													<a href="covid/{{ tambon.addressid }}/tambon">
+														{{ tambon.num_pt | currency:'':0 }}
+													</a>
+												</td>
+											</tr>
+											<tr>
+												<td style="text-align: center;" colspan="2">รวม</td>
+												<td style="text-align: center;">{{ totalData.total | currency:'':0 }}</td>
+											</tr>
+								
+										</tbody>
+									</table>
+								</div><!-- /.table-responsive -->
 
-										<td style="text-align: center;">{{ totalData.app | currency:'':0 }}</td>
-										<td style="text-align: center;">{{ totalData.notapp | currency:'':0 }}</td>
-										<td style="text-align: center;">{{ totalData.total | currency:'':0 }}</td>
-									</tr>
-						
-								</tbody>
-							</table>
-						</div><!-- /.table-responsive -->
-
+							</div>
+						</div>
 					</div><!-- /.card-body -->
 				</div><!-- /.card -->
 
