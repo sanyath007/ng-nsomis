@@ -107,7 +107,6 @@ app.controller('covidController', [
 			$scope.loading = true;
 			$http.get(`${CONFIG.apiUrl}/covid/${ward}/ward`)
 			.then(res => {
-				console.log(res);
 				$scope.data = res.data.patients;
 				$scope.ward = res.data.ward;
 			}, err => {

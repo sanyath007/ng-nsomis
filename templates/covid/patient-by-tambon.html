@@ -38,6 +38,8 @@
 										<th style="width: 6%; text-align: center;">วันที่ Admit</th>
 										<th style="width: 6%; text-align: center;">เวลา Admit</th>
 										<th style="width: 15%; text-align: center;">วอร์ด</th>
+										<th style="width: 15%; text-align: center;">อาการ</th>
+										<th style="width: 5%; text-align: center;">Diag</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -54,6 +56,8 @@
 										<td style="text-align: center;">{{ row.regdate | thdate }}</td>
 										<td style="text-align: center;">{{ row.regtime }}</td>
 										<td>{{ row.ward }}</td>
+										<td>{{ row.prediag }}</td>
+										<td style="text-align: center;">{{ row.pdx }}</td>
 									</tr>
 									<!-- <tr>
 										<td style="text-align: center;" colspan="9">รวม</td>
