@@ -135,6 +135,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/covid/num-bed.html',
 		controller: 'covidController'
 	})
+	.when('/covid/:ward/ward', {
+		templateUrl: 'templates/covid/patient-by-ward.html',
+		controller: 'covidController'
+	})
 	.otherwise({
 		redirectTo: '/'
 	});

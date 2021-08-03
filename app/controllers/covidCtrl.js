@@ -11,6 +11,7 @@ app.controller('covidController', [
 		$scope.data = [];
 		$scope.totalData = {};
 		$scope.tambon = {};
+		$scope.ward = {};
 		$scope.covidBed = [
 			{ ward: '00', capacity: 30 }, 	//ชั้น 10
 			{ ward: '06', capacity: 3 }, 	//ชั้น 1
@@ -93,6 +94,22 @@ app.controller('covidController', [
 					$scope.totalData.pt_num += parseInt(w.num_pt);
 					$scope.totalData.empty += w.capacity - parseInt(w.num_pt);
 				});
+			}, err => {
+				console.log(err);
+			});
+		};
+
+		$scope.getPatientsWard = function(e) {
+			if(e) e.preventDefault();
+
+			const ward = $routeParams.ward;
+
+			$scope.loading = true;
+			$http.get(`${CONFIG.apiUrl}/covid/${ward}/ward`)
+			.then(res => {
+				console.log(res);
+				$scope.data = res.data.patients;
+				$scope.ward = res.data.ward;
 			}, err => {
 				console.log(err);
 			});
