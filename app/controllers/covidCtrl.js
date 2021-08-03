@@ -13,10 +13,10 @@ app.controller('covidController', [
 		$scope.tambon = {};
 		$scope.covidBed = [
 			{ ward: '00', capacity: 30 }, 	//ชั้น 10
-			{ ward: '06', capacity: 8 }, 	//ชั้น 1
+			{ ward: '06', capacity: 3 }, 	//ชั้น 1
 			{ ward: '10', capacity: 30 }, 	//ชั้น 9
 			{ ward: '11', capacity: 24 }, 	//ชั้น 2
-			{ ward: '12', capacity: 5 }, 	//ชั้น 3
+			{ ward: '12', capacity: 14 }, 	//ชั้น 3
 		];
 
 		$scope.cardStat = [];

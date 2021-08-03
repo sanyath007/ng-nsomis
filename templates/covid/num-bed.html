@@ -60,7 +60,7 @@
 												<th style="text-align: center;">หอผู้ป่วย</th>
 												<th style="width: 15%; text-align: center;">ศักยภาพ (เตียง)</th>
 												<th style="width: 15%; text-align: center;">ใช้ (เตียง)</th>
-												<th style="width: 15%; text-align: center;">ว่าง (เตียง)</th>
+												<th style="width: 15%; text-align: center;">ว่าง (เตียง) / %</th>
 											</tr>
 										<thead>
 										<tbody>
@@ -68,9 +68,7 @@
 												<td style="text-align: center;">{{ index+1 }}</td>
 												<td>{{ ward.name }}</td>
 												<td style="text-align: center;">
-													<a href="covid/{{ tambon.addressid }}/tambon">
-														{{ ward.capacity | currency:'':0 }}
-													</a>
+													{{ ward.capacity | currency:'':0 }}
 												</td>
 												<td style="text-align: center;">
 													<a href="covid/{{ tambon.addressid }}/tambon">
@@ -78,16 +76,28 @@
 													</a>
 												</td>
 												<td style="text-align: center;">
-													<a href="covid/{{ tambon.addressid }}/tambon">
+													<span class="mr-1">
 														{{ getBedEmpty(ward) | currency:'':0 }}
-													</a>
+													</span>
+													/
+													<span class="ml-1">
+														({{ (getBedEmpty(ward) * 100) / ward.capacity | currency:'':1 }} %)
+													</span>
 												</td>
 											</tr>
 											<tr>
 												<td style="text-align: center;" colspan="2">รวม</td>
 												<td style="text-align: center;">{{ totalData.capacity | currency:'':0 }}</td>
 												<td style="text-align: center;">{{ totalData.pt_num | currency:'':0 }}</td>
-												<td style="text-align: center;">{{ totalData.empty | currency:'':0 }}</td>
+												<td style="text-align: center;">													
+													<span class="mr-1">
+														{{ totalData.empty | currency:'':0 }}
+													</span>
+													/
+													<span class="ml-1">
+														({{ (totalData.empty * 100) / totalData.capacity | currency:'':1 }} %)
+													</span>
+												</td>
 											</tr>
 								
 										</tbody>
