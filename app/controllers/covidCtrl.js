@@ -125,20 +125,20 @@ app.controller('covidController', [
 				/** Set card statistics of small box */
 				$scope.cardStat = [{
 					id: 1,
-					name: "ผู้ป่วยใหม่",
-					value: parseInt(res.data.new_case),
-					unit: 'คน',
-					bg: 'bg-danger',
-					icon: 'ion-person-add',
-					lnk: ''
-				},
-				{
-					id: 2,
 					name: "ยอดยกมา",
 					value: parseInt(res.data.top_case),
 					unit: 'คน',
 					bg: 'bg-warning',
 					icon: 'ion-stats-bars',
+					lnk: ''
+				},
+				{
+					id: 2,
+					name: "ผู้ป่วยใหม่",
+					value: parseInt(res.data.new_case),
+					unit: 'คน',
+					bg: 'bg-danger',
+					icon: 'ion-person-add',
 					lnk: ''
 				},
 				{
