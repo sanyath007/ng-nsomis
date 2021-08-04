@@ -12,6 +12,7 @@ app.controller('covidController', [
 		$scope.totalData = {};
 		$scope.tambon = {};
 		$scope.ward = {};
+		$scope.type = "";
 		$scope.covidBed = [
 			{ ward: '00', capacity: 30 }, 	//ชั้น 10
 			{ ward: '06', capacity: 3 }, 	//ชั้น 1
@@ -113,6 +114,21 @@ app.controller('covidController', [
 				console.log(err);
 			});
 		};
+		
+		$scope.getPatientsAll = function(e) {
+			if(e) e.preventDefault();
+
+			const type = $routeParams.type;
+
+			$scope.loading = true;
+			$http.get(`${CONFIG.apiUrl}/covid/${type}/all`)
+			.then(res => {
+				$scope.data = res.data.patients;
+				$scope.type = res.data.type;
+			}, err => {
+				console.log(err);
+			});
+		};
 
 		$scope.getCardStat = function(e) {
 			if(e) e.preventDefault();
@@ -130,7 +146,7 @@ app.controller('covidController', [
 					unit: 'คน',
 					bg: 'bg-warning',
 					icon: 'ion-stats-bars',
-					lnk: ''
+					link: 'covid/1/all'
 				},
 				{
 					id: 2,
@@ -139,7 +155,7 @@ app.controller('covidController', [
 					unit: 'คน',
 					bg: 'bg-danger',
 					icon: 'ion-person-add',
-					lnk: ''
+					link: 'covid/2/all'
 				},
 				{
 					id: 3,
@@ -148,7 +164,7 @@ app.controller('covidController', [
 					unit: 'คน',
 					bg: 'bg-success',
 					icon: 'ion-ios-redo',
-					lnk: ''
+					link: 'covid/3/all'
 				},
 				{
 					id: 4,
@@ -157,7 +173,7 @@ app.controller('covidController', [
 					unit: 'คน',
 					bg: 'bg-info',
 					icon: 'ion-android-clipboard',
-					lnk: ''
+					link: 'covid/0/all'
 				}];
 			}, err => {
 				console.log(err);

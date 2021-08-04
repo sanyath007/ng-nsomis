@@ -88,7 +88,11 @@
 											<tr>
 												<td style="text-align: center;" colspan="2">รวม</td>
 												<td style="text-align: center;">{{ totalData.capacity | currency:'':0 }}</td>
-												<td style="text-align: center;">{{ totalData.pt_num | currency:'':0 }}</td>
+												<td style="text-align: center;">
+													<a href="covid/0/all">
+														{{ totalData.pt_num | currency:'':0 }}
+													</a>
+												</td>
 												<td style="text-align: center;">													
 													<span class="mr-1">
 														{{ totalData.empty | currency:'':0 }}
