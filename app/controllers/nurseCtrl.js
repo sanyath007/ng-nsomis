@@ -42,7 +42,7 @@ app.controller('nurseController', [
 			start_date: '',
 			level_y: '',
 			level_m: '',
-			license_no: '',
+			cert_no: '',
 			position_no: '',
 			depart: ''
 		};
@@ -217,6 +217,7 @@ app.controller('nurseController', [
 		$scope.store = (e) => {
 			if(e) e.preventDefault();
 			console.log($scope.newNurse);
+
             // $http.post(`${CONFIG.apiUrl}/nurses`, $scope.newNurse)
             // .then(res => {
 			// 	console.log(res);

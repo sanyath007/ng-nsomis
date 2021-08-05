@@ -32,6 +32,7 @@
 											name="cid"								
 											ng-model="newNurse.cid"								
 											class="form-control"
+											placeholder="CID"
 										/>
 										<div class="input-group-append">
 											<button class="btn btn-primary" ng-click="showPersonLists($event)">
@@ -47,6 +48,7 @@
 										name="hn"								
 										ng-model="newNurse.hn"								
 										class="form-control"
+										placeholder="HN"
 									/>
 								</div>
 								<div class="form-group col-md-2">
@@ -71,8 +73,8 @@
 										name="fname"								
 										ng-model="newNurse.fname"								
 										class="form-control"
-										autocomplete="off"
-									>
+										placeholder="ชื่อ"
+									/>
 								</div>
 								<div class="form-group col-md-5">
 									<label>นามสกุล :</label>
@@ -82,8 +84,8 @@
 										name="lname"								
 										ng-model="newNurse.lname"								
 										class="form-control"
-										autocomplete="off"
-									>
+										placeholder="นามสกุล"
+									/>
 								</div>
 								<div class="form-group col-md-3">
 									<label>ว/ด/ป เกิด :</label>
@@ -94,7 +96,7 @@
 										ng-model="newNurse.birthdate"								
 										class="form-control"
 										autocomplete="off"
-									>
+									/>
 								</div>
 								<div class="form-group col-md-2">
 									<label>อายุ (ปี) :</label>
@@ -104,8 +106,8 @@
 										name="age_y"
 										ng-model="newNurse.age_y"
 										class="form-control"
-										autocomplete="off"
-									>
+										placeholder="อายุ (ปี)"
+									/>
 								</div>
 								<div class="form-group col-md-4">
 									<label>ตำแหน่ง :</label>
@@ -136,6 +138,17 @@
 									</select>
 								</div>
 								<div class="form-group col-md-4">
+									<label>เลขตำแหน่ง :</label>
+									<input
+										type="text"
+										id="position_no"
+										name="position_no"								
+										ng-model="newNurse.position_no"								
+										class="form-control"
+										placeholder="เลขตำแหน่ง"
+									/>
+								</div>
+								<div class="form-group col-md-4">
 									<label>จ.18 :</label>
 									<select
 										id="hosp_pay18"
@@ -163,7 +176,7 @@
 										</option>
 									</select>
 								</div>
-								<div class="form-group col-md-2">
+								<div class="form-group col-md-5">
 									<label>วันที่บรรจุ :</label>
 									<input
 										type="text"
@@ -172,7 +185,7 @@
 										ng-model="newNurse.start_date"								
 										class="form-control"
 										autocomplete="off"
-									>
+									/>
 								</div>
 								<div class="form-group col-md-2">
 									<label>อายุงาน (ปี) :</label>
@@ -182,7 +195,18 @@
 										name="level_y"								
 										ng-model="newNurse.level_y"								
 										class="form-control"
-										autocomplete="off"
+										placeholder="อายุงาน (ปี)"
+									/>
+								</div>
+								<div class="form-group col-md-5">
+									<label>เลขใบประกอบวิชาชีพ :</label>
+									<input
+										type="text"
+										id="cert_no"
+										name="cert_no"								
+										ng-model="newNurse.cert_no"								
+										class="form-control"
+										placeholder="เลขใบประกอบวิชาชีพ"
 									>
 								</div>
 
