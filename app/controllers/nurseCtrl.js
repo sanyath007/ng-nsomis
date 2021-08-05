@@ -3,16 +3,49 @@ app.controller('nurseController', [
 	'$http',
 	'CONFIG',
 	'$routeParams',
-	function($scope, $http, CONFIG, $routeParams) 
+	'StringFormatService',
+	function($scope, $http, CONFIG, $routeParams, StringFormatService) 
 	{
-		$scope.cboYear = '';
 		$scope.sdate = '';
 		$scope.edate = '';
+		$scope.cboYear = '';
+
+		$scope.cboYear = '';
+
+		$scope.prefixes = [];
+		$scope.positions = [];
+		$scope.academics = [];
+		$scope.hospPay18s = [];
+		$scope.departs = [];
+
 		$scope.data = [];
 		$scope.pager = null;
 		$scope.totalData = {};
 		$scope.profile = null;
 		$scope.toDay = new Date();
+
+		$scope.personLists = [];
+
+		$scope.newNurse = {
+			cid: '',
+			hn: '',
+			prefix: '',
+			fname: '',
+			lname: '',
+			birthdate: '',
+			age_y: '',
+			age_m: '',
+			position: '',
+			academic: '',
+			hosp_pay18: '23839',
+			checkin_date: '',
+			start_date: '',
+			level_y: '',
+			level_m: '',
+			license_no: '',
+			position_no: '',
+			depart: ''
+		};
 
 		const initTotalGenerations = function() {
 			return {
@@ -63,26 +96,35 @@ app.controller('nurseController', [
 		const calculatAge = function() {
 			$scope.data.forEach(nurse => {
 				nurse.birthYear = moment(nurse.person.person_birth).format('YYYY');
-				nurse.ageY = calcAge(nurse.person.person_birth, 'years');
-				nurse.ageM = calcAge(nurse.person.person_birth, 'months') - (nurse.ageY*12);
-				nurse.level = calcAge(nurse.start_date, 'years');
+				nurse.ageY = $scope.calcAge(nurse.person.person_birth, 'years');
+				nurse.ageM = $scope.calcAge(nurse.person.person_birth, 'months') - (nurse.ageY*12);
+				nurse.level = $scope.calcAge(nurse.start_date, 'years');
 			});
 		}
 
-		const calcAge = function(birthdate, type) {
+		$scope.calcAge = function(birthdate, type) {
 			return moment().diff(moment(birthdate), type);
 		}
 
-		$scope.onPaginateLinkClick = (e, link) => {
+		$scope.setData = (response) => {
+			$scope.data = response.data.items;
+			$scope.pager = response.data.pager;
+
+			calculatAge();
+		};
+		
+		$scope.setPersonLists = (response) => {
+			$scope.personLists = response.data.items;
+			$scope.pager = response.data.pager;
+		};
+
+		$scope.onPaginateLinkClick = (e, link, cb) => {
             e.preventDefault();
             
             $http.get(link)
             .then(res => {
-                $scope.data = res.data.items;
-                $scope.pager = res.data.pager;
-
-				calculatAge();
-            }, err => {
+				cb(res);
+			}, err => {
                 console.log(err)
             });
         };
@@ -125,6 +167,62 @@ app.controller('nurseController', [
 			}, err => {
 				console.log(err)
 			});
+		};
+
+		$scope.getInitForm = (e) => {
+			if(e) e.preventDefault();
+            
+            $http.get(`${CONFIG.apiUrl}/nurses/init/form`)
+            .then(res => {
+				$scope.prefixes = res.data.prefixes;
+				$scope.positions = res.data.positions;
+				$scope.academics = res.data.academics;
+				$scope.hospPay18s = res.data.hospPay18s;
+				$scope.departs = res.data.departs;
+            }, err => {
+                console.log(err)
+            });
+		};
+
+		$scope.showPersonLists = (e, id) => {
+            e.preventDefault();
+            
+            $http.get(`${CONFIG.apiUrl}/persons`)
+            .then(res => {
+                $scope.personLists = res.data.items;
+                $scope.pager = res.data.pager;
+
+                $('#personLists').modal('show');
+            }, err => {
+                console.log(err)
+            });
+        };
+
+		$scope.selectedPerson = (e, person) => {
+			if (!person) return;
+
+			e.preventDefault();
+			$scope.newNurse.cid = person.person_id;
+			$scope.newNurse.prefix = person.person_prefix;
+			$scope.newNurse.fname = person.person_firstname;
+			$scope.newNurse.lname = person.person_lastname;
+			$scope.newNurse.birthdate = StringFormatService.convFromDbDate(person.person_birth);
+			$scope.newNurse.age_y = $scope.calcAge(person.person_birth, 'year');
+			$scope.newNurse.position = person.position_id;
+			$scope.newNurse.academic = person.ac_id === '0' ? '' : person.ac_id;
+			$scope.newNurse.start_date = StringFormatService.convFromDbDate(person.person_singin);
+			$scope.newNurse.level_y = $scope.calcAge(person.person_singin, 'year');
+		};
+
+		$scope.store = (e) => {
+			if(e) e.preventDefault();
+			console.log($scope.newNurse);
+            // $http.post(`${CONFIG.apiUrl}/nurses`, $scope.newNurse)
+            // .then(res => {
+			// 	console.log(res);
+            // }, err => {
+            //     console.log(err)
+            // });
 		};
 	}
 ]);

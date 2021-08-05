@@ -51,7 +51,11 @@
 
 				<div class="card">
 					<div class="card-body">
-
+						<div class="row my-2">
+							<div class="col-md-12">
+								<a href="nurses/add" class="btn btn-primary float-right">เพิ่มพยาบาล</a>
+							</div>
+						</div>
 						<table class="table table-bordered table-striped" style="font-size: 14px;">
 							<thead>
 								<tr>
@@ -126,22 +130,22 @@
 							<div class="col-3 m-0" ng-show="data">
 								<ul class="pagination pagination-md m-0 float-right" ng-show="pager">
 									<li class="page-item" ng-class="{disabled: pager.current_page==1}">
-										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.first_page_url)">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.first_page_url, setData)">
 											First
 										</a>
 									</li>
 									<li class="page-item" ng-class="{disabled: pager.current_page==1}">
-										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.prev_page_url)">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.prev_page_url, setData)">
 											Prev
 										</a>
 									</li>
 									<li class="page-item" ng-class="{disabled: pager.current_page==pager.last_page}">
-										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.next_page_url)">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.next_page_url, setData)">
 											Next
 										</a>
 									</li>
 									<li class="page-item" ng-class="{disabled: pager.current_page==pager.last_page}">
-										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.last_page_url)">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.last_page_url, setData)">
 											Last
 										</a>
 									</li>

@@ -103,6 +103,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/nurses/list.html',
 		controller: 'nurseController'
 	})
+	.when('/nurses/add', {
+		templateUrl: 'templates/nurses/add.html',
+		controller: 'nurseController'
+	})
 	.when('/nurses/profile/:id', {
 		templateUrl: 'templates/nurses/profile.html',
 		controller: 'nurseController'
