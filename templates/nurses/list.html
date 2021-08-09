@@ -61,13 +61,14 @@
 								<tr>
 									<th style="width: 3%; text-align: center;">ลำดับ</th>
 									<th style="text-align: center;">ชื่อ-สกุล</th>
-									<th style="width: 15%; text-align: center;">จ.18</th>
+									<!-- <th style="width: 15%; text-align: center;">จ.18</th> -->
 									<th style="width: 7%; text-align: center;">ว/ด/ป เกิด</th>
 									<th style="width: 6%; text-align: center;">อายุ</th>
 									<th style="width: 20%; text-align: center;">กลุ่มงาน</th>
 									<th style="width: 7%; text-align: center;">ว/ด/ป บรรจุ</th>
 									<th style="width: 6%; text-align: center;">อายุงาน</th>
 									<th style="width: 8%; text-align: center;">ระดับ</th>
+									<th style="width: 8%; text-align: center;">สถานะ</th>
 									<th style="width: 10%; text-align: center;">Actions</th>
 								</tr>
 							</thead>
@@ -75,22 +76,42 @@
 								<tr ng-repeat="(index, row) in data">	
 									<td style="text-align: center;">{{ pager.from+index }}</td>
 									<td>
-										{{ row.person.prefix.prefix_name+row.person.person_firstname+ ' ' +row.person.person_lastname }}
+										{{ row.prefix.prefix_name+row.person_firstname+ ' ' +row.person_lastname }}
 									</td>
-									<td style="text-align: center;">{{ row.hosppay18.name }}</td>
-									<td style="text-align: center;">{{ row.person.person_birth | thdate }}</td>
+									<!-- <td style="text-align: center;">{{ row.hosppay18.name }}</td> -->
+									<td style="text-align: center;">{{ row.person_birth | thdate }}</td>
 									<td style="text-align: center;">{{ row.ageY+ 'ป ' +row.ageM+ 'ด' }}</td>
 									<td style="text-align: center;">
-										{{ row.depart.depart_id+ '-' +row.depart.depart_name }}
+										<span ng-show="row.member_of.duty_id === '1'">
+											หัวหน้ากลุ่มภารกิจ
+										</span>
+										<span ng-show="row.member_of.duty_id !== '1'">
+											<span ng-show="row.member_of.duty_id === '2'">
+												หัวหน้า
+											</span>
+											{{ row.member_of.depart.depart_name }}<br />
+											<span ng-show="row.member_of.duty_id !== '1' && row.member_of.duty_id !== '2'">
+												({{ row.office.ward_name }})
+											</span>
+										</span>
 									</td>
-									<td style="text-align: center;">{{ row.start_date | thdate }}</td>
+									<td style="text-align: center;">{{ row.person_singin | thdate }}</td>
 									<td style="text-align: center;">{{ row.level+ 'ปี' }}</td>
 									<td style="text-align: center;">
 										<span ng-show="(row.level < 1)">Novice</span>
 										<span ng-show="(row.level >= 1 && row.level < 2)">Beginner</span>
 										<span ng-show="(row.level >= 2 && row.level < 3)">Competent</span>
-										<span ng-show="(row.level >= 3 && row.level < 5)">Proficient	</span>
+										<span ng-show="(row.level >= 3 && row.level < 5)">Proficient</span>
 										<span ng-show="(row.level >= 5)">Expert</span>
+									</td>
+									<td style="text-align: center;">
+										<span ng-show="(row.person_state === '1')">ปฏิบัติราชการ</span>
+										<span ng-show="(row.person_state === '2')">มาช่วยราชการ</span>
+										<span ng-show="(row.person_state === '3')">ไปช่วยราชการ</span>
+										<span ng-show="(row.person_state === '4')">ลาศึกษาต่อ</span>
+										<span ng-show="(row.person_state === '5')">เพิ่มพูนทักษะ</span>
+										<span ng-show="(row.person_state === '6')">ลาออก</span>
+										<span ng-show="(row.person_state === '7')">เกษียณอายุราชการ</span>
 									</td>
 									<td style="text-align: center;">
 										<a 
