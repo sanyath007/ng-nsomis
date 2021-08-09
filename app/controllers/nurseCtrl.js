@@ -65,10 +65,12 @@ app.controller('nurseController', [
 			}
 		};
 
-		$scope.getAll = function(e, depart='') {
+		$scope.getAll = function(e, depart='', fname='') {
 			if(e) e.preventDefault();
 
-			const url = depart === '' ? `${CONFIG.apiUrl}/nurses` : `${CONFIG.apiUrl}/nurses?depart=${depart}`;
+			const url = (depart === '' && fname === '')
+						? `${CONFIG.apiUrl}/nurses`
+						: `${CONFIG.apiUrl}/nurses?depart=${depart}&fname=${fname}`;
 
 			$http.get(url)
 			.then(res => {
