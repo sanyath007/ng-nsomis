@@ -9,8 +9,7 @@ app.controller('nurseController', [
 		$scope.sdate = '';
 		$scope.edate = '';
 		$scope.cboYear = '';
-
-		$scope.cboYear = '';
+		$scope.cboDepart = '';
 
 		$scope.prefixes = [];
 		$scope.positions = [];
@@ -66,12 +65,12 @@ app.controller('nurseController', [
 			}
 		};
 
-		$scope.getAll = function(e) {
+		$scope.getAll = function(e, depart='') {
 			if(e) e.preventDefault();
 
-			let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
+			const url = depart === '' ? `${CONFIG.apiUrl}/nurses` : `${CONFIG.apiUrl}/nurses?depart=${depart}`;
 
-			$http.get(`${CONFIG.apiUrl}/nurses`)
+			$http.get(url)
 			.then(res => {
 				$scope.data = res.data.items;
 				$scope.pager = res.data.pager;
@@ -212,6 +211,10 @@ app.controller('nurseController', [
 			$scope.newNurse.academic = person.ac_id === '0' ? '' : person.ac_id;
 			$scope.newNurse.start_date = StringFormatService.convFromDbDate(person.person_singin);
 			$scope.newNurse.level_y = $scope.calcAge(person.person_singin, 'year');
+		};
+
+		$scope.onDepartChange = function(e) {
+			$scope.getAll(e, $scope.cboDepart);
 		};
 
 		$scope.store = (e) => {

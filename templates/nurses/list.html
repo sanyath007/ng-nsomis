@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="nurseController"
-	ng-init="getAll($event);"
+	ng-init="getAll($event); getInitForm($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -18,32 +18,21 @@
 					<div class="card-body">
 
 						<form action="" method="POST" class="form-inline">
-							<!-- <div class="form-group">
-								<label>วันที่บรรจุ :</label>
-								<input
-									type="text"
-									id="sdate"
-									name="sdate"								
-									ng-model="sdate"								
-									class="form-control mr-2 ml-2"
-									autocomplete="off"
-								>
-							</div> -->
-
 							<div class="form-group">
 								<label>กลุ่มงาน :</label>
 								<select
+									class="form-control mr-2 ml-2"
 									id="cboDepart"
 									name="cboDepart"								
 									ng-model="cboDepart"								
-									class="form-control mr-2 ml-2"
+									ng-change="onDepartChange($event)"
 								>
-									<option></option>
+									<option value="">-- เลือกกลุ่มงาน --</option>
+									<option ng-repeat="dep in departs" value="{{ dep.depart_id }}">
+										{{ dep.depart_name }}
+									</option>
 								</select>
-							</div>
-
-							<!-- <button ng-click="getAll($event)" class="btn btn-primary">ตกลง</button> -->
-							
+							</div>							
 						</form>
 
 					</div><!-- /.card-body -->
