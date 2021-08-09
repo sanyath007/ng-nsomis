@@ -10,6 +10,7 @@ app.controller('nurseController', [
 		$scope.edate = '';
 		$scope.cboYear = '';
 		$scope.cboDepart = '';
+		$scope.searchFname = '';
 
 		$scope.prefixes = [];
 		$scope.positions = [];
@@ -217,6 +218,10 @@ app.controller('nurseController', [
 
 		$scope.onDepartChange = function(e) {
 			$scope.getAll(e, $scope.cboDepart);
+		};
+
+		$scope.onFnameChange = function(e) {
+			$scope.getAll(e, '', $scope.searchFname);
 		};
 
 		$scope.store = (e) => {

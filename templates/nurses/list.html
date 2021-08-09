@@ -32,7 +32,17 @@
 										{{ dep.depart_name }}
 									</option>
 								</select>
-							</div>							
+							</div>
+							<div class="form-group">
+								<label>ชื่อ :</label>
+								<input
+									class="form-control mr-2 ml-2"
+									id="searchFname"
+									name="searchFname"								
+									ng-model="searchFname"								
+									ng-change="onFnameChange($event)"
+								/>
+							</div>
 						</form>
 
 					</div><!-- /.card-body -->
