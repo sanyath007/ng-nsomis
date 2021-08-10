@@ -18,6 +18,9 @@ app.controller('nurseController', [
 		$scope.hospPay18s = [];
 		$scope.departs = [];
 		$scope.divisions = [];
+		$scope.duties = [];
+
+		let tmpDivisions = [];
 
 		$scope.data = [];
 		$scope.pager = null;
@@ -26,6 +29,14 @@ app.controller('nurseController', [
 		$scope.toDay = new Date();
 
 		$scope.personLists = [];
+
+		$scope.nurseMove = {
+			nurse: null,
+			move_date: '',
+			move_duty: '',
+			move_depart: '',
+			move_division: ''
+		};
 
 		$scope.newNurse = {
 			cid: '',
@@ -225,13 +236,21 @@ app.controller('nurseController', [
 			$scope.getAll(e, '', $scope.searchFname);
 		};
 
-		$scope.showMoveForm = function(e) {
+		$scope.onMoveDepartChange = function(e) {
+			$scope.divisions = tmpDivisions.filter(div => div.depart_id === $scope.nurseMove.move_depart);
+		};
+
+		$scope.showMoveForm = function(e, nurse) {
 			e.preventDefault();
             
-            $http.get(`${CONFIG.apiUrl}/persons`)
+            $http.get(`${CONFIG.apiUrl}/nurses/init/form`)
             .then(res => {
-                $scope.personLists = res.data.items;
-                $scope.pager = res.data.pager;
+				console.log(res);
+                $scope.departs 	= res.data.departs;
+                tmpDivisions 	= res.data.divisions;
+                $scope.duties 	= res.data.duties;
+
+				$scope.nurseMove.nurse = nurse;
 
                 $('#moveForm').modal('show');
             }, err => {
@@ -239,15 +258,18 @@ app.controller('nurseController', [
             });
 		}
 
-		$scope.move = (e, id) => {
+		$scope.move = (e) => {
 			if(e) e.preventDefault();
 
-            $http.put(`${CONFIG.apiUrl}/nurses/${id}/move`, $scope.newNurse)
-            .then(res => {
-				console.log(res);
-            }, err => {
-                console.log(err)
-            });
+			console.log($scope.nurseMove);
+			const id = $scope.nurseMove.nurse.person_id;
+
+            // $http.put(`${CONFIG.apiUrl}/nurses/${id}/move`, $scope.nurseMove)
+            // .then(res => {
+			// 	console.log(res);
+            // }, err => {
+            //     console.log(err)
+            // });
 		};
 
 		$scope.store = (e) => {

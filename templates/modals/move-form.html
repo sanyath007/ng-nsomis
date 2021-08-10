@@ -10,23 +10,65 @@
                 </div>
                 <div class="modal-body" style="padding-bottom: 0;">
                     <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="">วันที่ย้าย</label>
+                            <input
+                                type="text"
+                                id="move_date"
+                                class="form-control mr-2"
+                                ng-model="nurseMove.move_date"
+                            />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">หน้าที่</label>
+                            <select
+                                class="form-control mr-2"
+                                ng-model="nurseMove.move_duty"
+                            >
+                                <option value="">-- หน้าที่ --</option>
+                                <option ng-repeat="duty in duties" value="{{ duty.duty_id }}">
+                                    {{ duty.duty_name }}    
+                                </option>
+                            </select>
+                        </div>
                         <div class="form-group col-md-12">
                             <label for="">ย้ายไป</label>
                             <div style="display: flex; flex-direction: row;">
-                                <select name="" id="" class="form-control mr-2">
+                                <select
+                                    class="form-control mr-2"
+                                    ng-model="nurseMove.move_depart"
+                                    ng-change="onMoveDepartChange($event)"
+                                >
                                     <option value="">-- กลุ่มงาน --</option>
+                                    <option ng-repeat="dep in departs" value="{{ dep.depart_id }}">
+                                        {{ dep.depart_name }}    
+                                    </option>
                                 </select>
-                                <select name="" id="" class="form-control">
+                                <select class="form-control" ng-model="nurseMove.move_division">
                                     <option value="">-- งาน --</option>
+                                    <option ng-repeat="div in divisions" value="{{ div.ward_id }}">
+                                        {{ div.ward_name }}    
+                                    </option>
                                 </select>
                             </div>
                         </div>
                     </div>
                 </div><!-- /.modal-body -->
                 <div class="modal-footer" style="padding-bottom: 8px;">
-                    <button class="btn btn-primary">ย้าย</button>
+                    <button class="btn btn-primary" ng-click="move($event)">ย้าย</button>
                 </div><!-- /.modal-footer -->
             </form>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+	$(function() {
+		$('#move_date').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+	});
+</script>
