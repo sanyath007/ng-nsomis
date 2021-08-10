@@ -224,6 +224,20 @@ app.controller('nurseController', [
 			$scope.getAll(e, '', $scope.searchFname);
 		};
 
+		$scope.showMoveForm = function(e) {
+			e.preventDefault();
+            
+            $http.get(`${CONFIG.apiUrl}/persons`)
+            .then(res => {
+                $scope.personLists = res.data.items;
+                $scope.pager = res.data.pager;
+
+                $('#moveForm').modal('show');
+            }, err => {
+                console.log(err)
+            });
+		}
+
 		$scope.store = (e) => {
 			if(e) e.preventDefault();
 			console.log($scope.newNurse);

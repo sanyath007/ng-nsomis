@@ -123,6 +123,7 @@
 											href="#"
 											class="btn btn-success btn-sm"
 											title="ย้ายภายใน"
+											ng-click="showMoveForm($event)"
 										>
 											<i class="fas fa-angle-double-right"></i>
 										</a>
@@ -149,6 +150,8 @@
 								</tr>
 							</tbody>
 						</table>
+
+						<div ng-include="'./templates/modals/move-form.html?version=202108091630'"></div>
 
 					</div><!-- /.card-body -->
 					<div class="card-footer clearfix">
