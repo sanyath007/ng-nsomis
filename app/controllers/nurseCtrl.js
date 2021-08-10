@@ -17,6 +17,7 @@ app.controller('nurseController', [
 		$scope.academics = [];
 		$scope.hospPay18s = [];
 		$scope.departs = [];
+		$scope.divisions = [];
 
 		$scope.data = [];
 		$scope.pager = null;
