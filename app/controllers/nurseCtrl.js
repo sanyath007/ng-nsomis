@@ -238,6 +238,17 @@ app.controller('nurseController', [
             });
 		}
 
+		$scope.move = (e, id) => {
+			if(e) e.preventDefault();
+
+            $http.put(`${CONFIG.apiUrl}/nurses/${id}/move`, $scope.newNurse)
+            .then(res => {
+				console.log(res);
+            }, err => {
+                console.log(err)
+            });
+		};
+
 		$scope.store = (e) => {
 			if(e) e.preventDefault();
 			console.log($scope.newNurse);
