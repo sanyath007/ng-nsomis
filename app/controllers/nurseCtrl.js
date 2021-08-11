@@ -41,6 +41,15 @@ app.controller('nurseController', [
 			move_division: ''
 		};
 
+		$scope.nurseTransfer = {
+			nurse: null,
+			transfer_date: '',
+			transfer_doc_no: '',
+			transfer_doc_date: '',
+			hosp: '',
+			pay18: ''
+		};
+
 		$scope.newNurse = {
 			cid: '',
 			hn: '',
@@ -285,6 +294,47 @@ app.controller('nurseController', [
 				move_faction: '',
 				move_depart: '',
 				move_division: ''
+			};
+		};
+
+		$scope.showTransferForm = function(e, nurse) {
+			e.preventDefault();
+            
+            $http.get(`${CONFIG.apiUrl}/nurses/init/form`)
+            .then(res => {
+                $scope.departs 	= res.data.departs;
+                tmpDivisions 	= res.data.divisions;
+                $scope.duties 	= res.data.duties;
+
+				$scope.nurseMove.nurse = nurse;
+
+                $('#transferForm').modal('show');
+            }, err => {
+                console.log(err)
+            });
+		}
+
+		$scope.transfer = (e) => {
+			if(e) e.preventDefault();
+
+			console.log($scope.nurseTransfer);
+			const id = $scope.nurseTransfer.nurse.person_id;
+
+            $http.put(`${CONFIG.apiUrl}/nurses/${id}/transfer`, $scope.nurseTransfer)
+            .then(res => {
+				console.log(res);
+            }, err => {
+                console.log(err)
+            });
+
+			/** Clear values */
+			$scope.nurseTransfer = {
+				nurse: null,
+				transfer_date: '',
+				transfer_doc_no: '',
+				transfer_doc_date: '',
+				hosp: '',
+				pay18: ''
 			};
 		};
 
