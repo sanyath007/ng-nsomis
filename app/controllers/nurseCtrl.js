@@ -32,8 +32,11 @@ app.controller('nurseController', [
 
 		$scope.nurseMove = {
 			nurse: null,
+			move_doc_no: '',
+			move_doc_date: '',
 			move_date: '',
 			move_duty: '',
+			move_faction: '',
 			move_depart: '',
 			move_division: ''
 		};
@@ -238,6 +241,8 @@ app.controller('nurseController', [
 
 		$scope.onMoveDepartChange = function(e) {
 			$scope.divisions = tmpDivisions.filter(div => div.depart_id === $scope.nurseMove.move_depart);
+			const faction = $scope.departs.find(dep => dep.depart_id === $scope.nurseMove.move_depart);
+			$scope.nurseMove.move_faction = faction?.faction_id;
 		};
 
 		$scope.showMoveForm = function(e, nurse) {
@@ -245,7 +250,6 @@ app.controller('nurseController', [
             
             $http.get(`${CONFIG.apiUrl}/nurses/init/form`)
             .then(res => {
-				console.log(res);
                 $scope.departs 	= res.data.departs;
                 tmpDivisions 	= res.data.divisions;
                 $scope.duties 	= res.data.duties;
@@ -264,12 +268,24 @@ app.controller('nurseController', [
 			console.log($scope.nurseMove);
 			const id = $scope.nurseMove.nurse.person_id;
 
-            // $http.put(`${CONFIG.apiUrl}/nurses/${id}/move`, $scope.nurseMove)
-            // .then(res => {
-			// 	console.log(res);
-            // }, err => {
-            //     console.log(err)
-            // });
+            $http.put(`${CONFIG.apiUrl}/nurses/${id}/move`, $scope.nurseMove)
+            .then(res => {
+				console.log(res);
+            }, err => {
+                console.log(err)
+            });
+
+			/** Clear values */
+			$scope.nurseMove = {
+				nurse: null,
+				move_doc_no: '',
+				move_doc_date: '',
+				move_date: '',
+				move_duty: '',
+				move_faction: '',
+				move_depart: '',
+				move_division: ''
+			};
 		};
 
 		$scope.store = (e) => {
