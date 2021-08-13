@@ -107,7 +107,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/nurses/add.html',
 		controller: 'nurseController'
 	})
-	.when('/nurses/profile/:id', {
+	.when('/nurses/:id/profile', {
 		templateUrl: 'templates/nurses/profile.html',
 		controller: 'nurseController'
 	})

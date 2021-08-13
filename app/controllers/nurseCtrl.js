@@ -110,7 +110,7 @@ app.controller('nurseController', [
 		$scope.getNurse = (e) => {
 			const id = $routeParams.id;
 
-			$http.get(`${CONFIG.apiUrl}/nurses/profile/${id}`)
+			$http.get(`${CONFIG.apiUrl}/nurses/${id}/profile`)
 			.then(res => {
 				$scope.profile = res.data;
 			}, err => {
