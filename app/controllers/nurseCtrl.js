@@ -46,8 +46,7 @@ app.controller('nurseController', [
 			transfer_date: '',
 			transfer_doc_no: '',
 			transfer_doc_date: '',
-			hosp: '',
-			pay18: ''
+			transfer_to: '',
 		};
 
 		$scope.newNurse = {
@@ -299,19 +298,10 @@ app.controller('nurseController', [
 
 		$scope.showTransferForm = function(e, nurse) {
 			e.preventDefault();
-            
-            $http.get(`${CONFIG.apiUrl}/nurses/init/form`)
-            .then(res => {
-                $scope.departs 	= res.data.departs;
-                tmpDivisions 	= res.data.divisions;
-                $scope.duties 	= res.data.duties;
 
-				$scope.nurseMove.nurse = nurse;
+			$scope.nurseTransfer.nurse = nurse;
 
-                $('#transferForm').modal('show');
-            }, err => {
-                console.log(err)
-            });
+			$('#transferForm').modal('show');
 		}
 
 		$scope.transfer = (e) => {
@@ -333,8 +323,7 @@ app.controller('nurseController', [
 				transfer_date: '',
 				transfer_doc_no: '',
 				transfer_doc_date: '',
-				hosp: '',
-				pay18: ''
+				transfer_to: ''
 			};
 		};
 
