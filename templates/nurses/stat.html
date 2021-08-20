@@ -15,28 +15,7 @@
 							ทรัพยากรด้านการพยาบาลทั้งหมด
 						</h3>
 					</div><!-- /.card-header -->
-					<div class="card-body">
-
-						<form action="" method="POST" class="form-inline">
-							<div class="form-group">
-								<label>วันที่ :</label>
-								<input
-									type="text"
-									id="cboDate"
-									name="cboDate"
-									ng-model="cboDate"
-									class="form-control"
-									style="margin: 0 10px;"
-									autocomplete="off"
-								>
-							</div>
-
-							<!-- <button ng-click="getNumBed($event); getCardStat($event);" class="btn btn-primary">
-								ตกลง
-							</button> -->
-						</form>
-
-					</div><!-- /.card-body -->
+					<!-- <div class="card-body"></div>/.card-body -->
 				</div><!-- /.card -->
 
 				<div class="card">
@@ -47,66 +26,30 @@
 
 								<!-- /** Small box */ -->
 								<div class="row">
-									<div class="col-lg-3 col-6" ng-repeat="(index, card) in cardStat">
+									<div class="col-md-6" ng-repeat="(index, card) in cardStat1">
 										<card-data data="{{ card }}"></card-data>
 									</div><!-- ./col -->
 								</div><!-- /.row -->
 
-								<div class="table-responsive px-5 pt-2">
-									<table class="table table-bordered table-striped">
-										<thead>
-											<tr style="font-size: 14px;">
-												<th style="width: 3%; text-align: center;">ลำดับ</th>
-												<th style="text-align: center;">หอผู้ป่วย</th>
-												<th style="width: 15%; text-align: center;">ศักยภาพ (เตียง)</th>
-												<th style="width: 15%; text-align: center;">ใช้ (เตียง)</th>
-												<th style="width: 15%; text-align: center;">ว่าง (เตียง) / %</th>
-											</tr>
-										<thead>
-										<tbody>
-											<tr ng-repeat="(index, ward) in data">
-												<td style="text-align: center;">{{ index+1 }}</td>
-												<td>{{ ward.name }}</td>
-												<td style="text-align: center;">
-													{{ ward.capacity | currency:'':0 }}
-												</td>
-												<td style="text-align: center;">
-													<a href="covid/{{ ward.ward }}/ward">
-														{{ ward.num_pt | currency:'':0 }}
-													</a>
-												</td>
-												<td style="text-align: center;">
-													<span class="mr-1">
-														{{ getBedEmpty(ward) | currency:'':0 }}
-													</span>
-													/
-													<span class="ml-1">
-														({{ (getBedEmpty(ward) * 100) / ward.capacity | currency:'':1 }} %)
-													</span>
-												</td>
-											</tr>
-											<tr>
-												<td style="text-align: center;" colspan="2">รวม</td>
-												<td style="text-align: center;">{{ totalData.capacity | currency:'':0 }}</td>
-												<td style="text-align: center;">
-													<a href="covid/0/all">
-														{{ totalData.pt_num | currency:'':0 }}
-													</a>
-												</td>
-												<td style="text-align: center;">													
-													<span class="mr-1">
-														{{ totalData.empty | currency:'':0 }}
-													</span>
-													/
-													<span class="ml-1">
-														({{ (totalData.empty * 100) / totalData.capacity | currency:'':1 }} %)
-													</span>
-												</td>
-											</tr>
-								
-										</tbody>
-									</table>
-								</div><!-- /.table-responsive -->
+								<div class="row">
+									<div class="col-lg-3 col-6" ng-repeat="(index, card) in cardStat2">
+										<card-data data="{{ card }}"></card-data>
+									</div><!-- ./col -->
+								</div><!-- /.row -->
+
+								<div class="row">
+									<div class="col-md-6">
+
+										<div id="generationPieContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+		
+									</div>
+									
+									<div class="col-md-6">
+
+										<div id="levelPieContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
+		
+									</div>
+								</div>
 
 							</div>
 						</div>

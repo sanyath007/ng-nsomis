@@ -29,6 +29,8 @@ app.controller('nurseController', [
 		$scope.toDay = new Date();
 
 		$scope.personLists = [];
+		$scope.cardStat1 = [];
+		$scope.cardStat2 = [];
 
 		$scope.nurseMove = {
 			nurse: null,
@@ -339,52 +341,87 @@ app.controller('nurseController', [
             // });
 		};
 
-		
 		$scope.getCardStat = function(e) {
 			if(e) e.preventDefault();
 
-			$scope.totalData = initTotalBed();
+			// $scope.totalData = initTotalBed();
 
 			$scope.loading = true;
 			$http.get(`${CONFIG.apiUrl}/nurses/card-stat`)
 			.then(res => {
+				let { nurse, types } = res.data;
+				let supported = nurse
+									.filter(pos => pos.position_id !== "22")
+									.reduce((sum, cur) => {
+										return sum + parseInt(cur.num);
+									}, 0);
+				console.log(types);
+				let temp = types
+							.filter(t => t.typeposition_id === "4" || t.typeposition_id === "5")
+							.reduce((sum, cur) => {
+								return sum + parseInt(cur.num);
+							}, 0);
+
 				/** Set card statistics of small box */
-				$scope.cardStat = [{
-					id: 1,
-					name: "ยอดยกมา",
-					value: parseInt(res.data.top_case),
-					unit: 'คน',
-					bg: 'bg-warning',
-					icon: 'ion-stats-bars',
-					link: 'covid/1/all'
-				},
-				{
-					id: 2,
-					name: "ผู้ป่วยใหม่",
-					value: parseInt(res.data.new_case),
-					unit: 'คน',
-					bg: 'bg-danger',
-					icon: 'ion-person-add',
-					link: 'covid/2/all'
-				},
-				{
-					id: 3,
-					name: "จำหน่าย",
-					value: parseInt(res.data.discharge),
-					unit: 'คน',
-					bg: 'bg-success',
-					icon: 'ion-ios-redo',
-					link: 'covid/3/all'
-				},
-				{
-					id: 4,
-					name: "คงพยาบาล",
-					value: parseInt(res.data.still),
-					unit: 'คน',
-					bg: 'bg-info',
-					icon: 'ion-android-clipboard',
-					link: 'covid/0/all'
-				}];
+				$scope.cardStat1 = [
+					{
+						id: 1,
+						name: "พยาบาลวิชาชีพ",
+						value: parseInt(nurse.find(pos => pos.position_id === "22").num),
+						unit: 'คน',
+						bg: 'bg-info',
+						icon: 'ion-university',
+						link: 'covid/1/all'
+					},
+					{
+						id: 2,
+						name: "สนับสนุน",
+						value: supported,
+						unit: 'คน',
+						bg: 'bg-success',
+						icon: 'ion-person-add',
+						link: 'covid/2/all'
+					}
+				];
+
+				$scope.cardStat2 = [
+					{
+						id: 1,
+						name: "ข้าราชการ",
+						value: parseInt(types.find(t => t.typeposition_id === "1").num),
+						unit: 'คน',
+						bg: 'bg-danger',
+						icon: 'ion-person-stalker',
+						link: 'covid/3/all'
+					},
+					{
+						id: 2,
+						name: "พกส",
+						value: parseInt(types.find(t => t.typeposition_id === "7").num),
+						unit: 'คน',
+						bg: 'bg-warning',
+						icon: 'ion-pie-graph',
+						link: 'covid/0/all'
+					},
+					{
+						id: 3,
+						name: "พนักงานราชการ",
+						value: types.find(t => t.typeposition_id === "2") ? parseInt(types.find(t => t.typeposition_id === "2").num) : 0,
+						unit: 'คน',
+						bg: 'bg-primary',
+						icon: 'ion-android-clipboard',
+						link: 'covid/0/all'
+					},
+					{
+						id: 4,
+						name: "ลูกจ้างชั่วคราว",
+						value: temp,
+						unit: 'คน',
+						bg: 'bg-default',
+						icon: 'ion-ios-redo',
+						link: 'covid/0/all'
+					}
+				];
 			}, err => {
 				console.log(err);
 			});
