@@ -338,5 +338,56 @@ app.controller('nurseController', [
             //     console.log(err)
             // });
 		};
+
+		
+		$scope.getCardStat = function(e) {
+			if(e) e.preventDefault();
+
+			$scope.totalData = initTotalBed();
+
+			$scope.loading = true;
+			$http.get(`${CONFIG.apiUrl}/nurses/card-stat`)
+			.then(res => {
+				/** Set card statistics of small box */
+				$scope.cardStat = [{
+					id: 1,
+					name: "ยอดยกมา",
+					value: parseInt(res.data.top_case),
+					unit: 'คน',
+					bg: 'bg-warning',
+					icon: 'ion-stats-bars',
+					link: 'covid/1/all'
+				},
+				{
+					id: 2,
+					name: "ผู้ป่วยใหม่",
+					value: parseInt(res.data.new_case),
+					unit: 'คน',
+					bg: 'bg-danger',
+					icon: 'ion-person-add',
+					link: 'covid/2/all'
+				},
+				{
+					id: 3,
+					name: "จำหน่าย",
+					value: parseInt(res.data.discharge),
+					unit: 'คน',
+					bg: 'bg-success',
+					icon: 'ion-ios-redo',
+					link: 'covid/3/all'
+				},
+				{
+					id: 4,
+					name: "คงพยาบาล",
+					value: parseInt(res.data.still),
+					unit: 'คน',
+					bg: 'bg-info',
+					icon: 'ion-android-clipboard',
+					link: 'covid/0/all'
+				}];
+			}, err => {
+				console.log(err);
+			});
+		};
 	}
 ]);
