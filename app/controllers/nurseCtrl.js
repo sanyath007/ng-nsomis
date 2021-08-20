@@ -122,10 +122,10 @@ app.controller('nurseController', [
 
 		const calculatAge = function() {
 			$scope.data.forEach(nurse => {
-				nurse.birthYear = moment(nurse.person_birth).format('YYYY');
-				nurse.ageY = $scope.calcAge(nurse.person_birth, 'years');
-				nurse.ageM = $scope.calcAge(nurse.person_birth, 'months') - (nurse.ageY*12);
-				nurse.level = $scope.calcAge(nurse.person_singin, 'years');
+				nurse.birthYear = moment(nurse.person.person_birth).format('YYYY');
+				nurse.ageY = $scope.calcAge(nurse.person.person_birth, 'years');
+				nurse.ageM = $scope.calcAge(nurse.person.person_birth, 'months') - (nurse.ageY*12);
+				nurse.level = $scope.calcAge(nurse.person.person_singin, 'years');
 			});
 		}
 
