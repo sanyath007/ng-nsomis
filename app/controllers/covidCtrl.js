@@ -26,6 +26,7 @@ app.controller('covidController', [
 		const initTotalData = function() {
 			return {
 				total: 0,
+				discharge: 0
 			}
 		};
 		
@@ -54,6 +55,10 @@ app.controller('covidController', [
 				$scope.totalData.total = $scope.data.reduce((sum, tam) => {
 					return sum + parseInt(tam.num_pt);
 				}, 0);
+
+				$scope.totalData.discharge = $scope.data.reduce((sum, tam) => {
+					return sum + parseInt(tam.dc_num);
+				}, 0);
 			}, err => {
 				console.log(err);
 			});
@@ -67,6 +72,22 @@ app.controller('covidController', [
 			$scope.loading = true;
 			$http.get(`${CONFIG.apiUrl}/covid/${tambon}/tambon`)
 			.then(res => {
+				$scope.data = res.data.patients;
+				$scope.tambon = res.data.tambon;
+			}, err => {
+				console.log(err);
+			});
+		};
+
+		$scope.getDischargesTambon = function(e) {
+			if(e) e.preventDefault();
+
+			const tambon = $routeParams.tambon;
+
+			$scope.loading = true;
+			$http.get(`${CONFIG.apiUrl}/covid/discharge/${tambon}/tambon`)
+			.then(res => {
+				console.log(res);
 				$scope.data = res.data.patients;
 				$scope.tambon = res.data.tambon;
 			}, err => {
