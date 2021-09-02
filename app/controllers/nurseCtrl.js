@@ -10,6 +10,7 @@ app.controller('nurseController', [
 		$scope.edate = '';
 		$scope.cboYear = '';
 		$scope.cboDepart = '';
+		$scope.cboDivision = '';
 		$scope.searchFname = '';
 
 		$scope.prefixes = [];
@@ -91,12 +92,13 @@ app.controller('nurseController', [
 			}
 		};
 
-		$scope.getAll = function(e, depart='', fname='') {
+		$scope.getAll = function(e, depart='', division='', fname='') {
 			if(e) e.preventDefault();
 
-			const url = (depart === '' && fname === '')
+			division = division == null ? '' : division;
+			const url = (depart === '' && division === '' && fname === '')
 						? `${CONFIG.apiUrl}/nurses`
-						: `${CONFIG.apiUrl}/nurses?depart=${depart}&fname=${fname}`;
+						: `${CONFIG.apiUrl}/nurses?depart=${depart}&division=${division}&fname=${fname}`;
 
 			$http.get(url)
 			.then(res => {
@@ -207,6 +209,8 @@ app.controller('nurseController', [
 				$scope.academics = res.data.academics;
 				$scope.hospPay18s = res.data.hospPay18s;
 				$scope.departs = res.data.departs;
+				$scope.divisions = res.data.divisions;
+				tmpDivisions = res.data.divisions;
             }, err => {
                 console.log(err)
             });
@@ -243,11 +247,17 @@ app.controller('nurseController', [
 		};
 
 		$scope.onDepartChange = function(e) {
-			$scope.getAll(e, $scope.cboDepart);
+			$scope.getAll(e, $scope.cboDepart, $scope.cboDivision, $scope.searchFname);
+
+			$scope.divisions = tmpDivisions.filter(div => div.depart_id === $scope.cboDepart);
+		};
+
+		$scope.onDivisionChange = function(e) {
+			$scope.getAll(e, $scope.cboDepart, $scope.cboDivision, $scope.searchFname);
 		};
 
 		$scope.onFnameChange = function(e) {
-			$scope.getAll(e, '', $scope.searchFname);
+			$scope.getAll(e, $scope.cboDepart, $scope.cboDivision, $scope.searchFname);
 		};
 
 		$scope.onMoveDepartChange = function(e) {

@@ -34,6 +34,21 @@
 								</select>
 							</div>
 							<div class="form-group">
+								<label>งาน :</label>
+								<select
+									class="form-control mr-2 ml-2"
+									id="cboDivision"
+									name="cboDivision"								
+									ng-model="cboDivision"								
+									ng-change="onDivisionChange($event)"
+								>
+									<option value="">-- เลือกงาน --</option>
+									<option ng-repeat="div in divisions" value="{{ div.ward_id }}">
+										{{ div.ward_name }}
+									</option>
+								</select>
+							</div>
+							<div class="form-group">
 								<label>ชื่อ :</label>
 								<input
 									class="form-control mr-2 ml-2"
