@@ -292,21 +292,23 @@ app.controller('nurseController', [
             $http.put(`${CONFIG.apiUrl}/nurses/${id}/move`, $scope.nurseMove)
             .then(res => {
 				console.log(res);
+				
+				/** Clear values */
+				$scope.nurseMove = {
+					nurse: null,
+					move_doc_no: '',
+					move_doc_date: '',
+					move_date: '',
+					move_duty: '',
+					move_faction: '',
+					move_depart: '',
+					move_division: ''
+				};
+
+				$('#moveForm').modal('hide');
             }, err => {
                 console.log(err)
             });
-
-			/** Clear values */
-			$scope.nurseMove = {
-				nurse: null,
-				move_doc_no: '',
-				move_doc_date: '',
-				move_date: '',
-				move_duty: '',
-				move_faction: '',
-				move_depart: '',
-				move_division: ''
-			};
 		};
 
 		$scope.showTransferForm = function(e, nurse) {
@@ -326,18 +328,53 @@ app.controller('nurseController', [
             $http.put(`${CONFIG.apiUrl}/nurses/${id}/transfer`, $scope.nurseTransfer)
             .then(res => {
 				console.log(res);
+
+				/** Clear values */
+				$scope.nurseTransfer = {
+					nurse: null,
+					transfer_date: '',
+					transfer_doc_no: '',
+					transfer_doc_date: '',
+					transfer_to: ''
+				};
+
+				$('#transferForm').modal('hide');
             }, err => {
                 console.log(err)
             });
+		};
 
-			/** Clear values */
-			$scope.nurseTransfer = {
-				nurse: null,
-				transfer_date: '',
-				transfer_doc_no: '',
-				transfer_doc_date: '',
-				transfer_to: ''
-			};
+		$scope.showLeaveForm = function(e, person) {
+			e.preventDefault();
+
+			$scope.nurseLeave.nurse = person;
+
+			$('#leaveForm').modal('show');
+		}
+
+		$scope.leave = (e) => {
+			if(e) e.preventDefault();
+
+			const id = $scope.nurseLeave.nurse.person_id;
+
+            $http.put(`${CONFIG.apiUrl}/supports/${id}/leave`, $scope.nurseLeave)
+            .then(res => {
+				console.log(res);
+
+				/** Clear values */
+				$scope.nurseLeave = {
+					nurse: null,
+					leave_doc_no: '',
+					leave_doc_date: '',
+					leave_date: '',
+					leave_type: '',
+					leave_reason: ''
+				};
+
+				$('#leaveForm').modal('hide');
+            }, err => {
+                console.log(err)
+            });
 		};
 
 		$scope.store = (e) => {
