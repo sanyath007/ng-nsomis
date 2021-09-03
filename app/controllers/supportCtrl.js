@@ -97,8 +97,8 @@ app.controller('supportController', [
 
 			division = division == null ? '' : division;
 			const url = (depart === '' && division === '' && fname === '')
-						? `${CONFIG.apiUrl}/nurses`
-						: `${CONFIG.apiUrl}/nurses?depart=${depart}&division=${division}&fname=${fname}`;
+						? `${CONFIG.apiUrl}/supports`
+						: `${CONFIG.apiUrl}/supports?depart=${depart}&division=${division}&fname=${fname}`;
 
 			$http.get(url)
 			.then(res => {
@@ -202,7 +202,7 @@ app.controller('supportController', [
 		$scope.getInitForm = (e) => {
 			if(e) e.preventDefault();
             
-            $http.get(`${CONFIG.apiUrl}/nurses/init/form`)
+            $http.get(`${CONFIG.apiUrl}/supports/init/form`)
             .then(res => {
 				$scope.prefixes = res.data.prefixes;
 				$scope.positions = res.data.positions;
