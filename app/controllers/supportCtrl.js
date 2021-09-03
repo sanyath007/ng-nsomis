@@ -52,6 +52,15 @@ app.controller('supportController', [
 			transfer_to: '',
 		};
 
+		$scope.nurseLeave = {
+			nurse: null,
+			leave_date: '',
+			leave_doc_no: '',
+			leave_doc_date: '',
+			leave_type: '',
+			leave_reason: '',
+		};
+
 		$scope.newNurse = {
 			cid: '',
 			hn: '',
@@ -269,7 +278,7 @@ app.controller('supportController', [
 		$scope.showMoveForm = function(e, nurse) {
 			e.preventDefault();
             
-            $http.get(`${CONFIG.apiUrl}/nurses/init/form`)
+            $http.get(`${CONFIG.apiUrl}/supports/init/form`)
             .then(res => {
                 $scope.departs 	= res.data.departs;
                 tmpDivisions 	= res.data.divisions;
@@ -289,7 +298,7 @@ app.controller('supportController', [
 			console.log($scope.nurseMove);
 			const id = $scope.nurseMove.nurse.person_id;
 
-            $http.put(`${CONFIG.apiUrl}/nurses/${id}/move`, $scope.nurseMove)
+            $http.put(`${CONFIG.apiUrl}/supports/${id}/move`, $scope.nurseMove)
             .then(res => {
 				console.log(res);
             }, err => {
@@ -323,7 +332,7 @@ app.controller('supportController', [
 			console.log($scope.nurseTransfer);
 			const id = $scope.nurseTransfer.nurse.person_id;
 
-            $http.put(`${CONFIG.apiUrl}/nurses/${id}/transfer`, $scope.nurseTransfer)
+            $http.put(`${CONFIG.apiUrl}/supports/${id}/transfer`, $scope.nurseTransfer)
             .then(res => {
 				console.log(res);
             }, err => {
@@ -340,102 +349,45 @@ app.controller('supportController', [
 			};
 		};
 
-		$scope.store = (e) => {
-			if(e) e.preventDefault();
-			console.log($scope.newNurse);
-
-            // $http.post(`${CONFIG.apiUrl}/nurses`, $scope.newNurse)
+		$scope.showLeaveForm = function(e, person) {
+			e.preventDefault();
+            
+            // $http.get(`${CONFIG.apiUrl}/supports/init/form`)
             // .then(res => {
-			// 	console.log(res);
+            //     $scope.departs 	= res.data.departs;
+            //     tmpDivisions 	= res.data.divisions;
+            //     $scope.duties 	= res.data.duties;
+
+				$scope.nurseLeave.nurse = person;
+
+                $('#leaveForm').modal('show');
             // }, err => {
             //     console.log(err)
             // });
-		};
+		}
 
-		$scope.getCardStat = function(e) {
+		$scope.leave = (e) => {
 			if(e) e.preventDefault();
 
-			// $scope.totalData = initTotalBed();
+			console.log($scope.nurseLeave);
+			const id = $scope.nurseLeave.nurse.person_id;
 
-			$scope.loading = true;
-			$http.get(`${CONFIG.apiUrl}/nurses/card-stat`)
-			.then(res => {
-				let { nurse, types } = res.data;
-				let supported = nurse
-									.filter(pos => pos.position_id !== "22")
-									.reduce((sum, cur) => {
-										return sum + parseInt(cur.num);
-									}, 0);
-				console.log(types);
-				let temp = types
-							.filter(t => t.typeposition_id === "4" || t.typeposition_id === "5")
-							.reduce((sum, cur) => {
-								return sum + parseInt(cur.num);
-							}, 0);
+            $http.put(`${CONFIG.apiUrl}/supports/${id}/leave`, $scope.nurseLeave)
+            .then(res => {
+				console.log(res);
+            }, err => {
+                console.log(err)
+            });
 
-				/** Set card statistics of small box */
-				$scope.cardStat1 = [
-					{
-						id: 1,
-						name: "พยาบาลวิชาชีพ",
-						value: parseInt(nurse.find(pos => pos.position_id === "22").num),
-						unit: 'คน',
-						bg: 'bg-info',
-						icon: 'ion-university',
-						link: 'covid/1/all'
-					},
-					{
-						id: 2,
-						name: "สนับสนุน",
-						value: supported,
-						unit: 'คน',
-						bg: 'bg-success',
-						icon: 'ion-person-add',
-						link: 'covid/2/all'
-					}
-				];
-
-				$scope.cardStat2 = [
-					{
-						id: 1,
-						name: "ข้าราชการ",
-						value: parseInt(types.find(t => t.typeposition_id === "1").num),
-						unit: 'คน',
-						bg: 'bg-danger',
-						icon: 'ion-person-stalker',
-						link: 'covid/3/all'
-					},
-					{
-						id: 2,
-						name: "พกส",
-						value: parseInt(types.find(t => t.typeposition_id === "7").num),
-						unit: 'คน',
-						bg: 'bg-warning',
-						icon: 'ion-pie-graph',
-						link: 'covid/0/all'
-					},
-					{
-						id: 3,
-						name: "พนักงานราชการ",
-						value: types.find(t => t.typeposition_id === "2") ? parseInt(types.find(t => t.typeposition_id === "2").num) : 0,
-						unit: 'คน',
-						bg: 'bg-primary',
-						icon: 'ion-android-clipboard',
-						link: 'covid/0/all'
-					},
-					{
-						id: 4,
-						name: "ลูกจ้างชั่วคราว",
-						value: temp,
-						unit: 'คน',
-						bg: 'bg-default',
-						icon: 'ion-ios-redo',
-						link: 'covid/0/all'
-					}
-				];
-			}, err => {
-				console.log(err);
-			});
+			/** Clear values */
+			$scope.nurseLeave = {
+				nurse: null,
+				leave_doc_no: '',
+				leave_doc_date: '',
+				leave_date: '',
+				leave_type: '',
+				leave_reason: ''
+			};
 		};
 	}
 ]);
