@@ -2,10 +2,10 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form action="">
-                <input type="hidden" id="move_faction" name="move_faction" ng-model="nurseMove.move_faction" />
+                <input type="hidden" ng-model="nurseMove.in_out" />
 
                 <div class="modal-header">
-                    <h5 class="modal-title">ฟอร์มย้ายภายใน รพ.</h5>
+                    <h5 class="modal-title">ฟอร์มย้ายไปหน่วยงานอื่นภายใน รพ.</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -46,31 +46,45 @@
                                 ng-model="nurseMove.move_duty"
                             >
                                 <option value="">-- หน้าที่ --</option>
-                                <option ng-repeat="duty in duties" value="{{ duty.duty_id }}">
+                                <option ng-repeat="duty in moveDuties" value="{{ duty.duty_id }}">
                                     {{ duty.duty_name }}    
                                 </option>
                             </select>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="">ย้ายไป</label>
+                            <label for="">ย้าย{{ nurseMove.in_out === 'O' ? 'ไป' : 'เข้า' }}</label>
                             <div style="display: flex; flex-direction: row;">
+                                <select
+                                    class="form-control mr-2"
+                                    ng-model="nurseMove.move_faction"
+                                    ng-change="onMoveFactionChange($event)"
+                                >
+                                    <option value="">-- กลุ่มภารกิจ --</option>
+                                    <option ng-repeat="fac in moveFactions" value="{{ fac.faction_id }}">
+                                        {{ fac.faction_name }}    
+                                    </option>
+                                </select>
                                 <select
                                     class="form-control mr-2"
                                     ng-model="nurseMove.move_depart"
                                     ng-change="onMoveDepartChange($event)"
                                 >
                                     <option value="">-- กลุ่มงาน --</option>
-                                    <option ng-repeat="dep in departs" value="{{ dep.depart_id }}">
-                                        {{ dep.depart_name }}    
+                                    <option ng-repeat="dep in moveDeparts" value="{{ dep.depart_id }}">
+                                        {{ dep.depart_name }}
                                     </option>
                                 </select>
                                 <select class="form-control" ng-model="nurseMove.move_division">
                                     <option value="">-- งาน --</option>
-                                    <option ng-repeat="div in divisions" value="{{ div.ward_id }}">
+                                    <option ng-repeat="div in moveDivisions" value="{{ div.ward_id }}">
                                         {{ div.ward_name }}    
                                     </option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="">เหตุผลการย้าย</label>
+                            <textarea rows="5" class="form-control"></textarea>
                         </div>
                     </div>
                 </div><!-- /.modal-body -->

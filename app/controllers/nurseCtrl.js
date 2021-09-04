@@ -9,6 +9,7 @@ app.controller('nurseController', [
 		$scope.sdate = '';
 		$scope.edate = '';
 		$scope.cboYear = '';
+		$scope.cboFaction = '';
 		$scope.cboDepart = '';
 		$scope.cboDivision = '';
 		$scope.searchFname = '';
@@ -17,11 +18,20 @@ app.controller('nurseController', [
 		$scope.positions = [];
 		$scope.academics = [];
 		$scope.hospPay18s = [];
+		$scope.factions = [];
 		$scope.departs = [];
 		$scope.divisions = [];
 		$scope.duties = [];
-
+		
+		let tmpDeparts = [];
 		let tmpDivisions = [];
+
+		$scope.moveFactions = [];
+		$scope.moveDeparts = [];
+		$scope.moveDivisions = [];
+		$scope.moveDuties = [];
+		let tmpMoveDeparts = [];
+		let tmpMoveDivisions = [];
 
 		$scope.data = [];
 		$scope.pager = null;
@@ -41,7 +51,8 @@ app.controller('nurseController', [
 			move_duty: '',
 			move_faction: '',
 			move_depart: '',
-			move_division: ''
+			move_division: '',
+			in_out: 'O',
 		};
 
 		$scope.nurseTransfer = {
@@ -50,6 +61,16 @@ app.controller('nurseController', [
 			transfer_doc_no: '',
 			transfer_doc_date: '',
 			transfer_to: '',
+			in_out: 'O',
+		};
+
+		$scope.nurseLeave = {
+			nurse: null,
+			leave_doc_no: '',
+			leave_doc_date: '',
+			leave_date: '',
+			leave_type: '',
+			leave_reason: ''
 		};
 
 		$scope.newNurse = {
@@ -102,7 +123,6 @@ app.controller('nurseController', [
 
 			$http.get(url)
 			.then(res => {
-				console.log(res);
 				$scope.data = res.data.items;
 				$scope.pager = res.data.pager;
 
@@ -208,8 +228,8 @@ app.controller('nurseController', [
 				$scope.positions = res.data.positions;
 				$scope.academics = res.data.academics;
 				$scope.hospPay18s = res.data.hospPay18s;
-				$scope.departs = res.data.departs;
-				$scope.divisions = res.data.divisions;
+				$scope.departs = res.data.departs.filter(dep => dep.faction_id === '5');
+				$scope.divisions = res.data.divisions.filter(div => div.faction_id === '5');;
 				tmpDivisions = res.data.divisions;
             }, err => {
                 console.log(err)
@@ -260,24 +280,38 @@ app.controller('nurseController', [
 			$scope.getAll(e, $scope.cboDepart, $scope.cboDivision, $scope.searchFname);
 		};
 
+		
+		$scope.onMoveFactionChange = function(e) {
+			$scope.moveDeparts = tmpMoveDeparts.filter(dep => dep.faction_id === $scope.nurseMove.move_faction);
+		};
+
 		$scope.onMoveDepartChange = function(e) {
-			$scope.divisions = tmpDivisions.filter(div => div.depart_id === $scope.nurseMove.move_depart);
-			const faction = $scope.departs.find(dep => dep.depart_id === $scope.nurseMove.move_depart);
+			$scope.moveDivisions = tmpMoveDivisions.filter(div => div.depart_id === $scope.nurseMove.move_depart);
+
+			const faction = $scope.moveDeparts.find(dep => dep.depart_id === $scope.nurseMove.move_depart);
 			$scope.nurseMove.move_faction = faction?.faction_id;
 		};
 
-		$scope.showMoveForm = function(e, nurse) {
+		$scope.showMoveForm = function(e, type, nurse) {
 			e.preventDefault();
             
             $http.get(`${CONFIG.apiUrl}/nurses/init/form`)
             .then(res => {
-                $scope.departs 	= res.data.departs;
-                tmpDivisions 	= res.data.divisions;
-                $scope.duties 	= res.data.duties;
+                $scope.moveFactions = res.data.factions;
+                tmpMoveDeparts 		= res.data.departs;
+                tmpMoveDivisions 	= res.data.divisions;
+                $scope.moveDuties 	= res.data.duties.filter(dut => [1,2,4,5].includes(parseInt(dut.duty_id)));
 
 				$scope.nurseMove.nurse = nurse;
 
-                $('#moveForm').modal('show');
+				if (type == 'S') {
+					$scope.moveDeparts 	= res.data.departs.filter(dep => dep.faction_id === '5');
+					$scope.nurseMove.move_faction = '5';
+
+					$('#shiftForm').modal('show');
+				} else if (type == 'M') {
+					$('#moveForm').modal('show');
+				}
             }, err => {
                 console.log(err)
             });
@@ -302,10 +336,12 @@ app.controller('nurseController', [
 					move_duty: '',
 					move_faction: '',
 					move_depart: '',
-					move_division: ''
+					move_division: '',
+					in_out: 'O',
 				};
 
 				$('#moveForm').modal('hide');
+				$('#shiftForm').modal('hide');
             }, err => {
                 console.log(err)
             });
@@ -335,7 +371,8 @@ app.controller('nurseController', [
 					transfer_date: '',
 					transfer_doc_no: '',
 					transfer_doc_date: '',
-					transfer_to: ''
+					transfer_to: '',
+					in_out: 'O',
 				};
 
 				$('#transferForm').modal('hide');
