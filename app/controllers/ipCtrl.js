@@ -38,6 +38,7 @@ app.controller('ipController', [
 			{ ward: '14', bed: 8 }, // Stroke Unit
 			{ ward: '15', bed: 2 }, // NICU
 			{ ward: '17', bed: 6 }, // IntermediateCare
+			{ ward: '18', bed: 30 }, // Cohort
 		];
 
 		const initTotalClass = () => ({
