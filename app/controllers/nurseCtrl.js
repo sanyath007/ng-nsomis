@@ -436,11 +436,11 @@ app.controller('nurseController', [
 			.then(res => {
 				let { nurse, types } = res.data;
 				let supported = nurse
-									.filter(pos => pos.position_id !== "22")
+									.filter(pos => pos.position_id !== "22" && pos.position_id !== "27")
 									.reduce((sum, cur) => {
 										return sum + parseInt(cur.num);
 									}, 0);
-				console.log(types);
+
 				let temp = types
 							.filter(t => t.typeposition_id === "4" || t.typeposition_id === "5")
 							.reduce((sum, cur) => {
@@ -452,7 +452,7 @@ app.controller('nurseController', [
 					{
 						id: 1,
 						name: "พยาบาลวิชาชีพ",
-						value: parseInt(nurse.find(pos => pos.position_id === "22").num),
+						value: parseInt(nurse.find(pos => pos.position_id === "22").num) + parseInt(nurse.find(pos => pos.position_id === "27").num),
 						unit: 'คน',
 						bg: 'bg-info',
 						icon: 'ion-university',
