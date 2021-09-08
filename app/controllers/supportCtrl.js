@@ -272,7 +272,7 @@ app.controller('supportController', [
 		$scope.onMoveDepartChange = function(e) {
 			$scope.divisions = tmpDivisions.filter(div => div.depart_id === $scope.nurseMove.move_depart);
 			const faction = $scope.departs.find(dep => dep.depart_id === $scope.nurseMove.move_depart);
-			$scope.nurseMove.move_faction = faction?.faction_id;
+			$scope.nurseMove.move_faction = faction.faction_id;
 		};
 
 		$scope.showMoveForm = function(e, nurse) {
