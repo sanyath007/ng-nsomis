@@ -21,8 +21,7 @@ app.controller('nurseController', [
 		$scope.factions = [];
 		$scope.departs = [];
 		$scope.divisions = [];
-		$scope.duties = [];
-		
+		$scope.duties = [];		
 		let tmpDeparts = [];
 		let tmpDivisions = [];
 
@@ -280,7 +279,6 @@ app.controller('nurseController', [
 			$scope.getAll(e, $scope.cboDepart, $scope.cboDivision, $scope.searchFname);
 		};
 
-		
 		$scope.onMoveFactionChange = function(e) {
 			$scope.moveDeparts = tmpMoveDeparts.filter(dep => dep.faction_id === $scope.nurseMove.move_faction);
 		};

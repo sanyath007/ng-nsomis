@@ -20,8 +20,16 @@ app.controller('supportController', [
 		$scope.departs = [];
 		$scope.divisions = [];
 		$scope.duties = [];
-
+		let tmpDeparts = [];
 		let tmpDivisions = [];
+
+		$scope.moveFactions = [];
+		$scope.moveDeparts = [];
+		$scope.moveDivisions = [];
+		$scope.moveDuties = [];
+		let tmpMoveDeparts = [];
+		let tmpMoveDivisions = [];
+
 
 		$scope.data = [];
 		$scope.pager = null;
@@ -269,24 +277,37 @@ app.controller('supportController', [
 			$scope.getAll(e, $scope.cboDepart, $scope.cboDivision, $scope.searchFname);
 		};
 
+		$scope.onMoveFactionChange = function(e) {
+			$scope.moveDeparts = tmpMoveDeparts.filter(dep => dep.faction_id === $scope.nurseMove.move_faction);
+		};
+
 		$scope.onMoveDepartChange = function(e) {
-			$scope.divisions = tmpDivisions.filter(div => div.depart_id === $scope.nurseMove.move_depart);
-			const faction = $scope.departs.find(dep => dep.depart_id === $scope.nurseMove.move_depart);
+			$scope.moveDivisions = tmpMoveDivisions.filter(div => div.depart_id === $scope.nurseMove.move_depart);
+
+			const faction = $scope.moveDeparts.find(dep => dep.depart_id === $scope.nurseMove.move_depart);
 			$scope.nurseMove.move_faction = faction.faction_id;
 		};
 
-		$scope.showMoveForm = function(e, nurse) {
+		$scope.showMoveForm = function(e, type, nurse) {
 			e.preventDefault();
-            
+
             $http.get(`${CONFIG.apiUrl}/supports/init/form`)
             .then(res => {
-                $scope.departs 	= res.data.departs;
-                tmpDivisions 	= res.data.divisions;
-                $scope.duties 	= res.data.duties;
+				$scope.moveFactions = res.data.factions;
+                tmpMoveDeparts 		= res.data.departs;
+                tmpMoveDivisions 	= res.data.divisions;
+                $scope.moveDuties 	= res.data.duties.filter(dut => [1,2,4,5].includes(parseInt(dut.duty_id)));
 
 				$scope.nurseMove.nurse = nurse;
 
-                $('#moveForm').modal('show');
+                if (type == 'S') {
+					$scope.moveDeparts 	= res.data.departs.filter(dep => dep.faction_id === '5');
+					$scope.nurseMove.move_faction = '5';
+
+					$('#shiftForm').modal('show');
+				} else if (type == 'M') {
+					$('#moveForm').modal('show');
+				}
             }, err => {
                 console.log(err)
             });
@@ -381,6 +402,17 @@ app.controller('supportController', [
 				};
 
 				$('#leaveForm').modal('hide');
+            }, err => {
+                console.log(err)
+            });
+		};
+
+		$scope.unknown = (e, id) => {
+			if(e) e.preventDefault();
+			console.log(id);
+            $http.put(`${CONFIG.apiUrl}/supports/${id}/unknown`, {})
+            .then(res => {
+				console.log(res);
             }, err => {
                 console.log(err)
             });
