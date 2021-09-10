@@ -412,6 +412,17 @@ app.controller('nurseController', [
             });
 		};
 
+		$scope.unknown = (e, id) => {
+			if(e) e.preventDefault();
+			console.log(id);
+            $http.put(`${CONFIG.apiUrl}/nurses/${id}/unknown`, {})
+            .then(res => {
+				console.log(res);
+            }, err => {
+                console.log(err)
+            });
+		};
+
 		$scope.store = (e) => {
 			if(e) e.preventDefault();
 			console.log($scope.newNurse);

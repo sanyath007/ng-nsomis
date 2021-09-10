@@ -122,6 +122,9 @@
 										<span ng-show="(row.person_state === '5')">เพิ่มพูนทักษะ</span>
 										<span ng-show="(row.person_state === '6')">ลาออก</span>
 										<span ng-show="(row.person_state === '7')">เกษียณอายุราชการ</span>
+										<span ng-show="(row.person_state === '8')">โอน/ย้าย</span>
+										<span ng-show="(row.person_state === '9')">ถูกให้ออก</span>
+										<span ng-show="(row.person_state === '99')">ไม่ทราบสถานะ</span>
 									</td>
 									<td style="text-align: center;">
 										<a 
@@ -144,9 +147,12 @@
 												<a class="dropdown-item" href="#" ng-click="showTransferForm($event, row)">
 													โอน/ย้ายออก (ภายนอก)
 												</a>
-												<a class="dropdown-item" href="#">ลาศึกษาต่อ</a>
+												<!-- <a class="dropdown-item" href="#">ลาศึกษาต่อ</a> -->
 												<a class="dropdown-item" href="#" ng-click="showLeaveForm($event, row)">
 													ออก
+												</a>
+												<a class="dropdown-item" href="#" ng-click="unknown($event, row.person_id)">
+													ไม่ทราบสถานะ
 												</a>
 											</div>
 										</div>
