@@ -81,6 +81,7 @@
 									<th style="width: 20%; text-align: center;">กลุ่มงาน</th>
 									<th style="width: 7%; text-align: center;">ว/ด/ป บรรจุ</th>
 									<th style="width: 5%; text-align: center;">อายุงาน</th>
+									<th style="width: 8%; text-align: center;">ประเภทตำแหน่ง</th>
 									<th style="width: 8%; text-align: center;">ตำแหน่ง</th>
 									<th style="width: 8%; text-align: center;">ระดับ</th>
 									<th style="width: 8%; text-align: center;">สถานะ</th>
@@ -112,6 +113,7 @@
 									</td>
 									<td style="text-align: center;">{{ row.person_singin | thdate }}</td>
 									<td style="text-align: center;">{{ row.level+ 'ปี' }}</td>
+									<td style="text-align: center;">{{ row.typeposition.typeposition_name }}</td>
 									<td style="text-align: center;">{{ row.position.position_name }}</td>
 									<td style="text-align: center;">{{ row.academic.ac_name }}</td>
 									<td style="text-align: center;">
