@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="nurseController"
-	ng-init="getNurse($event);"
+	ng-init="getNurse($event);getInitForm($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -65,7 +65,11 @@
 						<hr>
 
 						<strong><i class="fas fa-map-marker-alt mr-1"></i> ที่อยู่</strong>
-						<!-- <p class="text-muted">Malibu, California</p> -->
+						<p class="text-muted">
+							<p>เลขที่ <span>{{ profile.person_no }}</span> หมู่ <span>{{ profile.person_moo }}</span> ต. <span>{{ profile.person_tumbon }}</span></p>
+							<p>อ. <span>{{ profile.person_amphur }}</span> จ. <span>{{ profile.person_province }}</span> <span>{{ profile.person_postcode }}</span></p>
+							<p>เบอร์ <span>{{ profile.person_tel }}</span></p>
+						</p>
 
 						<hr>
 
@@ -94,160 +98,253 @@
 					<div class="card-header p-2">
 						<ul class="nav nav-pills">
 							<li class="nav-item">
-								<a class="nav-link active" href="#activity" data-toggle="tab">
+								<a class="nav-link active" href="#educations" data-toggle="tab">
 									ประวัติการอบรม/ศึกษาต่อ
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#timeline" data-toggle="tab">
+								<a class="nav-link" href="#moves" data-toggle="tab">
 									ประวัติการย้าย
 								</a>
 							</li>
 							<li class="nav-item">
+								<a class="nav-link" href="#positions" data-toggle="tab">
+									ประวัติการดำรงตำแหน่ง
+								</a>
+							</li>
+							<li class="nav-item">
 								<a class="nav-link" href="#settings" data-toggle="tab">
-									Settings
+									แก้ไขข้อมูล
 								</a>
 							</li>
 						</ul>
 					</div><!-- /.card-header -->
 					<div class="card-body">
 						<div class="tab-content">
-							<div class="active tab-pane" id="activity">
+							<div class="active tab-pane" id="educations">
 								<!-- Post -->
 								<div class="post">
 
-									<!-- // TODO: Content here ... -->
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th style="text-align: center; width: 5%;">ลำดับ</th>
+												<th style="text-align: center; width: 25%;">ประเภทการอบรม/ศึกษาต่อ</th>
+												<th style="text-align: center; width: 8%;">ปีที่สำเร็จ</th>
+												<th style="text-align: center;">สถาบัน/สถานศึกษา</th>
+												<th style="text-align: center; width: 10%;">Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
 
 								</div><!-- /.post -->
 							</div><!-- /.tab-pane -->
 
-							<div class="tab-pane" id="timeline">
+							<div class="tab-pane" id="moves">
 
-								<!-- The timeline -->
-								<div class="timeline timeline-inverse">
-									<!-- timeline time label -->
-									<div class="time-label">
-									<span class="bg-danger">
-										10 Feb. 2014
-									</span>
-									</div><!-- /.timeline-label -->
-									<!-- timeline item -->
-									<div>
-									<i class="fas fa-envelope bg-primary"></i>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th style="text-align: center; width: 5%;">ลำดับ</th>
+											<th style="text-align: center; width: 10%;">วันที่ย้าย</th>
+											<th style="text-align: center; width: 20%;">จากหน่วยงาน</th>
+											<th style="text-align: center; width: 20%;">ไปหน่วยงาน</th>
+											<th style="text-align: center;">คำสั่ง</th>
+											<th style="text-align: center; width: 10%;">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td>
+												<p style="margin: 2px auto;">เลขที่</p>
+												<p style="margin: 2px auto;">ลงวันที่</p>
+											</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
 
-									<div class="timeline-item">
-										<span class="time"><i class="far fa-clock"></i> 12:05</span>
+							</div><!-- /.tab-pane -->
 
-										<h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+							<div class="tab-pane" id="positions">
+								<!-- Post -->
+								<div class="post">
 
-										<div class="timeline-body">
-										Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-										weebly ning heekya handango imeem plugg dopplr jibjab, movity
-										jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-										quora plaxo ideeli hulu weebly balihoo...
-										</div>
-										<div class="timeline-footer">
-										<a href="#" class="btn btn-primary btn-sm">Read more</a>
-										<a href="#" class="btn btn-danger btn-sm">Delete</a>
-										</div>
-									</div>
-									</div>
-									<!-- END timeline item -->
-									<!-- timeline item -->
-									<div>
-									<i class="fas fa-user bg-info"></i>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th style="text-align: center; width: 5%;">ลำดับ</th>
+												<th style="text-align: center; width: 15%;">วันที่เข้า</th>
+												<th style="text-align: center; width: 15%;">วันที่ออก</th>
+												<th style="text-align: center;">ตำแหน่ง</th>
+												<th style="text-align: center; width: 20%;">คำสั่ง</th>
+												<th style="text-align: center; width: 10%;">Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>
+													<p style="margin: 2px auto;">ประเภทตำแหน่ง</p>
+													<p style="margin: 2px auto;">ตำแหน่ง</p>
+													<p style="margin: 2px auto;">ระดับ</p>
+												</td>
+												<td>
+													<p style="margin: 2px auto;">เลขที่</p>
+													<p style="margin: 2px auto;">ลงวันที่</p>
+												</td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
 
-									<div class="timeline-item">
-										<span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
-
-										<h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend request
-										</h3>
-									</div>
-									</div>
-									<!-- END timeline item -->
-									<!-- timeline item -->
-									<div>
-									<i class="fas fa-comments bg-warning"></i>
-
-									<div class="timeline-item">
-										<span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
-
-										<h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-										<div class="timeline-body">
-										Take me to your leader!
-										Switzerland is small and neutral!
-										We are more like Germany, ambitious and misunderstood!
-										</div>
-										<div class="timeline-footer">
-										<a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-										</div>
-									</div>
-									</div><!-- END timeline item -->
-									<!-- timeline time label -->
-									<div class="time-label">
-									<span class="bg-success">
-										3 Jan. 2014
-									</span>
-									</div><!-- /.timeline-label -->
-									<!-- timeline item -->
-									<div>
-									<i class="fas fa-camera bg-purple"></i>
-
-									<div class="timeline-item">
-										<span class="time"><i class="far fa-clock"></i> 2 days ago</span>
-
-										<h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-										<div class="timeline-body">
-										<img src="http://placehold.it/150x100" alt="...">
-										<img src="http://placehold.it/150x100" alt="...">
-										<img src="http://placehold.it/150x100" alt="...">
-										<img src="http://placehold.it/150x100" alt="...">
-										</div>
-									</div>
-									</div><!-- END timeline item -->
-									<div>
-									<i class="far fa-clock bg-gray"></i>
-									</div>
-								</div>
-
+								</div><!-- /.post -->
 							</div><!-- /.tab-pane -->
 
 							<div class="tab-pane" id="settings">
 
 								<form class="form-horizontal">
 									<div class="form-group row">
-										<label for="inputName" class="col-sm-2 col-form-label">Name</label>
+										<label for="person_name" class="col-sm-2 col-form-label">ชื่อ-สกุล</label>
 										<div class="col-sm-10">
-											<input type="email" class="form-control" id="inputName" placeholder="Name">
+											<div style="display: flex; flex-direction: row;">
+												<select name="person_prefix" id="" class="form-control mr-1">
+													<option value="">-- เลือกระดับ --</option>
+													<option ng-repeat="prefix in prefixes" value="prefix.prefix_id">
+														{{ prefix.prefix_name }}
+													</option>
+												</select>
+												<input
+													type="text"
+													class="form-control mr-1"
+													id="person_firstname"
+													value="{{ profile.person_firstname }}"
+													placeholder="Name"
+												/>
+												<input
+													type="text"
+													class="form-control"
+													id="person_lastname"
+													value="{{ profile.person_lastname }}"
+													placeholder="Name"
+												/>
+											</div>
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+										<label for="person_email" class="col-sm-2 col-form-label">Email</label>
 										<div class="col-sm-10">
-											<input type="email" class="form-control" id="inputEmail" placeholder="Email">
+											<input
+												type="email"
+												class="form-control"
+												id="person_email"
+												value="{{ profile.person_email }}"
+												placeholder="Name"
+											/>
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputName2" class="col-sm-2 col-form-label">Name</label>
+										<label for="person_tel" class="col-sm-2 col-form-label">โทรศัพท์</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputName2" placeholder="Name">
+											<input
+												type="text"
+												class="form-control"
+												id="person_tel"
+												value="{{ profile.person_tel }}"
+												placeholder="Name"
+											/>
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
+										<label for="inputExperience" class="col-sm-2 col-form-label">ประเภทตำแหน่ง</label>
 										<div class="col-sm-10">
-											<textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+											<select name="person_typeposition" id="person_typeposition" class="form-control">
+												<option value="">-- เลือกประเภทตำแหน่ง --</option>
+												<option ng-repeat="typeposition in typepositions" value="typeposition.typeposition_id">
+													{{ typeposition.typeposition_name }}
+												</option>
+											</select>
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
+										<label for="inputSkills" class="col-sm-2 col-form-label">ตำแหน่ง</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+											<div style="display: flex; flex-direction: row;">
+												<select
+													name="person_position"
+													id="person_position"
+													class="form-control mr-1"
+												>
+													<option value="">-- เลือกตำแหน่ง --</option>
+													<option ng-repeat="position in positions" value="position.position_id">
+														{{ position.position_name }}
+													</option>
+												</select>
+												<select
+													name="person_academic"
+													id="person_academic"
+													class="form-control"
+												>
+													<option value="">-- เลือกระดับ --</option>
+													<option ng-repeat="academic in academics" value="academic.ac_id">
+														{{ academic.ac_name }}
+													</option>
+												</select>
+											</div>
 										</div>
 									</div>
 									<div class="form-group row">
+										<label for="person_singin" class="col-sm-2 col-form-label">วันที่บรรจุ</label>
+										<div class="col-sm-10">
+											<input
+												type="text"
+												class="form-control"
+												id="person_singin"
+												value="{{ profile.person_singin }}"
+												placeholder="วันที่บรรจุ"
+											/>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="person_startdate" class="col-sm-2 col-form-label">วันที่เริ่มปฏิบัติงานที่นี่</label>
+										<div class="col-sm-10">
+											<input
+												type="text"
+												class="form-control"
+												id="person_startdate"
+												value="{{ profile.person_startdate }}"
+												placeholder="Name"
+											/>
+										</div>
+									</div>
+									<!-- <div class="form-group row">
+										<label for="inputSkills" class="col-sm-2 col-form-label">วันที่เริ่มปฏิบัติงานที่ รพ.</label>
+										<div class="col-sm-10">
+											<input
+												type="text"
+												class="form-control"
+												id="person_tel"
+												value="{{ profile.person_tel }}"
+												placeholder="Name"
+											/>
+										</div>
+									</div> -->
+									<!-- <div class="form-group row">
 										<div class="offset-sm-2 col-sm-10">
 											<div class="checkbox">
 											<label>
@@ -255,10 +352,10 @@
 											</label>
 											</div>
 										</div>
-									</div>
+									</div> -->
 									<div class="form-group row">
 										<div class="offset-sm-2 col-sm-10">
-											<button type="submit" class="btn btn-danger">Submit</button>
+											<button type="submit" class="btn btn-secondary">บันทึก</button>
 										</div>
 									</div>
 								</form>
@@ -275,11 +372,18 @@
 
 <script type="text/javascript">
 	$(function() {
-		// $('#sdate').datepicker({
-		// 	autoclose: true,
-		// 	language: 'th',
-		// 	format: 'dd/mm/yyyy',
-		// 	thaiyear: true
-		// }).datepicker('update', new Date());
+		$('#person_singin').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+
+		$('#person_startdate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
 	});
 </script>

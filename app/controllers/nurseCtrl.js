@@ -15,6 +15,7 @@ app.controller('nurseController', [
 		$scope.searchFname = '';
 
 		$scope.prefixes = [];
+		$scope.typepositions = [];
 		$scope.positions = [];
 		$scope.academics = [];
 		$scope.hospPay18s = [];
@@ -224,6 +225,7 @@ app.controller('nurseController', [
             $http.get(`${CONFIG.apiUrl}/nurses/init/form`)
             .then(res => {
 				$scope.prefixes = res.data.prefixes;
+				$scope.typepositions = res.data.typepositions;
 				$scope.positions = res.data.positions;
 				$scope.academics = res.data.academics;
 				$scope.hospPay18s = res.data.hospPay18s;
