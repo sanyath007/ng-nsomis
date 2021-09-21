@@ -43,6 +43,8 @@ app.controller('nurseController', [
 		$scope.cardStat1 = [];
 		$scope.cardStat2 = [];
 
+		$scope.moveLists = [];
+
 		$scope.nurseMove = {
 			nurse: null,
 			move_doc_no: '',
@@ -94,6 +96,20 @@ app.controller('nurseController', [
 			depart: ''
 		};
 
+		$('#person_singin').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		});
+
+		$('#person_startdate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		});
+
 		const initTotalGenerations = function() {
 			return {
 				b: 0,
@@ -137,11 +153,48 @@ app.controller('nurseController', [
 
 			$http.get(`${CONFIG.apiUrl}/nurses/${id}/profile`)
 			.then(res => {
+				console.log(res);
 				$scope.profile = res.data;
+
+				$scope.getMoves(res.data.person_id);
+
+				$('#person_singin').datepicker('update', strToDate(res.data.person_singin));		
+				$('#person_startdate').datepicker('update', strToDate(res.data.person_startdate));
 			}, err => {
 				console.log(err);
 			});
 		};
+
+		$scope.updateProfile = (e) => {
+			console.log($scope.profile);
+			
+			const { 
+				person_id,
+				person_prefix,
+				person_firstname,
+				person_lastname,
+				person_email,
+				person_tel,
+				typeposition_id,
+				position_id,
+				ac_id,
+				...rest
+			} = $scope.profile;
+
+			const person_singin = $('#person_singin').val();		
+			const person_startdate = $('#person_startdate').val();
+			
+			console.log(ac_id);
+			console.log(StringFormatService.convToDbDate(person_singin));
+		};
+
+		const strToDate = (str) => {
+			if (str === '' || str === '0000-00-00') return null;
+
+			const [year, month, day] = str.split('-');
+
+			return new Date(parseInt(year), parseInt(month)-1, parseInt(day));
+		}
 
 		const calculatAge = function() {
 			$scope.data.forEach(nurse => {
@@ -236,6 +289,15 @@ app.controller('nurseController', [
                 console.log(err)
             });
 		};
+
+		$scope.getMoves = (personId) => {
+			$http.get(`${CONFIG.apiUrl}/moves/${personId}`)
+            .then(res => {
+                $scope.moveLists = res.data.items;
+            }, err => {
+                console.log(err)
+            });
+		}
 
 		$scope.showPersonLists = (e, id) => {
             e.preventDefault();
