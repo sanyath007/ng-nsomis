@@ -166,8 +166,6 @@ app.controller('nurseController', [
 		};
 
 		$scope.updateProfile = (e) => {
-			console.log($scope.profile);
-			
 			const { 
 				person_id,
 				person_prefix,
@@ -181,11 +179,15 @@ app.controller('nurseController', [
 				...rest
 			} = $scope.profile;
 
-			const person_singin = $('#person_singin').val();		
-			const person_startdate = $('#person_startdate').val();
-			
-			console.log(ac_id);
-			console.log(StringFormatService.convToDbDate(person_singin));
+			const person_singin = StringFormatService.convToDbDate($('#person_singin').val());		
+			const person_startdate = StringFormatService.convToDbDate($('#person_startdate').val());
+
+			$http.put(`${CONFIG.apiUrl}/nurses/${person_id}`, { typeposition_id, position_id, ac_id, person_singin, person_startdate })
+			.then(res => {
+				console.log(res);
+			}, err => {
+				console.log(err)
+			});
 		};
 
 		const strToDate = (str) => {
