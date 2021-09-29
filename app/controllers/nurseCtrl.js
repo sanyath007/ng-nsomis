@@ -176,13 +176,15 @@ app.controller('nurseController', [
 				typeposition_id,
 				position_id,
 				ac_id,
+				scholarship,
+				remark,
 				...rest
 			} = $scope.profile;
 
 			const person_singin = StringFormatService.convToDbDate($('#person_singin').val());		
 			const person_startdate = StringFormatService.convToDbDate($('#person_startdate').val());
 
-			$http.put(`${CONFIG.apiUrl}/nurses/${person_id}`, { typeposition_id, position_id, ac_id, person_singin, person_startdate })
+			$http.put(`${CONFIG.apiUrl}/nurses/${person_id}`, { typeposition_id, position_id, ac_id, person_singin, person_startdate, scholarship, remark })
 			.then(res => {
 				console.log(res);
 			}, err => {
