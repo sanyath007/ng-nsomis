@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="nurseController"
-	ng-init="getCardStat($event);"
+	ng-init="getCardStat($event); getNumByDepart($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -37,7 +37,7 @@
 									</div><!-- ./col -->
 								</div><!-- /.row -->
 
-								<div class="row">
+								<!-- <div class="row">
 									<div class="col-md-6">
 
 										<div id="generationPieContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
@@ -49,10 +49,44 @@
 										<div id="levelPieContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
 		
 									</div>
-								</div>
+								</div> -->
 
 							</div>
 						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<h4>จำนวนบุคลากรรายกลุ่มงาน</h4>
+
+								<table class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th style="width: 5%; text-align: center;">ลำดับ</th>
+											<th style="text-align: center;">กลุ่มงาน</th>
+											<th style="width: 10%; text-align: center;">พยาบาล</th>
+											<th style="width: 10%; text-align: center;">สนับสนุน</th>
+											<th style="width: 10%; text-align: center;">รวม</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="(index, dep) in data">
+											<td style="text-align: center;">{{ index + 1 }}</td>
+											<td>{{ dep.depart_name }}</td>
+											<td style="text-align: center;">{{ dep.nurses }}</td>
+											<td style="text-align: center;">{{ dep.supports }}</td>
+											<td style="text-align: center;">{{ dep.total }}</td>
+										</tr>
+										<tr>
+											<td style="text-align: center;" colspan="2">รวม</td>
+											<td style="text-align: center;">{{ totalData.nurses }}</td>
+											<td style="text-align: center;">{{ totalData.supports }}</td>
+											<td style="text-align: center;">{{ totalData.total }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
 					</div><!-- /.card-body -->
 				</div><!-- /.card -->
 

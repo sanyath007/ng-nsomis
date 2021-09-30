@@ -110,6 +110,14 @@ app.controller('nurseController', [
 			thaiyear: true
 		});
 
+		const initTotalPersons = function() {
+			return {
+				nurses: 0,
+				supports: 0,
+				total: 0,
+			}
+		};
+
 		const initTotalGenerations = function() {
 			return {
 				b: 0,
@@ -501,6 +509,26 @@ app.controller('nurseController', [
             // }, err => {
             //     console.log(err)
             // });
+		};
+
+		$scope.getNumByDepart = function(e) {
+			if(e) e.preventDefault();
+
+			$scope.totalData = initTotalPersons();
+
+			$scope.loading = true;
+			$http.get(`${CONFIG.apiUrl}/nurses/stat/depart`)
+			.then(res => {
+				$scope.data = res.data;
+
+				res.data.forEach(dep => {
+					$scope.totalData.nurses 	+= parseInt(dep.nurses);
+					$scope.totalData.supports 	+= parseInt(dep.supports);
+					$scope.totalData.total 		+= parseInt(dep.total);
+				});
+			}, err => {
+				console.log(err);
+			});
 		};
 
 		$scope.getCardStat = function(e) {
