@@ -120,10 +120,11 @@ app.controller('nurseController', [
 
 		const initTotalGenerations = function() {
 			return {
-				b: 0,
+				bb: 0,
 				x: 0,
 				y: 0,
-				z: 0
+				z: 0,
+				al: 0
 			}
 		};
 		
@@ -248,10 +249,11 @@ app.controller('nurseController', [
 			$scope.totalData.generations = initTotalGenerations();
 
 			$scope.data.forEach(nurse => {
-				$scope.totalData.generations.b += (nurse.birthYear >= 1946 && nurse.birthYear <= 1964) ? 1 : 0; // gen b
+				$scope.totalData.generations.bb += (nurse.birthYear >= 1946 && nurse.birthYear <= 1964) ? 1 : 0; // gen b
 				$scope.totalData.generations.x += (nurse.birthYear >= 1965 && nurse.birthYear <= 1979) ? 1 : 0; // gen x
 				$scope.totalData.generations.y += (nurse.birthYear >= 1980 && nurse.birthYear <= 1997) ? 1 : 0; // gen y
-				$scope.totalData.generations.z += (nurse.birthYear >= 1998) ? 1 : 0; // gen z
+				$scope.totalData.generations.z += (nurse.birthYear >= 1998 && nurse.birthYear <= 2009) ? 1 : 0; // gen z
+				$scope.totalData.generations.al += (nurse.birthYear >= 2010) ? 1 : 0; // gen z
 			});
 		}
 		
@@ -274,7 +276,8 @@ app.controller('nurseController', [
 
 			$http.get(`${CONFIG.apiUrl}/nurses/gen-list`)
 			.then(res => {
-				$scope.data = res.data.nurses;
+				console.log(res);
+				$scope.data = res.data.items;
 
 				calculatAge();
 				calcTotalGen();
