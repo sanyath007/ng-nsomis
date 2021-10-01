@@ -496,7 +496,7 @@ app.controller('nurseController', [
 			console.log(id);
             $http.put(`${CONFIG.apiUrl}/nurses/${id}/unknown`, {})
             .then(res => {
-				console.log(res);
+				$scope.data = $scope.data.filter(person => person.person_id !== id);
             }, err => {
                 console.log(err)
             });
