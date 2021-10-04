@@ -22,7 +22,7 @@ app.controller('ipController', [
 		$scope.totalAdmdate = 0;
 		$scope.ward = null;
 		const wardBed = [
-			{ ward: '00', bed: 20 }, // จักษุ โสต ศอ นาสิก
+			{ ward: '00', bed: 30 }, // จักษุ โสต ศอ นาสิก
 			{ ward: '01', bed: 26 }, // อายุรกรรมชาย
 			{ ward: '02', bed: 26 }, // อายุรกรรมหญิง
 			{ ward: '04', bed: 8 }, // ห้องคลอด
@@ -30,15 +30,17 @@ app.controller('ipController', [
 			{ ward: '06', bed: 8 }, // พิเศษ 1
 			{ ward: '07', bed: 30 }, // ศัลยกรรมหญิง
 			{ ward: '08', bed: 20 }, // กุมารเวชกรรม
-			{ ward: '09', bed: 30 }, // สูติ-นรีเวชกรรม
-			{ ward: '10', bed: 30 }, // ศัลกรรมชาย
-			{ ward: '11', bed: 12 }, // พิเศษ 2
-			{ ward: '12', bed: 10 }, // พิเศษ 3
+			{ ward: '09', bed: 24 }, // สูติ-นรีเวชกรรม
+			{ ward: '10', bed: 32 }, // ศัลกรรมชาย
+			{ ward: '11', bed: 27 }, // พิเศษ 2
+			{ ward: '12', bed: 30 }, // พิเศษ 3
 			{ ward: '13', bed: 10 }, // ทารกแรกเกิดป่วย
 			{ ward: '14', bed: 8 }, // Stroke Unit
 			{ ward: '15', bed: 2 }, // NICU
+			{ ward: '16', bed: 30 }, // ตึก HICI
 			{ ward: '17', bed: 6 }, // IntermediateCare
 			{ ward: '18', bed: 30 }, // Cohort
+			{ ward: '19', bed: 30 }, // Trauma
 		];
 
 		const initTotalClass = () => ({
