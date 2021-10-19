@@ -39,8 +39,9 @@ app.controller('ipController', [
 			{ ward: '15', bed: 2 }, // NICU
 			{ ward: '16', bed: 30 }, // ตึก HICI
 			{ ward: '17', bed: 6 }, // IntermediateCare
-			{ ward: '18', bed: 30 }, // Cohort
+			{ ward: '18', bed: 30 }, // Cohort ตึกอายุรกรรม
 			{ ward: '19', bed: 30 }, // Trauma
+			{ ward: '21', bed: 50 }, // Cohort Ward เทศบาลฯ
 		];
 
 		const initTotalClass = () => ({
