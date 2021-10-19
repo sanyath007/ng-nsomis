@@ -15,10 +15,12 @@ app.controller('covidController', [
 		$scope.type = "";
 		$scope.covidBed = [
 			{ ward: '00', capacity: 30 }, 	//ชั้น 10
-			{ ward: '06', capacity: 3 }, 	//ชั้น 1
-			{ ward: '10', capacity: 30 }, 	//ชั้น 9
-			{ ward: '11', capacity: 24 }, 	//ชั้น 2
-			{ ward: '12', capacity: 14 }, 	//ชั้น 3
+			{ ward: '06', capacity: 6 }, 	//ชั้น 1
+			{ ward: '10', capacity: 32 }, 	//ชั้น 9
+			{ ward: '11', capacity: 27 }, 	//ชั้น 2
+			{ ward: '12', capacity: 30 }, 	//ชั้น 3
+			{ ward: '18', capacity: 24 }, 	//ชั้น 6
+			{ ward: '21', capacity: 50 }, 	//Cohort เทศบาล
 		];
 
 		$scope.cardStat = [];
