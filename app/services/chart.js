@@ -134,7 +134,11 @@ app.service('ChartService', [
         service.getSeriesData = function (url, data) {
             return $http.get(CONFIG.apiUrl + url + data);
         };
-        
+
+        service.getSeriesData2 = function (url) {
+            return $http.get(CONFIG.apiUrl + url);
+        };
+
         service.createDailyCategories = function() {
             return new Array(24);
         };

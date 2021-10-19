@@ -172,9 +172,11 @@ app.controller('dashmonthController', [
         };
         
         $scope.getErVisit = function() {
-            var month = '2020';
+            let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
 
-            ChartService.getSeriesData('/er/visit/', month)
+            ChartService.getSeriesData2(`/er/visit/${month}/month`)
             .then(function(res) {
                 let emergencyData = [];
                 let ugencyData = [];
@@ -230,12 +232,11 @@ app.controller('dashmonthController', [
         };
 
         $scope.getErEmergency = function () {
-            var month = '2020';
-            // var selectMonth = document.getElementById('selectMonth').value;
-            // var month = (selectMonth == '') ? moment().format('YYYY-MM') : selectMonth;
-            // console.log(month);
+            let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
 
-            ChartService.getSeriesData('/er/emergency/', month)
+            ChartService.getSeriesData2(`/er/emergency/${month}/month`)
             .then(function(res) {
                 var dataSeries = [];
 
