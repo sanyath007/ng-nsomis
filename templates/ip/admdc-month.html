@@ -1,0 +1,112 @@
+<section
+	class="content"
+	ng-controller="ipController"
+	ng-init="getAdmDcMonth($event);"
+>
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-bed mr-1"></i>
+							ยอด Admit / D/C ต่อเดือน
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+
+						<form action="" method="POST" class="form-inline">
+							<div class="form-group">
+								<label>ประจำเดือน :</label>
+								<input
+									type="text"
+									id="cboMonth"
+									name="cboMonth"
+									ng-model="cboMonth"
+									class="form-control"
+									style="margin: 0 10px;"
+									autocomplete="off"
+								>
+							</div>
+
+							<button ng-click="getAdmDcMonth($event)" class="btn btn-primary">ตกลง</button>
+							
+						</form>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<div class="card-body">
+
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th style="width: 3%; text-align: center;">ลำดับ</th>
+									<th style="text-align: center;">วอร์ด</th>
+									<!-- <th style="width: 8%; text-align: center;">จำนวนเตียง<br>(เตียง)</th> -->
+									<!-- <th style="width: 8%; text-align: center;">AdjRW</th> -->
+									<!-- <th style="width: 6%; text-align: center;">วันนอน<br>(วัน)</th> -->
+									<th style="width: 10%; text-align: center;">Admit<br>(ราย)</th>
+									<th style="width: 10%; text-align: center;">รับย้าย<br>(ราย)</th>
+									<th style="width: 10%; text-align: center;">รวม<br>(ราย)</th>
+									<!-- <th style="width: 10%; text-align: center;">Admit เฉลี่ย/วัน<br>(ราย)</th> -->
+									<th style="width: 8%; text-align: center;">D/C<br>(ราย)</th>
+									<th style="width: 10%; text-align: center;">ย้ายออก<br>(ราย)</th>
+									<th style="width: 10%; text-align: center;">รวม<br>(ราย)</th>
+									<!-- <th style="width: 8%; text-align: center;">D/C เฉลี่ย/วัน<br>(ราย)</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="(index, row) in data">	
+									<td style="text-align: center;">{{ index+1 }}</td>
+									<td>{{ row.ward + '-' + row.name }}</td>
+									<!-- <td style="text-align: center;">{{ row.bed.bed }}</td> -->
+									<!-- <td style="text-align: center;">{{ row.rw }}</td> -->
+									<!-- <td style="text-align: center;">{{ row.admdate }}</td> -->
+									<td style="text-align: center;">{{ row.adm_num | currency:'':0 }}</td>
+									<td style="text-align: center;">{{ row.movein.length | currency:'':0 }}</td>
+									<td style="text-align: center;">{{ (row.adm_num-0) + row.movein.length | currency:'':0 }}</td>
+									<!-- <td style="text-align: center;">{{ row.adm_avg | currency:'':1 }}</td> -->
+									<td style="text-align: center;">{{ row.dc_num | currency:'':0 }}</td>
+									<td style="text-align: center;">{{ row.moveout.length | currency:'':0 }}</td>
+									<td style="text-align: center;">{{ (row.dc_num-0) + row.moveout.length | currency:'':0 }}</td>
+									<!-- <td style="text-align: center;">{{ row.dc_avg | currency:'':1 }}</td> -->
+								</tr>
+							</tbody>
+						</table>
+
+					</div><!-- /.card-body -->
+					<div class="card-footer clearfix">
+						<div class="m-0 float-left" ng-show="data">
+							<a href="#" class="btn btn-success">Excel</a>
+						</div>
+						<ul class="pagination pagination-sm m-0 float-right" ng-show="false">
+							<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+						</ul>
+					</div><!-- /.card-footer -->
+				</div><!-- /.card -->
+
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->
+
+<script type="text/javascript">
+	$(function() {
+		$('#cboMonth').datepicker({
+			autoclose: true,
+			format: 'mm/yyyy',
+			viewMode: "months", 
+			minViewMode: "months",
+			language: 'th',
+			thaiyear: true
+		}).datepicker('update', new Date());
+	});
+</script>

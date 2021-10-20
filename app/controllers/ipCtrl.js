@@ -13,6 +13,7 @@ app.controller('ipController', [
 		$scope.cboYear = '';
 		$scope.sdate = '';
 		$scope.edate = '';
+
 		$scope.data = [];
 		$scope.ipLists = [];
 		$scope.pager = null;
@@ -91,6 +92,36 @@ app.controller('ipController', [
 				endDateOfMonth = moment(month).endOf("month").format('DD')
 				// Create data by calling sumAdmdate function
 				$scope.data = sumAdmdate(admdate, endDateOfMonth);
+			}, err => {
+				console.log(err)
+			});
+		}
+
+		$scope.getAdmDcMonth = function(e) {
+			if(e) e.preventDefault();
+
+			let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
+
+			$http.get(`${CONFIG.apiUrl}/ip/admdc-month/${month}`)
+			.then(res => {
+				let lastDate = moment(month).endOf('month').date();
+				let { ipStat, moveStat } = res.data;
+				$scope.data = ipStat;
+				console.log(moveStat.length);
+
+				$scope.data.forEach(d => {
+					// Get bed amount of each ward
+					d.bed = wardBed.find(wb => d.ward===wb.ward);
+					d.adm_avg = parseFloat(parseInt(d.adm_num) / lastDate);
+					d.dc_avg = parseFloat(parseInt(d.dc_num) / lastDate);
+
+					d.moveout = moveStat.filter(move => d.ward === move.oward && move.nward !== move.oward);
+					d.movein = moveStat.filter(move => d.ward === move.nward && move.nward !== move.oward);
+				});
+
+				console.log($scope.data);
 			}, err => {
 				console.log(err)
 			});
