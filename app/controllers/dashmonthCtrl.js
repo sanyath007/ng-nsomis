@@ -178,51 +178,20 @@ app.controller('dashmonthController', [
 
             ChartService.getSeriesData2(`/er/visit/${month}/month`)
             .then(function(res) {
-                let emergencyData = [];
-                let ugencyData = [];
-                let semiData = [];
-                let nonData = [];
-                let resusData = [];
+                let {series, categories} = ChartService.createStackedDataSeries(                    
+                    [
+                        { name: 'Emergency', prop: 'emergency' },
+                        { name: 'Ugency', prop: 'ugency' },
+                        { name: 'Semi-ugency', prop: 'semi' },
+                        { name: 'Non-ugency', prop: 'non' },
+                        { name: 'Resuscitation', prop: 'resuscitation' }
+                    ],
+                    res.data,
+                    { name: 'd'},
+                    { name: 'm', value: month }
+                );
 
-                res.data.visit.forEach((value, key) => {
-                    let emergency = value.emergency ? parseInt(value.emergency) : 0;
-                    let ugency = value.ugency ? parseInt(value.ugency) : 0;
-                    let semi = value.semi ? parseInt(value.semi) : 0;
-                    let non = value.non ? parseInt(value.non) : 0;
-                    let resuscitation = value.resuscitation ? parseInt(value.resuscitation) : 0;
-
-                    emergencyData.push(emergency);
-                    ugencyData.push(ugency);
-                    semiData.push(semi);
-                    nonData.push(non);
-                    resusData.push(resuscitation);
-
-                });
-
-                let series = [{
-                    name: 'Emergency',
-                    data: emergencyData,
-                    color: '#e41749',
-                }, {
-                    name: 'Ugency',
-                    data: ugencyData,
-                    color: '#f29c2b',
-                }, {
-                    name: 'Semi-ugency',
-                    data: semiData,
-                    color: '#57D1C9',
-                }, {
-                    name: 'Non-ugency',
-                    data: nonData,
-                    color: '#8bc24c',
-                }, {
-                    name: 'Resuscitation',
-                    data: resusData,
-                    color: '#200A3E',
-                }];
-
-                var categories = ['ตค', 'พย', 'ธค', 'มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย', 'กค', 'สค', 'กย']
-                $scope.barOptions = ChartService.initBarChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
+                $scope.barOptions = ChartService.initStackChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
                 $scope.barOptions.series = series;
 
                 var chart = new Highcharts.Chart($scope.barOptions);
