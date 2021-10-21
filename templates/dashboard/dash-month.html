@@ -56,15 +56,155 @@
 		<div class="row">
 			<section class="col-lg-12 connectedSortable">
 				<div class="card">
-					<div class="card-header">
-						<h3 class="card-title">
-							<i class="fas fa-users mr-1"></i>
-							ยอดผู้ป่วยนอก ประจำเดือน {{ cboMonth }}
-						</h3>
+					<div class="card-header p-2">
+						<ul class="nav nav-pills" id="dash-month">
+							<li class="nav-item">
+								<a class="nav-link active" href="#op" data-toggle="tab">
+									<i class="fas fa-users mr-1"></i>
+									ยอดผู้ป่วยนอก
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#ip" data-toggle="tab">
+									<i class="fas fa-bed mr-1"></i>
+									ยอดผู้ป่วยใน
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#refer" data-toggle="tab">
+									<i class="fas fa-ambulance mr-1"></i>
+									Refer In/Out
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#er" data-toggle="tab">
+									<i class="fas fa-wheelchair mr-1"></i>
+									ห้องฉุกเฉิน (ER)
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#or" data-toggle="tab">
+									<i class="fas fa-user-nurse mr-1"></i>
+									ห้องผ่าตัด (OR)
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#error" data-toggle="tab">
+									<i class="fas fa-exclamation-triangle"></i>
+									ข้อมูล Error
+								</a>
+							</li>
+						</ul>
 					</div><!-- /.card-header -->
 					<div class="card-body">
+
+						<div class="tab-content">
+							<div class="active tab-pane" id="op">
+								<div class="row">
+
+									<div class="col-md-5">
+
+										<div id="opVisitTypePieContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+
+									</div>
+
+									<div class="col-md-7">
+
+										<div id="opVisitBarContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+
+									</div>
+								</div>
+							</div><!-- /.tab-pane -->
+							<div class="tab-pane" id="ip">
+								<div class="row">
+									<div class="col-md-5">
+		
+										<div id="ipClassPieContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+		
+									</div>
+									
+									<div class="col-md-7">
+		
+										<div id="ipVisitBarContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+		
+									</div>
+								</div>
+							</div><!-- /.tab-pane -->
+							<div class="tab-pane" id="refer">
+								<div class="row">
+									<div class="col-md-6">
+		
+										<div id="referInBarContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+		
+									</div>
+		
+									<div class="col-md-6">
+		
+										<div id="referOutBarContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+		
+									</div>
+								</div>
+							</div><!-- /.tab-pane -->
+							<div class="tab-pane" id="er">
+								<div class="row">
+									<div class="col-md-5">
+
+										<div id="erEmergencyPieContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+
+									</div>
+
+									<div class="col-md-7">
+
+										<div id="erVisitBarContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+
+									</div>
+								</div>
+							</div><!-- /.tab-pane -->
+							<div class="tab-pane" id="or">
+								<div class="row">
+									<div class="col-md-5">
+
+										<div id="orTypePieContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+
+									</div>
+
+									<div class="col-md-7">
+
+										<div id="orVisitBarContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+
+									</div>
+								</div>
+							</div><!-- /.tab-pane -->
+							<div class="tab-pane" id="error">
+								<div class="row">
+									<div class="col-md-6">
+
+										<div id="errorOPBarContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+
+									</div>
+
+									<div class="col-md-6">
+
+										<div id="errorIPBarContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
+
+									</div>
+								</div>
+							</div><!-- /.tab-pane -->
+						</div><!-- /.tab-content -->
+
+					</div><!-- /.card-body-->
+				</div><!-- /.card-->
+
+				<!-- <div class="card">
+					<div class="card-header"> -->
+						<!-- <h3 class="card-title">
+							<i class="fas fa-users mr-1"></i>
+							ยอดผู้ป่วยนอก ประจำเดือน {{ cboMonth }}
+						</h3> -->
+					<!--</div> /.card-header -->
+					<!-- <div class="card-body"> -->
 						
-						<div class="row">
+						<!-- <div class="row">
 							<div class="col-md-12">
 
 								<div id="opVisitBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
@@ -76,19 +216,19 @@
 								<div id="opVisitTypePieContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
 
 							</div>
-						</div>
+						</div> -->
 
-					</div><!-- /.card-body-->
-				</div><!-- /.card-->
+					<!--</div> /.card-body-->
+				<!--</div> /.card-->
 
-				<div class="card">
+				<!-- <div class="card">
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-bed mr-1"></i>
-							ยอดผู้ป่วยใน ประจำวันที่ {{ cboMonth }}
-						</h3>
-					</div><!-- /.card-header -->
-					<div class="card-body">
+							ยอดผู้ป่วยใน ประจำเดือน {{ cboMonth }}
+						</h3> -->
+					<!-- </div> /.card-header -->
+					<!-- <div class="card-body">
 						<div class="row">
 							<div class="col-md-12">
 
@@ -101,19 +241,19 @@
 								<div id="ipVisitBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
 
 							</div>
-						</div>
+						</div> -->
 
-					</div><!-- /.card-body-->
-				</div><!-- /.card-->
+					<!--</div> /.card-body-->
+				<!--</div> /.card-->
 
-				<div class="card">
+				<!-- <div class="card">
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-ambulance mr-1"></i>
 							Refer In/Out ประจำเดือน {{ cboMonth }}
-						</h3>
-					</div><!-- /.card-header -->
-					<div class="card-body">
+						</h3> -->
+					<!--</div> /.card-header -->
+					<!-- <div class="card-body">
 						
 						<div class="row">
 							<div class="col-md-12">
@@ -127,19 +267,19 @@
 								<div id="referOutBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
 
 							</div>
-						</div>
+						</div> -->
 
-					</div><!-- /.card-body-->
-				</div><!-- /.card-->
+					<!--</div> /.card-body-->
+				<!--</div> /.card-->
 
-				<div class="card">
+				<!-- <div class="card">
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-wheelchair mr-1"></i>
-							ห้องอุบัติเหตุและฉุกเฉิน (ER) ปีงบประมาณ {{ cboYear }}
-						</h3>
-					</div><!-- /.card-header -->
-					<div class="card-body">
+							ห้องฉุกเฉิน (ER) ประจำเดือน {{ cboYear }}
+						</h3> -->
+					<!--</div> /.card-header -->
+					<!-- <div class="card-body">
 						<div class="row">
 							<div class="col-md-12">
 
@@ -152,19 +292,19 @@
 								<div id="erEmergencyPieContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
 
 							</div>
-						</div>
+						</div>-->
 
-					</div>
-				</div>
+					<!--</div> /.card-body -->
+				<!--</div> /.card -->
 
-				<div class="card">
+				<!-- <div class="card">
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-user-nurse mr-1"></i>
 							ห้องผ่าตัด (OR) ประจำเดือน {{ cboMonth }}
-						</h3>
-					</div><!-- /.card-header -->
-					<div class="card-body">
+						</h3> -->
+					<!--</div> /.card-header -->
+					<!-- <div class="card-body">
 						
 						<div class="row">
 							<div class="col-md-12">
@@ -178,20 +318,20 @@
 								<div id="orVisitBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
 
 							</div>
-						</div>
+						</div> -->
 
-					</div><!-- /.card-body-->
-				</div><!-- /.card-->
+					<!--</div> /.card-body-->
+				<!--</div> /.card-->
 
-				<div class="card">
+				<!-- <div class="card">
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-user-nurse mr-1"></i>
-							ข้อมูล Error ประจำเดือน {{ cboMonth }}
+							ข้อมูล Error ประจำเดือน {{ cboMonth }} -->
 							<!-- <a href="#" class="btn btn-warning btn-xs">ดูเพิ่มเติม</a> -->
-						</h3>
-					</div><!-- /.card-header -->
-					<div class="card-body">
+						<!-- </h3> -->
+					<!--</div> /.card-header -->
+					<!-- <div class="card-body">
 						
 						<div class="row">
 							<div class="col-md-12">
@@ -205,10 +345,10 @@
 								<div id="errorIPBarContainer" style="width: 100%; height: 400px; margin: 20px auto;"></div>
 
 							</div>
-						</div>
+						</div> -->
 
-					</div><!-- /.card-body-->
-				</div><!-- /.card-->
+					<!--</div> /.card-body-->
+				<!--</div> /.card-->
 
 			</section><!-- /.col-lg-12 -->
 		</div><!-- Main row -->
@@ -226,5 +366,15 @@
 			language: 'th',
 			thaiyear: true
 		}).datepicker('update', new Date());
+
+		$("#dash-month.nav .nav-link").on("click", function (e) {
+			e.preventDefault();
+
+			$("#dash-month.nav").find(".active").removeClass("active");
+			$(this).addClass("active");
+
+			$(".tab-content").find(".active").removeClass("active");
+			$('.tab-content > .tab-pane' + $(this).attr("href")).addClass("active");
+		});
 	});
 </script>

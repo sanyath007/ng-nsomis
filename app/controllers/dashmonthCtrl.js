@@ -28,7 +28,7 @@ app.controller('dashmonthController', [
                     { name: 'm', value: month }
                 );
 
-                $scope.barOptions = ChartService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอก", categories, 'จำนวน');
+                $scope.barOptions = ChartService.initBarChart("opVisitBarContainer", "ยอดผู้ป่วยนอก รายวัน", categories, 'จำนวน');
                 $scope.barOptions.series.push({
                     name: 'op visit',
                     data: dataSeries,
@@ -77,7 +77,7 @@ app.controller('dashmonthController', [
                     { name: 'm', value: month }
                 );
 
-                $scope.barOptions = ChartService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยใน", categories, 'จำนวน');
+                $scope.barOptions = ChartService.initBarChart("ipVisitBarContainer", "ยอดผู้ป่วยใน รายวัน", categories, 'จำนวน');
                 $scope.barOptions.series.push({
                     name: 'ip visit',
                     data: dataSeries,
@@ -191,7 +191,7 @@ app.controller('dashmonthController', [
                     { name: 'm', value: month }
                 );
 
-                $scope.barOptions = ChartService.initStackChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน ปีงบ " + (parseInt(month) + 543), categories, 'จำนวน');
+                $scope.barOptions = ChartService.initStackChart("erVisitBarContainer", "ยอดผู้รับบริการ รายวัน", categories, 'จำนวน');
                 $scope.barOptions.series = series;
 
                 var chart = new Highcharts.Chart($scope.barOptions);
