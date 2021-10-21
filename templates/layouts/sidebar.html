@@ -20,7 +20,13 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul 
+                id="app-sidebar"
+                class="nav nav-pills nav-sidebar flex-column"
+                data-widget="treeview"
+                role="menu"
+                data-accordion="false"
+            >
                 <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                 <li class="nav-item menu-open" id="dash">
@@ -61,7 +67,6 @@
                         <p>
                             ผู้ป่วยนอก (OP)
                             <i class="fas fa-angle-left right"></i>
-                            <span class="badge badge-info right">6</span>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -219,7 +224,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item" id="refer">
+                <li class="nav-item" id="eye">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>
@@ -242,7 +247,7 @@
                         </li> -->
                     </ul>
                 </li>
-                <li class="nav-item" id="refer">
+                <li class="nav-item" id="scope">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-microscope"></i>
                         <p>
@@ -265,7 +270,7 @@
                         </li> -->
                     </ul>
                 </li>
-                <li class="nav-item" id="refer">
+                <li class="nav-item" id="resource">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-hospital-user"></i>
                         <p>
@@ -300,7 +305,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="pharma">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-capsules"></i>
                         <p>
@@ -329,7 +334,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="covid">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-lungs-virus"></i>
                         <p>
@@ -339,15 +344,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="covid/num-tambon" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>ผู้ป่วย อ.เมือง รายตำบล</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="covid/num-bed" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>การใช้เตียง</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="covid/num-tambon" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ผู้ป่วย อ.เมือง รายตำบล</p>
                             </a>
                         </li>
                     </ul>
@@ -367,7 +372,8 @@
 			$(".nav-sidebar").find(".menu-open").children(".nav-treeview").css("display", "none");
             /** Remove .menu-open class from previous opened .nav-item */
 			$(".nav-sidebar").find(".menu-open").removeClass("menu-open");
-
+            
+            console.log('On menu is clicked!!');
             /** Set class and style to clicked .nav-item */
 			$(this).parent().addClass("menu-open");
             /** Set display style of .nav-treeview that is child of clicked .nav-item to block */
