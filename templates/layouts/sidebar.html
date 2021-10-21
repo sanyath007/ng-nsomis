@@ -24,7 +24,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                 <li class="nav-item menu-open" id="dash">
-                    <a href="#" class="nav-link active" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link active">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -33,21 +33,21 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="้home" class="nav-link active" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="้home" class="nav-link active">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>รายปี</p>
                                 <!-- <span class="right badge badge-danger">New</span> -->
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="dash-month" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="dash-month" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>รายเดือน</p>
                                 <!-- <span class="right badge badge-danger">New</span> -->
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="dash-day" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="dash-day" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>รายวัน</p>
                                 <!-- <span class="right badge badge-danger">New</span> -->
@@ -56,7 +56,7 @@
                     </ul>
                 </li>
                 <li class="nav-item" id="op">
-                    <a href="#" class="nav-link" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             ผู้ป่วยนอก (OP)
@@ -66,13 +66,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/layout/top-nav.html" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="pages/layout/top-nav.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Menu Name</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Menu Name</p>
                             </a>
@@ -80,7 +80,7 @@
                     </ul>
                 </li>
                 <li class="nav-item" id="ip">
-                    <a href="#" class="nav-link" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-bed"></i>
                         <p>
                             ผู้ป่วยใน (IP)
@@ -89,49 +89,49 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="ip/admdc-month" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="ip/admdc-month" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>ยอด Admit / D/C</p>
                             </a>
                         </li>
                         <!-- <li class="nav-item">
-                            <a href="ip/admdate-month" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="ip/admdate-month" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>สรุปวันนอน (ไม่นับ ICU)</p>
                             </a>
                         </li> -->
                         <!-- <li class="nav-item">
-                            <a href="ip/admdate-month" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="ip/admdate-month" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>สรุปวันนอน ICU</p>
                             </a>
                         </li> -->
                         <li class="nav-item">
-                            <a href="ip/bedocc-year" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="ip/bedocc-year" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>อัตราครองเตียง</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="ip/bedempty-day" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="ip/bedempty-day" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>การใช้เตียงประจำวัน</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="ip/class" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="ip/class" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>ยอดผู้ป่วยแยกประเภท</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="ip/product-sum" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="ip/product-sum" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Productivity ผู้ป่วยใน</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="ip/chart-sending" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="ip/chart-sending" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>สรุปการส่งชาร์ตผู้ป่วย</p>
                             </a>
@@ -139,7 +139,7 @@
                     </ul>
                 </li>
                 <li class="nav-item" id="er">
-                    <a href="#" class="nav-link" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-wheelchair"></i>
                         <p>
                             ห้องฉุกเฉิน (ER)
@@ -148,13 +148,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="er/sum-period" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="er/sum-period" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>ผลการปฏิบัติงานห้อง ER</p>
                             </a>
                         </li>
                         <!-- <li class="nav-item">
-                            <a href="pages/UI/icons.html" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="pages/UI/icons.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Menu Name</p>
                             </a>
@@ -162,7 +162,7 @@
                     </ul>
                 </li>
                 <li class="nav-item" id="or">
-                    <a href="#" class="nav-link" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user-nurse"></i>
                         <p>
                             ห้องผ่าตัด (OR)
@@ -171,25 +171,25 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="or/sum-year" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="or/sum-year" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>สรุปยอดผ่าตัด</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="or/emergency-year" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="or/emergency-year" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>ยอดผ่าตัดตามความเร่งด่วน </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="or/expenses" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="or/expenses" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>มูลค่าค่าใช้จ่ายแยกหมวด</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="or/cataract" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="or/cataract" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>รายการผู้รับบริการผ่าตัดตา</p>
                             </a>
@@ -197,7 +197,7 @@
                     </ul>
                 </li>
                 <li class="nav-item" id="refer">
-                    <a href="#" class="nav-link" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-ambulance"></i>
                         <p>
                             ศูนย์ส่งต่อ (Refer)
@@ -206,13 +206,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/tables/simple.html" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="pages/tables/simple.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Menu Name</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/tables/data.html" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="pages/tables/data.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Menu Name</p>
                             </a>
@@ -220,7 +220,7 @@
                     </ul>
                 </li>
                 <li class="nav-item" id="refer">
-                    <a href="#" class="nav-link" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>
                             OPD จักษุ
@@ -229,13 +229,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="eye/vision2020" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="eye/vision2020" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>รายงาน Vision2020</p>
                             </a>
                         </li>
                         <!-- <li class="nav-item">
-                            <a href="pages/tables/data.html" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="pages/tables/data.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Menu Name</p>
                             </a>
@@ -243,7 +243,7 @@
                     </ul>
                 </li>
                 <li class="nav-item" id="refer">
-                    <a href="#" class="nav-link" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-microscope"></i>
                         <p>
                             ห้องส่องกล้อง
@@ -252,13 +252,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="scope/sum-year" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="scope/sum-year" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>สรุปยอดผู้รับบริการ</p>
                             </a>
                         </li>
                         <!-- <li class="nav-item">
-                            <a href="pages/tables/data.html" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="pages/tables/data.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Menu Name</p>
                             </a>
@@ -266,7 +266,7 @@
                     </ul>
                 </li>
                 <li class="nav-item" id="refer">
-                    <a href="#" class="nav-link" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-hospital-user"></i>
                         <p>
                             ทรัพยากร
@@ -275,25 +275,25 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="nurses/stat" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="nurses/stat" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>ทรัพยากรทั้งหมด</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="nurses/list" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="nurses/list" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>พยาบาลวิชาชีพ</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="supports/list" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="supports/list" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>บุคลากรอื่นๆ</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="nurses/gen-list" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="nurses/gen-list" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>เจเนอเรชั่นและระดับ</p>
                             </a>
@@ -301,7 +301,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-capsules"></i>
                         <p>
                             ห้องจ่ายยา
@@ -310,19 +310,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pharma/op" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="pharma/op" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>ยอดการใช้ยา OPD</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pharma/ip" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="pharma/ip" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>ยอดการใช้ยา IPD</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pharma/user-druglists" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="pharma/user-druglists" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>สร้างรายการยา</p>
                             </a>
@@ -330,7 +330,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" ng-click="sidebarMenuToggle($event)">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-lungs-virus"></i>
                         <p>
                             ผู้ป่วยโควิด (COVID-19)
@@ -339,13 +339,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="covid/num-tambon" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="covid/num-tambon" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>ผู้ป่วย อ.เมือง รายตำบล</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="covid/num-bed" class="nav-link" ng-click="sidebarSubMenuToggle($event)">
+                            <a href="covid/num-bed" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>การใช้เตียง</p>
                             </a>
@@ -356,3 +356,34 @@
         </nav><!-- /.sidebar-menu -->
     </div><!-- /.sidebar -->
 </aside>
+
+<script type="text/javascript">
+	$(function () {
+        /** menu */
+		$(".nav-sidebar > .nav-item > .nav-link").on("click", function (e) {
+			e.preventDefault();
+            console.log('On menu is clicked!!');
+            /** Set display style of .nav-treeview that is child of previous opened .nav-item to none */
+			$(".nav-sidebar").find(".menu-open").children(".nav-treeview").css("display", "none");
+            /** Remove .menu-open class from previous opened .nav-item */
+			$(".nav-sidebar").find(".menu-open").removeClass("menu-open");
+
+            /** Set class and style to clicked .nav-item */
+			$(this).parent().addClass("menu-open");
+            /** Set display style of .nav-treeview that is child of clicked .nav-item to block */
+            $(this).parent().children(".nav-treeview").css("display", "block");
+
+            /** Remove .active class from previous actived .nav-link that is child of .nav-item */
+			$(".nav-sidebar .nav-item").find(".active").removeClass("active");
+            /** Set .active class to clicked .nav-link */
+			$(this).addClass("active");
+		});
+
+        /** submenu */
+		$(".nav-treeview .nav-link").on("click", function (e) {
+            console.log('On submenu is clicked!!');
+			$(".nav-treeview").find(".active").removeClass("active");
+			$(this).addClass("active");
+		});
+	});
+</script>
