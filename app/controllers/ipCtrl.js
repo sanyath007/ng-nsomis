@@ -97,6 +97,36 @@ app.controller('ipController', [
 			});
 		}
 
+		$scope.getAdmDcDay = function(e) {
+			if(e) e.preventDefault();
+
+			let date = ($('#sdate').val() !== '') 
+							? StringFormatService.convToDbDate($scope.sdate) 
+							: moment().format('YYYY-MM-DD');
+
+			$http.get(`${CONFIG.apiUrl}/ip/admdc-day/${date}`)
+			.then(res => {
+				let lastDate = moment(date).endOf('month').date();
+				let { ipStat, moveStat } = res.data;
+				$scope.data = ipStat;
+				console.log(moveStat.length);
+
+				$scope.data.forEach(d => {
+					// Get bed amount of each ward
+					d.bed = wardBed.find(wb => d.ward===wb.ward);
+					d.adm_avg = parseFloat(parseInt(d.adm_num) / lastDate);
+					d.dc_avg = parseFloat(parseInt(d.dc_num) / lastDate);
+
+					d.moveout = moveStat.filter(move => d.ward === move.oward && move.nward !== move.oward);
+					d.movein = moveStat.filter(move => d.ward === move.nward && move.nward !== move.oward);
+				});
+
+				console.log($scope.data);
+			}, err => {
+				console.log(err)
+			});
+		}
+
 		$scope.getAdmDcMonth = function(e) {
 			if(e) e.preventDefault();
 

@@ -27,6 +27,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/ip/admdate-month.html',
 		controller: 'ipController'
 	})
+	.when('/ip/admdc-day', {
+		templateUrl: 'templates/ip/admdc-day.html',
+		controller: 'ipController'
+	})
 	.when('/ip/admdc-month', {
 		templateUrl: 'templates/ip/admdc-month.html',
 		controller: 'ipController'
