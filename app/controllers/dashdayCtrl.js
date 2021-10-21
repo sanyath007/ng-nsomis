@@ -353,7 +353,7 @@ app.controller('dashdayController', [
                     { name: 'o' }
                 );
 
-                $scope.barOptions = ChartService.initStackChart("errorOPBarContainer", `สรุปข้อมูล Error ผู้ป่วยนอก (ณ วันที่ ${displayDate})`, categories, 'จำนวน (records)');
+                $scope.barOptions = ChartService.initStackChart("errorOPBarContainer", `สรุปข้อมูล Error ผู้ป่วยนอก`, categories, 'จำนวน (records)');
                 $scope.barOptions.series = series;
 
                 let chart = new Highcharts.Chart($scope.barOptions);
