@@ -69,8 +69,28 @@
 										</a>
 									</td>
 									<td style="text-align: center;">{{ row.bedEmpty | currency:'':0 }}</td>
-									<td style="text-align: center;" ng-style="row.bedUsePercent > 80 && { 'color': 'red' }">
-										{{ row.bedUsePercent | currency:'':1 }}
+									<td style="text-align: center;">
+										<span
+											ng-show="row.bedUsePercent > 90"
+											class="badge badge-danger"
+											style="font-size: medium;"
+										>
+											{{ row.bedUsePercent | currency:'':1 }}
+										</span>
+										<span
+											ng-show="row.bedUsePercent > 50 && row.bedUsePercent <= 90"
+											class="badge badge-warning"
+											style="font-size: medium;"
+										>
+											{{ row.bedUsePercent | currency:'':1 }}
+										</span>
+										<span
+											ng-show="row.bedUsePercent <= 50"
+											class="badge badge-success"
+											style="font-size: medium;"
+										>
+											{{ row.bedUsePercent | currency:'':1 }}
+										</span>
 									</td>
 								</tr>
 								<tr>
@@ -78,8 +98,28 @@
 									<td style="text-align: center;">{{ totalData.bedTotal | currency:'':0 }}</td>
 									<td style="text-align: center;">{{ totalData.ptAmount | currency:'':0 }}</td>
 									<td style="text-align: center;">{{ totalData.bedEmpty | currency:'':0 }}</td>
-									<td style="text-align: center;" ng-style="totalData.bedUsePercent > 80 && { 'color': 'red' }">
-										{{ totalData.bedUsePercent | currency:'':1 }}
+									<td style="text-align: center;">
+										<span
+											ng-show="totalData.bedUsePercent > 90"
+											class="badge badge-danger"
+											style="font-size: medium;"
+										>
+											{{ totalData.bedUsePercent | currency:'':1 }}
+										</span>
+										<span
+											ng-show="totalData.bedUsePercent > 50 && totalData.bedUsePercent <= 90"
+											class="badge badge-warning"
+											style="font-size: medium;"
+										>
+											{{ totalData.bedUsePercent | currency:'':1 }}
+										</span>
+										<span
+											ng-show="totalData.bedUsePercent <= 50"
+											class="badge badge-success"
+											style="font-size: medium;"
+										>
+											{{ totalData.bedUsePercent | currency:'':1 }}
+										</span>
 									</td>
 								</tr>
 							</tbody>

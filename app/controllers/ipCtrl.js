@@ -30,7 +30,7 @@ app.controller('ipController', [
 			{ ward: '01', bed: 26, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 5 }, sortBy: 5 }, // อายุรกรรมชาย ชั้น 5
 			{ ward: '14', bed: 8, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 5 }, sortBy: 5 }, // Stroke Unit ชั้น 5
 			{ ward: '18', bed: 24, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 6 }, sortBy: 7 }, // Cohort ตึกอายุรกรรม ชั้น 6
-			{ ward: '17', bed: 6, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 6 }, sortBy: 8 }, // IntermediateCare ชั้น 6
+			{ ward: '17', bed: 0, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 6 }, sortBy: 8 }, // IntermediateCare ชั้น 6
 			{ ward: '08', bed: 30, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 7 }, sortBy: 9 }, // กุมารเวชกรรม ชั้น 7
 			{ ward: '15', bed: 2, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 7 }, sortBy: 10 }, // ทารกแรกเกิดวิกฤต (NICU) ชั้น 7
 			{ ward: '13', bed: 10, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 7 }, sortBy: 11 }, // ทารกแรกเกิดป่วย ชั้น 7
@@ -39,10 +39,10 @@ app.controller('ipController', [
 			{ ward: '00', bed: 24, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 10 }, sortBy: 14 }, // จักษุ โสต ศอ นาสิก ชั้น 10
 			{ ward: '19', bed: 24, building: { no: 6, name: 'ตึกสิรินคร', floor: 3 }, sortBy: 15 }, // Trauma ตึกสิรินคร ชั้น 3
 			{ ward: '09', bed: 30, building: { no: 6, name: 'ตึกสิรินคร', floor: 4 }, sortBy: 16 }, // สูติ-นรีเวชกรรม ตึกสิรินคร ชั้น 4
-			{ ward: '09', bed: 24, building: { no: 6, name: 'ตึกสิรินคร', floor: 4 }, sortBy: 17 }, // เด็กวิกฤต (PICU) ตึกสิรินคร ชั้น 4
+			{ ward: '20', bed: 24, building: { no: 6, name: 'ตึกสิรินคร', floor: 4 }, sortBy: 17 }, // เด็กวิกฤต (PICU) ตึกสิรินคร ชั้น 4
 			{ ward: '04', bed: 8, building: { no: 6, name: 'ตึกสิรินคร', floor: 4 }, sortBy: 18 }, // ห้องคลอด ตึกสิรินคร
 			{ ward: '05', bed: 8, building: { no: 6, name: 'ตึกสิรินคร', floor: 2 }, sortBy: 19 }, // วิกฤต ตึกสิรินคร
-			{ ward: '16', bed: 30, building: { no: 5, name: 'เทศบาลฯ', floor: 0 }, sortBy: 20 }, // ตึก HICI ปฐมภูมิ
+			{ ward: '16', bed: 0, building: { no: 5, name: 'เทศบาลฯ', floor: 0 }, sortBy: 20 }, // ตึก HICI ปฐมภูมิ
 			{ ward: '21', bed: 50, building: { no: 99, name: 'เทศบาลฯ', floor: 0 }, sortBy: 21 }, // Cohort Ward เทศบาลฯ
 		];
 
