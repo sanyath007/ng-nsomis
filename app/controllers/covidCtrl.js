@@ -211,5 +211,9 @@ app.controller('covidController', [
 		$scope.calculatePercentage = function(val1, val2) {
 			return (val1 * 100) / val2;
 		};
+
+		$scope.calculateLos = function(admitDate) {
+			return moment().diff(moment(admitDate), 'days');
+		};
 	}
 ]);
