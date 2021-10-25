@@ -259,26 +259,26 @@ app.controller('homeController', [
                 let series = [{
                     name: 'Emergency',
                     data: emergencyData,
-                    color: '#e41749',
+                    color: '#8ac6d1',
                 }, {
                     name: 'Ugency',
                     data: ugencyData,
-                    color: '#f29c2b',
+                    color: '#414141',
                 }, {
                     name: 'Semi-ugency',
                     data: semiData,
-                    color: '#57D1C9',
+                    color: '#8bc24c',
                 }, {
                     name: 'Non-ugency',
                     data: nonData,
-                    color: '#8bc24c',
+                    color: '#f29c2b',
                 }, {
                     name: 'Resuscitation',
                     data: resusData,
-                    color: '#200A3E',
+                    color: '#a696c8',
                 }];
 
-                $scope.barOptions = ChartService.initBarChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน", categories, 'จำนวน');
+                $scope.barOptions = ChartService.initStackChart("erVisitBarContainer", "ยอดผู้รับบริการรายเดือน", categories, 'จำนวน');
                 $scope.barOptions.series = series;
 
                 var chart = new Highcharts.Chart($scope.barOptions);
