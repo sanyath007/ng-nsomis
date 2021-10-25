@@ -32,13 +32,14 @@
 									<tr style="font-size: 14px;">
 										<th style="width: 3%; text-align: center;">ลำดับ</th>
 										<th style="width: 6%; text-align: center;">AN</th>
-										<th style="width: 6%; text-align: center;">HN</th>
+										<th style="width: 5%; text-align: center;">HN</th>
 										<th style="text-align: center;">ชื่อ-สกุล</th>
 										<th style="width: 25%; text-align: center;">ที่อยู่</th>
 										<th style="width: 6%; text-align: center;">วันที่ Admit</th>
-										<th style="width: 6%; text-align: center;">เวลา Admit</th>
+										<th style="width: 5%; text-align: center;">เวลา Admit</th>
 										<th style="width: 6%; text-align: center;" ng-if="type=='จำหน่าย'">วันที่ D/C</th>
-										<th style="width: 6%; text-align: center;" ng-if="type=='จำหน่าย'">เวลา D/C</th>
+										<th style="width: 5%; text-align: center;" ng-if="type=='จำหน่าย'">เวลา D/C</th>
+										<th style="width: 5%; text-align: center;">วันนอน<br>(วัน)</th>
 										<th style="width: 15%; text-align: center;">อาการ</th>
 										<th style="width: 5%; text-align: center;">Diag</th>
 									</tr>
@@ -61,6 +62,12 @@
 										</td>
 										<td style="text-align: center;" ng-if="type=='จำหน่าย'">
 											{{ row.dchtime }}
+										</td>
+										<td style="text-align: center;" ng-if="type=='จำหน่าย'">
+											{{ row.admdate }}
+										</td>
+										<td style="text-align: center;" ng-if="type!='จำหน่าย'">
+											{{ calculateLos(row.regdate) }}
 										</td>
 										<td>{{ row.prediag }}</td>
 										<td style="text-align: center;">{{ row.pdx }}</td>
