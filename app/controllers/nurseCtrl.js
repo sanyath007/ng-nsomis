@@ -403,7 +403,8 @@ app.controller('nurseController', [
             $http.put(`${CONFIG.apiUrl}/nurses/${id}/move`, $scope.nurseMove)
             .then(res => {
 				console.log(res);
-				
+				$scope.data = $scope.data.filter(person => person.person_id !== id);
+
 				/** Clear values */
 				$scope.nurseMove = {
 					nurse: null,
@@ -441,6 +442,7 @@ app.controller('nurseController', [
             $http.put(`${CONFIG.apiUrl}/nurses/${id}/transfer`, $scope.nurseTransfer)
             .then(res => {
 				console.log(res);
+				$scope.data = $scope.data.filter(person => person.person_id !== id);
 
 				/** Clear values */
 				$scope.nurseTransfer = {
@@ -474,6 +476,7 @@ app.controller('nurseController', [
             $http.put(`${CONFIG.apiUrl}/supports/${id}/leave`, $scope.nurseLeave)
             .then(res => {
 				console.log(res);
+				$scope.data = $scope.data.filter(person => person.person_id !== id);
 
 				/** Clear values */
 				$scope.nurseLeave = {

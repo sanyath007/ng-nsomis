@@ -322,6 +322,7 @@ app.controller('supportController', [
             $http.put(`${CONFIG.apiUrl}/supports/${id}/move`, $scope.nurseMove)
             .then(res => {
 				console.log(res);
+				$scope.data = $scope.data.filter(person => person.person_id !== id);
 
 				/** Clear values */
 				$scope.nurseMove = {
@@ -336,6 +337,7 @@ app.controller('supportController', [
 				};
 
 				$('#moveForm').modal('hide');
+				$('#shiftForm').modal('hide');
             }, err => {
                 console.log(err)
             });
@@ -358,6 +360,7 @@ app.controller('supportController', [
             $http.put(`${CONFIG.apiUrl}/supports/${id}/transfer`, $scope.nurseTransfer)
             .then(res => {
 				console.log(res);
+				$scope.data = $scope.data.filter(person => person.person_id !== id);
 
 				/** Clear values */
 				$scope.nurseTransfer = {
@@ -390,6 +393,7 @@ app.controller('supportController', [
             $http.put(`${CONFIG.apiUrl}/supports/${id}/leave`, $scope.nurseLeave)
             .then(res => {
 				console.log(res);
+				$scope.data = $scope.data.filter(person => person.person_id !== id);
 
 				/** Clear values */
 				$scope.nurseLeave = {
