@@ -65,8 +65,8 @@
 									<td>
 										{{ row.ward + '-' + row.name }}
 										<span style="margin: 0px; color: grey;">
-											{{ row.bed.building.name + ' ชั้น ' }}
-											{{ row.bed.building.floor != '0' ? row.bed.building.floor : '-'}}
+											{{ row.bed.building.name }}
+											{{ row.bed.building.floor != '0' ? ' ชั้น ' + row.bed.building.floor : ''}}
 										</span>
 									</td>
 									<!-- <td style="text-align: center;">{{ row.bed.bed }}</td> -->
