@@ -23,26 +23,27 @@ app.controller('ipController', [
 		$scope.totalAdmdate = 0;
 		$scope.ward = null;
 		const wardBed = [
-			{ ward: '00', bed: 30 }, // จักษุ โสต ศอ นาสิก
-			{ ward: '01', bed: 26 }, // อายุรกรรมชาย
-			{ ward: '02', bed: 26 }, // อายุรกรรมหญิง
-			{ ward: '04', bed: 8 }, // ห้องคลอด
-			{ ward: '05', bed: 8 }, // วิกฤต
-			{ ward: '06', bed: 8 }, // พิเศษ 1
-			{ ward: '07', bed: 30 }, // ศัลยกรรมหญิง
-			{ ward: '08', bed: 20 }, // กุมารเวชกรรม
-			{ ward: '09', bed: 24 }, // สูติ-นรีเวชกรรม
-			{ ward: '10', bed: 32 }, // ศัลกรรมชาย
-			{ ward: '11', bed: 27 }, // พิเศษ 2
-			{ ward: '12', bed: 30 }, // พิเศษ 3
-			{ ward: '13', bed: 10 }, // ทารกแรกเกิดป่วย
-			{ ward: '14', bed: 8 }, // Stroke Unit
-			{ ward: '15', bed: 2 }, // NICU
-			{ ward: '16', bed: 30 }, // ตึก HICI
-			{ ward: '17', bed: 6 }, // IntermediateCare
-			{ ward: '18', bed: 30 }, // Cohort ตึกอายุรกรรม
-			{ ward: '19', bed: 30 }, // Trauma
-			{ ward: '21', bed: 50 }, // Cohort Ward เทศบาลฯ
+			{ ward: '06', bed: 8, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 1 }, sortBy: 1 }, // พิเศษ 1 ชั้น 1
+			{ ward: '11', bed: 12, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 2 }, sortBy: 2 }, // พิเศษ 2 ชั้น 2
+			{ ward: '12', bed: 16, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 3 }, sortBy: 3 }, // พิเศษ 3 ชั้น 3
+			{ ward: '02', bed: 30, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 4 }, sortBy: 4 }, // อายุรกรรมหญิง ชั้น 4
+			{ ward: '01', bed: 26, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 5 }, sortBy: 5 }, // อายุรกรรมชาย ชั้น 5
+			{ ward: '14', bed: 8, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 5 }, sortBy: 5 }, // Stroke Unit ชั้น 5
+			{ ward: '18', bed: 24, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 6 }, sortBy: 7 }, // Cohort ตึกอายุรกรรม ชั้น 6
+			{ ward: '17', bed: 6, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 6 }, sortBy: 8 }, // IntermediateCare ชั้น 6
+			{ ward: '08', bed: 30, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 7 }, sortBy: 9 }, // กุมารเวชกรรม ชั้น 7
+			{ ward: '15', bed: 2, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 7 }, sortBy: 10 }, // ทารกแรกเกิดวิกฤต (NICU) ชั้น 7
+			{ ward: '13', bed: 10, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 7 }, sortBy: 11 }, // ทารกแรกเกิดป่วย ชั้น 7
+			{ ward: '07', bed: 30, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 8 }, sortBy: 12 }, // ศัลยกรรมหญิง ชั้น 8
+			{ ward: '10', bed: 30, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 9 }, sortBy: 13 }, // ศัลกรรมชาย ชั้น 9
+			{ ward: '00', bed: 24, building: { no: 4, name: 'ตึก 10 ชั้น', floor: 10 }, sortBy: 14 }, // จักษุ โสต ศอ นาสิก ชั้น 10
+			{ ward: '19', bed: 24, building: { no: 6, name: 'ตึกสิรินคร', floor: 3 }, sortBy: 15 }, // Trauma ตึกสิรินคร ชั้น 3
+			{ ward: '09', bed: 30, building: { no: 6, name: 'ตึกสิรินคร', floor: 4 }, sortBy: 16 }, // สูติ-นรีเวชกรรม ตึกสิรินคร ชั้น 4
+			{ ward: '09', bed: 24, building: { no: 6, name: 'ตึกสิรินคร', floor: 4 }, sortBy: 17 }, // เด็กวิกฤต (PICU) ตึกสิรินคร ชั้น 4
+			{ ward: '04', bed: 8, building: { no: 6, name: 'ตึกสิรินคร', floor: 4 }, sortBy: 18 }, // ห้องคลอด ตึกสิรินคร
+			{ ward: '05', bed: 8, building: { no: 6, name: 'ตึกสิรินคร', floor: 2 }, sortBy: 19 }, // วิกฤต ตึกสิรินคร
+			{ ward: '16', bed: 30, building: { no: 5, name: 'เทศบาลฯ', floor: 0 }, sortBy: 20 }, // ตึก HICI ปฐมภูมิ
+			{ ward: '21', bed: 50, building: { no: 99, name: 'เทศบาลฯ', floor: 0 }, sortBy: 21 }, // Cohort Ward เทศบาลฯ
 		];
 
 		const initTotalClass = () => ({
@@ -109,7 +110,6 @@ app.controller('ipController', [
 				let lastDate = moment(date).endOf('month').date();
 				let { ipStat, moveStat } = res.data;
 				$scope.data = ipStat;
-				console.log(moveStat.length);
 
 				$scope.data.forEach(d => {
 					// Get bed amount of each ward
@@ -119,9 +119,9 @@ app.controller('ipController', [
 
 					d.moveout = moveStat.filter(move => d.ward === move.oward && move.nward !== move.oward);
 					d.movein = moveStat.filter(move => d.ward === move.nward && move.nward !== move.oward);
-				});
-
-				console.log($scope.data);
+				})
+				
+				$scope.data.sort((a, b) => a.bed.sortBy - b.bed.sortBy);
 			}, err => {
 				console.log(err)
 			});
@@ -139,7 +139,6 @@ app.controller('ipController', [
 				let lastDate = moment(month).endOf('month').date();
 				let { ipStat, moveStat } = res.data;
 				$scope.data = ipStat;
-				console.log(moveStat.length);
 
 				$scope.data.forEach(d => {
 					// Get bed amount of each ward
@@ -151,7 +150,7 @@ app.controller('ipController', [
 					d.movein = moveStat.filter(move => d.ward === move.nward && move.nward !== move.oward);
 				});
 
-				console.log($scope.data);
+				$scope.data.sort((a, b) => a.bed.sortBy - b.bed.sortBy);
 			}, err => {
 				console.log(err)
 			});
@@ -294,6 +293,8 @@ app.controller('ipController', [
 					$scope.totalData.ptAmount += parseInt(val.num_pt);
 					$scope.totalData.bedEmpty += parseInt(val.bed.bed) - parseInt(val.num_pt);
 				});
+
+				$scope.data.sort((a, b) => a.bed.sortBy - b.bed.sortBy);
 
 				$scope.totalData.bedUsePercent = ($scope.totalData.ptAmount * 100) / $scope.totalData.bedTotal;
 				$scope.totalData.bedEmptyPercent = ($scope.totalData.bedEmpty * 100) / $scope.totalData.bedTotal;
