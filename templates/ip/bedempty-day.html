@@ -55,7 +55,13 @@
 							<tbody>
 								<tr ng-repeat="(index, row) in data">	
 									<td style="text-align: center;">{{ index+1 }}</td>
-									<td>{{ row.ward + '-' + row.wardname }}</td>
+									<td>
+										{{ row.ward + '-' + row.wardname }}
+										<span style="margin: 0px; color: grey;">
+											{{ row.bed.building.name + ' ชั้น ' }}
+											{{ row.bed.building.floor != '0' ? row.bed.building.floor : '-'}}
+										</span>
+									</td>
 									<td style="text-align: center;">{{ row.bed.bed }}</td>
 									<td style="text-align: center;">
 										<a href="#" ng-click="showIpLists($event, row.ward)">
