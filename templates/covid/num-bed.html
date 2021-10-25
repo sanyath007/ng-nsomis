@@ -88,21 +88,21 @@
 													/
 													<span class="ml-1">
 														<span
-															ng-show="calculatePercentage(getBedEmpty(ward), ward.bed.capacity) > 90"
+															ng-show="calculatePercentage(getBedEmpty(ward), ward.bed.capacity) <= 10"
 															class="badge badge-danger"
 															style="font-size: medium;"
 														>
 															{{ calculatePercentage(getBedEmpty(ward), ward.bed.capacity) | currency:'':0 }} %
 														</span>
 														<span
-															ng-show="calculatePercentage(getBedEmpty(ward), ward.bed.capacity) > 60 && calculatePercentage(getBedEmpty(ward), ward.bed.capacity) < 90"
+															ng-show="calculatePercentage(getBedEmpty(ward), ward.bed.capacity) > 10 && calculatePercentage(getBedEmpty(ward), ward.bed.capacity) <= 40"
 															class="badge badge-warning"
 															style="font-size: medium;"
 														>
 															{{ calculatePercentage(getBedEmpty(ward), ward.bed.capacity) | currency:'':0 }} %
 														</span>
 														<span
-															ng-show="calculatePercentage(getBedEmpty(ward), ward.bed.capacity) <= 60"
+															ng-show="calculatePercentage(getBedEmpty(ward), ward.bed.capacity) > 40"
 															class="badge badge-success"
 															style="font-size: medium;"
 														>
