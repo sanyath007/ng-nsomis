@@ -110,6 +110,12 @@ app.controller('productController', [
             .then(res => {
 				$scope.data = res.data.product;
 				$scope.wards = res.data.wards;
+
+				$scope.wards.forEach(w => {
+					w.desc = $rootScope.wardBed().find(wb => wb.ward === w.ward);
+				});
+
+				$scope.wards.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
 			}, err => {
 				console.log(err)
 			});
