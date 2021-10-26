@@ -50,12 +50,12 @@
 									<tr>
 										<!-- <td tyle="width: 3%; text-align: center;" rowspan="2">ลำดับ</td> -->
 										<td style="text-align: center;" rowspan="2">หน่วยงาน</td>
-										<td style="width: 5%; text-align: center;" rowspan="2">เวร</td>
+										<td style="width: 3%; text-align: center;" rowspan="2">เวร</td>
 										<td style="text-align: center;" colspan="31">วันที่</td>
 									</tr>
 									<tr>
 										<td
-											style="width: 4%; text-align: center;"
+											style="width: 3%; text-align: center; font-size: small;"
 											ng-repeat="m in range(1, dataTableOptions.totalCol)"
 										>
 											{{ m }}
@@ -64,7 +64,13 @@
 								</thead>
 									<tr ng-repeat="(index, ward) in data" style="font-size: 12px;">
 										<!-- <td style="text-align: center;">{{ index+1 }}</td> -->
-										<td>{{ ward.ward + '-' + ward.name }}</td>
+										<td>
+											{{ ward.ward + '-' + ward.name }}
+											<span style="margin: 0px; color: grey;">
+												{{ ward.desc.building.name }}
+												{{ ward.desc.building.floor != '0' ? ' ชั้น ' + ward.desc.building.floor : ''}}
+											</span>
+										</td>
 										<td style="text-align: center;">
 											<span ng-show="ward.period == 1">เช้า</span>
 											<span ng-show="ward.period == 2">บ่าย</span>
@@ -76,28 +82,28 @@
 										>
 											<h6>
 												<span
-													ng-show="ward[m] > 130"
+													ng-show="ward[m] != '' && ward[m] > 130"
 													class="badge bg-danger"
 												>
-													{{ ward[m] }}
+													{{ ward[m] | currency:'':0 }}
 												</span>
 												<span
-													ng-show="ward[m] > 110 && ward[m] <= 130"
+													ng-show="ward[m] != '' && ward[m] > 110 && ward[m] <= 130"
 													class="badge bg-warning"
 												>
-													{{ ward[m] }}
+													{{ ward[m] | currency:'':0 }}
 												</span>
 												<span
-													ng-show="ward[m] >= 90 && ward[m] <= 110"
+													ng-show="ward[m] != '' && ward[m] >= 90 && ward[m] <= 110"
 													class="badge bg-success"
 												>
-													{{ ward[m] }}
+													{{ ward[m] | currency:'':0 }}
 												</span>
 												<span
-													ng-show="ward[m] < 90"
+													ng-show="ward[m] != '' && ward[m] < 90"
 													class="badge bg-default"
 												>
-													{{ ward[m] }}
+													{{ ward[m] | currency:'':0 }}
 												</span>
 											</h6>
 										</td>
