@@ -89,7 +89,10 @@ app.controller('productController', [
 
 						w[day] = prod ? prod.productivity : '';
 					}
+					w.desc = $rootScope.wardBed().find(wb => wb.ward === w.ward);
 				});
+
+				$scope.data.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
 			}, err => {
 				console.log(err)
 			});
