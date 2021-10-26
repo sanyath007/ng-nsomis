@@ -1,11 +1,12 @@
 app.controller('productController', [
+	'$rootScope',
 	'$scope',
 	'$http',
 	'CONFIG',
 	'StringFormatService',
 	'DatetimeService',
 	'toaster',
-	function($scope, $http, CONFIG, StringFormatService, DatetimeService, toaster) 
+	function($rootScope, $scope, $http, CONFIG, StringFormatService, DatetimeService, toaster) 
 	{
 		$scope.cboSDate = '';
 		$scope.cboMonth = '';
@@ -115,6 +116,12 @@ app.controller('productController', [
 			$http.get(`${CONFIG.apiUrl}/product-add`)
             .then(res => {
 				$scope.wards = res.data;
+
+				$scope.wards.forEach(w => {
+					w.desc = $rootScope.wardBed().find(wb => wb.ward === w.ward);
+				});
+
+				$scope.wards.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
 			}, err => {
 				console.log(err)
 			});
