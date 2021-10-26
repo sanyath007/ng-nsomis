@@ -36,7 +36,11 @@
 											>
 												<option value="">-- กรุณาเลือก --</option>
 												<option value="{{ ward.ward }}" ng-repeat="(index, ward) in wards">
-													{{ ward.ward+ '-' +ward.name }}
+													{{ ward.ward+ '-' +ward.name }} / 
+													<span>
+														{{ ward.desc.building.name }}
+														{{ ward.desc.building.floor == '0' ? '' : ' ชั้น ' + ward.desc.building.floor }}
+													</span>
 												</option>
 											</select>
 										</div>
