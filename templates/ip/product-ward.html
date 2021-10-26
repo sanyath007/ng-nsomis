@@ -64,7 +64,7 @@
 					<div class="card-body">
 
 						<div class="table-responsive">
-							<table class="table table-bordered table-striped">
+							<table class="table table-bordered table-striped table-sm">
 								<thead>
 									<tr>
 										<!-- <td width="3%" style="text-align: center;">ลำดับ</td> -->
@@ -87,6 +87,7 @@
 										<td width="6%" style="text-align: center;">Nursing Productivity</td>
 									</tr>
 								</thead>
+								<tbody>
 									<tr ng-repeat="(index, prod) in data">
 										<!-- <td style="text-align: center;">{{ index+1 }}</td> -->
 										<td style="text-align: center;">{{ prod.product_date | thdate }}</td>
@@ -106,31 +107,25 @@
 										<td style="text-align: center;">{{ prod.pn }}</td>
 										<td style="text-align: center;">{{ prod.xstaff }}</td>
 										<td style="text-align: center;">
-											<h6>
+											<h5 style="margin: 0px;">
 												<span
 													ng-show="prod.productivity > 130"
 													class="badge bg-danger"
 												>
 													{{ prod.productivity | currency:'':2 }}
 												</span>
-											</h6>
-											<h6>
 												<span
 													ng-show="prod.productivity > 110 && prod.productivity <= 130"
 													class="badge bg-warning"
 												>
 													{{ prod.productivity | currency:'':2 }}
 												</span>
-											</h6>
-											<h6>
 												<span
 													ng-show="prod.productivity >= 90 && prod.productivity <= 110"
 													class="badge bg-success"
 												>
 													{{ prod.productivity | currency:'':2 }}
 												</span>
-											</h6>
-											<h6>
 												<span
 													ng-show="prod.productivity < 90"
 													class="badge bg-default"
