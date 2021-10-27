@@ -6,7 +6,7 @@ app.controller('homeController', [
     'ChartService',
     function($scope, $http, CONFIG, ChartService)
     {
-        $scope.cboYear = '';
+        $scope.cboYear = moment().month() >= 9 ? moment().add(1, 'year').year() + 543 : moment().year() + 543;
         $scope.pieOptions = {};
         $scope.barOptions = {};
         $scope.toDay = new Date();
@@ -48,6 +48,18 @@ app.controller('homeController', [
                 lnk: ''
             },
         ];
+
+        console.log(moment().month());
+        console.log(moment().toDate());
+        console.log(new Date());
+        $('#cboYear').datepicker({
+			autoclose: true,
+			format: 'yyyy',
+			viewMode: "years", 
+			minViewMode: "years",
+			language: 'th',
+			thaiyear: true
+		}).datepicker('update', moment().month() >= 9 ? moment().add(1, 'year').toDate() : new Date());
 
         $scope.getCardData = function (e) {
             if(e) e.preventDefault();
