@@ -1,0 +1,252 @@
+<section
+	class="content"
+	ng-controller="schedulingController"
+	ng-init="getInitForm($event);"
+>
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-hospital-user"></i>
+							ฟอร์มเพิ่มข้อมูลพยาบาล
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<div class="card-body">
+
+						<form action="" method="POST">
+							<div class="row py-2 px-5">
+								<div class="form-group col-md-6">
+									<label>เลข 13 หลัก :</label>
+									<div class="input-group">
+										<input
+											id="cid"
+											name="cid"								
+											ng-model="newNurse.cid"								
+											class="form-control"
+											placeholder="CID"
+										/>
+										<div class="input-group-append">
+											<button class="btn btn-primary" ng-click="showPersonLists($event)">
+												Search
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label>HN :</label>
+									<input
+										id="hn"
+										name="hn"								
+										ng-model="newNurse.hn"								
+										class="form-control"
+										placeholder="HN"
+									/>
+								</div>
+								<div class="form-group col-md-2">
+									<label>คำนำหน้า :</label>
+									<select
+										id="prefix"
+										name="prefix"								
+										ng-model="newNurse.prefix"								
+										class="form-control"
+									>
+										<option value="">-- เลือกคำนำหน้า --</option>
+										<option ng-repeat="prefix in prefixes" value="{{ prefix.prefix_id }}">
+											{{ prefix.prefix_name }}
+										</option>
+									</select>
+								</div>
+								<div class="form-group col-md-5">
+									<label>ชื่อ :</label>
+									<input
+										type="text"
+										id="fname"
+										name="fname"								
+										ng-model="newNurse.fname"								
+										class="form-control"
+										placeholder="ชื่อ"
+									/>
+								</div>
+								<div class="form-group col-md-5">
+									<label>นามสกุล :</label>
+									<input
+										type="text"
+										id="lname"
+										name="lname"								
+										ng-model="newNurse.lname"								
+										class="form-control"
+										placeholder="นามสกุล"
+									/>
+								</div>
+								<div class="form-group col-md-3">
+									<label>ว/ด/ป เกิด :</label>
+									<input
+										type="text"
+										id="birthdate"
+										name="birthdate"								
+										ng-model="newNurse.birthdate"								
+										class="form-control"
+										autocomplete="off"
+									/>
+								</div>
+								<div class="form-group col-md-2">
+									<label>อายุ (ปี) :</label>
+									<input
+										type="text"
+										id="age_y"
+										name="age_y"
+										ng-model="newNurse.age_y"
+										class="form-control"
+										placeholder="อายุ (ปี)"
+									/>
+								</div>
+								<div class="form-group col-md-4">
+									<label>ตำแหน่ง :</label>
+									<select
+										id="position"
+										name="position"								
+										ng-model="newNurse.position"								
+										class="form-control"
+									>
+										<option value="">-- เลือกตำแหน่ง --</option>
+										<option ng-repeat="position in positions" value="{{ position.position_id }}">
+											{{ position.position_name }}
+										</option>
+									</select>
+								</div>
+								<div class="form-group col-md-3">
+									<label>ระดับ :</label>
+									<select
+										id="academic"
+										name="academic"								
+										ng-model="newNurse.academic"								
+										class="form-control"
+									>
+										<option value="">-- เลือกระดับ --</option>
+										<option ng-repeat="academic in academics" value="{{ academic.ac_id }}">
+											{{ academic.ac_name }}
+										</option>
+									</select>
+								</div>
+								<div class="form-group col-md-4">
+									<label>เลขตำแหน่ง :</label>
+									<input
+										type="text"
+										id="position_no"
+										name="position_no"								
+										ng-model="newNurse.position_no"								
+										class="form-control"
+										placeholder="เลขตำแหน่ง"
+									/>
+								</div>
+								<div class="form-group col-md-4">
+									<label>จ.18 :</label>
+									<select
+										id="hosp_pay18"
+										name="hosp_pay18"								
+										ng-model="newNurse.hosp_pay18"								
+										class="form-control"
+									>
+										<option value="">-- เลือก จ.18 --</option>
+										<option ng-repeat="hosp in hospPay18s" value="{{ hosp.hospcode }}">
+											{{ hosp.name }}
+										</option>
+									</select>
+								</div>
+								<div class="form-group col-md-4">
+									<label>กลุ่มงาน :</label>
+									<select
+										id="depart"
+										name="depart"								
+										ng-model="newNurse.depart"								
+										class="form-control"
+									>
+										<option value="">-- เลือกกลุ่มงาน --</option>
+										<option ng-repeat="depart in departs" value="{{ depart.depart_id }}">
+											{{ depart.depart_name }}
+										</option>
+									</select>
+								</div>
+								<div class="form-group col-md-5">
+									<label>วันที่บรรจุ :</label>
+									<input
+										type="text"
+										id="start_date"
+										name="start_date"								
+										ng-model="newNurse.start_date"								
+										class="form-control"
+										autocomplete="off"
+									/>
+								</div>
+								<div class="form-group col-md-2">
+									<label>อายุงาน (ปี) :</label>
+									<input
+										type="text"
+										id="level_y"
+										name="level_y"								
+										ng-model="newNurse.level_y"								
+										class="form-control"
+										placeholder="อายุงาน (ปี)"
+									/>
+								</div>
+								<div class="form-group col-md-5">
+									<label>เลขใบประกอบวิชาชีพ :</label>
+									<input
+										type="text"
+										id="cert_no"
+										name="cert_no"								
+										ng-model="newNurse.cert_no"								
+										class="form-control"
+										placeholder="เลขใบประกอบวิชาชีพ"
+									>
+								</div>
+
+								<div class="form-group col-md-12">
+									<button ng-click="store($event)" class="btn btn-primary float-right">
+										ตกลง
+									</button>
+								</div>
+							</div><!-- /.row -->
+						</form>
+
+						<div ng-include="'./templates/modals/person-list.html?version=202108051630'"></div>
+
+					</div><!-- /.card-body -->
+					<div class="card-footer clearfix">
+						
+					</div><!-- /.card-footer -->
+				</div><!-- /.card -->
+	
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->
+
+<script type="text/javascript">
+	$(function() {
+		$('#hosp_pay18').select2();
+
+		$('#birthdate').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+
+		$('#start_date').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+	});
+</script>

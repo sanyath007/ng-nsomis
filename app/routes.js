@@ -175,6 +175,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/covid/patient-all.html',
 		controller: 'covidController'
 	})
+	.when('/schedulings', {
+		templateUrl: 'templates/scheduling/add.html',
+		controller: 'schedulingController'
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
