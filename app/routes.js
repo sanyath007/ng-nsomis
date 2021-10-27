@@ -68,8 +68,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		controller: 'productController'
 	})
 	.when('/ip/chart-sending', {
-		templateUrl: 'templates/ip/chart-sending.html',
-		controller: 'ipController'
+		templateUrl: 'templates/error/chart-sending.html',
+		controller: 'errorController'
 	})
 	.when('/er/sum-period', {
 		templateUrl: 'templates/er/sum-period.html',
