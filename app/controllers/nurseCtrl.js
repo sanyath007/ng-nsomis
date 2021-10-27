@@ -473,9 +473,8 @@ app.controller('nurseController', [
 
 			const id = $scope.nurseLeave.nurse.person_id;
 
-            $http.put(`${CONFIG.apiUrl}/supports/${id}/leave`, $scope.nurseLeave)
+            $http.put(`${CONFIG.apiUrl}/nurses/${id}/leave`, $scope.nurseLeave)
             .then(res => {
-				console.log(res);
 				$scope.data = $scope.data.filter(person => person.person_id !== id);
 
 				/** Clear values */
