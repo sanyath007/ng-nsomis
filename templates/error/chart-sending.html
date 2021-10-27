@@ -84,39 +84,39 @@
 									</td>
 									<td style="text-align: center;">{{ row.total }}</td>
 									<td style="text-align: center;">
-										<a href="ip/ptdchbyward/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+										<a href="error/sent-list/{{ sdate | dbdate }}/{{ edate | dbdate }}/1/{{ row.ward }}">
 											{{ row.send }}
 										</a>
 									</td>
 									<td style="text-align: center;">{{ row.send*100/row.total | currency:'':1 }}</td>
 									<td style="text-align: center;">
-										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+										<a href="error/sent-list/{{ sdate | dbdate }}/{{ edate | dbdate }}/0/{{ row.ward }}">
 											{{ row.notsend }}
 										</a>
 									</td>
 									<td style="text-align: center;">{{ row.notsend*100/row.total | currency:'':1 }}</td>
 									<td style="text-align: center;">
-										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+										<a href="error/sent-list/{{ sdate | dbdate }}/{{ edate | dbdate }}/2/{{ row.ward }}">
 											{{ row.notsendless7 }}
 										</a>
 									</td>
 									<td style="text-align: center;">
-										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+										<a href="error/sent-list/{{ sdate | dbdate }}/{{ edate | dbdate }}/3/{{ row.ward }}">
 											{{ row.notsend7 }}
 										</a>
 									</td>
 									<td style="text-align: center;">
-										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+										<a href="error/sent-list/{{ sdate | dbdate }}/{{ edate | dbdate }}/4/{{ row.ward }}">
 											{{ row.notsend14 }}
 										</a>
 									</td>
 									<td style="text-align: center;">
-										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+										<a href="error/sent-list/{{ sdate | dbdate }}/{{ edate | dbdate }}/5/{{ row.ward }}">
 											{{ row.notsend21 }}
 										</a>
 									</td>
 									<td style="text-align: center;">
-										<a href="ip/ptlosbycare/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">
+										<a href="error/sent-list/{{ sdate | dbdate }}/{{ edate | dbdate }}/6/{{ row.ward }}">
 											{{ row.notsendgreat30 }}
 										</a>
 									</td>

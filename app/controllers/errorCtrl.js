@@ -3,13 +3,16 @@ app.controller('errorController', [
 	'$rootScope',
 	'$scope',
 	'$http',
+	'$routeParams',
 	'CONFIG',
 	'StringFormatService',
-	function($rootScope, $scope, $http, CONFIG, StringFormatService)
+	function($rootScope, $scope, $http, $routeParams, CONFIG, StringFormatService)
 	{
 		$scope.sdate = '';
 		$scope.edate = '';
 		$scope.data = [];
+		$scope.ward = '';
+		$scope.status = '';
 
 		$scope.getChartSending = function(e) {
 			if(e) e.preventDefault();
@@ -38,8 +41,6 @@ app.controller('errorController', [
 		};
 
 		$scope.getChartSentList = function(e) {
-			// if(!$rootScope.isLogedIn) $rootScope.showLogin();
-
 			let sdate = $routeParams.sdate;
 			let edate = $routeParams.edate;
 			let status = $routeParams.status;
@@ -49,10 +50,7 @@ app.controller('errorController', [
 			.then(res => {
 				$scope.data = res.data.data;
 				$scope.ward = res.data.ward;
-
-				$scope.totalAdmdate = $scope.data.reduce((sumAdmDate, curVal) => {
-					return sumAdmDate + parseInt(curVal.admdate);
-				}, 0);
+				$scope.status = res.data.status;
 			}, err => {
 				console.log(err);
 			})

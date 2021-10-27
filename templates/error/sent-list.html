@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="errorController"
-	ng-init="getPtDchByWard($event);"
+	ng-init="getChartSentList($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -12,7 +12,8 @@
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-bed mr-1"></i>
-							รายชื่อผู้ป่วยที่จำหน่ายในวอร์ด (นับเฉพาะที่ถูกจำหน่ายในวอร์ด)
+							รายชื่อชาร์ตผู้ป่วย
+							<span>{{ status }}</span>
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
@@ -36,7 +37,10 @@
 										<th style="width: 6%; text-align: center;">เวลา Admit</th>
 										<th style="width: 8%; text-align: center;">วันที่ D/C</th>
 										<th style="width: 6%; text-align: center;">เวลา D/C</th>
-										<th style="width: 5%; text-align: center;">วันนอน</th>
+										<th style="width: 5%; text-align: center;">
+											<span ng-show="status == 'ส่งแล้วทั้งหมด'">จน.วันถึงวันที่ส่ง</span>
+											<span ng-show="status != 'ส่งแล้วทั้งหมด'">จน.วันที่ยังไม่ส่ง</span>
+										</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -50,11 +54,10 @@
 										<td style="text-align: center;">{{ row.regtime }}</td>
 										<td style="text-align: center;">{{ row.dchdate | thdate }}</td>
 										<td style="text-align: center;">{{ row.dchtime }}</td>
-										<td style="text-align: center;">{{ row.admdate }}</td>
+										<td style="text-align: center;">{{ row.senddatediff }} วัน</td>
 									</tr>
 									<tr>
-										<td style="text-align: center;" colspan="9">รวมวันนอน</td>
-										<td style="text-align: center;">{{ totalAdmdate }}</td>
+										<td style="text-align: center;" colspan="10">รวมทั้งสิ้น {{ data.length }} ชาร์ต</td>
 									</tr>
 								</tbody>
 							</table>
