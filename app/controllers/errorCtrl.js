@@ -36,5 +36,26 @@ app.controller('errorController', [
 				console.log(err);
 			})
 		};
+
+		$scope.getChartSentList = function(e) {
+			// if(!$rootScope.isLogedIn) $rootScope.showLogin();
+
+			let sdate = $routeParams.sdate;
+			let edate = $routeParams.edate;
+			let status = $routeParams.status;
+			let ward = $routeParams.ward;
+
+			$http.get(`${CONFIG.apiUrl}/error/chart-sent-list/${sdate}/${edate}/${status}/${ward}`)
+			.then(res => {
+				$scope.data = res.data.data;
+				$scope.ward = res.data.ward;
+
+				$scope.totalAdmdate = $scope.data.reduce((sumAdmDate, curVal) => {
+					return sumAdmDate + parseInt(curVal.admdate);
+				}, 0);
+			}, err => {
+				console.log(err);
+			})
+		};
 	}
 ]);

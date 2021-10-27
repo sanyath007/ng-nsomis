@@ -71,6 +71,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/error/chart-sending.html',
 		controller: 'errorController'
 	})
+	.when('/error/sent-list/:sdate/:edate/:status/:ward', {
+		templateUrl: 'templates/error/sent-list.html',
+		controller: 'errorController'
+	})
 	.when('/er/sum-period', {
 		templateUrl: 'templates/er/sum-period.html',
 		controller: 'erController'
