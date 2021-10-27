@@ -155,6 +155,7 @@ app.controller('ipController', [
 				daysOfYear = (moment().year(year).month(1).endOf("month").format('DD') == 28) ? 365 : 366;
 				// Create data by calling sumAdmdate function
 				$scope.data = sumAdmdate(admdate, daysOfYear);
+				$scope.data.sort((wa, wb) => wa.bed.sortBy - wb.bed.sortBy);
 
 				$scope.data.forEach(d => {
 					$scope.totalData.adjRwTotal += parseFloat(d.rw);
