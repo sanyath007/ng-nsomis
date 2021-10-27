@@ -75,7 +75,13 @@
 							<tbody>
 								<tr ng-repeat="(index, row) in data">	
 									<td style="text-align: center;">{{ index+1 }}</td>
-									<td>{{ row.ward + '-' + row.name }}</td>
+									<td>
+										{{ row.ward + '-' + row.name }}
+										<span style="margin: 0px; color: grey;">
+											{{ row.desc.building.name }}
+											{{ row.desc.building.floor != '0' ? ' ชั้น ' + row.desc.building.floor : ''}}
+										</span>
+									</td>
 									<td style="text-align: center;">{{ row.total }}</td>
 									<td style="text-align: center;">
 										<a href="ip/ptdchbyward/{{ sdate | dbdate }}/{{ edate | dbdate }}/{{ row.ward }}">

@@ -1,10 +1,11 @@
 
 app.controller('errorController', [
+	'$rootScope',
 	'$scope',
 	'$http',
 	'CONFIG',
 	'StringFormatService',
-	function($scope, $http, CONFIG, StringFormatService)
+	function($rootScope, $scope, $http, CONFIG, StringFormatService)
 	{
 		$scope.sdate = '';
 		$scope.edate = '';
@@ -22,8 +23,15 @@ app.controller('errorController', [
 
 			$http.get(`${CONFIG.apiUrl}/error/chart-send/${startDate}/${endDate}`)
 			.then(res => {
-				console.log(res);
 				$scope.data = res.data.chartSend
+
+				// Get bed amount of each ward
+				$scope.data.forEach(d => {
+					d.desc = $rootScope.wardBed().find(wb => d.ward===wb.ward);
+				});
+
+				// Sort ward data
+				$scope.data.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
 			}, err => {
 				console.log(err);
 			})

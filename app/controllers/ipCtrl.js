@@ -65,7 +65,7 @@ app.controller('ipController', [
 					// Get bed amount of each ward
 					d.bed = $rootScope.wardBed().find(wb => d.ward===wb.ward);
 				});
-				
+
 				// Get end date of month from startDate
 				endDateOfMonth = moment(month).endOf("month").format('DD')
 				// Create data by calling sumAdmdate function
@@ -97,7 +97,7 @@ app.controller('ipController', [
 					d.moveout = moveStat.filter(move => d.ward === move.oward && move.nward !== move.oward);
 					d.movein = moveStat.filter(move => d.ward === move.nward && move.nward !== move.oward);
 				})
-				
+
 				$scope.data.sort((a, b) => a.bed.sortBy - b.bed.sortBy);
 			}, err => {
 				console.log(err)
@@ -137,7 +137,7 @@ app.controller('ipController', [
 			if(e) e.preventDefault();
 
 			let year = $scope.cboYear !== '' ? parseInt($scope.cboYear) - 543 : $scope.toDay.getFullYear();
-			
+
 			$http.get(`${CONFIG.apiUrl}/ip/bedocc-year/${year}`)
 			.then(res => {
 				let admdate = res.data.admdate
@@ -150,7 +150,7 @@ app.controller('ipController', [
 					// Get bed amount of each ward
 					d.bed = $rootScope.wardBed().find(wb => d.ward===wb.ward);
 				});
-				
+
 				// Get total days of the year
 				daysOfYear = (moment().year(year).month(1).endOf("month").format('DD') == 28) ? 365 : 366;
 				// Create data by calling sumAdmdate function
@@ -184,28 +184,28 @@ app.controller('ipController', [
 				d.sumHr = d.stat.reduce((sum, st) => {
 					return sum + parseInt(st.admit_hour);
 				}, 0);
-				
+
 				d.sumPt = d.stat.length;
 
 				d.sumBedOcc2 = calculateBedOcc(d.sumAdm, d.bed.bed, totalDate);
 
 				d.activeBed2 = calculateActiveBed(d.sumBedOcc2, d.bed.bed);
 			});
-			
+
 			return data;
 		}
 
 		const calculateBedOcc = function(sumAdmdate, totalBed, totalDate) {
 			return (sumAdmdate*100)/(totalBed*totalDate);
 		}
-		
+
 		const calculateActiveBed = function(bedOcc, totalBed) {
 			return (bedOcc*totalBed)/100;
 		}
 
 		$scope.showIpLists = (e, ward) => {
 			e.preventDefault();
-            
+
 			let date = ($scope.cboDate !== '') 
                         ? StringFormatService.convToDbDate($scope.cboDate)
                         : moment().format('YYYY-MM-DD');
@@ -219,7 +219,7 @@ app.controller('ipController', [
 				$scope.ipLists.forEach(u => {
 					u.ageY = DatetimeService.calcAge(u.birthday, 'years');
 				});
-				
+
                 $('#ipLists').modal('show');
 			}, err => {
                 console.log(err)
@@ -228,7 +228,7 @@ app.controller('ipController', [
 
 		$scope.onPaginateLinkClick = (e, link) => {
             e.preventDefault();
-            
+
             $http.get(link)
             .then(res => {
                 $scope.ipLists = res.data.items;
@@ -250,7 +250,7 @@ app.controller('ipController', [
 			let date = ($scope.cboDate !== '') 
                         ? StringFormatService.convToDbDate($scope.cboDate)
                         : moment().format('YYYY-MM-DD');
-			
+
 			$http.get(`${CONFIG.apiUrl}/ip/bedempty-day/${date}`)
 			.then(res => {
 				$scope.data = res.data
@@ -331,7 +331,7 @@ app.controller('ipController', [
 				console.log(err);
 			})
 		};
-		
+
 		$scope.getPtLosByCare = function(e) {
 			// if(!$rootScope.isLogedIn) $rootScope.showLogin();
 
