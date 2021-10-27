@@ -112,25 +112,25 @@
 													ng-show="prod.productivity > 130"
 													class="badge bg-danger"
 												>
-													{{ prod.productivity | currency:'':2 }}
+													{{ prod.productivity | currency:'':1 }}
 												</span>
 												<span
 													ng-show="prod.productivity > 110 && prod.productivity <= 130"
 													class="badge bg-warning"
 												>
-													{{ prod.productivity | currency:'':2 }}
+													{{ prod.productivity | currency:'':1 }}
 												</span>
 												<span
 													ng-show="prod.productivity >= 90 && prod.productivity <= 110"
 													class="badge bg-success"
 												>
-													{{ prod.productivity | currency:'':2 }}
+													{{ prod.productivity | currency:'':1 }}
 												</span>
 												<span
 													ng-show="prod.productivity < 90"
 													class="badge bg-default"
 												>
-													{{ prod.productivity | currency:'':2 }}
+													{{ prod.productivity | currency:'':1 }}
 												</span>
 											</h6>
 										</td>
