@@ -16,7 +16,7 @@ app.controller('covidController', [
 		$scope.covidBed = [
 			{ ward: '06', capacity: 6, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 1 }, sortBy: 1 }, //ชั้น 1
 			{ ward: '11', capacity: 27, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 2 }, sortBy: 2 }, //ชั้น 2
-			{ ward: '12', capacity: 30, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 3 }, sortBy: 3 }, //ชั้น 3
+			{ ward: '12', capacity: 27, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 3 }, sortBy: 3 }, //ชั้น 3
 			{ ward: '18', capacity: 24, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 6 }, sortBy: 7 }, //ชั้น 6
 			{ ward: '10', capacity: 32, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 9 }, sortBy: 11 }, //ชั้น 9
 			{ ward: '00', capacity: 30, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 10 }, sortBy: 12 }, //ชั้น 10
