@@ -102,9 +102,9 @@ var app = angular.module('App', ['ngRoute', 'ngStorage', 'toaster', 'angular-loa
                     { ward: '07', bed: 30, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 8 }, sortBy: 10 }, // ศัลยกรรมหญิง ชั้น 8
                     { ward: '10', bed: 30, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 9 }, sortBy: 11 }, // ศัลกรรมชาย ชั้น 9
                     { ward: '00', bed: 30, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 10 }, sortBy: 12 }, // จักษุ โสต ศอ นาสิก ชั้น 10
-                    { ward: '05', bed: 8, building: { no: 6, name: 'อาคารสิรินคร', floor: 2 }, sortBy: 13 }, // วิกฤต อาคารสิรินคร ชั้น 2
+                    { ward: '05', bed: 8, building: { no: 6, name: 'อาคารผู้ป่วยนอก', floor: 3 }, sortBy: 13 }, // วิกฤต (ICU) อาคารผู้ป่วยนอก ชั้น 3
                     { ward: '15', bed: 2, building: { no: 6, name: 'อาคารสิรินคร', floor: 2 }, sortBy: 14 }, // ทารกแรกเกิดวิกฤต (NICU) อาคารสิรินคร ชั้น 2
-                    { ward: '13', bed: 10, building: { no: 6, name: 'อาคารสิรินคร', floor: 2 }, sortBy: 15 }, // ทารกแรกเกิดป่วย อาคารสิรินคร ชั้น 2
+                    { ward: '13', bed: 10, building: { no: 6, name: 'อาคารสิรินคร', floor: 2 }, sortBy: 15 }, // ทารกแรกเกิดป่วย (SNB) อาคารสิรินคร ชั้น 2
                     { ward: '20', bed: 24, building: { no: 6, name: 'อาคารสิรินคร', floor: 2 }, sortBy: 16 }, // เด็กวิกฤต (PICU) อาคารสิรินคร ชั้น 2
                     { ward: '19', bed: 24, building: { no: 6, name: 'อาคารสิรินคร', floor: 3 }, sortBy: 17 }, // Trauma อาคารสิรินคร ชั้น 3
                     { ward: '09', bed: 30, building: { no: 6, name: 'อาคารสิรินคร', floor: 4 }, sortBy: 18 }, // สูติ-นรีเวชกรรม อาคารสิรินคร ชั้น 4
