@@ -6,38 +6,79 @@ app.controller('schedulingController', [
 	'$routeParams',
 	'CONFIG',
 	'StringFormatService',
-	function($rootScope, $scope, $http, $routeParams, CONFIG, StringFormatService)
+	'DatetimeService',
+	function($rootScope, $scope, $http, $routeParams, CONFIG, StringFormatService, DatetimeService)
 	{
 		$scope.sdate = '';
 		$scope.edate = '';
 		$scope.data = [];
-		$scope.ward = '';
-		$scope.status = '';
+		$scope.dataTableOptions = null;
+		$scope.cboDepart = '';
+		$scope.cboMonth = '';
+		$scope.scheduling_shifts = [];
 
-		$scope.getChartSending = function(e) {
+		$scope.range = function(min, max, step) {
+			step = step || 1;
+			var input = [];
+			for (var i = min; i <= max; i += step) {
+				input.push(i);
+			}
+			return input;
+		};
+
+		$scope.getAll = function(e) {
 			if(e) e.preventDefault();
 
-			let startDate = ($('#sdate').val() !== '') 
-							? StringFormatService.convToDbDate($scope.sdate) 
-							: moment().format('YYYY-MM-DD');
-			let endDate = ($('#edate').val() !== '') 
-							? StringFormatService.convToDbDate($scope.edate) 
-							: moment().format('YYYY-MM-DD');
+			let depart = $scope.cboDepart !== '' ? $scope.cboDepart : '0';
+			let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
 
-			$http.get(`${CONFIG.apiUrl}/error/chart-send/${startDate}/${endDate}`)
+			$scope.dataTableOptions = {
+				totalCol: parseInt(moment(month).endOf('month').format('D')),
+			};
+
+			$http.get(`${CONFIG.apiUrl}/schedulings?depart=${depart}&month=${month}`)
 			.then(res => {
-				$scope.data = res.data.chartSend
+				console.log(res);
+				const { shifts, ...data } = res.data.scheduling;
+				$scope.data = data;
+				const memberOfDep = res.data.memberOfDep
 
-				// Get bed amount of each ward
-				$scope.data.forEach(d => {
-					d.desc = $rootScope.wardBed().find(wb => d.ward===wb.ward);
+				// TODO: create shifts of each person of each days by columns
+				memberOfDep.forEach(person => {
+					let person_shifts = [];
+					for(let d = 1; d <= $scope.dataTableOptions.totalCol; d++) {
+						const sh = shifts.filter(sh => sh.person_id === person.person_id && d === moment(sh.date).date());
+
+						let shiftText = '';
+						
+						if (sh.length === 0) {
+							shiftText = '';
+						} else {
+							sh.forEach(s => {
+								shiftText += (s.shift_id === '1' ? 'ด' : s.shift_id === '2' ? 'ช' : 'บ') + '|';
+							});
+						}
+
+						person_shifts.push(shiftText);
+					}
+
+					$scope.scheduling_shifts.push({
+						person_id: person.person_id,
+						person_name: person.person_firstname+ ' ' +person.person_lastname,
+						shifts: person_shifts
+					});
 				});
-
-				// Sort ward data
-				$scope.data.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
 			}, err => {
 				console.log(err);
 			})
 		};
+
+		// TODO: move this method to filter
+		$scope.formatShiftText = function(text)
+		{
+			return text.slice(0, text.lastIndexOf('|'));
+		}
 	}
 ]);

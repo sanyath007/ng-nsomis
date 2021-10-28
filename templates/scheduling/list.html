@@ -1,0 +1,206 @@
+<section class="content" ng-controller="schedulingController">
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-hospital-user"></i>
+							ตารางเวร
+						</h3>
+					</div><!-- /.card-header -->
+					<div class="card-body">
+
+						<form action="" method="POST" class="form-inline">
+							<div class="form-group">
+								<label>กลุ่มงาน :</label>
+								<select
+									class="form-control mr-2 ml-2"
+									id="cboDepart"
+									name="cboDepart"								
+									ng-model="cboDepart"								
+									ng-change="onDepartChange($event)"
+								>
+									<option value="">-- เลือกกลุ่มงาน --</option>
+									<option value="65">สำนักการพยาบาล</option>
+									<!-- <option ng-repeat="dep in departs" value="{{ dep.depart_id }}">
+										{{ dep.depart_name }}
+									</option> -->
+								</select>
+							</div>
+							<div class="form-group">
+								<label>งาน :</label>
+								<select
+									class="form-control mr-2 ml-2"
+									id="cboDivision"
+									name="cboDivision"								
+									ng-model="cboDivision"								
+									ng-change="onDivisionChange($event)"
+								>
+									<option value="">-- เลือกงาน --</option>
+									<option ng-repeat="div in divisions" value="{{ div.ward_id }}">
+										{{ div.ward_name }}
+									</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>ประจำเดือน :</label>
+								<input
+									type="text"
+									id="cboMonth"
+									name="cboMonth"
+									ng-model="cboMonth"
+									class="form-control"
+									style="margin: 0 10px;"
+									autocomplete="off"
+								>
+							</div>
+
+							<button ng-click="getAll($event)" class="btn btn-primary">ตกลง</button>
+						</form>
+
+					</div><!-- /.card-body -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<div class="card-body">
+						<div class="row my-2">
+							<div class="col-md-12">
+								<a href="nurses/add" class="btn btn-primary float-right">เพิ่มตารางเวร</a>
+							</div>
+						</div>
+
+						<table class="table table-bordered table-striped" style="font-size: 14px;">
+							<thead>
+								<tr>
+									<td style="text-align: center;" rowspan="2">ชื่อ-สกุล</td>
+									<td style="text-align: center;" colspan="{{ dataTableOptions.totalCol }}">วันที่</td>
+									<td style="width: 3%; text-align: center;" rowspan="2">Actions</td>
+								</tr>
+								<tr>
+									<td
+										style="width: 2.5%; text-align: center; font-size: small;"
+										ng-repeat="m in range(1, dataTableOptions.totalCol)"
+									>
+										{{ m }}
+									</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="row in scheduling_shifts track by $index">
+									<td>
+										{{ row.person_name }}
+										<p style="color: grey; margin: 0px;">
+											ตำแหน่ง ...
+										</p>
+									</td>
+									<td
+										ng-repeat="shift in row.shifts track by $index"
+										style="text-align: center; font-size: small; padding: 0px;"
+									>
+										{{ formatShiftText(shift) }}
+									</td>
+									<td style="text-align: center;">
+										<div class="btn-group" role="group">
+											<button id="btnGroupDrop1" type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<i class="fas fa-cog"></i>
+											</button>
+											<div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+												<a class="dropdown-item" href="#" ng-click="showMoveForm($event, 'S', row)">
+													ย้ายภายใน ก.ภารกิจ
+												</a>
+												<a class="dropdown-item" href="#" ng-click="showMoveForm($event, 'M', row)">
+													ย้ายออกภายใน รพ.
+												</a>
+												<a class="dropdown-item" href="#" ng-click="showTransferForm($event, row)">
+													โอน/ย้ายออก (ภายนอก)
+												</a>
+												<!-- <a class="dropdown-item" href="#">ลาศึกษาต่อ</a> -->
+												<a class="dropdown-item" href="#" ng-click="showLeaveForm($event, row)">
+													ออก
+												</a>
+												<a class="dropdown-item" href="#" ng-click="unknown($event, row.person_id)">
+													ไม่ทราบสถานะ
+												</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="row mt-2">
+							<div class="col-md-6">
+								ผู้ควบคุม
+							</div>
+							<div class="col-md-6">
+								หัวหน้ากลุ่มงาน
+							</div>
+							<div class="col-md-6">
+								หัวหน้ากลุ่มภารกิจ
+							</div>
+							<div class="col-md-6">
+								ผู้อำนวยการ
+							</div>
+						</div>
+
+						<div ng-include="'./templates/modals/nurse/shift-form.html?version=202109031630'"></div>
+
+					</div><!-- /.card-body -->
+					<div class="card-footer clearfix">
+						<div class="row">
+							<div class="col-3 m-0 float-left" ng-show="data">
+								<a href="#" class="btn btn-success btn-sm">Excel</a>
+							</div>
+							
+							<div class="col-6 m-0" ng-show="data" style="text-align: center;">
+								<span>จำนวนทั้งหมด {{ pager.total }} ราย</span>
+							</div>
+							
+							<div class="col-3 m-0" ng-show="data">
+								<ul class="pagination pagination-md m-0 float-right" ng-show="pager">
+									<li class="page-item" ng-class="{disabled: pager.current_page==1}">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.first_page_url, setData)">
+											First
+										</a>
+									</li>
+									<li class="page-item" ng-class="{disabled: pager.current_page==1}">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.prev_page_url, setData)">
+											Prev
+										</a>
+									</li>
+									<li class="page-item" ng-class="{disabled: pager.current_page==pager.last_page}">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.next_page_url, setData)">
+											Next
+										</a>
+									</li>
+									<li class="page-item" ng-class="{disabled: pager.current_page==pager.last_page}">
+										<a class="page-link" href="#" ng-click="onPaginateLinkClick($event, pager.last_page_url, setData)">
+											Last
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div><!-- /.card-footer -->
+				</div><!-- /.card -->
+	
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->
+
+<script type="text/javascript">
+	$(function() {
+		$('#cboMonth').datepicker({
+			autoclose: true,
+			format: 'mm/yyyy',
+			viewMode: "months", 
+			minViewMode: "months",
+			language: 'th',
+			thaiyear: true
+		}).datepicker('update', new Date());
+	});
+</script>
