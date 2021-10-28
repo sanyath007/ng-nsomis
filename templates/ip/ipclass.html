@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="ipController"
-	ng-init="getIpClassData($event);"
+	ng-init="getIpClassDay($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -19,24 +19,12 @@
 
 						<form action="" method="POST" class="form-inline">
 							<div class="form-group">
-								<label>วันที่ :</label>
+								<label>ประจำวันที่ :</label>
 								<input
 									type="text"
 									id="sdate"
 									name="sdate"								
 									ng-model="sdate"								
-									class="form-control mr-2 ml-2"
-									autocomplete="off"
-								>
-							</div>
-
-							<div class="form-group">
-								<label>ถึงวันที่ :</label>
-								<input
-									type="text"
-									id="edate"
-									name="edate"
-									ng-model="edate"
 									class="form-control mr-2 ml-2"
 									autocomplete="off"
 								>
@@ -69,7 +57,13 @@
 								</thead>
 									<tr ng-repeat="(index, class) in data">
 										<td style="text-align: center;">{{ index+1 }}</td>
-										<td>{{ class.ward + '-' + class.name }}</td>
+										<td>
+											{{ class.ward + '-' + class.name }}
+											<span style="margin: 0px; color: grey;">
+												{{ class.desc.building.name }}
+												{{ class.desc.building.floor != '0' ? ' ชั้น ' + class.desc.building.floor : ''}}
+											</span>
+										</td>
 										<td style="text-align: center;">{{ class.type1 }}</td>
 										<td style="text-align: center;">{{ class.type2 }}</td>
 										<td style="text-align: center;">{{ class.type3 }}</td>
@@ -108,13 +102,6 @@
 			language: 'th',
 			format: 'dd/mm/yyyy',
 			thaiyear: true
-		}).datepicker('update', new Date());
-
-		$('#edate').datepicker({
-			autoclose: true,
-			language: 'th',
-			format: 'dd/mm/yyyy',
-			thaiyear: true,
 		}).datepicker('update', new Date());
 	});
 </script>

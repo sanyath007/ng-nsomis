@@ -312,6 +312,39 @@ app.controller('ipController', [
 			});
 		};
 
+		$scope.getIpClassDay = function(e) {
+			if(e) e.preventDefault();
+
+			$scope.totalData = initTotalClass();
+
+			let date = ($('#sdate').val() !== '') 
+							? StringFormatService.convToDbDate($scope.sdate) 
+							: moment().format('YYYY-MM-DD');
+
+			$http.get(`${CONFIG.apiUrl}/ip/class/${date}`)
+			.then(res => {
+				$scope.data = res.data.classes;
+
+				$scope.data.forEach((val, key) => {
+					console.log(key);
+					$scope.totalData.type1 += parseInt(val.type1);
+					$scope.totalData.type2 += parseInt(val.type2);
+					$scope.totalData.type3 += parseInt(val.type3);
+					$scope.totalData.type4 += parseInt(val.type4);
+					$scope.totalData.type5 += parseInt(val.type5);
+					$scope.totalData.unknown += parseInt(val.unknown);
+					$scope.totalData.all += parseInt(val.all);
+
+					/** Get bed amount of each ward */
+					val.desc = $rootScope.wardBed().find(wb => val.ward===wb.ward);
+				});
+
+				$scope.data.sort((a, b) => a.desc.sortBy - b.desc.sortBy);
+			}, err => {
+				console.log(err)
+			});
+		};
+
 		$scope.getPtDchByWard = function(e) {
 			// if(!$rootScope.isLogedIn) $rootScope.showLogin();
 
