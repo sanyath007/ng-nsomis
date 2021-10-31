@@ -1,8 +1,4 @@
-<section
-	class="content"
-	ng-controller="schedulingController"
-	ng-init="getInitForm($event);"
->
+<section class="content" ng-controller="schedulingController" ng-init="initForm()">
 	<div class="container-fluid">
 		<!-- Main row -->
 		<div class="row">
@@ -12,218 +8,185 @@
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-hospital-user"></i>
-							ฟอร์มเพิ่มข้อมูลพยาบาล
+							เพิ่มตารางเวร
 						</h3>
 					</div><!-- /.card-header -->
-					<div class="card-body">
-					</div><!-- /.card-body -->
 				</div><!-- /.card -->
 
 				<div class="card">
-					<div class="card-body">
-
-						<form action="" method="POST">
-							<div class="row py-2 px-5">
-								<div class="form-group col-md-6">
-									<label>เลข 13 หลัก :</label>
-									<div class="input-group">
-										<input
-											id="cid"
-											name="cid"								
-											ng-model="newNurse.cid"								
-											class="form-control"
-											placeholder="CID"
-										/>
-										<div class="input-group-append">
-											<button class="btn btn-primary" ng-click="showPersonLists($event)">
-												Search
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="form-group col-md-6">
-									<label>HN :</label>
-									<input
-										id="hn"
-										name="hn"								
-										ng-model="newNurse.hn"								
-										class="form-control"
-										placeholder="HN"
-									/>
-								</div>
-								<div class="form-group col-md-2">
-									<label>คำนำหน้า :</label>
-									<select
-										id="prefix"
-										name="prefix"								
-										ng-model="newNurse.prefix"								
-										class="form-control"
-									>
-										<option value="">-- เลือกคำนำหน้า --</option>
-										<option ng-repeat="prefix in prefixes" value="{{ prefix.prefix_id }}">
-											{{ prefix.prefix_name }}
-										</option>
-									</select>
-								</div>
-								<div class="form-group col-md-5">
-									<label>ชื่อ :</label>
-									<input
-										type="text"
-										id="fname"
-										name="fname"								
-										ng-model="newNurse.fname"								
-										class="form-control"
-										placeholder="ชื่อ"
-									/>
-								</div>
-								<div class="form-group col-md-5">
-									<label>นามสกุล :</label>
-									<input
-										type="text"
-										id="lname"
-										name="lname"								
-										ng-model="newNurse.lname"								
-										class="form-control"
-										placeholder="นามสกุล"
-									/>
-								</div>
-								<div class="form-group col-md-3">
-									<label>ว/ด/ป เกิด :</label>
-									<input
-										type="text"
-										id="birthdate"
-										name="birthdate"								
-										ng-model="newNurse.birthdate"								
-										class="form-control"
-										autocomplete="off"
-									/>
-								</div>
-								<div class="form-group col-md-2">
-									<label>อายุ (ปี) :</label>
-									<input
-										type="text"
-										id="age_y"
-										name="age_y"
-										ng-model="newNurse.age_y"
-										class="form-control"
-										placeholder="อายุ (ปี)"
-									/>
-								</div>
+					<form action="" method="POST">
+						<div class="card-body">
+							<div class="row">
 								<div class="form-group col-md-4">
-									<label>ตำแหน่ง :</label>
+									<label>กลุ่มภารกิจ :</label>
 									<select
-										id="position"
-										name="position"								
-										ng-model="newNurse.position"								
 										class="form-control"
+										id="faction"
+										name="faction"								
+										ng-model="newScheduling.faction"								
+										ng-change="onFactionChange(newScheduling.faction)"
 									>
-										<option value="">-- เลือกตำแหน่ง --</option>
-										<option ng-repeat="position in positions" value="{{ position.position_id }}">
-											{{ position.position_name }}
-										</option>
-									</select>
-								</div>
-								<div class="form-group col-md-3">
-									<label>ระดับ :</label>
-									<select
-										id="academic"
-										name="academic"								
-										ng-model="newNurse.academic"								
-										class="form-control"
-									>
-										<option value="">-- เลือกระดับ --</option>
-										<option ng-repeat="academic in academics" value="{{ academic.ac_id }}">
-											{{ academic.ac_name }}
-										</option>
-									</select>
-								</div>
-								<div class="form-group col-md-4">
-									<label>เลขตำแหน่ง :</label>
-									<input
-										type="text"
-										id="position_no"
-										name="position_no"								
-										ng-model="newNurse.position_no"								
-										class="form-control"
-										placeholder="เลขตำแหน่ง"
-									/>
-								</div>
-								<div class="form-group col-md-4">
-									<label>จ.18 :</label>
-									<select
-										id="hosp_pay18"
-										name="hosp_pay18"								
-										ng-model="newNurse.hosp_pay18"								
-										class="form-control"
-									>
-										<option value="">-- เลือก จ.18 --</option>
-										<option ng-repeat="hosp in hospPay18s" value="{{ hosp.hospcode }}">
-											{{ hosp.name }}
+										<option value="">-- เลือกกลุ่มภารกิจ --</option>
+										<option ng-repeat="fac in factions" value="{{ fac.faction_id }}">
+											{{ fac.faction_name }}
 										</option>
 									</select>
 								</div>
 								<div class="form-group col-md-4">
 									<label>กลุ่มงาน :</label>
 									<select
+										class="form-control"
 										id="depart"
 										name="depart"								
-										ng-model="newNurse.depart"								
-										class="form-control"
+										ng-model="newScheduling.depart"								
+										ng-change="onDepartChange(newScheduling.depart)"
 									>
 										<option value="">-- เลือกกลุ่มงาน --</option>
-										<option ng-repeat="depart in departs" value="{{ depart.depart_id }}">
-											{{ depart.depart_name }}
+										<option ng-repeat="dep in departs" value="{{ dep.depart_id }}">
+											{{ dep.depart_name }}
 										</option>
 									</select>
 								</div>
-								<div class="form-group col-md-5">
-									<label>วันที่บรรจุ :</label>
+								<div class="form-group col-md-4">
+									<label>งาน :</label>
+									<select
+										class="form-control"
+										id="division"
+										name="division"								
+										ng-model="newScheduling.division"								
+										ng-change="onDivisionChange(newScheduling.division)"
+									>
+										<option value="">-- เลือกงาน --</option>
+										<option ng-repeat="div in divisions" value="{{ div.ward_id }}">
+											{{ div.ward_name }}
+										</option>
+									</select>
+								</div>
+								<div class="form-group col-md-4">
+									<label>ประจำเดือน :</label>
 									<input
 										type="text"
-										id="start_date"
-										name="start_date"								
-										ng-model="newNurse.start_date"								
+										id="month"
+										name="month"
+										ng-model="newScheduling.month"
 										class="form-control"
 										autocomplete="off"
-									/>
-								</div>
-								<div class="form-group col-md-2">
-									<label>อายุงาน (ปี) :</label>
-									<input
-										type="text"
-										id="level_y"
-										name="level_y"								
-										ng-model="newNurse.level_y"								
-										class="form-control"
-										placeholder="อายุงาน (ปี)"
-									/>
-								</div>
-								<div class="form-group col-md-5">
-									<label>เลขใบประกอบวิชาชีพ :</label>
-									<input
-										type="text"
-										id="cert_no"
-										name="cert_no"								
-										ng-model="newNurse.cert_no"								
-										class="form-control"
-										placeholder="เลขใบประกอบวิชาชีพ"
 									>
 								</div>
-
-								<div class="form-group col-md-12">
-									<button ng-click="store($event)" class="btn btn-primary float-right">
-										ตกลง
-									</button>
+								<div class="form-group col-md-4">
+									<label>ปีงบประมาณ :</label>
+									<input
+										type="text"
+										id="year"
+										name="year"
+										ng-model="newScheduling.year"
+										class="form-control"
+										style="margin: 0 10px;"
+										autocomplete="off"
+									>
 								</div>
-							</div><!-- /.row -->
-						</form>
+								<div class="form-group col-md-4">
+									<label>ผู้ควบคุม :</label>
+									<select
+										id="controller"
+										name="controller"
+										ng-model="newScheduling.controller"
+										class="form-control">
+										<option value="">-- เลือกผู้ควบคุม --</option>
+										<option ng-repeat="person in divisionMembers" value="{{ person.person_id }}">
+											{{ person.person_firstname+ ' ' +person.person_lastname }}
+										</option>
+									</select>
+								</div>
+							</div>
 
-						<div ng-include="'./templates/modals/person-list.html?version=202108051630'"></div>
+							<table class="table table-bordered table-striped" style="font-size: 14px;">
+								<thead>
+									<tr>
+										<td style="text-align: center;" rowspan="2">ชื่อ-สกุล</td>
+										<td style="text-align: center;" colspan="{{ dataTableOptions.totalCol }}">วันที่</td>
+										<td style="width: 3%; text-align: center;" rowspan="2">รวม</td>
+										<td style="width: 5%; text-align: center;" rowspan="2">Actions</td>
+									</tr>
+									<tr>
+										<td
+											style="width: 2.5%; text-align: center; font-size: small;"
+											ng-repeat="m in range(1, dataTableOptions.totalCol)"
+										>
+											{{ m }}
+										</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="person in divisionMembers track by $index">
+										<td>
+											{{ person.person_firstname+ ' ' +person.person_lastname }}
+											<p style="color: grey; margin: 0px;">
+												ตำแหน่ง ...
+											</p>
+										</td>
+										<td
+											ng-repeat="date in range(1, dataTableOptions.totalCol) track by $index"
+											style="text-align: center; font-size: small; padding: 0px;"
+										>
+											<input
+												type="hidden"
+												id="{{ person.person_id+ '_' +date }}"
+												name="{{ person.person_id+ '_' +date }}"
+												value="ช"
+											/>
+											<div class="btn-group mt-2" role="group">
+												<button
+													type="button"
+													id="{{ person.person_id+ '_' +date+ '_btnGroupDrop' }}"
+													class="btn btn-success btn-xs dropdown-toggle"
+													data-toggle="dropdown"
+													aria-haspopup="true"
+													aria-expanded="false"
+												>
+													{{ 'ช' }}
+												</button>
+												<div
+													class="dropdown-menu dropdown-menu-right" 
+													aria-labelledby="{{ person.person_id+ '_' +date+ '_btnGroupDrop' }}"
+													style="min-width: 4rem;"
+												>
+													<a href="#" class="dropdown-item" ng-click="onSelectedShift($event, 'ด', person.person_id+ '_' +date)">
+														ด
+													</a>
+													<a href="#" class="dropdown-item" ng-click="onSelectedShift($event, 'ช', person.person_id+ '_' +date)">
+														ช
+													</a>
+													<a href="#" class="dropdown-item" ng-click="onSelectedShift($event, 'บ', person.person_id+ '_' +date)">
+														บ
+													</a>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div style="display: flex; flex-direction: column;">
+												<span>ด=</span>
+												<span>ช=</span>
+												<span>บ=</span>
+											</div>
+										</td>
+										<td style="text-align: center;">
+											<a href="#" class="btn btn-primary btn-sm" ng-click="onAddShift($event, person.person_id)">
+												เพิ่ม
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 
-					</div><!-- /.card-body -->
-					<div class="card-footer clearfix">
-						
-					</div><!-- /.card-footer -->
+							<div ng-include="'./templates/modals/nurse/shift-form.html?version=202109031630'"></div>
+
+						</div><!-- /.card-body -->
+						<div class="card-footer clearfix">
+							<button type="reset" class="btn btn-danger float-right">ยกเลิก</button>
+							<button ng-click="store($event)" class="btn btn-primary float-right mr-2">บันทึก</button>
+						</div><!-- /.card-footer -->
+					</form>
 				</div><!-- /.card -->
 	
 			</section>
@@ -232,21 +195,5 @@
 </section><!-- /.content -->
 
 <script type="text/javascript">
-	$(function() {
-		$('#hosp_pay18').select2();
-
-		$('#birthdate').datepicker({
-			autoclose: true,
-			language: 'th',
-			format: 'dd/mm/yyyy',
-			thaiyear: true
-		}).datepicker('update', new Date());
-
-		$('#start_date').datepicker({
-			autoclose: true,
-			language: 'th',
-			format: 'dd/mm/yyyy',
-			thaiyear: true
-		}).datepicker('update', new Date());
-	});
+	$(function() {});
 </script>

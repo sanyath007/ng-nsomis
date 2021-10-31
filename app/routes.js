@@ -175,8 +175,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/covid/patient-all.html',
 		controller: 'covidController'
 	})
-	.when('/schedulings', {
+	.when('/schedulings/list', {
 		templateUrl: 'templates/scheduling/list.html',
+		controller: 'schedulingController'
+	})
+	.when('/schedulings/add', {
+		templateUrl: 'templates/scheduling/add.html',
 		controller: 'schedulingController'
 	})
 	.otherwise({
