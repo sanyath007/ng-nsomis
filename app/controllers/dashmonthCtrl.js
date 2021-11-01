@@ -148,7 +148,7 @@ app.controller('dashmonthController', [
 				// Create data by calling sumAdmdate function
 				$scope.data = $rootScope.sumAdmdate(admdate, daysOfMonth);
 				$scope.data.sort((wa, wb) => wa.bed.sortBy - wb.bed.sortBy);
-                console.log($scope.data);
+
                 /** Calculate summary */
 				// $scope.data.forEach(d => {
 				// 	$scope.totalData.adjRwTotal += parseFloat(d.rw);
@@ -199,6 +199,26 @@ app.controller('dashmonthController', [
                 }];
 
                 let chart2 = new Highcharts.Chart($scope.chartOptions);
+
+                /** อัตราการใช้เตียง (Turn Over Rate) */
+                const dataSeries3 = $scope.data.map(ward => {
+                    return {
+                        name: ward.name,
+                        y: parseFloat((ward.sumPt/ward.bed.bed).toFixed(2))
+                    };
+                });
+
+                $scope.chartOptions = ChartService.initColumnChart("ipTurnOverRateBarContainer", "อัตราการใช้เตียง (Turn Over Rate)", 'ราย/เตียง', '{point.y:.1f}');
+                $scope.chartOptions.series = [{
+                    name: 'Active Bed',
+                    colorByPoint: true,
+                    data: dataSeries3,
+                    dataLabels: {
+                        enabled: true
+                    }
+                }];
+
+                let chart3 = new Highcharts.Chart($scope.chartOptions);
 			}, err => {
 				console.log(err)
 			});
