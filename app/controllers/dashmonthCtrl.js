@@ -148,7 +148,7 @@ app.controller('dashmonthController', [
 				// Create data by calling sumAdmdate function
 				$scope.data = $rootScope.sumAdmdate(admdate, daysOfMonth);
 				$scope.data.sort((wa, wb) => wa.bed.sortBy - wb.bed.sortBy);
-
+                console.log($scope.data);
                 /** Calculate summary */
 				// $scope.data.forEach(d => {
 				// 	$scope.totalData.adjRwTotal += parseFloat(d.rw);
@@ -160,25 +160,45 @@ app.controller('dashmonthController', [
 				// $scope.totalData.bedOccTotal = ($scope.totalData.admDateTotal) * 100/($scope.totalData.bedTotal * daysOfYear)
 				// $scope.totalData.activeBedTotal = ($scope.totalData.bedOccTotal * 200)/100;
 
-                const dataSeries = $scope.data.map(ward => {
+                /** อัตราครองเตียง */
+                const dataSeries1 = $scope.data.map(ward => {
                     return {
                         name: ward.name,
                         y: parseFloat(ward.sumBedOcc2.toFixed(2))
                     };
                 });
-                console.log(dataSeries);
 
-                $scope.chartOptions = ChartService.initColumnChart("ipBedoccBarContainer", "อัตราครองเตียงผู้ป่วยใน", '%');
+                $scope.chartOptions = ChartService.initColumnChart("ipBedoccBarContainer", "อัตราครองเตียง", '%', '{point.y:.0f}');
                 $scope.chartOptions.series = [{
                     name: 'อัตราครองเตียง',
                     colorByPoint: true,
-                    data: dataSeries,
+                    data: dataSeries1,
                     dataLabels: {
                         enabled: true
                     }
                 }];
 
                 let chart = new Highcharts.Chart($scope.chartOptions);
+
+                /** Active Bed */
+                const dataSeries2 = $scope.data.map(ward => {
+                    return {
+                        name: ward.name,
+                        y: parseFloat(ward.activeBed2.toFixed(2))
+                    };
+                });
+
+                $scope.chartOptions = ChartService.initColumnChart("ipActiveBedBarContainer", "Active Bed", 'เตียง', '{point.y:.0f}');
+                $scope.chartOptions.series = [{
+                    name: 'Active Bed',
+                    colorByPoint: true,
+                    data: dataSeries2,
+                    dataLabels: {
+                        enabled: true
+                    }
+                }];
+
+                let chart2 = new Highcharts.Chart($scope.chartOptions);
 			}, err => {
 				console.log(err)
 			});

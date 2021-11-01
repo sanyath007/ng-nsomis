@@ -6,7 +6,7 @@ app.service('ChartService', [
     {
         let service = this;
 
-        service.initColumnChart = function(_container, _title, _ytitle) {
+        service.initColumnChart = function(_container, _title, _ytitle, _format) {
             return {
                 chart: {
                     renderTo: _container,
@@ -32,7 +32,7 @@ app.service('ChartService', [
                         borderWidth: 0,
                         dataLabels: {
                             enabled: true,
-                            format: '{point.y:.1f}%'
+                            format: _format
                         }
                     }
                 },
