@@ -69,7 +69,7 @@ app.controller('ipController', [
 				// Get end date of month from startDate
 				endDateOfMonth = moment(month).endOf("month").format('DD')
 				// Create data by calling sumAdmdate function
-				$scope.data = sumAdmdate(admdate, endDateOfMonth);
+				$scope.data = $rootScope.sumAdmdate(admdate, endDateOfMonth);
 			}, err => {
 				console.log(err)
 			});
@@ -154,7 +154,7 @@ app.controller('ipController', [
 				// Get total days of the year
 				daysOfYear = (moment().year(year).month(1).endOf("month").format('DD') == 28) ? 365 : 366;
 				// Create data by calling sumAdmdate function
-				$scope.data = sumAdmdate(admdate, daysOfYear);
+				$scope.data = $rootScope.sumAdmdate(admdate, daysOfYear);
 				$scope.data.sort((wa, wb) => wa.bed.sortBy - wb.bed.sortBy);
 
 				$scope.data.forEach(d => {
@@ -163,44 +163,12 @@ app.controller('ipController', [
 					$scope.totalData.admDateTotal += parseInt(d.admdate);
 				});
 
-				$scope.totalData.bedTotal = 200; //คิด
+				$scope.totalData.bedTotal = 200; //คิดตามกระทรวง
 				$scope.totalData.bedOccTotal = ($scope.totalData.admDateTotal) * 100/($scope.totalData.bedTotal * daysOfYear)
 				$scope.totalData.activeBedTotal = ($scope.totalData.bedOccTotal * 200)/100;
 			}, err => {
 				console.log(err)
 			});
-		}
-
-		const sumAdmdate = function(data, totalDate) {
-			data.forEach(d => {
-				d.sumBedOcc1 = calculateBedOcc(d.admdate, d.bed.bed, totalDate);
-
-				d.activeBed1 = calculateActiveBed(d.sumBedOcc1, d.bed.bed);
-
-				d.sumAdm = d.stat.reduce((sum, st) => {
-					return sum + parseInt(st.admdate);
-				}, 0);
-
-				d.sumHr = d.stat.reduce((sum, st) => {
-					return sum + parseInt(st.admit_hour);
-				}, 0);
-
-				d.sumPt = d.stat.length;
-
-				d.sumBedOcc2 = calculateBedOcc(d.sumAdm, d.bed.bed, totalDate);
-
-				d.activeBed2 = calculateActiveBed(d.sumBedOcc2, d.bed.bed);
-			});
-
-			return data;
-		}
-
-		const calculateBedOcc = function(sumAdmdate, totalBed, totalDate) {
-			return (sumAdmdate*100)/(totalBed*totalDate);
-		}
-
-		const calculateActiveBed = function(bedOcc, totalBed) {
-			return (bedOcc*totalBed)/100;
 		}
 
 		$scope.showIpLists = (e, ward) => {

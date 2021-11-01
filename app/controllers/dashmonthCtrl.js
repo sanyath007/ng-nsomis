@@ -1,12 +1,13 @@
 
 app.controller('dashmonthController', [
+    '$rootScope',
     '$scope',
     '$http',
     'CONFIG',
     'ChartService',
     'DatetimeService',
     'StringFormatService',
-    function($scope, $http, CONFIG, ChartService, DatetimeService, StringFormatService)
+    function($rootScope, $scope, $http, CONFIG, ChartService, DatetimeService, StringFormatService)
     {
         $scope.cardData = {};
         $scope.barOptions = {};
@@ -112,6 +113,71 @@ app.controller('dashmonthController', [
                 console.log(err);
             });
         };
+
+		const initTotalBedOccYear = () => ({
+			bedTotal: 0,
+			adjRwTotal: 0,
+			ptTotal: 0,
+			admDateTotal: 0,
+			bedOccTotal: 0,
+			activeBedTotal: 0,
+		});
+
+        $scope.getBedOccMonth = function(e) {
+			if(e) e.preventDefault();
+
+			let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
+
+			$http.get(`${CONFIG.apiUrl}/ip/bedocc-month/${month}`)
+			.then(res => {
+				let admdate = res.data.admdate
+				let wardStat = res.data.wardStat
+
+				$scope.totalData = initTotalBedOccYear();
+
+				admdate.forEach(d => {
+					d.stat = wardStat.filter(st => d.ward === st.ward);
+					// Get bed amount of each ward
+					d.bed = $rootScope.wardBed().find(wb => d.ward===wb.ward);
+				});
+
+				// Get total days of the year
+				daysOfMonth = moment(month).endOf("month").format('DD');
+                console.log(daysOfMonth);
+				// Create data by calling sumAdmdate function
+				$scope.data = $rootScope.sumAdmdate(admdate, daysOfMonth);
+				$scope.data.sort((wa, wb) => wa.bed.sortBy - wb.bed.sortBy);
+
+                /** Calculate summary */
+				// $scope.data.forEach(d => {
+				// 	$scope.totalData.adjRwTotal += parseFloat(d.rw);
+				// 	$scope.totalData.ptTotal += parseInt(d.dc_num);
+				// 	$scope.totalData.admDateTotal += parseInt(d.admdate);
+				// });
+
+				// $scope.totalData.bedTotal = 200; //คิดตามกระทรวง
+				// $scope.totalData.bedOccTotal = ($scope.totalData.admDateTotal) * 100/($scope.totalData.bedTotal * daysOfYear)
+				// $scope.totalData.activeBedTotal = ($scope.totalData.bedOccTotal * 200)/100;
+
+                const categories = $scope.data.map(ward => ward.name);
+                const dataSeries = $scope.data.map(ward => {
+                    return {
+                        name: ward.name,
+                        data: [parseFloat(ward.sumBedOcc2.toFixed(2))],
+                    }
+                });
+                console.log(categories);
+                console.log(dataSeries);
+                $scope.barOptions = ChartService.initBarChart("ipBedoccBarContainer", "อัตราครองเตียงผู้ป่วยใน", categories, 'จำนวน');
+                $scope.barOptions.series = dataSeries;
+
+                let chart = new Highcharts.Chart($scope.barOptions);
+			}, err => {
+				console.log(err)
+			});
+		}
 
         $scope.getReferIn = function(e) {
             if(e) e.preventDefault();

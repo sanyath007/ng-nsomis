@@ -114,6 +114,39 @@ var app = angular.module('App', ['ngRoute', 'ngStorage', 'toaster', 'angular-loa
                 ];
             };
 
+            
+            $rootScope.sumAdmdate = function(data, totalDate) {
+                data.forEach(d => {
+                    d.sumBedOcc1 = $rootScope.calculateBedOcc(d.admdate, d.bed.bed, totalDate);
+
+                    d.activeBed1 = $rootScope.calculateActiveBed(d.sumBedOcc1, d.bed.bed);
+
+                    d.sumAdm = d.stat.reduce((sum, st) => {
+                        return sum + parseInt(st.admdate);
+                    }, 0);
+
+                    d.sumHr = d.stat.reduce((sum, st) => {
+                        return sum + parseInt(st.admit_hour);
+                    }, 0);
+
+                    d.sumPt = d.stat.length;
+
+                    d.sumBedOcc2 = $rootScope.calculateBedOcc(d.sumAdm, d.bed.bed, totalDate);
+
+                    d.activeBed2 = $rootScope.calculateActiveBed(d.sumBedOcc2, d.bed.bed);
+                });
+
+                return data;
+            }
+
+            $rootScope.calculateBedOcc = function(sumAdmdate, totalBed, totalDate) {
+                return (sumAdmdate*100)/(totalBed*totalDate);
+            }
+
+            $rootScope.calculateActiveBed = function(bedOcc, totalBed) {
+                return (bedOcc*totalBed)/100;
+            }
+
             $rootScope.showLogin = function() {
                 $('#loginForm').modal('show');
             };

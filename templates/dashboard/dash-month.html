@@ -3,8 +3,6 @@
 	ng-controller="dashmonthController"
 	ng-init="getOpVisit($event);
 			getOpVisitType($event);
-			getIpVisit($event);
-			getIpClass($event);
 			getReferIn($event);
 			getReferOut($event);
 			getErVisit();
@@ -36,6 +34,7 @@
 																getOpVisitType($event);
 																getIpVisit($event);
 																getIpClass($event);
+																getBedOccMonth($event);
 																getReferIn($event);
 																getReferOut($event);
 																getErVisit();
@@ -116,19 +115,9 @@
 								</div>
 							</div><!-- /.tab-pane -->
 							<div class="tab-pane" id="ip">
-								<div class="row">
-									<div class="col-md-5">
-		
-										<div id="ipClassPieContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
-		
-									</div>
-									
-									<div class="col-md-7">
-		
-										<div id="ipVisitBarContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
-		
-									</div>
-								</div>
+
+								<div ng-include="'./templates/dashboard/_ip-month.html?version=202101151500'"></div>
+
 							</div><!-- /.tab-pane -->
 							<div class="tab-pane" id="refer">
 								<div class="row">
