@@ -210,7 +210,7 @@ app.controller('dashmonthController', [
 
                 $scope.chartOptions = ChartService.initColumnChart("ipTurnOverRateBarContainer", "อัตราการใช้เตียง (Turn Over Rate)", 'ราย/เตียง', '{point.y:.1f}');
                 $scope.chartOptions.series = [{
-                    name: 'Active Bed',
+                    name: 'Turn Over Rate',
                     colorByPoint: true,
                     data: dataSeries3,
                     dataLabels: {
@@ -219,6 +219,26 @@ app.controller('dashmonthController', [
                 }];
 
                 let chart3 = new Highcharts.Chart($scope.chartOptions);
+                
+                /** วิเคราะห์ศักยภาพการจัดบริการผู้ป่วยใน (CMI) */
+                const dataSeries4 = $scope.data.map(ward => {
+                    return {
+                        name: ward.name,
+                        y: parseFloat((ward.rw/ward.sumPt).toFixed(2))
+                    };
+                });
+
+                $scope.chartOptions = ChartService.initColumnChart("ipCMIBarContainer", "CMI", '', '{point.y:.1f}');
+                $scope.chartOptions.series = [{
+                    name: 'CMI',
+                    colorByPoint: true,
+                    data: dataSeries4,
+                    dataLabels: {
+                        enabled: true
+                    }
+                }];
+
+                let chart4 = new Highcharts.Chart($scope.chartOptions);
 			}, err => {
 				console.log(err)
 			});
