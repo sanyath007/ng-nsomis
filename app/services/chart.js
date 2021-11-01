@@ -6,7 +6,7 @@ app.service('ChartService', [
     {
         let service = this;
 
-        service.initBarChart = function(_container, _title, _categories, _ytitle) {
+        service.initColumnChart = function(_container, _title, _ytitle) {
             return {
                 chart: {
                     renderTo: _container,
@@ -16,18 +16,23 @@ app.service('ChartService', [
                     text: _title
                 },
                 xAxis: {
-                    categories: _categories
+                    type: 'category',
                 },
                 yAxis: {
+                    min: 0,
                     title: {
-                        enabled: true,
                         text: _ytitle
                     }
                 },
+                legend: {
+                    enabled: true,
+                },
                 plotOptions: {
                     series: {
+                        borderWidth: 0,
                         dataLabels: {
-                            enabled: true
+                            enabled: true,
+                            format: '{point.y:.1f}%'
                         }
                     }
                 },

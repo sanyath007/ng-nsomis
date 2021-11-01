@@ -145,7 +145,6 @@ app.controller('dashmonthController', [
 
 				// Get total days of the year
 				daysOfMonth = moment(month).endOf("month").format('DD');
-                console.log(daysOfMonth);
 				// Create data by calling sumAdmdate function
 				$scope.data = $rootScope.sumAdmdate(admdate, daysOfMonth);
 				$scope.data.sort((wa, wb) => wa.bed.sortBy - wb.bed.sortBy);
@@ -161,19 +160,25 @@ app.controller('dashmonthController', [
 				// $scope.totalData.bedOccTotal = ($scope.totalData.admDateTotal) * 100/($scope.totalData.bedTotal * daysOfYear)
 				// $scope.totalData.activeBedTotal = ($scope.totalData.bedOccTotal * 200)/100;
 
-                const categories = $scope.data.map(ward => ward.name);
                 const dataSeries = $scope.data.map(ward => {
                     return {
                         name: ward.name,
-                        data: [parseFloat(ward.sumBedOcc2.toFixed(2))],
-                    }
+                        y: parseFloat(ward.sumBedOcc2.toFixed(2))
+                    };
                 });
-                console.log(categories);
                 console.log(dataSeries);
-                $scope.barOptions = ChartService.initBarChart("ipBedoccBarContainer", "อัตราครองเตียงผู้ป่วยใน", categories, 'จำนวน');
-                $scope.barOptions.series = dataSeries;
 
-                let chart = new Highcharts.Chart($scope.barOptions);
+                $scope.chartOptions = ChartService.initColumnChart("ipBedoccBarContainer", "อัตราครองเตียงผู้ป่วยใน", '%');
+                $scope.chartOptions.series = [{
+                    name: 'อัตราครองเตียง',
+                    colorByPoint: true,
+                    data: dataSeries,
+                    dataLabels: {
+                        enabled: true
+                    }
+                }];
+
+                let chart = new Highcharts.Chart($scope.chartOptions);
 			}, err => {
 				console.log(err)
 			});
