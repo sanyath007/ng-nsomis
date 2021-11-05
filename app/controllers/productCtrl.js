@@ -65,6 +65,22 @@ app.controller('productController', [
 			return input;
 		};
 		
+		$scope.initForm = () => {
+			$http.get(`${CONFIG.apiUrl}/products/init-form`)
+            .then(res => {
+				console.log(res);
+				$scope.wards = res.data.wards;
+
+				$scope.wards.forEach(w => {
+					w.desc = $rootScope.wardBed().find(wb => wb.ward === w.ward);
+				});
+
+				$scope.wards.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
+			}, err => {
+				console.log(err)
+			});
+		};
+
 		$scope.getProductSum = (e) => {
 			if (e) e.preventDefault();
 			
@@ -109,13 +125,6 @@ app.controller('productController', [
             $http.get(`${CONFIG.apiUrl}/product-ward/${month}/${ward}`)
             .then(res => {
 				$scope.data = res.data.product;
-				$scope.wards = res.data.wards;
-
-				$scope.wards.forEach(w => {
-					w.desc = $rootScope.wardBed().find(wb => wb.ward === w.ward);
-				});
-
-				$scope.wards.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
 			}, err => {
 				console.log(err)
 			});

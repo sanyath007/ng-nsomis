@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="productController"
-	ng-init="getProductSum($event);"
+	ng-init="initForm(); getProductSum($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -30,6 +30,27 @@
 										autocomplete="off"
 									>
 								</div>
+
+								<div class="form-group mr-2">
+									<label>วอร์ด :</label>
+									<select
+										id="ward"
+										name="ward"
+										ng-model="cboWard"
+										class="form-control ml-2"
+										ng-class="{'is-invalid': errors.ward}"
+										ng-change="getProductSum($event)"
+									>
+										<option value="">-- กรุณาเลือก --</option>
+										<option value="{{ ward.ward }}" ng-repeat="(index, ward) in wards">
+											{{ ward.ward+ '-' +ward.name }} / 
+											<span>
+												{{ ward.desc.building.name }}
+												{{ ward.desc.building.floor == '0' ? '' : ' ชั้น ' + ward.desc.building.floor }}
+											</span>
+										</option>
+									</select>
+								</div>		
 
 								<button ng-click="getProductSum($event)" class="btn btn-primary">ตกลง</button>						
 							</form>
