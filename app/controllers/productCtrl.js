@@ -106,6 +106,7 @@ app.controller('productController', [
 						w[day] = prod ? prod.productivity : '';
 					}
 
+					/** Add new description data to each ward */
 					w.desc = $rootScope.wardBed().find(wb => wb.ward === w.ward);
 				});
 
