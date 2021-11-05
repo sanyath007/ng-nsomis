@@ -17,6 +17,7 @@ app.controller('productController', [
 		$scope.dataTableOptions = null;
 
 		$scope.data = [];
+		$scope.filteredData = [];
 		$scope.wards = [];
 		$scope.staff = null;
 		$scope.multiply = null;
@@ -64,11 +65,10 @@ app.controller('productController', [
 			}
 			return input;
 		};
-		
+
 		$scope.initForm = () => {
 			$http.get(`${CONFIG.apiUrl}/products/init-form`)
             .then(res => {
-				console.log(res);
 				$scope.wards = res.data.wards;
 
 				$scope.wards.forEach(w => {
@@ -96,7 +96,7 @@ app.controller('productController', [
             .then(res => {
 				$scope.data = res.data.wards;
 
-				// create productivity of each day
+				/** Create productivity of each day */
 				$scope.data.forEach(w => {
 					for(let day = 1; day <= $scope.dataTableOptions.totalCol; day++) {
 						let prod = res.data.product.find(p => {
@@ -105,13 +105,23 @@ app.controller('productController', [
 
 						w[day] = prod ? prod.productivity : '';
 					}
+
 					w.desc = $rootScope.wardBed().find(wb => wb.ward === w.ward);
 				});
 
-				$scope.data.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
+				/** Sort data by each desc.sortBy element */
+				$scope.filteredData = $scope.data.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
 			}, err => {
 				console.log(err)
 			});
+		};
+
+		$scope.filterData = (filteredWard) => {
+			if (filteredWard === '') {
+				$scope.filteredData = $scope.data;
+			} else {
+				$scope.filteredData = $scope.data.filter(wd => wd.ward === filteredWard);
+			}
 		};
 
 		$scope.getProductWard = (e) => {

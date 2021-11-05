@@ -31,27 +31,6 @@
 									>
 								</div>
 
-								<div class="form-group mr-2">
-									<label>วอร์ด :</label>
-									<select
-										id="ward"
-										name="ward"
-										ng-model="cboWard"
-										class="form-control ml-2"
-										ng-class="{'is-invalid': errors.ward}"
-										ng-change="getProductSum($event)"
-									>
-										<option value="">-- กรุณาเลือก --</option>
-										<option value="{{ ward.ward }}" ng-repeat="(index, ward) in wards">
-											{{ ward.ward+ '-' +ward.name }} / 
-											<span>
-												{{ ward.desc.building.name }}
-												{{ ward.desc.building.floor == '0' ? '' : ' ชั้น ' + ward.desc.building.floor }}
-											</span>
-										</option>
-									</select>
-								</div>		
-
 								<button ng-click="getProductSum($event)" class="btn btn-primary">ตกลง</button>						
 							</form>
 
@@ -66,6 +45,29 @@
 
 				<div class="card">
 					<div class="card-body">
+						<div class="form-group">
+							<div style="display: flex; flex-direction: row;">
+								<label class="mt-1 mr-2">วอร์ด :</label>
+								<select
+									id="ward"
+									name="ward"
+									ng-model="cboWard"
+									class="form-control"
+									style="width: 600px;"
+									ng-class="{'is-invalid': errors.ward}"
+									ng-change="filterData(cboWard)"
+								>
+									<option value="">-- ทุกวอร์ด --</option>
+									<option value="{{ ward.ward }}" ng-repeat="(index, ward) in wards">
+										{{ ward.ward+ '-' +ward.name }} / 
+										<span>
+											{{ ward.desc.building.name }}
+											{{ ward.desc.building.floor == '0' ? '' : ' ชั้น ' + ward.desc.building.floor }}
+										</span>
+									</option>
+								</select>
+							</div>
+						</div>
 
 						<div class="table-responsive">
 							<table class="table table-bordered table-striped">
@@ -85,7 +87,7 @@
 										</td>
 									</tr>
 								</thead>
-									<tr ng-repeat="(index, ward) in data" style="font-size: 12px;">
+									<tr ng-repeat="(index, ward) in filteredData" style="font-size: 12px;">
 										<!-- <td style="text-align: center;">{{ index+1 }}</td> -->
 										<td>
 											{{ ward.ward + '-' + ward.name }}
