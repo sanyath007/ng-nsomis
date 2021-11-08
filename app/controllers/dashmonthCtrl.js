@@ -72,6 +72,7 @@ app.controller('dashmonthController', [
 
             ChartService.getSeriesData('/dashboard/ip-visit-month/', month)
             .then(function(res) {
+                console.log(res);
                 let {dataSeries, categories} = ChartService.createDataSeries(
                     res.data,
                     { name: 'd', value: 'num_pt'},
@@ -243,6 +244,73 @@ app.controller('dashmonthController', [
 				console.log(err)
 			});
 		}
+
+        $scope.getCovidRegMonth = function(e) {
+			if(e) e.preventDefault();
+
+			let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
+
+			$http.get(`${CONFIG.apiUrl}/covid/register/${month}/month`)
+			.then(res => {
+                console.log(res);
+                let {dataSeries, categories} = ChartService.createDataSeries(
+                    res.data,
+                    { name: 'd', value: 'all'},
+                    { name: 'm', value: month }
+                );
+
+                console.log(dataSeries, categories);
+
+                $scope.chartOptions = ChartService.initBarChart("covidTotalBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
+                $scope.chartOptions.series.push({
+                    name: 'Covid Total',
+                    data: dataSeries,
+                    color: '#1f640a',
+                });
+
+                let chart = new Highcharts.Chart($scope.chartOptions);
+			}, err => {
+				console.log(err)
+			});
+		};
+
+        $scope.getCovidRegWardMonth = function(e) {
+			if(e) e.preventDefault();
+
+			let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
+
+			$http.get(`${CONFIG.apiUrl}/covid/register/ward/${month}/month`)
+			.then(res => {
+                console.log(res);
+                let {series, categories} = ChartService.createStackedDataSeries(
+                    [ 
+                        { name: 'ชั้น1', prop: 'fl1' },
+                        { name: 'ชั้น2', prop: 'fl2' },
+                        { name: 'ชั้น3', prop: 'fl3' },
+                        { name: 'ชั้น6', prop: 'fl6' },
+                        { name: 'ชั้น9', prop: 'fl9' },
+                        { name: 'ชั้น10', prop: 'fl10' },
+                        { name: 'วอร์ด11', prop: 'w11' }
+                    ],
+                    res.data,
+                    { name: 'd'},
+                    { name: 'm', value: month }
+                );
+
+                console.log(series, categories);
+
+                $scope.chartOptions = ChartService.initStackChart("covidWardBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
+                $scope.chartOptions.series = series;
+
+                let chart = new Highcharts.Chart($scope.chartOptions);
+			}, err => {
+				console.log(err)
+			});
+		};
 
         $scope.getReferIn = function(e) {
             if(e) e.preventDefault();

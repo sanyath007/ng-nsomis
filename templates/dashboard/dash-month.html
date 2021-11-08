@@ -42,7 +42,9 @@
 																getOrVisit($event);
 																getOrType($event);
 																getErrorOp($event);
-																getErrorIp($event);"
+																getErrorIp($event);
+																getCovidRegMonth($event);
+																getCovidRegWardMonth($event);"
 					>
 						ตกลง
 					</button>
@@ -85,6 +87,12 @@
 								<a class="nav-link" href="#or" data-toggle="tab">
 									<i class="fas fa-user-nurse mr-1"></i>
 									ห้องผ่าตัด (OR)
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#covid" data-toggle="tab">
+									<i class="fas fa-user-nurse mr-1"></i>
+									ยอดผู้ป่วยโควิด (COVID-19)
 								</a>
 							</li>
 							<li class="nav-item">
@@ -163,6 +171,11 @@
 
 									</div>
 								</div>
+							</div><!-- /.tab-pane -->
+							<div class="tab-pane" id="covid">
+
+								<div ng-include="'./templates/dashboard/_covid-month.html?version=202111011600'"></div>
+
 							</div><!-- /.tab-pane -->
 							<div class="tab-pane" id="error">
 								<div class="row">
