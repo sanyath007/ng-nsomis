@@ -184,24 +184,24 @@ app.controller('productController', [
 		};
 
 		function setXType(period) {
-			if (period === '1') {
-				$scope.xtype.type1 = 0.3;
-				$scope.xtype.type2 = 1.5;
-				$scope.xtype.type3 = 2.4;
-				$scope.xtype.type4 = 3.5;
-				$scope.xtype.type5 = 5;
-			} else if (period === '2') {
-				$scope.xtype.type1 = 0.1;
-				$scope.xtype.type2 = 1.6;
-				$scope.xtype.type3 = 2;
-				$scope.xtype.type4 = 2;
-				$scope.xtype.type5 = 4;
-			} else if (period === '3') {
+			if (period === '1') { // เวรดึก
 				$scope.xtype.type1 = 0.1;
 				$scope.xtype.type2 = 1;
 				$scope.xtype.type3 = 1.5;
 				$scope.xtype.type4 = 2;
 				$scope.xtype.type5 = 3;
+			} else if (period === '2') { // เวรเช้า
+				$scope.xtype.type1 = 0.3;
+				$scope.xtype.type2 = 1.5;
+				$scope.xtype.type3 = 2.4;
+				$scope.xtype.type4 = 3.5;
+				$scope.xtype.type5 = 5;
+			} else if (period === '3') { // เวรบ่าย
+				$scope.xtype.type1 = 0.1;
+				$scope.xtype.type2 = 1;
+				$scope.xtype.type3 = 1.6;
+				$scope.xtype.type4 = 2;
+				$scope.xtype.type5 = 4;
 			}
 		}
 
@@ -255,12 +255,12 @@ app.controller('productController', [
 
 			// Check if user save data before fit time 
 			let chkTime = '';
-			if ($scope.cboPeriod === '1') {
-				chkTime = 'T15:00:00';
-			} else if ($scope.cboPeriod === '2') {
-				chkTime = 'T23:00:00';
-			} else if ($scope.cboPeriod === '3') {
+			if ($scope.cboPeriod === '1') { // เวรดึก
 				chkTime = 'T07:00:00';
+			} else if ($scope.cboPeriod === '2') { // เวรเช้า
+				chkTime = 'T15:00:00';
+			} else if ($scope.cboPeriod === '3') { // เวรบ่าย
+				chkTime = 'T23:00:00';
 			}
 
 			if (moment(new Date()).diff(moment(StringFormatService.convToDbDate($scope.dtpProductDate) + chkTime), 'minutes') < 0) {
