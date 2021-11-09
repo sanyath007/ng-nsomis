@@ -256,11 +256,11 @@ app.controller('productController', [
 			// Check if user save data before fit time 
 			let chkTime = '';
 			if ($scope.cboPeriod === '1') { // เวรดึก
-				chkTime = 'T07:00:00';
+				chkTime = 'T02:00:00';
 			} else if ($scope.cboPeriod === '2') { // เวรเช้า
-				chkTime = 'T15:00:00';
+				chkTime = 'T10:00:00';
 			} else if ($scope.cboPeriod === '3') { // เวรบ่าย
-				chkTime = 'T23:00:00';
+				chkTime = 'T18:00:00';
 			}
 
 			if (moment(new Date()).diff(moment(StringFormatService.convToDbDate($scope.dtpProductDate) + chkTime), 'minutes') < 0) {
