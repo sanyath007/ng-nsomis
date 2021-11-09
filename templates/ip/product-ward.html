@@ -81,6 +81,7 @@
 											รวม จนท.xชม.การทำงาน
 										</td>
 										<td width="6%" style="text-align: center;">Nursing Productivity</td>
+										<td width="6%" style="text-align: center;">Actions</td>
 									</tr>
 								</thead>
 								<tbody>
@@ -129,6 +130,22 @@
 													{{ prod.productivity | currency:'':1 }}
 												</span>
 											</h6>
+										</td>
+										<td style="text-align: center;">
+											<a
+												href="#"
+												ng-click="edit(prod.id)"
+												class="btn btn-warning btn-sm"
+											>
+												<i class="fas fa-pencil-alt"></i>
+											</a>
+											<a 
+												href="#"
+												ng-click="remove(prod.id)"
+												class="btn btn-danger btn-sm"
+											>
+												<i class="far fa-trash-alt"></i>
+											</a>
 										</td>
 									</tr>
 									<!-- <tr>

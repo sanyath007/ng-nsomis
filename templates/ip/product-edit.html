@@ -1,0 +1,407 @@
+<section
+	class="content"
+	ng-controller="productController"
+	ng-init="getProductEdit($event);"
+>
+	<div class="container-fluid">
+		<!-- Main row -->
+		<div class="row">
+			<section class="col-lg-12 connectedSortable">
+
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">
+							<i class="fas fa-bed mr-1"></i>
+							แก้ไข Productivity
+						</h3>
+					</div><!-- /.card-header -->
+				</div><!-- /.card -->
+
+				<div class="card">
+					<form action="" method="POST">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-7">
+									<div class="row">
+
+										<div class="form-group col-md-6">
+											<label for="ward">วอร์ด</label>
+											<select
+												id="ward"
+												name="ward"
+												ng-model="cboWard"
+												ng-change="getWorkload($event)"
+												class="form-control"
+												ng-class="{'is-invalid': errors.ward}"
+											>
+												<option value="">-- กรุณาเลือก --</option>
+												<option value="{{ ward.ward }}" ng-repeat="(index, ward) in wards">
+													{{ ward.ward+ '-' +ward.name }} / 
+													<span>
+														{{ ward.desc.building.name }}
+														{{ ward.desc.building.floor == '0' ? '' : ' ชั้น ' + ward.desc.building.floor }}
+													</span>
+												</option>
+											</select>
+										</div>
+
+										<div class="form-group col-md-6">
+											<label for="product_date">วันที่</label>
+											<input
+												type="text"
+												id="product_date"
+												name="product_date"
+												ng-model="dtpProductDate"
+												class="form-control"
+												autocomplete="off"
+											>
+										</div>
+										<div class="form-group col-md-6">
+											<label for="period">เวร</label>
+											<select
+												id="period"
+												name="period"
+												ng-model="cboPeriod"
+												class="form-control"
+												ng-class="{'is-invalid': errors.period}"
+												ng-change="getWorkload($event)"
+											>
+												<option value="">-- กรุณาเลือก --</option>
+												<option value="1">เวรดึก</option>
+												<option value="2">เวรเช้า</option>
+												<option value="3">เวรบ่าย</option>
+											</select>
+										</div>
+										<div class="form-group col-md-6">
+											<label for="totlaPatient">ผู้ป่วยทั้งหมด</label>
+											<input
+												type="text"
+												id="totlaPatient"
+												name="totlaPatient"
+												ng-model="data.all"
+												class="form-control text-center"
+												placeholder="ผู้ป่วยทั้งหมด"
+											>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="unknow">ไม่ระบุประเภท {{ data.unknow }}</label>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="unknow"
+													name="unknow"
+													ng-model="data.unknow"
+													class="form-control text-center"
+													ng-class="{ 'is-invalid': data.unknow > 0 }"
+													placeholder="ไม่ระบุประเภท"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '')"
+														ng-disabled="!data.unknow > 0 || data.unknow == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>											
+										</div>
+										<div class="form-group col-md-4">
+											<label for="type1">ประเภท 1</label>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="type1"
+													name="type1"
+													ng-model="data.type1"
+													class="form-control text-center"
+													placeholder="ประเภท 1"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '1')"
+														ng-disabled="!data.type1 > 0 || data.type1 == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="type2">ประเภท 2</label>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="type2"
+													name="type2"
+													ng-model="data.type2"
+													class="form-control text-center"
+													placeholder="ประเภท 2"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '2')"
+														ng-disabled="!data.type2 > 0 || data.type2 == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="type3">ประเภท 3</label>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="type3"
+													name="type3"
+													ng-model="data.type3"
+													class="form-control text-center"
+													placeholder="ประเภท 3"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '3')"
+														ng-disabled="!data.type3 > 0 || data.type3 == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="type4">ประเภท 4</label>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="type4"
+													name="type4"
+													ng-model="data.type4"
+													class="form-control text-center"
+													placeholder="ประเภท 4"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '4')"
+														ng-disabled="!data.type4 > 0 || data.type4 == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="type5">ประเภท 5</label>
+											<div class="input-group input-group-md">
+												<input
+													type="text"
+													id="type5"
+													name="type5"
+													ng-model="data.type5"
+													class="form-control text-center"
+													placeholder="ประเภท 5"
+													readonly
+												>
+												<span class="input-group-append">
+													<button
+														type="button"
+														class="btn btn-info btn-flat"
+														ng-click="showIpTypeLists($event, '5')"
+														ng-disabled="!data.type5 > 0 || data.type5 == 0"
+													>
+														<i class="fas fa-search"></i>
+													</button>
+												</span>
+											</div>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="exampleInputPassword1">จำนวน RN</label>
+											<input
+												type="text"
+												id="rn"
+												name="rn"
+												ng-model="staff.rn"
+												class="form-control text-center"
+												placeholder="จำนวน RN"
+												ng-change="onChangeStaffAmount()"
+											>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="exampleInputPassword1">จำนวน PN/NA</label>
+											<input
+												type="text"
+												id="pn"
+												name="pn"
+												ng-model="staff.pn"
+												class="form-control text-center"
+												placeholder="จำนวน PN/NA"
+												ng-change="onChangeStaffAmount()"
+											>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="total_staff">รวมผู้ปฏิบัติ</label>
+											<input
+												type="text"
+												id="total_staff"
+												name="total_staff"
+												ng-model="staff.total"
+												class="form-control text-center"
+												placeholder="รวมผู้ปฏิบัติ"
+												readonly
+											>
+										</div>
+									</div><!-- /.row -->
+								</div>
+
+								<div class="col-md-1"></div>
+
+								<div class="col-md-4">
+
+									<div class="card card-primary">
+										<div class="card-body">
+
+											<div class="row">
+												<div class="form-group col-md-6">
+													<label for="xtype1">ประเภท1 x {{ xtype.type1 }}</label>
+													<input
+														type="text"
+														id="xtype1"
+														name="xtype1"
+														ng-model="multiply.xtype1"
+														class="form-control text-center"
+														placeholder="ประเภท 1 x {{ xtype.type1 }}"
+														readonly
+													>
+												</div>								
+												<div class="form-group col-md-6">
+													<label for="xtype2">ประเภท2 x {{ xtype.type2 }}</label>
+													<input
+														type="text"
+														id="xtype2"
+														name="xtype2"
+														ng-model="multiply.xtype2"
+														class="form-control text-center"
+														placeholder="ประเภท 2 x {{ xtype.type2 }}"
+														readonly
+													>
+												</div>								
+												<div class="form-group col-md-6">
+													<label for="xtype3">ประเภท3 x {{ xtype.type3 }}</label>
+													<input
+														type="text"
+														id="xtype3"
+														name="xtype3"
+														ng-model="multiply.xtype3"
+														class="form-control text-center"
+														placeholder="ประเภท 3 x {{ xtype.type3 }}"
+														readonly
+													>
+												</div>								
+												<div class="form-group col-md-6">
+													<label for="xtype4">ประเภท4 x {{ xtype.type4 }}</label>
+													<input
+														type="text"
+														id="xtype4"
+														name="xtype4"
+														ng-model="multiply.xtype4"
+														class="form-control text-center"
+														placeholder="ประเภท 4 x {{ xtype.type4 }}"
+														readonly
+													>
+												</div>								
+												<div class="form-group col-md-6">
+													<label for="xtype5">ประเภท5 x {{ xtype.type5 }}</label>
+													<input
+														type="text"
+														id="xtype5"
+														name="xtype5"
+														ng-model="multiply.xtype5"
+														class="form-control text-center"
+														placeholder="ประเภท 5 x {{ xtype.type5 }}"
+														readonly
+													>
+												</div>
+												<div class="form-group col-md-6">
+													<label for="xtotal">รวมทุกประเภท</label>
+													<input
+														type="text"
+														id="xtotal"
+														name="xtotal"
+														ng-model="multiply.xtotal"
+														class="form-control text-center"
+														placeholder="ประเภท 5 x 12"
+														readonly
+													>
+												</div>
+												<div class="form-group col-md-12">
+													<label for="xstaff">ผู้ปฏิบัติ x 7</label>
+													<input
+														type="text"
+														id="xstaff"
+														name="xstaff"
+														ng-model="multiply.xstaff"
+														class="form-control text-center"
+														placeholder="ผู้ปฏิบัติ x 7"
+														readonly
+													>
+												</div>
+												<div class="form-group col-md-12">
+													<label for="productivity">Productivity</label>
+													<input
+														type="text"
+														id="productivity"
+														name="productivity"
+														ng-model="multiply.productivity"
+														class="form-control text-center"
+														placeholder="Productivity"
+														readonly
+													>
+												</div>
+											</div><!-- /.row -->
+
+										</div><!-- /.card-body -->
+									</div><!-- /.card -->
+
+								</div>
+							</div><!-- /.row -->
+						</div><!-- /.card-body -->
+			
+						<div class="card-footer">
+							<button type="submit" class="btn btn-warning float-right" ng-click="update($event)">
+								แก้ไข
+							</button>
+						</div>
+					</form>
+				</div><!-- /.card -->
+				
+				<div ng-include="'./templates/modals/ip-type-list.html?version=202103241540'"></div>
+
+			</section>
+		</div><!-- Main row -->
+	</div><!-- /.container-fluid-->
+</section><!-- /.content -->
+
+<!-- <script type="text/javascript">
+	$(function() {
+		$('#product_date').datepicker({
+			autoclose: true,
+			language: 'th',
+			format: 'dd/mm/yyyy',
+			thaiyear: true
+		}).datepicker('update', new Date());
+	});
+</script> -->
