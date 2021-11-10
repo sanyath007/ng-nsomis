@@ -449,12 +449,8 @@ app.controller('productController', [
 				user: 'test'
 			};
 
-			console.log(data);
-
 			$http.put(`${CONFIG.apiUrl}/product/${$scope.data.id}`, data)
             .then(res => {
-				console.log(res);
-
 				if (res.data.status === 1) {
 					toaster.pop('error', "", 'คุณกรอกข้อมูลไม่ครบ กรุณาเลือกวอร์ดและเลือกเวรก่อน !!!');
 					$scope.errors = res.data.errors;
@@ -466,6 +462,26 @@ app.controller('productController', [
 			}, err => {
 				console.log(err)
 			});
+		};
+
+		$scope.delete = (e, id) => {
+			e.preventDefault();
+
+			if (confirm(`คุณต้องการลบข้อมูล Productivity รหัส ${id} ใช่หรือไม่ ?` )) {
+				$http.delete(`${CONFIG.apiUrl}/product/${id}`)
+				.then(res => {
+					if (res.data.status === 1) {
+						toaster.pop('error', "", 'พบข้อผิดพลาด ไม่สามารถลบข้อมูลได้ !!!');
+						$scope.errors = res.data.errors;
+					} else if (res.data.status === 0) {
+						toaster.pop('success', "", 'ลบข้อมูลเรียบร้อย !!!');
+					}
+				}, err => {
+					console.log(err)
+				});
+			} else {
+
+			}
 		};
 	}
 ]);
