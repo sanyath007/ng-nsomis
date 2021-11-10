@@ -39,6 +39,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/ip/bedocc-year.html',
 		controller: 'ipController'
 	})
+	.when('/ip/bedocc-month', {
+		templateUrl: 'templates/ip/bedocc-month.html',
+		controller: 'ipController'
+	})
 	.when('/ip/bedempty-day', {
 		templateUrl: 'templates/ip/bedempty-day.html',
 		controller: 'ipController'
