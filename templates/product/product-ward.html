@@ -72,13 +72,13 @@
 										<td width="6%" style="text-align: center;">ประเภท 3</td>
 										<td width="6%" style="text-align: center;">ประเภท 4</td>
 										<td width="6%" style="text-align: center;">ประเภท 5</td>
-										<td width="8%" style="text-align: center; font-size: 14px;">
-											รวม ผป.xชม.การพยาบาล
+										<td width="6%" style="text-align: center; font-size: 14px;">
+											รวม ผป.xชม.<br>การพยาบาล
 										</td>
 										<td width="6%" style="text-align: center;">RN</td>
 										<td width="6%" style="text-align: center;">PN/NA</td>
-										<td width="8%" style="text-align: center; font-size: 14px;">
-											รวม จนท.xชม.การทำงาน
+										<td width="6%" style="text-align: center; font-size: 14px;">
+											รวม จนท.xชม.<br>การทำงาน
 										</td>
 										<td width="6%" style="text-align: center;">Nursing Productivity</td>
 										<td width="6%" style="text-align: center;">Actions</td>
@@ -134,14 +134,14 @@
 										<td style="text-align: center;">
 											<a
 												href="ip/product-edit/{{ prod.id }}"
-												class="btn btn-warning btn-sm"
+												class="btn btn-warning btn-xs"
 											>
 												<i class="fas fa-pencil-alt"></i>
 											</a>
 											<a 
 												href="#"
 												ng-click="delete(prod.id)"
-												class="btn btn-danger btn-sm"
+												class="btn btn-danger btn-xs"
 											>
 												<i class="far fa-trash-alt"></i>
 											</a>
@@ -155,7 +155,10 @@
 										<td style="text-align: center;">{{ totalData.type3 }}</td>
 										<td style="text-align: center;">{{ totalData.type4 }}</td>
 										<td style="text-align: center;">{{ totalData.type5 }}</td>
-										<td style="text-align: center;">{{ totalData.xtotal | currency:'':2 }}</td>
+										<td style="text-align: center;">
+											{{ totalData.xtotal | currency:'':2 }}<br>
+											<span class="text-sm mr-1">(เฉลี่ย)</span>
+										</td>
 										<td style="text-align: center;">{{ totalData.staff_rn }}</td>
 										<td style="text-align: center;">{{ totalData.staff_pn }}</td>
 										<td style="text-align: center;">{{ totalData.staffs }}</td>
@@ -185,6 +188,7 @@
 												>
 													{{ totalData.productivity | currency:'':1 }}
 												</span>
+												<span class="text-sm mr-1">(เฉลี่ย)</span>
 											</h6>
 										</td>
 										<td style="text-align: center;"></td>
