@@ -58,6 +58,28 @@ app.controller('productController', [
 			};
 		};
 
+		const initTotalWardData = () => {
+			return {
+				patients: 0,
+				type1: 0,
+				xtype1: 0,
+				type2: 0,
+				xtype2: 0,
+				type3: 0,
+				xtype3: 0,
+				type4: 0,
+				xtype4: 0,
+				type5: 0,
+				xtype5: 0,
+				xtotal: 0.0,
+				staff_rn: 0,
+				staff_pn: 0,
+				staffs: 0,
+				xstaff: 0,
+				productivity: 0.0,
+			};
+		};
+
 		$scope.range = function(min, max, step) {
 			step = step || 1;
 			var input = [];
@@ -129,6 +151,8 @@ app.controller('productController', [
 		$scope.getProductWard = (e) => {
 			if (e) e.preventDefault();
 
+			$scope.totalData = initTotalWardData();
+
 			let month = ($scope.cboMonth !== '') 
                         ? DatetimeService.fotmatYearMonth($scope.cboMonth)
                         : moment().format('YYYY-MM');
@@ -137,6 +161,39 @@ app.controller('productController', [
             $http.get(`${CONFIG.apiUrl}/product-ward/${month}/${ward}`)
             .then(res => {
 				$scope.data = res.data.product;
+
+				let rowCount = 0;
+				$scope.data.forEach(product => {
+					$scope.totalData.patients += parseInt(product.total_patient);
+					$scope.totalData.type1 += parseInt(product.type1);
+					$scope.totalData.xtype1 += parseFloat(product.xtype1);
+					$scope.totalData.type2 += parseInt(product.type2);
+					$scope.totalData.xtype2 += parseFloat(product.xtype2);
+					$scope.totalData.type3 += parseInt(product.type3);
+					$scope.totalData.xtype3 += parseFloat(product.xtype3);
+					$scope.totalData.type4 += parseInt(product.type4);
+					$scope.totalData.xtype4 += parseFloat(product.xtype4);
+					$scope.totalData.type5 += parseInt(product.type5);
+					$scope.totalData.xtype5 += parseFloat(product.xtype5);
+					$scope.totalData.xtotal += parseFloat(product.xtotal);
+					$scope.totalData.staff_rn += parseInt(product.rn);
+					$scope.totalData.staff_pn += parseInt(product.pn);
+					$scope.totalData.staffs += parseInt(product.total_staff);
+					$scope.totalData.xstaff += parseFloat(product.xstaff);
+					$scope.totalData.productivity += parseFloat(product.productivity);
+					rowCount++;
+				});
+
+				$scope.totalData.xtype1 = parseFloat($scope.totalData.xtype1) / rowCount;
+				$scope.totalData.xtype2 = parseFloat($scope.totalData.xtype2) / rowCount;
+				$scope.totalData.xtype3 = parseFloat($scope.totalData.xtype3) / rowCount;
+				$scope.totalData.xtype4 = parseFloat($scope.totalData.xtype4) / rowCount;
+				$scope.totalData.xtype5 = parseFloat($scope.totalData.xtype5) / rowCount;
+				$scope.totalData.xtotal = parseFloat($scope.totalData.xtotal) / rowCount;
+				$scope.totalData.xstaff = parseFloat($scope.totalData.xstaff) / rowCount;
+				$scope.totalData.productivity = parseFloat($scope.totalData.productivity) / rowCount;
+				console.log('row = ' +rowCount);
+				console.log($scope.totalData);
 			}, err => {
 				console.log(err)
 			});

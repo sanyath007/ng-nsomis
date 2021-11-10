@@ -147,20 +147,48 @@
 											</a>
 										</td>
 									</tr>
-									<!-- <tr>
+									<tr>
 										<td colspan="2" style="text-align: center;">รวม</td>
-										<td style="text-align: center;">{{ totalData.patient }}</td>
+										<td style="text-align: center;">{{ totalData.patients }}</td>
 										<td style="text-align: center;">{{ totalData.type1 }}</td>
 										<td style="text-align: center;">{{ totalData.type2 }}</td>
 										<td style="text-align: center;">{{ totalData.type3 }}</td>
 										<td style="text-align: center;">{{ totalData.type4 }}</td>
 										<td style="text-align: center;">{{ totalData.type5 }}</td>
-										<td style="text-align: center;">{{ totalData.type5 }}</td>
-										<td style="text-align: center;">{{ totalData.rn }}</td>
-										<td style="text-align: center;">{{ totalData.pn }}</td>
-										<td style="text-align: center;">{{ totalData.pn }}</td>
-										<td style="text-align: center;">{{ totalData.product }}</td>
-									</tr> -->
+										<td style="text-align: center;">{{ totalData.xtotal | currency:'':2 }}</td>
+										<td style="text-align: center;">{{ totalData.staff_rn }}</td>
+										<td style="text-align: center;">{{ totalData.staff_pn }}</td>
+										<td style="text-align: center;">{{ totalData.staffs }}</td>
+										<td style="text-align: center;">
+											<h5 style="margin: 0px;">
+												<span
+													ng-show="totalData.productivity > 130"
+													class="badge bg-danger"
+												>
+													{{ totalData.productivity | currency:'':1 }}
+												</span>
+												<span
+													ng-show="totalData.productivity > 110 && totalData.productivity <= 130"
+													class="badge bg-warning"
+												>
+													{{ totalData.productivity | currency:'':1 }}
+												</span>
+												<span
+													ng-show="totalData.productivity >= 90 && totalData.productivity <= 110"
+													class="badge bg-success"
+												>
+													{{ totalData.productivity | currency:'':1 }}
+												</span>
+												<span
+													ng-show="totalData.productivity < 90"
+													class="badge bg-default"
+												>
+													{{ totalData.productivity | currency:'':1 }}
+												</span>
+											</h6>
+										</td>
+										<td style="text-align: center;"></td>
+									</tr>
 
 								</tbody>
 							</table>
