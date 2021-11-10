@@ -2,11 +2,12 @@ app.controller('productController', [
 	'$rootScope',
 	'$scope',
 	'$http',
+	'$routeParams',
 	'CONFIG',
 	'StringFormatService',
 	'DatetimeService',
 	'toaster',
-	function($rootScope, $scope, $http, CONFIG, StringFormatService, DatetimeService, toaster) 
+	function($rootScope, $scope, $http, $routeParams, CONFIG, StringFormatService, DatetimeService, toaster) 
 	{
 		$scope.cboSDate = '';
 		$scope.cboMonth = '';
@@ -171,7 +172,7 @@ app.controller('productController', [
 				$scope.staff = res.data.staff;
 
 				setXType(period);
-				calcProductivity();
+				$scope.calcProductivity();
 			}, err => {
 				console.log(err)
 			});
@@ -180,7 +181,7 @@ app.controller('productController', [
 		$scope.onChangeStaffAmount = () => {
 			$scope.staff.total = parseInt($scope.staff.rn) + parseInt($scope.staff.pn);
 
-			calcProductivity();
+			$scope.calcProductivity();
 		};
 
 		function setXType(period) {
@@ -205,7 +206,7 @@ app.controller('productController', [
 			}
 		}
 
-		function calcProductivity() {
+		$scope.calcProductivity = function() {
 			if ($scope.data) {
 				$scope.multiply.xtype1 = (parseInt($scope.data.type1) * $scope.xtype.type1).toFixed(2);
 				$scope.multiply.xtype2 = (parseInt($scope.data.type2) * $scope.xtype.type2).toFixed(2);
@@ -274,7 +275,7 @@ app.controller('productController', [
 				if(confirm(`คุณมีผู้ป่วยที่ยังไม่ได้ระบุประเภทจำนวน  ${$scope.data.unknow} ราย หากคุณทำการบันทึกผู้ป่วยประเภทดังกล่าวจะถูกนำไปรวมกับผู้ป่วยประเภท 2 คุณต้องการทำการบันทึกต่อไปหรือไม่?`)) {
 					$scope.data.type2 = parseInt($scope.data.type2) + parseInt($scope.data.unknow);
 
-					calcProductivity();
+					$scope.calcProductivity();
 				} else {
 					return false;
 				}
@@ -304,7 +305,153 @@ app.controller('productController', [
 				user: 'test'
 			};
 
-			$http.post(`${CONFIG.apiUrl}/product-store`, data)
+			$http.post(`${CONFIG.apiUrl}/product`, data)
+            .then(res => {
+				console.log(res);
+
+				if (res.data.status === 1) {
+					toaster.pop('error', "", 'คุณกรอกข้อมูลไม่ครบ กรุณาเลือกวอร์ดและเลือกเวรก่อน !!!');
+					$scope.errors = res.data.errors;
+				} else if (res.data.status === 2) {
+					toaster.pop('error', "", 'คุณบันทึกข้อมูลซ้ำ !!!');
+				} else if (res.data.status === 0) {
+					toaster.pop('success', "", 'บันทึกข้อมูลเรียบร้อย !!!');
+				}
+			}, err => {
+				console.log(err)
+			});
+		};
+
+		const checkSumPatientTotal = function() {
+			let tempSumPatients = parseInt($scope.data.type1) + parseInt($scope.data.type2) + parseInt($scope.data.type3) + parseInt($scope.data.type4) + parseInt($scope.data.type5);
+			console.log(tempSumPatients+ '!==' +$scope.data.all);
+
+			if (tempSumPatients !== parseInt($scope.data.all)) {
+				return true;
+			}
+
+			return false;
+		};
+
+		$scope.getProductEdit = function() {
+			let id = $routeParams.id;
+
+			$scope.multiply = initMultiplyData();
+			$scope.staff = {
+				rn: 0,
+				pn: 0,
+				total: 0
+			};
+
+			$http.get(`${CONFIG.apiUrl}/product/${id}`)
+            .then(res => {
+				$scope.wards = res.data.wards;
+
+				$scope.wards.forEach(w => {
+					w.desc = $rootScope.wardBed().find(wb => wb.ward === w.ward);
+				});
+
+				$scope.wards.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
+
+				/** Set edited data to input controls */
+				$scope.data.id 			= res.data.product.id;
+				$scope.dtpProductDate 	= StringFormatService.convFromDbDate(res.data.product.product_date);
+				$scope.cboPeriod 		= res.data.product.period;
+				$scope.cboWard 			= res.data.product.ward;
+				/** Patient data */
+				$scope.data.all = res.data.product.total_patient;
+				$scope.data.type1 = res.data.product.type1;
+				$scope.data.type2 = res.data.product.type2;
+				$scope.data.type3 = res.data.product.type3;
+				$scope.data.type4 = res.data.product.type4;
+				$scope.data.type5 = res.data.product.type5;
+				/** Officer data */
+				$scope.staff.rn 	= res.data.product.rn;
+				$scope.staff.pn 	= res.data.product.pn;
+				$scope.staff.total 	= res.data.product.total_staff;
+
+				setXType($scope.cboPeriod);
+				$scope.calcProductivity();
+			}, err => {
+				console.log(err)
+			});
+		};
+
+		$scope.update = (e) => {
+			e.preventDefault();
+
+			if ($scope.data.length === 0 && !$scope.multiply && !$scope.staff) {
+				toaster.pop('warning', "", 'กรุณาเลือกวอร์ดและเลือกเวรก่อน !!!');
+
+				return false;
+			}
+
+			if (checkSumPatientTotal()) {
+				toaster.pop('error', "", 'คุณจำนวนรวมของผู้ป่วยแต่ละประเภทไม่เท่ากับผู้ป่วยทั้หมด !!!');
+
+				return false;
+			}
+
+			if (moment().diff(moment(StringFormatService.convToDbDate($scope.dtpProductDate)), "days") > 3) {
+				toaster.pop('error', "", 'ไม่สามารถแก้ไขข้อมูลที่ถูกบันทึกแล้วเกิน 3 วันได้ !!!');
+
+				return false;
+			}
+
+			// Check if user save data before fit time 
+			let chkTime = '';
+			if ($scope.cboPeriod === '1') { // เวรดึก
+				chkTime = 'T02:00:00';
+			} else if ($scope.cboPeriod === '2') { // เวรเช้า
+				chkTime = 'T10:00:00';
+			} else if ($scope.cboPeriod === '3') { // เวรบ่าย
+				chkTime = 'T18:00:00';
+			}
+
+			if (moment(new Date()).diff(moment(StringFormatService.convToDbDate($scope.dtpProductDate) + chkTime), 'minutes') < 0) {
+				toaster.pop('error', "", `ไม่สามารถบันทึกข้อมูลก่อนเวลาได้ ต้องบันทึกหลังเวลา ${chkTime} น. สำหรับ${$('#period option:selected').text()} !!!`);
+
+				return false;
+			}
+
+			/** Ask user for set unknow type to type 3 */
+			if (parseInt($scope.data.unknow) > 0) {
+				if(confirm(`คุณมีผู้ป่วยที่ยังไม่ได้ระบุประเภทจำนวน  ${$scope.data.unknow} ราย หากคุณทำการบันทึกผู้ป่วยประเภทดังกล่าวจะถูกนำไปรวมกับผู้ป่วยประเภท 2 คุณต้องการทำการบันทึกต่อไปหรือไม่?`)) {
+					$scope.data.type2 = parseInt($scope.data.type2) + parseInt($scope.data.unknow);
+
+					$scope.calcProductivity();
+				} else {
+					return false;
+				}
+			}
+
+			let data = {
+				ward: $scope.cboWard,
+				period: $scope.cboPeriod,
+				product_date: StringFormatService.convToDbDate($scope.dtpProductDate),
+				total_patient: $scope.data.all,
+				type1: $scope.data.type1,
+				type2: $scope.data.type2,
+				type3: $scope.data.type3,
+				type4: $scope.data.type4,
+				type5: $scope.data.type5,
+				xtype1: $scope.multiply.xtype1,
+				xtype2: $scope.multiply.xtype2,
+				xtype3: $scope.multiply.xtype3,
+				xtype4: $scope.multiply.xtype4,
+				xtype5: $scope.multiply.xtype5,
+				xtotal: $scope.multiply.xtotal,
+				rn: $scope.staff.rn,
+				pn: $scope.staff.pn,
+				total_staff: $scope.staff.total,
+				xstaff: $scope.multiply.xstaff,
+				productivity: $scope.multiply.productivity,
+				user: 'test'
+			};
+
+			console.log(data);
+
+			$http.put(`${CONFIG.apiUrl}/product/${$scope.data.id}`, data)
             .then(res => {
 				console.log(res);
 

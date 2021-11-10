@@ -56,15 +56,19 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		controller: 'ipController'
 	})
 	.when('/ip/product-sum', {
-		templateUrl: 'templates/ip/product-sum.html',
+		templateUrl: 'templates/product/product-sum.html',
 		controller: 'productController'
 	})
 	.when('/ip/product-ward', {
-		templateUrl: 'templates/ip/product-ward.html',
+		templateUrl: 'templates/product/product-ward.html',
 		controller: 'productController'
 	})
 	.when('/ip/product-add', {
-		templateUrl: 'templates/ip/product-add.html',
+		templateUrl: 'templates/product/product-add.html',
+		controller: 'productController'
+	})
+	.when('/ip/product-edit/:id', {
+		templateUrl: 'templates/product/product-edit.html',
 		controller: 'productController'
 	})
 	.when('/ip/chart-sending', {
