@@ -10,6 +10,7 @@ app.controller('ipController', [
 	function($rootScope, $scope, $http, $routeParams, CONFIG, DatetimeService, StringFormatService)
 	{
 		$scope.cboDate = '';
+		$scope.cboMonth = '';
 		$scope.cboYear = '';
 		$scope.sdate = '';
 		$scope.edate = '';
@@ -165,6 +166,50 @@ app.controller('ipController', [
 
 				$scope.totalData.bedTotal = 200; //คิดตามกระทรวง
 				$scope.totalData.bedOccTotal = ($scope.totalData.admDateTotal) * 100/($scope.totalData.bedTotal * daysOfYear)
+				$scope.totalData.activeBedTotal = ($scope.totalData.bedOccTotal * 200)/100;
+			}, err => {
+				console.log(err)
+			});
+		}
+
+		$scope.getBedOccMonth = function(e) {
+			if(e) e.preventDefault();
+
+			let month = ($scope.cboMonth !== '') 
+						? DatetimeService.fotmatYearMonth($scope.cboMonth)
+						: moment().format('YYYY-MM');
+
+			// Get total days of the year
+			daysOfMonth = moment(month).endOf("month").format('DD');
+			$scope.sdate = moment().format('YYYY-MM')+ '-01';
+			$scope.edate = moment().format('YYYY-MM')+ '-' +daysOfMonth;
+
+			$http.get(`${CONFIG.apiUrl}/ip/bedocc-month/${month}`)
+			.then(res => {
+				console.log(res);
+				let admdate = res.data.admdate
+				let wardStat = res.data.wardStat
+
+				$scope.totalData = initTotalBedOccYear();
+
+				admdate.forEach(d => {
+					d.stat = wardStat.filter(st => d.ward === st.ward);
+					// Get bed amount of each ward
+					d.bed = $rootScope.wardBed().find(wb => d.ward===wb.ward);
+				});
+
+				// Create data by calling sumAdmdate function
+				$scope.data = $rootScope.sumAdmdate(admdate, daysOfMonth);
+				$scope.data.sort((wa, wb) => wa.bed.sortBy - wb.bed.sortBy);
+
+				$scope.data.forEach(d => {
+					$scope.totalData.adjRwTotal += parseFloat(d.rw);
+					$scope.totalData.ptTotal += parseInt(d.dc_num);
+					$scope.totalData.admDateTotal += parseInt(d.admdate);
+				});
+
+				$scope.totalData.bedTotal = 200; //คิดตามกระทรวง
+				$scope.totalData.bedOccTotal = ($scope.totalData.admDateTotal) * 100/($scope.totalData.bedTotal * daysOfMonth)
 				$scope.totalData.activeBedTotal = ($scope.totalData.bedOccTotal * 200)/100;
 			}, err => {
 				console.log(err)
