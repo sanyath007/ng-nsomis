@@ -316,11 +316,11 @@ app.controller('dashmonthController', [
                 let categories = Object.keys(res.data);
                 let dataSeries = Object.values(res.data).map(d => parseInt(d));
 
-                $scope.chartOptions = ChartService.initBarChart("covidWeekBarContainer", "ยอด Admit ผู้ป่วยโควิด ตามสัปดาห์ระบาดวิทยา ปี 2564", categories, 'จำนวน');
+                $scope.chartOptions = ChartService.initAreaChart("covidWeekBarContainer", "ยอด Admit ผู้ป่วยโควิด ตามสัปดาห์ระบาดวิทยา ปี 2564", categories, 'จำนวน');
                 $scope.chartOptions.series.push({
                     name: 'Covid Total',
                     data: dataSeries,
-                    color: '#1f640a',
+                    color: '#FD7013',
                 });
 
                 let chart = new Highcharts.Chart($scope.chartOptions);
