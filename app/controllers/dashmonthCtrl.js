@@ -13,6 +13,7 @@ app.controller('dashmonthController', [
         $scope.barOptions = {};
         $scope.pieOptions = {};
         $scope.cboMonth = '';
+        $scope.cboWeek = '';
 
         $scope.getOpVisit = function (e) {
             if(e) e.preventDefault();
@@ -298,6 +299,29 @@ app.controller('dashmonthController', [
 
                 $scope.chartOptions = ChartService.initStackChart("covidWardBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
                 $scope.chartOptions.series = series;
+
+                let chart = new Highcharts.Chart($scope.chartOptions);
+			}, err => {
+				console.log(err)
+			});
+		};
+
+        $scope.getCovidRegWeek = function(e) {
+			if(e) e.preventDefault();
+
+			let week = 44;
+
+			$http.get(`${CONFIG.apiUrl}/covid/register/${week}/epi-week`)
+			.then(res => {
+                let categories = Object.keys(res.data);
+                let dataSeries = Object.values(res.data).map(d => parseInt(d));
+
+                $scope.chartOptions = ChartService.initBarChart("covidWeekBarContainer", "ยอด Admit ผู้ป่วยโควิด ตามสัปดาห์ระบาดวิทยา ปี 2564", categories, 'จำนวน');
+                $scope.chartOptions.series.push({
+                    name: 'Covid Total',
+                    data: dataSeries,
+                    color: '#1f640a',
+                });
 
                 let chart = new Highcharts.Chart($scope.chartOptions);
 			}, err => {
