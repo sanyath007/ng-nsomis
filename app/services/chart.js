@@ -168,6 +168,30 @@ app.service('ChartService', [
             return months;
         };
 
+        service.createArbitraryDataSeries = function(data, dataProps) {
+            let dataSeries = [];
+            let categories = [];
+
+            /** Create categories */
+            categories = data.map(d => {
+                return d[dataProps.name];
+            });
+
+            for(let i = 0; i < categories.length; i++) {
+                console.log(categories[i]);
+                data.every(val => {
+                    if(val[dataProps.name] === categories[i]) {
+                        dataSeries[i] = parseInt(val[dataProps.value]);
+                        return false;
+                    }
+
+                    return true;
+                });
+            }
+
+            return { dataSeries, categories }
+        };
+
         service.createDataSeries = function(data, dataProps, catType) {
             let dataSeries = [];
             let categories = [];

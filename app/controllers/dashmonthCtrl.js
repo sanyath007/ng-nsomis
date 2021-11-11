@@ -72,7 +72,6 @@ app.controller('dashmonthController', [
 
             ChartService.getSeriesData('/dashboard/ip-visit-month/', month)
             .then(function(res) {
-                console.log(res);
                 let {dataSeries, categories} = ChartService.createDataSeries(
                     res.data,
                     { name: 'd', value: 'num_pt'},
@@ -254,14 +253,11 @@ app.controller('dashmonthController', [
 
 			$http.get(`${CONFIG.apiUrl}/covid/register/${month}/month`)
 			.then(res => {
-                console.log(res);
                 let {dataSeries, categories} = ChartService.createDataSeries(
                     res.data,
                     { name: 'd', value: 'all'},
                     { name: 'm', value: month }
                 );
-
-                console.log(dataSeries, categories);
 
                 $scope.chartOptions = ChartService.initBarChart("covidTotalBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
                 $scope.chartOptions.series.push({
@@ -285,7 +281,6 @@ app.controller('dashmonthController', [
 
 			$http.get(`${CONFIG.apiUrl}/covid/register/ward/${month}/month`)
 			.then(res => {
-                console.log(res);
                 let {series, categories} = ChartService.createStackedDataSeries(
                     [ 
                         { name: 'ชั้น1', prop: 'fl1' },
@@ -300,8 +295,6 @@ app.controller('dashmonthController', [
                     { name: 'd'},
                     { name: 'm', value: month }
                 );
-
-                console.log(series, categories);
 
                 $scope.chartOptions = ChartService.initStackChart("covidWardBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
                 $scope.chartOptions.series = series;
