@@ -309,7 +309,7 @@ app.controller('dashmonthController', [
         $scope.getCovidRegWeek = function(e) {
 			if(e) e.preventDefault();
 
-			let week = 44;
+			let week = 46;
 
 			$http.get(`${CONFIG.apiUrl}/covid/register/${week}/epi-week`)
 			.then(res => {
