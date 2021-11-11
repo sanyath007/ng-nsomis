@@ -16,8 +16,16 @@
     </div>
 
     <div class="col-md-12">
+        <div class="ml-4">
+            <a href="#" class="btn btn-success" ng-click="showEpidWeekList($event)">
+                ตารางแสดงสัปดาห์ระบาดวิทยา ปี 2564
+            </a>
+        </div>
 
         <div id="covidWeekBarContainer" style="width: 100%; height: 640px; margin: 20px auto;"></div>
 
     </div>
+
+    <div ng-include="'./templates/dashboard/_week-list.html?version=202111111430'"></div>
+
 </div>

@@ -14,6 +14,7 @@ app.controller('dashmonthController', [
         $scope.pieOptions = {};
         $scope.cboMonth = '';
         $scope.cboWeek = '';
+        $scope.epidWeeks = [];
 
         $scope.getOpVisit = function (e) {
             if(e) e.preventDefault();
@@ -556,6 +557,21 @@ app.controller('dashmonthController', [
             }, function(err) {
                 console.log(err);
             });
+        };
+
+        $scope.showEpidWeekList = function(e) {
+            e.preventDefault();
+
+            $http.get(`${CONFIG.apiUrl}/epid-weeks`)
+			.then(res => {
+				console.log(res.data);
+
+				$scope.epidWeeks = res.data;
+
+                $('#weekLists').modal('show');
+			}, err => {
+				console.log(err);
+			});
         };
     }
 ]);
