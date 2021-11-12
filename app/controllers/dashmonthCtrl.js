@@ -270,7 +270,7 @@ app.controller('dashmonthController', [
                 $scope.chartOptions.series = series;
                 let chart1 = new Highcharts.Chart($scope.chartOptions);
 
-                $scope.pieOptions = ChartService.initPieChart("covidTotalPieContainer", "สัดส่วนผู้ป่วย COVID-19 ตามเพศ", "", "สัดส่วนตามประเภทผู้ป่วย");
+                $scope.pieOptions = ChartService.initPieChart("covidTotalPieContainer", "สัดส่วนตามเพศ", "", "สัดส่วนผู้ป่วย COVID-19");
                 /** Generate series data of pie chart */
                 const men = res.data.reduce((sum, curVal) => {
                     return sum += parseInt(curVal.m);
@@ -304,16 +304,17 @@ app.controller('dashmonthController', [
 
 			$http.get(`${CONFIG.apiUrl}/covid/register/ward/${month}/month`)
 			.then(res => {
+                let wards = [ 
+                    { name: 'ชั้น1', prop: 'fl1', value: 0 },
+                    { name: 'ชั้น2', prop: 'fl2', value: 0 },
+                    { name: 'ชั้น3', prop: 'fl3', value: 0 },
+                    { name: 'ชั้น6', prop: 'fl6', value: 0 },
+                    { name: 'ชั้น9', prop: 'fl9', value: 0 },
+                    { name: 'ชั้น10', prop: 'fl10', value: 0 },
+                    { name: 'วอร์ด11', prop: 'w11', value: 0 }
+                ];
                 let { series, categories } = ChartService.createStackedDataSeries(
-                    [ 
-                        { name: 'ชั้น1', prop: 'fl1' },
-                        { name: 'ชั้น2', prop: 'fl2' },
-                        { name: 'ชั้น3', prop: 'fl3' },
-                        { name: 'ชั้น6', prop: 'fl6' },
-                        { name: 'ชั้น9', prop: 'fl9' },
-                        { name: 'ชั้น10', prop: 'fl10' },
-                        { name: 'วอร์ด11', prop: 'w11' }
-                    ],
+                    wards,
                     res.data,
                     { name: 'd'},
                     { name: 'm', value: month }
@@ -322,7 +323,31 @@ app.controller('dashmonthController', [
                 $scope.chartOptions = ChartService.initStackChart("covidWardBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
                 $scope.chartOptions.series = series;
 
-                let chart = new Highcharts.Chart($scope.chartOptions);
+                let chart1 = new Highcharts.Chart($scope.chartOptions);
+
+                wards.forEach(w => {
+                    w.value = res.data.reduce((sum, curval) => {
+                        return sum += parseInt(curval[w.prop]);
+                    }, 0)
+                });
+
+                const dataSeries = wards.map(fl => {
+                    return {
+                        name: fl.name,
+                        y: fl.value
+                    }
+                });
+
+                $scope.chartOptions = ChartService.initColumnChart("covidWardTotalBarContainer", "ยอด Admit รายวอร์ด", 'จำนวน (ราย)', '{point.y:.0f}');
+                $scope.chartOptions.series = [
+                    {
+                        name: 'Covid Total',
+                        colorByPoint: true,
+                        data: dataSeries
+                    }
+                ];
+
+                let chart2 = new Highcharts.Chart($scope.chartOptions);
 			}, err => {
 				console.log(err)
 			});
