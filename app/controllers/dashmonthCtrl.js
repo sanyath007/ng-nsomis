@@ -255,18 +255,19 @@ app.controller('dashmonthController', [
 
 			$http.get(`${CONFIG.apiUrl}/covid/register/${month}/month`)
 			.then(res => {
-                let {dataSeries, categories} = ChartService.createDataSeries(
+                let { series, categories } = ChartService.createStackedDataSeries(
+                    [ 
+                        { name: 'ชาย', prop: 'm' },
+                        { name: 'หญิง', prop: 'w' },
+                    ],
                     res.data,
-                    { name: 'd', value: 'all'},
+                    { name: 'd' },
                     { name: 'm', value: month }
                 );
-
-                $scope.chartOptions = ChartService.initBarChart("covidTotalBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
-                $scope.chartOptions.series.push({
-                    name: 'Covid Total',
-                    data: dataSeries,
-                    color: '#1f640a',
-                });
+                
+                console.log(series, categories);
+                $scope.chartOptions = ChartService.initStackChart("covidTotalBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
+                $scope.chartOptions.series = series;
 
                 let chart = new Highcharts.Chart($scope.chartOptions);
 			}, err => {
