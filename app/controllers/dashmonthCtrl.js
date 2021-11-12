@@ -255,6 +255,7 @@ app.controller('dashmonthController', [
 
 			$http.get(`${CONFIG.apiUrl}/covid/register/${month}/month`)
 			.then(res => {
+                /** Generate series data of pie chart */
                 let { series, categories } = ChartService.createStackedDataSeries(
                     [ 
                         { name: 'ชาย', prop: 'm' },
@@ -264,12 +265,31 @@ app.controller('dashmonthController', [
                     { name: 'd' },
                     { name: 'm', value: month }
                 );
-                
-                console.log(series, categories);
+
                 $scope.chartOptions = ChartService.initStackChart("covidTotalBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
                 $scope.chartOptions.series = series;
+                let chart1 = new Highcharts.Chart($scope.chartOptions);
 
-                let chart = new Highcharts.Chart($scope.chartOptions);
+                $scope.pieOptions = ChartService.initPieChart("covidTotalPieContainer", "สัดส่วนผู้ป่วย COVID-19 ตามเพศ", "", "สัดส่วนตามประเภทผู้ป่วย");
+                /** Generate series data of pie chart */
+                const men = res.data.reduce((sum, curVal) => {
+                    return sum += parseInt(curVal.m);
+                }, 0);
+                const women = res.data.reduce((sum, curVal) => {
+                    return sum += parseInt(curVal.w);
+                }, 0);
+                let dataSeries = [];
+                [ 
+                    { name: 'ชาย', value: men },
+                    { name: 'หญิง', value: women },
+                ].forEach(data => {
+                    dataSeries.push({ name: data.name, y: parseInt(data.value) });
+                });
+
+                $scope.pieOptions.series[0].data = dataSeries;
+
+                /** Render chart */
+                var chart2 = new Highcharts.Chart($scope.pieOptions);
 			}, err => {
 				console.log(err)
 			});
@@ -284,7 +304,7 @@ app.controller('dashmonthController', [
 
 			$http.get(`${CONFIG.apiUrl}/covid/register/ward/${month}/month`)
 			.then(res => {
-                let {series, categories} = ChartService.createStackedDataSeries(
+                let { series, categories } = ChartService.createStackedDataSeries(
                     [ 
                         { name: 'ชั้น1', prop: 'fl1' },
                         { name: 'ชั้น2', prop: 'fl2' },
