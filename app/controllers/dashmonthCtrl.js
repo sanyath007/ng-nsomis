@@ -13,7 +13,7 @@ app.controller('dashmonthController', [
         $scope.barOptions = {};
         $scope.pieOptions = {};
         $scope.cboMonth = '';
-        $scope.cboWeek = '';
+        $scope.cboEpidWeek = '45';
         $scope.epidWeeks = [];
 
         $scope.getOpVisit = function (e) {
@@ -378,8 +378,9 @@ app.controller('dashmonthController', [
         
         $scope.getBedOccWeek = function(e) {
 			if(e) e.preventDefault();
+            console.log(e);
 
-			let week = 45;
+			let week = $scope.cboEpidWeek == '' ? 45 : $scope.cboEpidWeek;
 
 			$http.get(`${CONFIG.apiUrl}/ip/bedocc-week/${week}`)
 			.then(res => {

@@ -29,7 +29,19 @@
 
     <div class="col-md-6">
 
+        <div class="form-group col-md-4">
+            <select ng-model="cboEpidWeek" ng-change="getBedOccWeek();" class="form-control">
+                <option value="40">สัปดาห์ที่ 40</option>
+                <option value="41">สัปดาห์ที่ 41</option>
+                <option value="42">สัปดาห์ที่ 42</option>
+                <option value="43">สัปดาห์ที่ 43</option>
+                <option value="44">สัปดาห์ที่ 44</option>
+                <option value="45">สัปดาห์ที่ 45</option>
+            </select>
+        </div>
+
         <div id="covidBedOccBarContainer" style="width: 100%; height: 480px; margin: 20px auto;"></div>
+
         <p style="color: red; margin: 2px auto; font-size: 14px;">
             * อัตราครองเตียง = จำนวนวันนอนของวอร์ดในสัปดาห์ * 100 / จำนวนเตียงของวอร์ด * จำนวนวันในสัปดาห์ (7 วัน)
         </p><br>
