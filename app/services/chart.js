@@ -198,6 +198,7 @@ app.service('ChartService', [
                 },
             
                 xAxis: {
+                    categories: _categories,
                     accessibility: {
                         rangeDescription: 'Range: 2010 to 2017'
                     }
@@ -214,7 +215,9 @@ app.service('ChartService', [
                         label: {
                             connectorAllowed: false
                         },
-                        pointStart: 2010
+                        dataLabels: {
+                            enabled: true
+                        }
                     }
                 },
 

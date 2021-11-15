@@ -320,7 +320,7 @@ app.controller('dashmonthController', [
                     { name: 'm', value: month }
                 );
 
-                $scope.chartOptions = ChartService.initStackChart("covidWardBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
+                $scope.chartOptions = ChartService.initLineChart("covidWardBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
                 $scope.chartOptions.series = series;
 
                 let chart1 = new Highcharts.Chart($scope.chartOptions);
