@@ -178,6 +178,65 @@ app.service('ChartService', [
             }
         };
 
+        service.initLineChart = function(_container, _title, _categories, _labelUnit) {
+            return {
+                chart: {
+                    renderTo: _container
+                },
+                title: {
+                    text: _title
+                },
+            
+                subtitle: {
+                    text: ''
+                },
+            
+                yAxis: {
+                    title: {
+                        text: ''
+                    }
+                },
+            
+                xAxis: {
+                    accessibility: {
+                        rangeDescription: 'Range: 2010 to 2017'
+                    }
+                },
+            
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+            
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        },
+                        pointStart: 2010
+                    }
+                },
+
+                series: [],
+
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                }
+            }
+        };
+
         service.getSeriesData = function (url, data) {
             return $http.get(CONFIG.apiUrl + url + data);
         };
