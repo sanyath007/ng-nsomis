@@ -375,6 +375,110 @@ app.controller('dashmonthController', [
 				console.log(err)
 			});
 		};
+        
+        $scope.getBedOccWeek = function(e) {
+			if(e) e.preventDefault();
+
+			let week = 45;
+
+			$http.get(`${CONFIG.apiUrl}/ip/bedocc-week/${week}`)
+			.then(res => {
+				let admdate = res.data.admdate
+				let wardStat = res.data.wardStat
+
+				admdate.forEach(d => {
+					d.stat = wardStat.filter(st => d.ward === st.ward);
+					// Get bed amount of each ward
+					d.bed = $rootScope.covidBed().find(wb => d.ward===wb.ward);
+				});
+
+				// Create data by calling sumAdmdate function
+				$scope.data = $rootScope.sumAdmdate2(admdate, 7);
+				$scope.data.sort((wa, wb) => wa.bed.sortBy - wb.bed.sortBy);
+
+                /** อัตราครองเตียง */
+                const dataSeries1 = $scope.data.map(ward => {
+                    return {
+                        name: ward.name,
+                        y: parseFloat(ward.sumBedOcc2.toFixed(2))
+                    };
+                });
+
+                $scope.chartOptions = ChartService.initColumnChart("covidBedOccBarContainer", "อัตราครองเตียง สัปดาห์ที่ 45 (ตามสัปดาห์ระบาดวิทยา ปี 2564)", '%', '{point.y:.0f}');
+                $scope.chartOptions.series = [{
+                    name: 'อัตราครองเตียง',
+                    colorByPoint: true,
+                    data: dataSeries1,
+                    dataLabels: {
+                        enabled: true
+                    }
+                }];
+
+                let chart = new Highcharts.Chart($scope.chartOptions);
+
+                /** Active Bed */
+                // const dataSeries2 = $scope.data.map(ward => {
+                //     return {
+                //         name: ward.name,
+                //         y: parseFloat(ward.activeBed2.toFixed(2))
+                //     };
+                // });
+
+                // $scope.chartOptions = ChartService.initColumnChart("ipActiveBedBarContainer", "Active Bed", 'เตียง', '{point.y:.0f}');
+                // $scope.chartOptions.series = [{
+                //     name: 'Active Bed',
+                //     colorByPoint: true,
+                //     data: dataSeries2,
+                //     dataLabels: {
+                //         enabled: true
+                //     }
+                // }];
+
+                // let chart2 = new Highcharts.Chart($scope.chartOptions);
+
+                /** อัตราการใช้เตียง (Turn Over Rate) */
+                // const dataSeries3 = $scope.data.map(ward => {
+                //     return {
+                //         name: ward.name,
+                //         y: parseFloat((ward.sumPt/ward.bed.bed).toFixed(2))
+                //     };
+                // });
+
+                // $scope.chartOptions = ChartService.initColumnChart("ipTurnOverRateBarContainer", "อัตราการใช้เตียง (Turn Over Rate)", 'ราย/เตียง', '{point.y:.1f}');
+                // $scope.chartOptions.series = [{
+                //     name: 'Turn Over Rate',
+                //     colorByPoint: true,
+                //     data: dataSeries3,
+                //     dataLabels: {
+                //         enabled: true
+                //     }
+                // }];
+
+                // let chart3 = new Highcharts.Chart($scope.chartOptions);
+                
+                /** วิเคราะห์ศักยภาพการจัดบริการผู้ป่วยใน (CMI) */
+                // const dataSeries4 = $scope.data.map(ward => {
+                //     return {
+                //         name: ward.name,
+                //         y: parseFloat((ward.rw/ward.sumPt).toFixed(2))
+                //     };
+                // });
+
+                // $scope.chartOptions = ChartService.initColumnChart("ipCMIBarContainer", "CMI", '', '{point.y:.1f}');
+                // $scope.chartOptions.series = [{
+                //     name: 'CMI',
+                //     colorByPoint: true,
+                //     data: dataSeries4,
+                //     dataLabels: {
+                //         enabled: true
+                //     }
+                // }];
+
+                // let chart4 = new Highcharts.Chart($scope.chartOptions);
+			}, err => {
+				console.log(err)
+			});
+		};
 
         $scope.getReferIn = function(e) {
             if(e) e.preventDefault();

@@ -1,7 +1,7 @@
 <div
     class="row"
     ng-controller="dashmonthController"
-    ng-init="getCovidRegMonth($event); getCovidRegWardMonth($event); getCovidRegWeek($event)"
+    ng-init="getCovidRegMonth($event); getCovidRegWardMonth($event); getCovidRegWeek($event); getBedOccWeek();"
 >
     <div class="col-md-7">
 
@@ -24,6 +24,15 @@
     <div class="col-md-5">
 
         <div id="covidWardTotalBarContainer" style="width: 100%; height: 480px; margin: 20px auto;"></div>
+
+    </div>
+
+    <div class="col-md-12">
+
+        <div id="covidBedOccBarContainer" style="width: 100%; height: 480px; margin: 20px auto;"></div>
+        <p style="color: red; margin: 2px auto; font-size: 14px;">
+            * อัตราครองเตียง = จำนวนวันนอนของวอร์ดในสัปดาห์ * 100 / จำนวนเตียงของวอร์ด * จำนวนวันในสัปดาห์ (7 วัน)
+        </p><br>
 
     </div>
 

@@ -150,6 +150,26 @@ var app = angular.module('App', ['ngRoute', 'ngStorage', 'toaster', 'angular-loa
                 return data;
             }
 
+            $rootScope.sumAdmdate2 = function(data, totalDate) {
+                data.forEach(d => {
+                    d.sumAdm = d.stat.reduce((sum, st) => {
+                        return sum + parseInt(st.admdate);
+                    }, 0);
+
+                    d.sumHr = d.stat.reduce((sum, st) => {
+                        return sum + parseInt(st.admit_hour);
+                    }, 0);
+
+                    d.sumPt = d.stat.length;
+
+                    d.sumBedOcc2 = $rootScope.calculateBedOcc(d.sumAdm, d.bed.capacity, totalDate);
+
+                    d.activeBed2 = $rootScope.calculateActiveBed(d.sumBedOcc2, d.bed.capacity);
+                });
+
+                return data;
+            }
+
             $rootScope.calculateBedOcc = function(sumAdmdate, totalBed, totalDate) {
                 return (sumAdmdate*100)/(totalBed*totalDate);
             }
