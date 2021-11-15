@@ -169,10 +169,17 @@ app.service('ChartService', [
                     },
                 },
                 tooltip: {
-                    pointFormat: 'ยอด Admit สัปดาห์ที่ {point.x} ทั้งหมด <b>{point.y:,.0f}</b>'
+                    pointFormat: 'ยอด Admit <b>{point.y:,.0f}</b>'
                 },
                 plotOptions: {
-                    
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        },
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
                 },
                 series: []
             }
