@@ -123,7 +123,11 @@ app.controller('schedulingController', [
 							shiftText = '';
 						} else {
 							sh.forEach(s => {
-								shiftText += (s.shift_id === '1' ? 'ด' : s.shift_id === '2' ? 'ช' : 'บ') + '|';
+								shiftText += (s.shift_id === '1' 
+												? 'ด' 
+												: s.shift_id === '2' 
+													? 'ช' 
+													: 'บ') + '|';
 							});
 						}
 
@@ -174,14 +178,20 @@ app.controller('schedulingController', [
 
 			document.getElementById(ctrl+ '_btnGroupDrop').innerText = shift;
 			if (shift == 'ด') {
-				document.getElementById(ctrl+ '_btnGroupDrop').classList.remove('btn-success', 'btn-danger');
+				document.getElementById(ctrl+ '_btnGroupDrop').classList.remove('btn-default','btn-success','btn-danger','btn-warning');
 				document.getElementById(ctrl+ '_btnGroupDrop').classList.add('btn-info');
 			} else if (shift == 'ช') {
-				document.getElementById(ctrl+ '_btnGroupDrop').classList.remove('btn-info', 'btn-danger');
+				document.getElementById(ctrl+ '_btnGroupDrop').classList.remove('btn-default','btn-info','btn-danger','btn-warning');
 				document.getElementById(ctrl+ '_btnGroupDrop').classList.add('btn-success');
 			} else if (shift == 'บ') {
-				document.getElementById(ctrl+ '_btnGroupDrop').classList.remove('btn-info', 'btn-success');
+				document.getElementById(ctrl+ '_btnGroupDrop').classList.remove('btn-default','btn-info','btn-success','btn-warning');
 				document.getElementById(ctrl+ '_btnGroupDrop').classList.add('btn-danger');
+			} else if (shift == 'BD') {
+				document.getElementById(ctrl+ '_btnGroupDrop').classList.remove('btn-default','btn-info','btn-success','btn-danger');
+				document.getElementById(ctrl+ '_btnGroupDrop').classList.add('btn-warning');
+			} else if (shift == '-') {
+				document.getElementById(ctrl+ '_btnGroupDrop').classList.remove('btn-info','btn-success','btn-danger','btn-warning');
+				document.getElementById(ctrl+ '_btnGroupDrop').classList.add('btn-default');
 			}
 		};
 
@@ -190,7 +200,11 @@ app.controller('schedulingController', [
 
 			let person_shifts = [];
 			for (let d = 1; d <= $scope.dataTableOptions.totalCol; d++) {
-				person_shifts.push(document.getElementById(person+ '_' +d).value);
+				let shiftOfDay = document.getElementById(person+ '_1_' +d).value == '-' ? '' : document.getElementById(person+ '_1_' +d).value+ '|';
+				shiftOfDay += document.getElementById(person+ '_2_' +d).value == '-' ? '' : document.getElementById(person+ '_2_' +d).value+ '|';
+				shiftOfDay += document.getElementById(person+ '_3_' +d).value == '-' ? '' : document.getElementById(person+ '_3_' +d).value;
+
+				person_shifts.push(shiftOfDay);
 			}
 
 			$scope.newScheduling.shifts.push({
