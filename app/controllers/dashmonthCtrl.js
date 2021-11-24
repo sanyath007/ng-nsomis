@@ -13,7 +13,7 @@ app.controller('dashmonthController', [
         $scope.barOptions = {};
         $scope.pieOptions = {};
         $scope.cboMonth = '';
-        $scope.cboEpidWeek = '45';
+        $scope.cboEpidWeek = '';
         $scope.epidWeeks = [];
 
         $scope.getOpVisit = function (e) {
@@ -320,7 +320,7 @@ app.controller('dashmonthController', [
                     { name: 'm', value: month }
                 );
 
-                $scope.chartOptions = ChartService.initLineChart("covidWardBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
+                $scope.chartOptions = ChartService.initStackChart("covidWardBarContainer", "ยอด Admit ผู้ป่วยโควิด", categories, 'จำนวน');
                 $scope.chartOptions.series = series;
 
                 let chart1 = new Highcharts.Chart($scope.chartOptions);
@@ -353,10 +353,19 @@ app.controller('dashmonthController', [
 			});
 		};
 
+        let defaultEpidWeek = 45;
+        if (moment().isBetween(moment('2021-11-07'), moment('2021-11-13'))) {
+            defaultEpidWeek = 45;
+        } else if (moment().isBetween(moment('2021-11-14'), moment('2021-11-20'))) {
+            defaultEpidWeek = 46;
+        } else if (moment().isBetween(moment('2021-11-21'), moment('2021-11-27'))) {
+            defaultEpidWeek = 47;
+        }
+
         $scope.getCovidRegWeek = function(e) {
 			if(e) e.preventDefault();
 
-			let week = 46;
+			let week = defaultEpidWeek - 1;
 
 			$http.get(`${CONFIG.apiUrl}/covid/register/${week}/epi-week`)
 			.then(res => {
@@ -375,12 +384,11 @@ app.controller('dashmonthController', [
 				console.log(err)
 			});
 		};
-        
+
         $scope.getBedOccWeek = function(e) {
 			if(e) e.preventDefault();
-            console.log(e);
 
-			let week = $scope.cboEpidWeek == '' ? 45 : $scope.cboEpidWeek;
+			let week = $scope.cboEpidWeek == '' ? defaultEpidWeek - 1 : $scope.cboEpidWeek;
 
 			$http.get(`${CONFIG.apiUrl}/ip/bedocc-week/${week}`)
 			.then(res => {
@@ -405,7 +413,7 @@ app.controller('dashmonthController', [
                     };
                 });
 
-                $scope.chartOptions = ChartService.initColumnChart("covidBedOccBarContainer", "อัตราครองเตียง สัปดาห์ที่ 45 (ตามสัปดาห์ระบาดวิทยา ปี 2564)", '%', '{point.y:.0f}');
+                $scope.chartOptions = ChartService.initColumnChart("covidBedOccBarContainer", `อัตราครองเตียง สัปดาห์ที่ ${week} (ตามสัปดาห์ระบาดวิทยา ปี 2564)`, '%', '{point.y:.0f}');
                 $scope.chartOptions.series = [{
                     name: 'อัตราครองเตียง',
                     colorByPoint: true,
