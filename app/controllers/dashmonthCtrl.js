@@ -360,6 +360,12 @@ app.controller('dashmonthController', [
             defaultEpidWeek = 46;
         } else if (moment().isBetween(moment('2021-11-21'), moment('2021-11-27'))) {
             defaultEpidWeek = 47;
+        } else if (moment().isBetween(moment('2021-11-28'), moment('2021-12-04'))) {
+            defaultEpidWeek = 48;
+        } else if (moment().isBetween(moment('2021-12-05'), moment('2021-12-11'))) {
+            defaultEpidWeek = 49;
+        } else if (moment().isBetween(moment('2021-12-12'), moment('2021-12-18'))) {
+            defaultEpidWeek = 50;
         }
 
         $scope.getCovidRegWeek = function(e) {

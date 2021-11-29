@@ -378,12 +378,11 @@
 			$(".nav-sidebar").find(".menu-open").children(".nav-treeview").css("display", "none");
             /** Remove .menu-open class from previous opened .nav-item */
 			$(".nav-sidebar").find(".menu-open").removeClass("menu-open");
-            
-            console.log('On menu is clicked!!');
+
             /** Set class and style to clicked .nav-item */
-			$(this).parent().addClass("menu-open");
+			// $(this).parent().addClass("menu-open");
             /** Set display style of .nav-treeview that is child of clicked .nav-item to block */
-            $(this).parent().children(".nav-treeview").css("display", "block");
+            // $(this).parent().children(".nav-treeview").css("display", "block");
 
             /** Remove .active class from previous actived .nav-link that is child of .nav-item */
 			$(".nav-sidebar .nav-item").find(".active").removeClass("active");
@@ -394,6 +393,7 @@
         /** submenu */
 		$(".nav-treeview .nav-link").on("click", function (e) {
             console.log('On submenu is clicked!!');
+
 			$(".nav-treeview").find(".active").removeClass("active");
 			$(this).addClass("active");
 		});
