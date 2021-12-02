@@ -181,8 +181,8 @@ app.controller('ipController', [
 
 			// Get total days of the year
 			daysOfMonth = moment(month).endOf("month").format('DD');
-			$scope.sdate = moment().format('YYYY-MM')+ '-01';
-			$scope.edate = moment().format('YYYY-MM')+ '-' +daysOfMonth;
+			$scope.sdate = moment(month).format('YYYY-MM')+ '-01';
+			$scope.edate = moment(month).format('YYYY-MM')+ '-' +daysOfMonth;
 
 			$http.get(`${CONFIG.apiUrl}/ip/bedocc-month/${month}`)
 			.then(res => {
