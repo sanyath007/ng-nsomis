@@ -134,6 +134,36 @@ app.controller('ipController', [
 			});
 		}
 
+		$scope.getAdmDcYear = function(e) {
+			if(e) e.preventDefault();
+
+			let year = ($scope.cboYear !== '') 
+                        ? $scope.cboYear
+                        : moment().format('YYYY');
+
+			$http.get(`${CONFIG.apiUrl}/ip/admdc-year/${year}`)
+			.then(res => {
+				console.log(res);
+				// let lastDate = moment(year).endOf('year').date();
+				let { ipStat, moveStat } = res.data;
+				$scope.data = ipStat;
+
+				$scope.data.forEach(d => {
+					// Get bed amount of each ward
+					d.bed = $rootScope.wardBed().find(wb => d.ward===wb.ward);
+					// d.adm_avg = parseFloat(parseInt(d.adm_num) / lastDate);
+					// d.dc_avg = parseFloat(parseInt(d.dc_num) / lastDate);
+
+					d.moveout = moveStat.filter(move => d.ward === move.oward && move.nward !== move.oward);
+					d.movein = moveStat.filter(move => d.ward === move.nward && move.nward !== move.oward);
+				});
+
+				$scope.data.sort((a, b) => a.bed.sortBy - b.bed.sortBy);
+			}, err => {
+				console.log(err)
+			});
+		}
+
 		$scope.getBedOccYear = function(e) {
 			if(e) e.preventDefault();
 
