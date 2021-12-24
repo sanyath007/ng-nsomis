@@ -80,7 +80,7 @@
 									</tr>
 									<tr>
 										<td
-											style="width: 3%; text-align: center; font-size: small;"
+											style="width: 2.5%; text-align: center; font-size: small;"
 											ng-repeat="m in range(1, dataTableOptions.totalCol)"
 										>
 											{{ m }}
@@ -105,28 +105,32 @@
 											ng-repeat="m in range(1, dataTableOptions.totalCol)"
 											style="text-align: center; padding: 10px 0px 0px;"
 										>
-											<h6>
+											<h5>
 												<span
 													ng-show="ward[m] != '' && ward[m] > 130"
 													class="badge bg-danger"
+													style="margin: auto 0px;"
 												>
 													{{ ward[m] | currency:'':0 }}
 												</span>
 												<span
 													ng-show="ward[m] != '' && ward[m] > 110 && ward[m] <= 130"
 													class="badge bg-warning"
+													style="margin: auto 0px;"
 												>
 													{{ ward[m] | currency:'':0 }}
 												</span>
 												<span
 													ng-show="ward[m] != '' && ward[m] >= 90 && ward[m] <= 110"
 													class="badge bg-success"
+													style="margin: auto 0px;"
 												>
 													{{ ward[m] | currency:'':0 }}
 												</span>
 												<span
 													ng-show="ward[m] != '' && ward[m] < 90"
 													class="badge bg-default"
+													style="margin: auto 0px;"
 												>
 													{{ ward[m] | currency:'':0 }}
 												</span>
