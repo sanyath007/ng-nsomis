@@ -107,18 +107,18 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#educations" data-toggle="tab">
-									ประวัติการอบรม/ศึกษาต่อ
-								</a>
-							</li>
-							<li class="nav-item">
 								<a class="nav-link" href="#moves" data-toggle="tab">
 									ประวัติการย้าย
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#positions" data-toggle="tab">
+								<a class="nav-link" href="#promotes" data-toggle="tab">
 									ประวัติการดำรงตำแหน่ง
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#educations" data-toggle="tab">
+									ประวัติการอบรม/ศึกษาต่อ
 								</a>
 							</li>
 						</ul>
@@ -215,7 +215,7 @@
 
 							</div><!-- /.tab-pane -->
 
-							<div class="tab-pane" id="positions">
+							<div class="tab-pane" id="promotes">
 								<!-- Post -->
 								<div class="post">
 
@@ -223,26 +223,40 @@
 										<thead>
 											<tr>
 												<th style="text-align: center; width: 5%;">ลำดับ</th>
-												<th style="text-align: center; width: 15%;">วันที่เข้า</th>
-												<th style="text-align: center; width: 15%;">วันที่ออก</th>
-												<th style="text-align: center;">ตำแหน่ง</th>
-												<th style="text-align: center; width: 20%;">คำสั่ง</th>
+												<th style="text-align: center; width: 10%;">วันที่</th>
+												<th style="text-align: center;">ความเคลื่อนไหว</th>
+												<th style="text-align: center; width: 25%;">ตำแหน่ง</th>
+												<th style="text-align: center; width: 25%;">คำสั่ง</th>
 												<th style="text-align: center; width: 10%;">Actions</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td style="text-align: center;"></td>
-												<td style="text-align: center;"></td>
-												<td style="text-align: center;"></td>
+											<tr ng-repeat="(index, promote) in promotedLists">
+												<td style="text-align: center;">{{ promote.id }}</td>
+												<td style="text-align: center;">{{ promote.promote_date | thdate }}</td>
 												<td>
-													<p class="text-sm my-1">ประเภทตำแหน่ง</p>
-													<p class="text-sm my-1">ตำแหน่ง</p>
-													<p class="text-sm my-1">ระดับ</p>
+													<p class="text-sm my-1">
+														{{ promote.promote_desc }}
+													</p>
 												</td>
 												<td>
-													<p class="text-sm my-1">เลขที่</p>
-													<p class="text-sm my-1">ลงวันที่</p>
+													<p class="text-sm my-1">
+														ประเภท {{ promote.typeacademic.typeac_name }}
+													</p>
+													<p class="text-sm my-1">
+														ตำแหน่ง {{ promote.position.position_name }}
+													</p>
+													<p class="text-sm my-1">
+														ระดับ {{ promote.academic.ac_name }}
+													</p>
+												</td>
+												<td>
+													<p class="text-sm my-1">
+														เลขที่ {{ promote.doc_no }}
+													</p>
+													<p class="text-sm my-1">
+														ลงวันที่ {{ promote.doc_date | thdate }}
+													</p>
 												</td>
 												<td style="text-align: center;">
 													<a href="" class="btn btn-warning btn-xs">

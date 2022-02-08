@@ -162,10 +162,10 @@ app.controller('nurseController', [
 
 			$http.get(`${CONFIG.apiUrl}/nurses/${id}/profile`)
 			.then(res => {
-				console.log(res);
 				$scope.profile = res.data;
 
 				$scope.getMoves(res.data.person_id);
+				$scope.getPromoted(res.data.person_id);
 
 				$('#person_singin').datepicker('update', strToDate(res.data.person_singin));		
 				$('#person_startdate').datepicker('update', strToDate(res.data.person_startdate));
@@ -309,6 +309,16 @@ app.controller('nurseController', [
 			$http.get(`${CONFIG.apiUrl}/moves/${personId}`)
             .then(res => {
                 $scope.moveLists = res.data.items;
+            }, err => {
+                console.log(err)
+            });
+		}
+
+		$scope.promotedLists = [];
+		$scope.getPromoted = (personId) => {
+			$http.get(`${CONFIG.apiUrl}/nurses/${personId}/promotes`)
+            .then(res => {
+                $scope.promotedLists = res.data;
             }, err => {
                 console.log(err)
             });

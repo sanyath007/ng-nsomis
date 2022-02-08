@@ -96,7 +96,7 @@ var app = angular.module('App', ['ngRoute', 'ngStorage', 'toaster', 'angular-loa
                     { ward: '02', bed: 30, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 4 }, sortBy: 4 }, // อายุรกรรมหญิง ชั้น 4
                     { ward: '01', bed: 25, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 5 }, sortBy: 5 }, // อายุรกรรมชาย ชั้น 5
                     { ward: '14', bed: 8, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 5 }, sortBy: 6 }, // Stroke Unit ชั้น 5
-                    { ward: '18', bed: 15, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 6 }, sortBy: 7 }, // Cohort อาคารอายุรกรรม ชั้น 6
+                    { ward: '18', bed: 30, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 6 }, sortBy: 7 }, // Cohort อาคารอายุรกรรม ชั้น 6
                     { ward: '17', bed: 0, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 6 }, sortBy: 8 }, // IntermediateCare ชั้น 6
                     { ward: '08', bed: 30, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 7 }, sortBy: 9 }, // กุมารเวชกรรม ชั้น 7
                     { ward: '07', bed: 30, building: { no: 4, name: 'อาคารผู้ป่วยใน', floor: 8 }, sortBy: 10 }, // ศัลยกรรมหญิง ชั้น 8
