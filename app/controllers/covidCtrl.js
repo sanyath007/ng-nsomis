@@ -136,7 +136,7 @@ app.controller('covidController', [
 				console.log(err);
 			});
 		};
-		
+
 		$scope.getPatientsAll = function(e) {
 			if(e) e.preventDefault();
 

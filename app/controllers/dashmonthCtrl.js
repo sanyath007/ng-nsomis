@@ -13,8 +13,16 @@ app.controller('dashmonthController', [
         $scope.barOptions = {};
         $scope.pieOptions = {};
         $scope.cboMonth = '';
-        $scope.cboEpidWeek = '';
+        $scope.cboEpidWeek =  $scope.defaultEpidWeek !== '' ?  ($scope.defaultEpidWeek - 1).toString() : '';
         $scope.epidWeeks = [];
+
+        $scope.onInit = function () {
+            $scope.getEpidWeeks();
+            $scope.getCovidRegMonth();
+            $scope.getCovidRegWardMonth();
+            $scope.getCovidRegWeek();
+            $scope.getBedOccWeek();
+        };
 
         $scope.getOpVisit = function (e) {
             if(e) e.preventDefault();
@@ -378,10 +386,9 @@ app.controller('dashmonthController', [
 			});
 		};
 
-        $scope.getBedOccWeek = function(e) {
-			if(e) e.preventDefault();
-
+        $scope.getBedOccWeek = function() {
 			let week = $scope.cboEpidWeek == '' ? $scope.defaultEpidWeek - 1 : $scope.cboEpidWeek;
+            $scope.setEpidWeek();
 
 			$http.get(`${CONFIG.apiUrl}/ip/bedocc-week/${week}?year=${$scope.defaultEpidYear}`)
 			.then(res => {
@@ -716,14 +723,28 @@ app.controller('dashmonthController', [
 
             $http.get(`${CONFIG.apiUrl}/epid-weeks?year=${$scope.defaultEpidYear}`)
 			.then(res => {
-				console.log(res.data);
-
 				$scope.epidWeeks = res.data;
 
                 $('#weekLists').modal('show');
 			}, err => {
 				console.log(err);
 			});
+        };
+
+        $scope.epidWeek = null;
+        $scope.getEpidWeeks = function() {
+            $http.get(`${CONFIG.apiUrl}/epid-weeks?year=${$scope.defaultEpidYear}`)
+			.then(res => {
+                $scope.epidWeeks = res.data;
+                
+                $scope.setEpidWeek();
+			}, err => {
+                console.log(err);
+			});
+        };
+
+        $scope.setEpidWeek = function() {
+            $scope.epidWeek = $scope.epidWeeks.find(week => week.week_no == $scope.cboEpidWeek);
         };
     }
 ]);
