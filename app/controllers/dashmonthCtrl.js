@@ -360,7 +360,7 @@ app.controller('dashmonthController', [
 
 			let week = $scope.defaultEpidWeek - 1;
 
-			$http.get(`${CONFIG.apiUrl}/covid/register/${week}/epi-week?year=2565`)
+			$http.get(`${CONFIG.apiUrl}/covid/register/${week}/epi-week?year=${$scope.defaultEpidYear}`)
 			.then(res => {
                 let categories = Object.keys(res.data);
                 let dataSeries = Object.values(res.data).map(d => parseInt(d));
@@ -383,7 +383,7 @@ app.controller('dashmonthController', [
 
 			let week = $scope.cboEpidWeek == '' ? $scope.defaultEpidWeek - 1 : $scope.cboEpidWeek;
 
-			$http.get(`${CONFIG.apiUrl}/ip/bedocc-week/${week}`)
+			$http.get(`${CONFIG.apiUrl}/ip/bedocc-week/${week}?year=${$scope.defaultEpidYear}`)
 			.then(res => {
 				let admdate = res.data.admdate
 				let wardStat = res.data.wardStat
@@ -406,7 +406,7 @@ app.controller('dashmonthController', [
                     };
                 });
 
-                $scope.chartOptions = ChartService.initColumnChart("covidBedOccBarContainer", `อัตราครองเตียง สัปดาห์ที่ ${week} (ตามสัปดาห์ระบาดวิทยา ปี 2564)`, '%', '{point.y:.0f}');
+                $scope.chartOptions = ChartService.initColumnChart("covidBedOccBarContainer", `อัตราครองเตียง สัปดาห์ที่ ${week} (ตามสัปดาห์ระบาดวิทยา ปี ${$scope.defaultEpidYear})`, '%', '{point.y:.0f}');
                 $scope.chartOptions.series = [{
                     name: 'อัตราครองเตียง',
                     colorByPoint: true,
@@ -714,7 +714,7 @@ app.controller('dashmonthController', [
         $scope.showEpidWeekList = function(e) {
             e.preventDefault();
 
-            $http.get(`${CONFIG.apiUrl}/epid-weeks?year=2565`)
+            $http.get(`${CONFIG.apiUrl}/epid-weeks?year=${$scope.defaultEpidYear}`)
 			.then(res => {
 				console.log(res.data);
 
