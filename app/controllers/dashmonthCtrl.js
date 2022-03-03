@@ -353,38 +353,19 @@ app.controller('dashmonthController', [
 			});
 		};
 
-        let defaultEpidWeek = 45;
-        if (moment().isBetween(moment('2021-11-07'), moment('2021-11-13'))) {
-            defaultEpidWeek = 45;
-        } else if (moment().isBetween(moment('2021-11-14'), moment('2021-11-20'))) {
-            defaultEpidWeek = 46;
-        } else if (moment().isBetween(moment('2021-11-21'), moment('2021-11-27'))) {
-            defaultEpidWeek = 47;
-        } else if (moment().isBetween(moment('2021-11-28'), moment('2021-12-04'))) {
-            defaultEpidWeek = 48;
-        } else if (moment().isBetween(moment('2021-12-05'), moment('2021-12-11'))) {
-            defaultEpidWeek = 49;
-        } else if (moment().isBetween(moment('2021-12-12'), moment('2021-12-18'))) {
-            defaultEpidWeek = 50;
-        } else if (moment().isBetween(moment('2021-12-19'), moment('2021-12-25'))) {
-            defaultEpidWeek = 51;
-        } else if (moment().isBetween(moment('2021-12-26'), moment('2022-01-01'))) {
-            defaultEpidWeek = 52;
-        } else if (moment().isAfter(moment('2022-01-01'))) {
-            defaultEpidWeek = 53;
-        }
-
+        $scope.defaultEpidYear = 2565;
+        $scope.defaultEpidWeek = 9;
         $scope.getCovidRegWeek = function(e) {
 			if(e) e.preventDefault();
 
-			let week = defaultEpidWeek - 1;
+			let week = $scope.defaultEpidWeek - 1;
 
-			$http.get(`${CONFIG.apiUrl}/covid/register/${week}/epi-week`)
+			$http.get(`${CONFIG.apiUrl}/covid/register/${week}/epi-week?year=2565`)
 			.then(res => {
                 let categories = Object.keys(res.data);
                 let dataSeries = Object.values(res.data).map(d => parseInt(d));
 
-                $scope.chartOptions = ChartService.initAreaChart("covidWeekBarContainer", "ยอด Admit ผู้ป่วยโควิด ตามสัปดาห์ระบาดวิทยา ปี 2564", categories, 'จำนวน');
+                $scope.chartOptions = ChartService.initAreaChart("covidWeekBarContainer", `ยอด Admit ผู้ป่วยโควิด ตามสัปดาห์ระบาดวิทยา ปี ${$scope.defaultEpidYear}`, categories, 'จำนวน');
                 $scope.chartOptions.series.push({
                     name: 'Covid Total',
                     data: dataSeries,
@@ -400,7 +381,7 @@ app.controller('dashmonthController', [
         $scope.getBedOccWeek = function(e) {
 			if(e) e.preventDefault();
 
-			let week = $scope.cboEpidWeek == '' ? defaultEpidWeek - 1 : $scope.cboEpidWeek;
+			let week = $scope.cboEpidWeek == '' ? $scope.defaultEpidWeek - 1 : $scope.cboEpidWeek;
 
 			$http.get(`${CONFIG.apiUrl}/ip/bedocc-week/${week}`)
 			.then(res => {
@@ -733,7 +714,7 @@ app.controller('dashmonthController', [
         $scope.showEpidWeekList = function(e) {
             e.preventDefault();
 
-            $http.get(`${CONFIG.apiUrl}/epid-weeks`)
+            $http.get(`${CONFIG.apiUrl}/epid-weeks?year=2565`)
 			.then(res => {
 				console.log(res.data);
 
