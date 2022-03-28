@@ -46,10 +46,28 @@
     </div>
 
     <div class="col-md-12">
-        <div class="ml-4">
-            <a href="#" class="btn btn-success" ng-click="showEpidWeekList($event)">
-                ตารางแสดงสัปดาห์ระบาดวิทยา ปี {{ defaultEpidYear }}
-            </a>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ml-4" style="display: flex; align-items: center;">
+                    <label>ปี พ.ศ. :</label>
+                    <div class="col-md-4">
+                        <input
+                            type="text"
+                            id="defaultEpidYear"
+                            name="defaultEpidYear"
+                            ng-model="defaultEpidYear"
+                            class="form-control"
+                            style="margin: 0 10px;"
+                            autocomplete="off"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <a href="#" class="btn btn-success float-right" ng-click="showEpidWeekList($event)">
+                    ตารางแสดงสัปดาห์ระบาดวิทยา ปี {{ defaultEpidYear }}
+                </a>
+            </div>
         </div>
 
         <div id="covidWeekBarContainer" style="width: 100%; height: 480px; margin: 20px auto;"></div>

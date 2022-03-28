@@ -1,4 +1,3 @@
-
 app.controller('dashmonthController', [
     '$rootScope',
     '$scope',
@@ -361,8 +360,25 @@ app.controller('dashmonthController', [
 			});
 		};
 
-        $scope.defaultEpidYear = 2565;
-        $scope.defaultEpidWeek = 9;
+        const initYearPicker = {
+			autoclose: true,
+			format: 'yyyy',
+			viewMode: "years", 
+			minViewMode: "years",
+			language: 'th',
+			thaiyear: true
+		};
+
+        $scope.defaultEpidYear = moment().year()+543;
+        $scope.defaultEpidWeek = moment().week()-1;
+        $('#defaultEpidYear')
+            .datepicker(initYearPicker)
+            .datepicker('update', new Date())
+            .on('changeDate', (event) => {
+                $scope.defaultEpidYear = moment(event.date).year() + 543;
+                $scope.getCovidRegWeek();
+            });
+
         $scope.getCovidRegWeek = function(e) {
 			if(e) e.preventDefault();
 
