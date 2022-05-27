@@ -54,7 +54,9 @@ app.controller('nurseController', [
 			move_faction: '',
 			move_depart: '',
 			move_division: '',
+			move_reason: '',
 			in_out: 'O',
+			remark: ''
 		};
 
 		$scope.nurseTransfer = {
@@ -63,7 +65,9 @@ app.controller('nurseController', [
 			transfer_doc_no: '',
 			transfer_doc_date: '',
 			transfer_to: '',
+			transfer_reason: '',
 			in_out: 'O',
+			remark: ''
 		};
 
 		$scope.nurseLeave = {
@@ -72,7 +76,8 @@ app.controller('nurseController', [
 			leave_doc_date: '',
 			leave_date: '',
 			leave_type: '',
-			leave_reason: ''
+			leave_reason: '',
+			remark: ''
 		};
 
 		$scope.newNurse = {
@@ -425,7 +430,9 @@ app.controller('nurseController', [
 					move_faction: '',
 					move_depart: '',
 					move_division: '',
+					move_reason: '',
 					in_out: 'O',
+					remark: '',
 				};
 
 				$('#moveForm').modal('hide');
@@ -461,7 +468,9 @@ app.controller('nurseController', [
 					transfer_doc_no: '',
 					transfer_doc_date: '',
 					transfer_to: '',
+					transfer_reason: '',
 					in_out: 'O',
+					remark: '',
 				};
 
 				$('#transferForm').modal('hide');
@@ -494,7 +503,8 @@ app.controller('nurseController', [
 					leave_doc_date: '',
 					leave_date: '',
 					leave_type: '',
-					leave_reason: ''
+					leave_reason: '',
+					remark: ''
 				};
 
 				$('#leaveForm').modal('hide');
