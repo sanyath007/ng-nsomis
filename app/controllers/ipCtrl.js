@@ -205,6 +205,10 @@ app.controller('ipController', [
 		$scope.getBedOccMonth = function(e) {
 			if(e) e.preventDefault();
 
+			$scope.data = [];
+			$scope.pager = null;
+			$scope.totalData = {};
+
 			let month = ($scope.cboMonth !== '') 
 						? DatetimeService.fotmatYearMonth($scope.cboMonth)
 						: moment().format('YYYY-MM');
@@ -216,20 +220,28 @@ app.controller('ipController', [
 
 			$http.get(`${CONFIG.apiUrl}/ip/bedocc-month/${month}`)
 			.then(res => {
-				console.log(res);
-				let admdate = res.data.admdate
-				let wardStat = res.data.wardStat
-
 				$scope.totalData = initTotalBedOccYear();
 
-				admdate.forEach(d => {
-					d.stat = wardStat.filter(st => d.ward === st.ward);
-					// Get bed amount of each ward
-					d.bed = $rootScope.wardBed().find(wb => d.ward===wb.ward);
+				let wards = res.data.wards.map(w => {
+					let ward = null;
+					/** Get discharge data of each ward */
+					let admit = res.data.admdate.find(ad => ad.ward === w.ward);
+					/** Get ward stat of each ward */
+					let stat = res.data.wardStat.filter(st => w.ward === st.ward);
+					/** Get bed amount of each ward */
+					let bed = $rootScope.wardBed().find(wb => w.ward===wb.ward);
+
+					if (admit && admit.ward === w.ward) {
+						ward = { ...w, ...admit, stat, bed };
+					} else {
+						ward = { ...w, rw: 0.0, dc_num: 0, admdate: 0, stat, bed };
+					}
+
+					return ward;
 				});
 
-				// Create data by calling sumAdmdate function
-				$scope.data = $rootScope.sumAdmdate(admdate, daysOfMonth);
+				/** Create data by calling sumAdmdate function */
+				$scope.data = $rootScope.sumAdmdate(wards, daysOfMonth);
 				$scope.data.sort((wa, wb) => wa.bed.sortBy - wb.bed.sortBy);
 
 				$scope.data.forEach(d => {
