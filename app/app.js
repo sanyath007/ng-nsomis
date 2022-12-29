@@ -105,7 +105,7 @@ var app = angular.module('App', ['ngRoute', 'ngStorage', 'toaster', 'angular-loa
                     { ward: '05', bed: 8, building: { no: 6, name: 'อาคารผู้ป่วยนอก', floor: 3 }, sortBy: 13 }, // วิกฤต (ICU) อาคารผู้ป่วยนอก ชั้น 3
                     { ward: '15', bed: 2, building: { no: 6, name: 'อาคารสิรินคร', floor: 2 }, sortBy: 14 }, // ทารกแรกเกิดวิกฤต (NICU) อาคารสิรินคร ชั้น 2
                     { ward: '13', bed: 10, building: { no: 6, name: 'อาคารสิรินคร', floor: 2 }, sortBy: 15 }, // ทารกแรกเกิดป่วย (SNB) อาคารสิรินคร ชั้น 2
-                    { ward: '20', bed: 24, building: { no: 6, name: 'อาคารสิรินคร', floor: 2 }, sortBy: 16 }, // เด็กวิกฤต (PICU) อาคารสิรินคร ชั้น 2
+                    { ward: '20', bed: 2, building: { no: 6, name: 'อาคารสิรินคร', floor: 2 }, sortBy: 16 }, // เด็กวิกฤต (PICU) อาคารสิรินคร ชั้น 2
                     { ward: '08', bed: 20, building: { no: 6, name: 'อาคารสิรินคร', floor: 4 }, sortBy: 17 }, // กุมารเวชกรรม
                     { ward: '09', bed: 30, building: { no: 6, name: 'อาคารสิรินคร', floor: 4 }, sortBy: 18 }, // สูติ-นรีเวชกรรม อาคารสิรินคร ชั้น 4
                     { ward: '04', bed: 8, building: { no: 6, name: 'อาคารสิรินคร', floor: 4 }, sortBy: 19 }, // ห้องคลอด ตึกสิรินคร
