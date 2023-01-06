@@ -63,6 +63,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		templateUrl: 'templates/ip/ptlosbycare.html',
 		controller: 'ipController'
 	})
+	.when('/ip/product-overall', {
+		templateUrl: 'templates/product/product-overall.html',
+		controller: 'productController'
+	})
 	.when('/ip/product-sum', {
 		templateUrl: 'templates/product/product-sum.html',
 		controller: 'productController'

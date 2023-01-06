@@ -104,6 +104,40 @@ app.controller('productController', [
 			});
 		};
 
+		$scope.getProductOverAll = (e) => {
+			if (e) e.preventDefault();
+			
+			let month = ($scope.cboMonth !== '') 
+                        ? DatetimeService.fotmatYearMonth($scope.cboMonth)
+                        : moment().format('YYYY-MM');
+
+			$scope.dataTableOptions = {
+				totalCol: parseInt(moment(month).endOf('month').format('D')),
+			};
+
+            $http.get(`${CONFIG.apiUrl}/product-overall/${month}`)
+            .then(res => {
+				$scope.data = res.data.wards;
+
+				/** Create productivity of each day */
+				$scope.data.forEach(w => {
+					for(let day = 1; day <= $scope.dataTableOptions.totalCol; day++) {
+						let prod = res.data.product.find(p => w.ward == p.ward);
+
+						w[day] = prod ? parseFloat(prod[`p${day}`])/parseInt(prod[`t${day}`]) : '';
+					}
+
+					/** Add new description data to each ward */
+					w.desc = $rootScope.wardBed().find(wb => wb.ward === w.ward);
+				});
+
+				/** Sort data by each desc.sortBy element */
+				$scope.filteredData = $scope.data.sort((wa, wb) => wa.desc.sortBy - wb.desc.sortBy);
+			}, err => {
+				console.log(err)
+			});
+		};
+
 		$scope.getProductSum = (e) => {
 			if (e) e.preventDefault();
 			

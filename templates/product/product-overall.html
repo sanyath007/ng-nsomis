@@ -1,7 +1,7 @@
 <section
 	class="content"
 	ng-controller="productController"
-	ng-init="initForm(); getProductSum($event);"
+	ng-init="initForm(); getProductOverAll($event);"
 >
 	<div class="container-fluid">
 		<!-- Main row -->
@@ -12,34 +12,34 @@
 					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-chart-bar mr-1"></i>
-							สรุป Productivity รายเวร
+							สรุป Productivity ประจำเดือน
 						</h3>
 					</div><!-- /.card-header -->
 					<div class="card-body">
 						<div class="row">
+							<form action="#" method="POST" class="form-inline col-md-8">
+								<div class="form-group">
+									<label>ประจำเดือน :</label>
+									<input
+										type="text"
+										id="cboMonth"
+										name="cboMonth"
+										ng-model="cboMonth"
+										class="form-control"
+										style="margin: 0 10px;"
+										autocomplete="off"
+									>
+								</div>
+
+								<button ng-click="getProductOverAll($event)" class="btn btn-primary">ตกลง</button>						
+							</form>
+
 							<div class="col-md-4">
-								<form action="#" method="POST" class="form-inline">
-									<div class="form-group">
-										<label>ประจำเดือน :</label>
-										<input
-											type="text"
-											id="cboMonth"
-											name="cboMonth"
-											ng-model="cboMonth"
-											class="form-control"
-											style="margin: 0 10px;"
-											autocomplete="off"
-										>
-									</div>
-	
-									<button ng-click="getProductSum($event)" class="btn btn-primary">ตกลง</button>						
-								</form>
-							</div>
-							<div class="col-md-8">
 								<a href="ip/product-add" class="btn btn-primary float-right ml-2">บันทึก Productivity</a>
 								<a href="ip/product-ward" class="btn btn-success float-right ml-2">Productivity รายวอร์ด</a>
-								<a href="ip/product-overall" class="btn btn-danger float-right">สรุป Productivity ประจำเดือน</a>
+								<a href="ip/product-sum" class="btn btn-danger float-right">สรุป Productivity รายเวร</a>
 							</div>
+
 						</div>
 					</div><!-- /.card-body -->
 				</div><!-- /.card -->
@@ -76,7 +76,6 @@
 									<tr>
 										<!-- <td tyle="width: 3%; text-align: center;" rowspan="2">ลำดับ</td> -->
 										<td style="text-align: center;" rowspan="2">หน่วยงาน</td>
-										<td style="width: 3%; text-align: center;" rowspan="2">เวร</td>
 										<td style="text-align: center;" colspan="31">วันที่</td>
 									</tr>
 									<tr>
@@ -96,11 +95,6 @@
 												{{ ward.desc.building.name }}
 												{{ ward.desc.building.floor != '0' ? ' ชั้น ' + ward.desc.building.floor : ''}}
 											</span>
-										</td>
-										<td style="text-align: center;">
-											<span ng-show="ward.period == 1">ดึก</span>
-											<span ng-show="ward.period == 2">เช้า</span>
-											<span ng-show="ward.period == 3">บ่าย</span>
 										</td>
 										<td
 											ng-repeat="m in range(1, dataTableOptions.totalCol)"
