@@ -379,9 +379,9 @@
 			$(".nav-sidebar").find(".menu-open").removeClass("menu-open");
 
             /** Set class and style to clicked .nav-item */
-			// $(this).parent().addClass("menu-open");
+			$(this).parent().addClass("menu-open");
             /** Set display style of .nav-treeview that is child of clicked .nav-item to block */
-            // $(this).parent().children(".nav-treeview").css("display", "block");
+            $(this).parent().children(".nav-treeview").css("display", "block");
 
             /** Remove .active class from previous actived .nav-link that is child of .nav-item */
 			$(".nav-sidebar .nav-item").find(".active").removeClass("active");

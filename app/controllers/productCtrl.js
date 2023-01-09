@@ -121,12 +121,19 @@ app.controller('productController', [
 
 				/** Create productivity of each day */
 				$scope.data.forEach(w => {
+					let total = 0;
+					let count = 0;
+
 					for(let day = 1; day <= $scope.dataTableOptions.totalCol; day++) {
 						let prod = res.data.product.find(p => w.ward == p.ward);
 
-						w[day] = prod ? parseFloat(prod[`p${day}`])/parseInt(prod[`t${day}`]) : '';
+						w[day] = prod && prod[`p${day}`] ? parseFloat(prod[`p${day}`])/parseInt(prod[`t${day}`]) : '';
+						total += prod && prod[`p${day}`] ? parseFloat(prod[`p${day}`])/parseInt(prod[`t${day}`]) : 0;
+						count += prod && prod[`p${day}`] ? 1 : 0;
 					}
 
+					w.count = count;
+					w.total = total;
 					/** Add new description data to each ward */
 					w.desc = $rootScope.wardBed().find(wb => wb.ward === w.ward);
 				});
