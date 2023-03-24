@@ -2,13 +2,17 @@ app.controller('productController', [
 	'$rootScope',
 	'$scope',
 	'$http',
+	'$timeout',
 	'$routeParams',
 	'CONFIG',
 	'StringFormatService',
 	'DatetimeService',
+	'ExcelService',
 	'toaster',
-	function($rootScope, $scope, $http, $routeParams, CONFIG, StringFormatService, DatetimeService, toaster) 
-	{
+	function(
+		$rootScope, $scope, $http, $timeout, $routeParams, CONFIG,
+		StringFormatService, DatetimeService, ExcelService, toaster
+	) {
 		$scope.cboSDate = '';
 		$scope.cboMonth = '';
 		$scope.cboWard = '';
@@ -580,6 +584,14 @@ app.controller('productController', [
 			} else {
 
 			}
+		};
+
+		$scope.exportToExcel = function (tableId) {
+			console.log(tableId);
+			var exportHref = ExcelService.tableToExcel(tableId, 'WireWorkbenchDataExport');
+			$timeout(function() {
+				location.href = exportHref;
+			},100); // trigger download
 		};
 	}
 ]);

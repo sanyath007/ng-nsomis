@@ -3,12 +3,16 @@ app.controller('ipController', [
 	'$rootScope',
 	'$scope',
 	'$http',
+	'$timeout',
 	'$routeParams',
 	'CONFIG',
 	'DatetimeService',
 	'StringFormatService',
-	function($rootScope, $scope, $http, $routeParams, CONFIG, DatetimeService, StringFormatService)
-	{
+	'ExcelService',
+	function(
+		$rootScope, $scope, $http, $timeout, $routeParams, 
+		CONFIG, DatetimeService, StringFormatService, ExcelService
+	) {
 		$scope.cboDate = '';
 		$scope.cboMonth = '';
 		$scope.cboYear = '';
@@ -438,6 +442,14 @@ app.controller('ipController', [
 			}, err => {
 				console.log(err);
 			})
+		};
+
+		$scope.exportToExcel = function (tableId) {
+			console.log(tableId);
+			var exportHref = ExcelService.tableToExcel(tableId, 'WireWorkbenchDataExport');
+			$timeout(function() {
+				location.href = exportHref;
+			},100); // trigger download
 		};
 	}
 ]);

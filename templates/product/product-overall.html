@@ -47,7 +47,7 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="table-responsive">
-							<table class="table table-bordered table-striped">
+							<table class="table table-bordered table-striped" id="tableData">
 								<thead>
 									<tr>
 										<!-- <td tyle="width: 3%; text-align: center;" rowspan="2">ลำดับ</td> -->
@@ -160,6 +160,13 @@
 						<p style="margin: 2px;"><span class="badge bg-success">สีเขียว</span> : ค่าระหว่าง 90 - 110</p>
 						<p style="margin: 2px;"><span class="badge bg-default">สีขาว</span> : ค่าน้อยกว่า 90</p>
 					</div><!-- /.card-body -->
+					<div class="card-footer clearfix">
+						<div class="m-0 float-right" ng-show="data">
+							<a href="#" class="btn btn-success" ng-click="exportToExcel('#tableData')">
+								Excel
+							</a>
+						</div>
+					</div><!-- /.card-footer -->
 				</div><!-- /.card -->
 	
 			</section>
